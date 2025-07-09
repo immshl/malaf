@@ -9,7 +9,7 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-background">
       {/* Header */}
-      <header className="border-b bg-white/80 backdrop-blur-sm sticky top-0 z-50">
+      <header className="border-b glass-soft sticky top-0 z-50">
         <div className="container mx-auto px-4 py-4 flex items-center justify-between">
           <div className="flex items-center space-x-2">
             <div className="w-8 h-8 bg-gradient-primary rounded-lg flex items-center justify-center">
@@ -20,7 +20,6 @@ const Index = () => {
           <nav className="hidden md:flex items-center space-x-8">
             <a href="#features" className="text-muted-foreground hover:text-foreground transition-smooth">المميزات</a>
             <a href="#how-it-works" className="text-muted-foreground hover:text-foreground transition-smooth">كيف يعمل</a>
-            <a href="#pricing" className="text-muted-foreground hover:text-foreground transition-smooth">الأسعار</a>
           </nav>
           <div className="flex items-center space-x-4">
             <Button variant="ghost" asChild>
@@ -51,8 +50,8 @@ const Index = () => {
                 <Button size="lg" variant="hero" className="text-lg px-8 py-4" asChild>
                   <Link to="/signup">أنشئ ملفك المهني</Link>
                 </Button>
-                <Button size="lg" variant="outline" className="text-lg px-8 py-4">
-                  شاهد نموذج
+                <Button size="lg" variant="outline" className="text-lg px-8 py-4" asChild>
+                  <Link to="/profile/demo">شاهد نموذج</Link>
                 </Button>
               </div>
               <p className="text-sm text-muted-foreground mt-4">
@@ -260,9 +259,8 @@ const Index = () => {
             <div>
               <h4 className="font-semibold mb-4">المنتج</h4>
               <ul className="space-y-2 text-gray-400">
-                <li><a href="#" className="hover:text-white transition-smooth">المميزات</a></li>
-                <li><a href="#" className="hover:text-white transition-smooth">الأسعار</a></li>
-                <li><a href="#" className="hover:text-white transition-smooth">القوالب</a></li>
+                <li><a href="#features" className="hover:text-white transition-smooth">المميزات</a></li>
+                <li><a href="#how-it-works" className="hover:text-white transition-smooth">كيف يعمل</a></li>
               </ul>
             </div>
             <div>

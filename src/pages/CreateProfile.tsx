@@ -32,12 +32,18 @@ const CreateProfile = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     
+    // التحقق من البيانات المطلوبة
+    if (!profileData.availableDays.length || !profileData.timeSlot) {
+      alert("يرجى تحديد الأيام المتاحة والفترة الزمنية للحجز");
+      return;
+    }
+    
     // مؤقت - سيتم ربطه بـ Supabase لاحقاً
     console.log("بيانات الملف:", profileData);
     alert("تم إنشاء ملفك بنجاح!");
     
-    // الانتقال إلى لوحة التحكم
-    navigate("/dashboard");
+    // الانتقال إلى صفحة الملف الشخصي
+    navigate(`/profile/${profileData.username}`);
   };
 
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {

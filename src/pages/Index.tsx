@@ -7,7 +7,7 @@ import { useLanguage } from "@/hooks/useLanguage";
 import AuthButton from "@/components/AuthButton";
 
 const Index = () => {
-  const { t } = useLanguage();
+  const { language } = useLanguage();
   const [showWelcome, setShowWelcome] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
@@ -367,7 +367,7 @@ const Index = () => {
               className="text-lg px-12 py-4 rounded-full border-2 border-purple-500 text-purple-600 hover:bg-purple-500 hover:text-white transform hover:scale-105 active:scale-95 transition-all duration-300 shadow-md hover:shadow-lg" 
               onClick={handleContactUs}
             >
-              {t('contactUs')}
+              {language === "ar" ? "تواصل معنا" : "Contact Us"}
             </Button>
           </div>
         </div>

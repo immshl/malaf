@@ -106,24 +106,14 @@ const Index = () => {
         <div className="container mx-auto px-4 relative z-10">
           <div className="max-w-4xl mx-auto text-center">
             <p className="text-sm text-muted-foreground mb-4 font-medium">
-              للمستقلين في كل مكان ✨
+              لتمكين العمل الحر
             </p>
             
             <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight">
-              <span className="text-foreground">ملف </span>
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-600 via-pink-500 to-blue-500">
-                مهني 
+                ملف مهني خاص بك
               </span>
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 via-green-500 to-purple-600">
-                خاص 
-              </span>
-              <span className="text-foreground">بك</span>
             </h1>
-            
-            <p className="text-lg md:text-xl text-muted-foreground mb-8 max-w-2xl mx-auto leading-relaxed">
-              اصنع هويتك الرقمية واجذب العملاء المناسبين، عرض خدماتك، تلقي طلبات المشاريع، 
-              وإدارة عملك بسهولة — كل ذلك برابط واحد مميز.
-            </p>
             
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button 
@@ -132,7 +122,7 @@ const Index = () => {
                 asChild
               >
                 <Link to="/signup">
-                  ❤️ ابدأ رحلتك الآن
+                  اصنع ملفك المهني
                 </Link>
               </Button>
               <Button 
@@ -142,7 +132,7 @@ const Index = () => {
                 asChild
               >
                 <Link to="/example">
-                  👀 شاهد نموذج
+                  شاهد نموذج
                 </Link>
               </Button>
             </div>
@@ -166,16 +156,13 @@ const Index = () => {
             <Card className="border-0 shadow-soft hover:shadow-medium transition-smooth bg-white group">
               <CardContent className="p-8 text-center">
                 <div className="mb-6 flex justify-center">
-                  <div className="w-16 h-16 bg-green-100 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-smooth">
-                    <Users className="w-8 h-8 text-green-600" />
+                  <div className="w-16 h-16 bg-purple-100 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-smooth">
+                    <Link2 className="w-8 h-8 text-purple-600" />
                   </div>
                 </div>
-                <h3 className="text-xl font-bold mb-4 text-foreground">عنوان رقمي مخصص</h3>
+                <h3 className="text-xl font-bold mb-4 text-foreground">واجهة مميزة</h3>
                 <p className="text-muted-foreground leading-relaxed">
-                  احصل على رابط شخصي أنيق يعكس هويتك. 
-                  سهل المشاركة، يحفظ بسهولة، ويمنح العملاء انطباعاً احترافياً.
-                  <br />
-                  <span className="text-primary font-medium">🌐 malaf.me/اسمك</span>
+                  اعرض خدماتك وبياناتك بطريقة منظمة لتبني ثقة مع العميل من اللحظة الأولى.
                 </p>
               </CardContent>
             </Card>
@@ -189,10 +176,7 @@ const Index = () => {
                 </div>
                 <h3 className="text-xl font-bold mb-4 text-foreground">نظام حجز ذكي</h3>
                 <p className="text-muted-foreground leading-relaxed">
-                  امنح عملائك سهولة طلب المواعيد مباشرة.
-                  نظام ذكي لجدولة الموعيد يوفر وقتك ويحل مشكل التنسيق بين الطرفين.
-                  <br />
-                  <span className="text-primary font-medium">📅 طلب جديد</span>
+                  امنح عملاءك سهولة طلب المواعيد معك مباشرة، إدارة ذكية لجدولك مع إشعارات فورية لكل طلب جديد.
                 </p>
               </CardContent>
             </Card>
@@ -200,16 +184,13 @@ const Index = () => {
             <Card className="border-0 shadow-soft hover:shadow-medium transition-smooth bg-white group">
               <CardContent className="p-8 text-center">
                 <div className="mb-6 flex justify-center">
-                  <div className="w-16 h-16 bg-purple-100 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-smooth">
-                    <Link2 className="w-8 h-8 text-purple-600" />
+                  <div className="w-16 h-16 bg-green-100 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-smooth">
+                    <Users className="w-8 h-8 text-green-600" />
                   </div>
                 </div>
-                <h3 className="text-xl font-bold mb-4 text-foreground">واجهة مميزة وجذابة</h3>
+                <h3 className="text-xl font-bold mb-4 text-foreground">عنوان رقمي مخصص</h3>
                 <p className="text-muted-foreground leading-relaxed">
-                  اعرض خبراتك واحجياجات بطريقة جذابة ومنظمة
-                  تلفت انتباه عميل وتبني الثقة من اللحظة الأولى.
-                  <br />
-                  <span className="text-primary font-medium">✨ الأول</span>
+                  احصل على رابط شخصي يعكس هويتك، سهل المشاركة، يُحفظ بسهولة، ويتيح الوصول إليك من أي مكان.
                 </p>
               </CardContent>
             </Card>
@@ -225,7 +206,7 @@ const Index = () => {
               كيف يعمل ملف؟
             </h2>
             <p className="text-lg text-muted-foreground">
-              خطوات بسيطة للحصول على ملفك المهني
+              ثلاث خطوات بسيطة
             </p>
           </div>
           
@@ -248,7 +229,7 @@ const Index = () => {
                   2
                 </div>
               </div>
-              <h3 className="text-xl font-bold mb-4 text-foreground">شارك رابطك</h3>
+              <h3 className="text-xl font-bold mb-4 text-foreground">شارك ملفك</h3>
               <p className="text-muted-foreground leading-relaxed">
                 احصل على رابط شخصي لمشاركته مع العملاء
               </p>
@@ -276,7 +257,7 @@ const Index = () => {
             ابدأ ملفك المميز
           </h2>
           <p className="text-lg text-muted-foreground mb-8 max-w-2xl mx-auto">
-            انضم لآلاف المستقلين الذين اختاروا ملف لبناء حضورهم الرقمي وجذب العملاء الذين يحتاجونهم.
+            انضم إلى ملف واحصل على ظهور رقمي فعال
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button 

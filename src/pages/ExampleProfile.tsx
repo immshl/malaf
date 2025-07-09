@@ -18,7 +18,7 @@ import {
   Check
 } from "lucide-react";
 import { Link } from "react-router-dom";
-import profileMockup from "@/assets/profile-mockup.jpg";
+
 
 const ExampleProfile = () => {
   const [copied, setCopied] = useState(false);
@@ -58,8 +58,7 @@ const ExampleProfile = () => {
           <CardContent className="p-8">
             <div className="flex flex-col md:flex-row gap-6 items-start">
               <Avatar className="w-24 h-24 border-4 border-primary/20">
-                <AvatarImage src={profileMockup} alt="أحمد سالم" />
-                <AvatarFallback>أس</AvatarFallback>
+                <AvatarFallback className="text-xl font-bold bg-gradient-primary text-white">أس</AvatarFallback>
               </Avatar>
               
               <div className="flex-1">

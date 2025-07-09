@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -12,6 +12,7 @@ const SignUp = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const navigate = useNavigate();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -23,7 +24,9 @@ const SignUp = () => {
     
     // مؤقت - سيتم ربطه بـ Supabase لاحقاً
     console.log("تسجيل حساب جديد:", { email, password });
-    alert("سيتم إضافة وظيفة التسجيل عند ربط قاعدة البيانات");
+    
+    // الانتقال إلى صفحة التحقق
+    navigate("/verify-email");
   };
 
   return (

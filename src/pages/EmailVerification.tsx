@@ -13,8 +13,8 @@ const EmailVerification = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     
-    if (code.length !== 6) {
-      alert("يرجى إدخال كود التحقق المكون من 6 أرقام");
+    if (code.length !== 4) {
+      alert("يرجى إدخال كود التحقق المكون من 4 أرقام");
       return;
     }
     
@@ -56,7 +56,7 @@ const EmailVerification = () => {
             </div>
             <CardTitle className="text-2xl font-bold text-foreground">تحقق من بريدك الإلكتروني</CardTitle>
             <CardDescription className="text-muted-foreground">
-              أرسلنا كود التحقق المكون من 6 أرقام إلى بريدك الإلكتروني
+              أرسلنا كود التحقق المكون من 4 أرقام إلى بريدك الإلكتروني
             </CardDescription>
           </CardHeader>
           
@@ -66,18 +66,17 @@ const EmailVerification = () => {
               <div className="space-y-4">
                 <div className="text-center">
                   <InputOTP
-                    maxLength={6}
+                    maxLength={4}
                     value={code}
                     onChange={(value) => setCode(value)}
                     className="justify-center"
+                    dir="ltr"
                   >
                     <InputOTPGroup>
                       <InputOTPSlot index={0} className="w-12 h-12 text-lg" />
                       <InputOTPSlot index={1} className="w-12 h-12 text-lg" />
                       <InputOTPSlot index={2} className="w-12 h-12 text-lg" />
                       <InputOTPSlot index={3} className="w-12 h-12 text-lg" />
-                      <InputOTPSlot index={4} className="w-12 h-12 text-lg" />
-                      <InputOTPSlot index={5} className="w-12 h-12 text-lg" />
                     </InputOTPGroup>
                   </InputOTP>
                 </div>
@@ -93,7 +92,7 @@ const EmailVerification = () => {
                 className="w-full" 
                 variant="hero"
                 size="lg"
-                disabled={code.length !== 6}
+                disabled={code.length !== 4}
               >
                 تحقق من الكود
                 <ArrowRight className="mr-2 h-5 w-5" />

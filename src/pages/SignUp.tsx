@@ -91,6 +91,31 @@ const SignUp = () => {
                     {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
                   </button>
                 </div>
+                <div className="text-sm text-muted-foreground space-y-1">
+                  <p>متطلبات كلمة المرور:</p>
+                  <ul className="text-xs space-y-1 text-right">
+                    <li className="flex items-center justify-end space-x-2 space-x-reverse">
+                      <span>لا تقل عن 8 أحرف</span>
+                      <div className={`w-2 h-2 rounded-full ${password.length >= 8 ? 'bg-green-500' : 'bg-gray-300'}`}></div>
+                    </li>
+                    <li className="flex items-center justify-end space-x-2 space-x-reverse">
+                      <span>تحتوي على حرف كبير</span>
+                      <div className={`w-2 h-2 rounded-full ${/[A-Z]/.test(password) ? 'bg-green-500' : 'bg-gray-300'}`}></div>
+                    </li>
+                    <li className="flex items-center justify-end space-x-2 space-x-reverse">
+                      <span>تحتوي على حرف صغير</span>
+                      <div className={`w-2 h-2 rounded-full ${/[a-z]/.test(password) ? 'bg-green-500' : 'bg-gray-300'}`}></div>
+                    </li>
+                    <li className="flex items-center justify-end space-x-2 space-x-reverse">
+                      <span>تحتوي على رقم</span>
+                      <div className={`w-2 h-2 rounded-full ${/\d/.test(password) ? 'bg-green-500' : 'bg-gray-300'}`}></div>
+                    </li>
+                    <li className="flex items-center justify-end space-x-2 space-x-reverse">
+                      <span>تحتوي على رمز خاص</span>
+                      <div className={`w-2 h-2 rounded-full ${/[!@#$%^&*(),.?":{}|<>]/.test(password) ? 'bg-green-500' : 'bg-gray-300'}`}></div>
+                    </li>
+                  </ul>
+                </div>
               </div>
 
               {/* تأكيد كلمة المرور */}

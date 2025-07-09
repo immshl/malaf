@@ -4,8 +4,6 @@ import { Card, CardContent } from "@/components/ui/card";
 import { ArrowLeft, Users, Calendar, Link2, Star, Zap, Shield, Smartphone } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useLanguage } from "@/hooks/useLanguage";
-import heroImage from "@/assets/hero-image.jpg";
-import profileMockup from "@/assets/profile-mockup.jpg";
 
 const Index = () => {
   const { t } = useLanguage();
@@ -69,12 +67,13 @@ const Index = () => {
               </p>
             </div>
             <div className="relative">
-              <div className="relative rounded-2xl overflow-hidden shadow-strong">
-                <img 
-                  src={heroImage} 
-                  alt="منصة ملف للمحترفين المستقلين" 
-                  className="w-full h-auto object-cover"
-                />
+              <div className="relative rounded-2xl overflow-hidden shadow-strong bg-gradient-primary/10 h-80 flex items-center justify-center">
+                <div className="text-center">
+                  <div className="w-24 h-24 bg-gradient-primary rounded-full flex items-center justify-center mb-4 mx-auto">
+                    <span className="text-2xl font-bold text-white">ملف</span>
+                  </div>
+                  <p className="text-muted-foreground">{t('heroTitle')}</p>
+                </div>
               </div>
               <div className="absolute -top-4 -right-4 w-20 h-20 bg-gradient-secondary rounded-full opacity-60"></div>
               <div className="absolute -bottom-6 -left-6 w-32 h-32 bg-gradient-primary rounded-full opacity-40"></div>

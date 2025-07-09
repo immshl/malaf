@@ -8,8 +8,6 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Calendar } from "@/components/ui/calendar";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { useToast } from "@/hooks/use-toast";
 import { 
   Copy, 
@@ -25,17 +23,19 @@ import {
   Star,
   CheckCircle
 } from "lucide-react";
-import { format } from "date-fns";
-import { ar } from "date-fns/locale";
 import { cn } from "@/lib/utils";
 
 const UserProfile = () => {
-  const [selectedDate, setSelectedDate] = useState<Date>();
+  const [selectedDay, setSelectedDay] = useState("");
   const [selectedTime, setSelectedTime] = useState("");
+  const [showAlternativeBooking, setShowAlternativeBooking] = useState(false);
+  const [alternativeDay, setAlternativeDay] = useState("");
+  const [alternativeTimeSlot, setAlternativeTimeSlot] = useState("");
   const [bookingForm, setBookingForm] = useState({
     name: "",
     email: "",
-    message: ""
+    preferredContact: "",
+    notes: ""
   });
   const { toast } = useToast();
 
@@ -76,22 +76,39 @@ const UserProfile = () => {
   };
 
   const handleBooking = () => {
-    // مؤقت - سيتم ربطه بقاعدة البيانات لاحقاً
-    console.log("حجز اجتماع:", {
-      date: selectedDate,
-      time: selectedTime,
-      ...bookingForm
-    });
-    
-    toast({
-      title: "تم إرسال طلب الحجز",
-      description: "سيتم التواصل معك قريباً لتأكيد الموعد",
-    });
+    if (showAlternativeBooking) {
+      // طلب موعد مختلف
+      console.log("طلب موعد مختلف:", {
+        suggestedDay: alternativeDay,
+        suggestedTimeSlot: alternativeTimeSlot,
+        ...bookingForm
+      });
+      
+      toast({
+        title: "تم إرسال اقتراح الموعد",
+        description: "سيتم مراجعة طلبك والرد عليك قريباً",
+      });
+    } else {
+      // حجز عادي
+      console.log("حجز اجتماع:", {
+        day: selectedDay,
+        time: selectedTime,
+        ...bookingForm
+      });
+      
+      toast({
+        title: "تم إرسال طلب الحجز",
+        description: "سيتم التواصل معك قريباً لتأكيد الموعد",
+      });
+    }
     
     // إعادة تعيين النموذج
-    setSelectedDate(undefined);
+    setSelectedDay("");
     setSelectedTime("");
-    setBookingForm({ name: "", email: "", message: "" });
+    setShowAlternativeBooking(false);
+    setAlternativeDay("");
+    setAlternativeTimeSlot("");
+    setBookingForm({ name: "", email: "", preferredContact: "", notes: "" });
   };
 
   const dayLabels = {
@@ -110,10 +127,21 @@ const UserProfile = () => {
     evening: "المساء (5:00 م - 9:00 م)"
   };
 
-  const availableTimeSlots = [
-    "8:00 ص", "9:00 ص", "10:00 ص", "11:00 ص",
-    "1:00 م", "2:00 م", "3:00 م", "4:00 م",
-    "5:00 م", "6:00 م", "7:00 م", "8:00 م"
+  const availableTimeSlots = {
+    morning: ["8:00 ص", "9:00 ص", "10:00 ص", "11:00 ص"],
+    afternoon: ["12:00 م", "1:00 م", "2:00 م", "3:00 م", "4:00 م"],
+    evening: ["5:00 م", "6:00 م", "7:00 م", "8:00 م"]
+  };
+
+  const getCurrentTimeSlots = () => {
+    return availableTimeSlots[profileData.timeSlot as keyof typeof availableTimeSlots] || [];
+  };
+
+  const contactMethods = [
+    { value: "email", label: "البريد الإلكتروني" },
+    { value: "phone", label: "الهاتف" },
+    { value: "whatsapp", label: "واتساب" },
+    { value: "telegram", label: "تلقرام" }
   ];
 
   return (
@@ -144,78 +172,146 @@ const UserProfile = () => {
                     حجز اجتماع
                   </Button>
                 </DialogTrigger>
-                <DialogContent className="max-w-md">
+                <DialogContent className="max-w-lg max-h-[90vh] overflow-y-auto">
                   <DialogHeader>
                     <DialogTitle>حجز اجتماع</DialogTitle>
                     <DialogDescription>
-                      اختر التاريخ والوقت المناسب لك
+                      اختر الموعد المناسب لك أو اقترح موعد مختلف
                     </DialogDescription>
                   </DialogHeader>
-                  <div className="space-y-4">
-                    {/* اختيار التاريخ */}
-                    <div className="space-y-2">
-                      <Label>التاريخ</Label>
-                      <Popover>
-                        <PopoverTrigger asChild>
+                  <div className="space-y-6">
+                    {!showAlternativeBooking ? (
+                      <>
+                        {/* الحجز العادي */}
+                        <div className="bg-muted/50 p-4 rounded-lg">
+                          <h4 className="font-medium mb-2">الأوقات المتاحة</h4>
+                          <div className="text-sm text-muted-foreground mb-3">
+                            <p>الفترة: {timeSlotLabels[profileData.timeSlot as keyof typeof timeSlotLabels]}</p>
+                          </div>
+                        </div>
+
+                        {/* اختيار اليوم */}
+                        <div className="space-y-2">
+                          <Label>اختر اليوم</Label>
+                          <Select value={selectedDay} onValueChange={setSelectedDay}>
+                            <SelectTrigger>
+                              <SelectValue placeholder="اختر يوم من الأيام المتاحة" />
+                            </SelectTrigger>
+                            <SelectContent className="bg-white">
+                              {profileData.availableDays.map((day) => (
+                                <SelectItem key={day} value={day}>
+                                  {dayLabels[day as keyof typeof dayLabels]}
+                                </SelectItem>
+                              ))}
+                            </SelectContent>
+                          </Select>
+                        </div>
+
+                        {/* اختيار الوقت */}
+                        <div className="space-y-2">
+                          <Label>اختر الوقت</Label>
+                          <Select value={selectedTime} onValueChange={setSelectedTime}>
+                            <SelectTrigger>
+                              <SelectValue placeholder="اختر وقت محدد" />
+                            </SelectTrigger>
+                            <SelectContent className="bg-white">
+                              {getCurrentTimeSlots().map((time) => (
+                                <SelectItem key={time} value={time}>
+                                  {time}
+                                </SelectItem>
+                              ))}
+                            </SelectContent>
+                          </Select>
+                        </div>
+
+                        {/* رابط اقتراح موعد مختلف */}
+                        <div className="text-center">
                           <Button
-                            variant="outline"
-                            className={cn(
-                              "w-full justify-start text-right font-normal",
-                              !selectedDate && "text-muted-foreground"
-                            )}
+                            type="button"
+                            variant="link"
+                            onClick={() => setShowAlternativeBooking(true)}
+                            className="text-primary"
                           >
-                            <CalendarIcon className="ml-2 h-4 w-4" />
-                            {selectedDate ? (
-                              format(selectedDate, "PPP", { locale: ar })
-                            ) : (
-                              <span>اختر تاريخ</span>
-                            )}
+                            أو اقترح موعد مختلف
                           </Button>
-                        </PopoverTrigger>
-                        <PopoverContent className="w-auto p-0" align="start">
-                          <Calendar
-                            mode="single"
-                            selected={selectedDate}
-                            onSelect={setSelectedDate}
-                            disabled={(date) => date < new Date()}
-                            initialFocus
-                            className="pointer-events-auto"
-                          />
-                        </PopoverContent>
-                      </Popover>
-                    </div>
+                        </div>
+                      </>
+                    ) : (
+                      <>
+                        {/* اقتراح موعد مختلف */}
+                        <div className="bg-blue-50 border border-blue-200 p-4 rounded-lg">
+                          <h4 className="font-medium text-blue-900 mb-2">اقتراح موعد مختلف</h4>
+                          <p className="text-sm text-blue-700">
+                            اقترح يوم وفترة مناسبة لك، وسيتم مراجعة طلبك والرد عليك
+                          </p>
+                        </div>
 
-                    {/* اختيار الوقت */}
-                    <div className="space-y-2">
-                      <Label>الوقت</Label>
-                      <Select value={selectedTime} onValueChange={setSelectedTime}>
-                        <SelectTrigger>
-                          <SelectValue placeholder="اختر وقت" />
-                        </SelectTrigger>
-                        <SelectContent className="bg-white">
-                          {availableTimeSlots.map((time) => (
-                            <SelectItem key={time} value={time}>
-                              {time}
-                            </SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
-                    </div>
+                        {/* اختيار يوم مختلف */}
+                        <div className="space-y-2">
+                          <Label>اليوم المقترح</Label>
+                          <Select value={alternativeDay} onValueChange={setAlternativeDay}>
+                            <SelectTrigger>
+                              <SelectValue placeholder="اختر يوم" />
+                            </SelectTrigger>
+                            <SelectContent className="bg-white">
+                              {Object.entries(dayLabels).map(([value, label]) => (
+                                <SelectItem key={value} value={value}>
+                                  {label}
+                                </SelectItem>
+                              ))}
+                            </SelectContent>
+                          </Select>
+                        </div>
 
-                    {/* بيانات الحجز */}
-                    <div className="space-y-4">
+                        {/* اختيار فترة مختلفة */}
+                        <div className="space-y-2">
+                          <Label>الفترة المقترحة</Label>
+                          <Select value={alternativeTimeSlot} onValueChange={setAlternativeTimeSlot}>
+                            <SelectTrigger>
+                              <SelectValue placeholder="اختر فترة" />
+                            </SelectTrigger>
+                            <SelectContent className="bg-white">
+                              {Object.entries(timeSlotLabels).map(([value, label]) => (
+                                <SelectItem key={value} value={value}>
+                                  {label}
+                                </SelectItem>
+                              ))}
+                            </SelectContent>
+                          </Select>
+                        </div>
+
+                        {/* رابط العودة للحجز العادي */}
+                        <div className="text-center">
+                          <Button
+                            type="button"
+                            variant="link"
+                            onClick={() => setShowAlternativeBooking(false)}
+                            className="text-muted-foreground"
+                          >
+                            العودة للأوقات المتاحة
+                          </Button>
+                        </div>
+                      </>
+                    )}
+
+                    {/* بيانات العميل */}
+                    <div className="border-t pt-4 space-y-4">
+                      <h4 className="font-medium">بياناتك</h4>
+                      
                       <div className="space-y-2">
-                        <Label htmlFor="name">الاسم</Label>
+                        <Label htmlFor="name">الاسم الكامل *</Label>
                         <Input
                           id="name"
                           value={bookingForm.name}
                           onChange={(e) => setBookingForm(prev => ({ ...prev, name: e.target.value }))}
-                          placeholder="اكتب اسمك"
+                          placeholder="اكتب اسمك الكامل"
                           className="text-right"
+                          required
                         />
                       </div>
+                      
                       <div className="space-y-2">
-                        <Label htmlFor="email">البريد الإلكتروني</Label>
+                        <Label htmlFor="email">البريد الإلكتروني *</Label>
                         <Input
                           id="email"
                           type="email"
@@ -223,15 +319,36 @@ const UserProfile = () => {
                           onChange={(e) => setBookingForm(prev => ({ ...prev, email: e.target.value }))}
                           placeholder="example@email.com"
                           className="text-left"
+                          required
                         />
                       </div>
+                      
                       <div className="space-y-2">
-                        <Label htmlFor="message">رسالة (اختياري)</Label>
+                        <Label htmlFor="contact">وسيلة التواصل المفضلة (اختياري)</Label>
+                        <Select 
+                          value={bookingForm.preferredContact} 
+                          onValueChange={(value) => setBookingForm(prev => ({ ...prev, preferredContact: value }))}
+                        >
+                          <SelectTrigger>
+                            <SelectValue placeholder="اختر وسيلة التواصل" />
+                          </SelectTrigger>
+                          <SelectContent className="bg-white">
+                            {contactMethods.map((method) => (
+                              <SelectItem key={method.value} value={method.value}>
+                                {method.label}
+                              </SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                      </div>
+                      
+                      <div className="space-y-2">
+                        <Label htmlFor="notes">ملاحظة إضافية (اختياري)</Label>
                         <Textarea
-                          id="message"
-                          value={bookingForm.message}
-                          onChange={(e) => setBookingForm(prev => ({ ...prev, message: e.target.value }))}
-                          placeholder="اكتب رسالتك هنا..."
+                          id="notes"
+                          value={bookingForm.notes}
+                          onChange={(e) => setBookingForm(prev => ({ ...prev, notes: e.target.value }))}
+                          placeholder="أي معلومات إضافية تود مشاركتها..."
                           className="text-right resize-none"
                           rows={3}
                         />
@@ -242,9 +359,13 @@ const UserProfile = () => {
                       onClick={handleBooking} 
                       className="w-full" 
                       variant="hero"
-                      disabled={!selectedDate || !selectedTime || !bookingForm.name || !bookingForm.email}
+                      disabled={
+                        !bookingForm.name || 
+                        !bookingForm.email || 
+                        (!showAlternativeBooking ? (!selectedDay || !selectedTime) : (!alternativeDay || !alternativeTimeSlot))
+                      }
                     >
-                      إرسال طلب الحجز
+                      {showAlternativeBooking ? "إرسال اقتراح الموعد" : "إرسال طلب الحجز"}
                     </Button>
                   </div>
                 </DialogContent>

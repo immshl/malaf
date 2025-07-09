@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -10,17 +10,20 @@ const SignIn = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const navigate = useNavigate();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     
     // مؤقت - سيتم ربطه بـ Supabase لاحقاً
     console.log("تسجيل دخول:", { email, password });
-    alert("سيتم إضافة وظيفة تسجيل الدخول عند ربط قاعدة البيانات");
+    
+    // الانتقال لصفحة الملف الشخصي (محاكاة نجاح تسجيل الدخول)
+    navigate("/profile/ahmed-salem");
   };
 
   return (
-    <div className="min-h-screen bg-gradient-hero opacity-5 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-muted/30 flex items-center justify-center p-4">
       <div className="w-full max-w-md">
         {/* شعار الموقع */}
         <div className="text-center mb-8">

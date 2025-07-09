@@ -50,8 +50,8 @@ const Index = () => {
                 <Button size="lg" variant="hero" className="text-lg px-8 py-4" asChild>
                   <Link to="/signup">أنشئ ملفك المهني</Link>
                 </Button>
-                <Button size="lg" variant="outline" className="text-lg px-8 py-4">
-                  شاهد نموذج
+                <Button size="lg" variant="outline" className="text-lg px-8 py-4" asChild>
+                  <Link to="/example">شاهد نموذج</Link>
                 </Button>
               </div>
               <p className="text-sm text-muted-foreground mt-4">

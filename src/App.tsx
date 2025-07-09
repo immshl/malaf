@@ -10,6 +10,7 @@ import SignIn from "./pages/SignIn";
 import EmailVerification from "./pages/EmailVerification";
 import CreateProfile from "./pages/CreateProfile";
 import UserProfile from "./pages/UserProfile";
+import ExampleProfile from "./pages/ExampleProfile";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -26,6 +27,7 @@ const App = () => (
           <Route path="/signin" element={<SignIn />} />
           <Route path="/verify-email" element={<EmailVerification />} />
           <Route path="/create-profile" element={<CreateProfile />} />
+          <Route path="/example" element={<ExampleProfile />} />
           <Route path="/profile/:username" element={<UserProfile />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />

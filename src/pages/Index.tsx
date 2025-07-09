@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { ArrowLeft, Users, Calendar, Link2, Star, Zap, Shield, Smartphone } from "lucide-react";
+import { Link } from "react-router-dom";
 import heroImage from "@/assets/hero-image.jpg";
 import profileMockup from "@/assets/profile-mockup.jpg";
 
@@ -22,8 +23,12 @@ const Index = () => {
             <a href="#pricing" className="text-muted-foreground hover:text-foreground transition-smooth">الأسعار</a>
           </nav>
           <div className="flex items-center space-x-4">
-            <Button variant="ghost">تسجيل الدخول</Button>
-            <Button variant="hero">إنشاء ملف مجاني</Button>
+            <Button variant="ghost" asChild>
+              <Link to="/signin">تسجيل الدخول</Link>
+            </Button>
+            <Button variant="hero" asChild>
+              <Link to="/signup">إنشاء ملف مجاني</Link>
+            </Button>
           </div>
         </div>
       </header>
@@ -43,8 +48,8 @@ const Index = () => {
                 اسمح لعملائك بحجز اجتماع معك بسهولة وسرعة.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-end">
-                <Button size="lg" variant="hero" className="text-lg px-8 py-4">
-                  أنشئ ملفك المهني
+                <Button size="lg" variant="hero" className="text-lg px-8 py-4" asChild>
+                  <Link to="/signup">أنشئ ملفك المهني</Link>
                 </Button>
                 <Button size="lg" variant="outline" className="text-lg px-8 py-4">
                   شاهد نموذج
@@ -164,8 +169,8 @@ const Index = () => {
                   </div>
                 ))}
               </div>
-              <Button variant="professional" size="lg" className="px-8">
-                ابدأ إنشاء ملفك
+              <Button variant="professional" size="lg" className="px-8" asChild>
+                <Link to="/signup">ابدأ إنشاء ملفك</Link>
               </Button>
             </div>
           </div>
@@ -227,8 +232,8 @@ const Index = () => {
             انضم إلى آلاف المحترفين المستقلين الذين يستخدمون ملف لتنمية أعمالهم
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button size="lg" variant="hero" className="text-lg px-12 py-4">
-              أنشئ ملفك الآن
+            <Button size="lg" variant="hero" className="text-lg px-12 py-4" asChild>
+              <Link to="/signup">أنشئ ملفك الآن</Link>
             </Button>
             <Button size="lg" variant="outline" className="text-lg px-12 py-4">
               تواصل معنا

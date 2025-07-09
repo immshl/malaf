@@ -1,13 +1,14 @@
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { ArrowLeft, Users, Calendar, Link2, Star, Zap, Shield, Smartphone } from "lucide-react";
+import { ArrowLeft, Users, Calendar, Link2, Star, Zap, Shield, Smartphone, Menu, X } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useLanguage } from "@/hooks/useLanguage";
 
 const Index = () => {
   const { t } = useLanguage();
   const [showWelcome, setShowWelcome] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     // Show welcome animation only on first visit
@@ -23,12 +24,62 @@ const Index = () => {
     }
   }, []);
 
+  const toggleMobileMenu = () => {
+    setIsMobileMenuOpen(!isMobileMenuOpen);
+  };
+
+  const closeMobileMenu = () => {
+    setIsMobileMenuOpen(false);
+  };
+
   const handleContactUs = () => {
     window.open('mailto:info@malaf.me?subject=استفسار عن منصة ملف', '_blank');
   };
 
+  // Close mobile menu when clicking outside
+  useEffect(() => {
+    const handleOutsideClick = (event: MouseEvent) => {
+      const target = event.target as HTMLElement;
+      if (isMobileMenuOpen && !target.closest('.mobile-menu-container')) {
+        closeMobileMenu();
+      }
+    };
+
+    if (isMobileMenuOpen) {
+      document.addEventListener('click', handleOutsideClick);
+    }
+
+    return () => {
+      document.removeEventListener('click', handleOutsideClick);
+    };
+  }, [isMobileMenuOpen]);
+
+  // Add smooth scrolling for anchor links
+  useEffect(() => {
+    const style = document.createElement('style');
+    style.textContent = `
+      html {
+        scroll-behavior: smooth;
+      }
+    `;
+    document.head.appendChild(style);
+    
+    return () => {
+      document.head.removeChild(style);
+    };
+  }, []);
+
   return (
     <div className="min-h-screen bg-background relative">
+      {/* Mobile Menu Overlay */}
+      {isMobileMenuOpen && (
+        <div 
+          className="fixed inset-0 bg-black/20 backdrop-blur-sm z-30 md:hidden"
+          onClick={closeMobileMenu}
+        />
+      )}
+      
+      <div className="relative z-40">
       {/* Welcome Animation */}
       {showWelcome && (
         <div className="fixed inset-0 z-50 bg-gradient-primary flex items-center justify-center">
@@ -90,11 +141,70 @@ const Index = () => {
               </Button>
             </div>
 
-            {/* Mobile Menu */}
+            {/* Mobile Menu Button */}
             <div className="md:hidden">
-              <Button variant="outline" size="sm" asChild>
-                <Link to="/signup">أنشئ ملفك</Link>
+              <Button 
+                variant="ghost" 
+                size="sm"
+                onClick={toggleMobileMenu}
+                className="p-2 hover:bg-muted/50 transition-smooth"
+              >
+                {isMobileMenuOpen ? (
+                  <X className="w-6 h-6 text-foreground" />
+                ) : (
+                  <Menu className="w-6 h-6 text-foreground" />
+                )}
               </Button>
+            </div>
+          </div>
+        </div>
+
+        {/* Mobile Dropdown Menu */}
+        <div className={`mobile-menu-container md:hidden transition-all duration-500 ease-in-out ${
+          isMobileMenuOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
+        }`}>
+          <div className="px-4 py-6 bg-gradient-to-b from-background/95 to-background/90 backdrop-blur-sm border-t border-border/50 shadow-lg">
+            <div className="flex flex-col space-y-4">
+              <a 
+                href="#features" 
+                className="text-muted-foreground hover:text-foreground transition-all duration-300 py-3 px-4 text-lg font-medium rounded-lg hover:bg-muted/50 hover:transform hover:scale-105 active:scale-95"
+                onClick={closeMobileMenu}
+              >
+                <div className="flex items-center space-x-3 space-x-reverse">
+                  <div className="w-2 h-2 bg-purple-500 rounded-full"></div>
+                  <span>المميزات</span>
+                </div>
+              </a>
+              <a 
+                href="#how-it-works" 
+                className="text-muted-foreground hover:text-foreground transition-all duration-300 py-3 px-4 text-lg font-medium rounded-lg hover:bg-muted/50 hover:transform hover:scale-105 active:scale-95"
+                onClick={closeMobileMenu}
+              >
+                <div className="flex items-center space-x-3 space-x-reverse">
+                  <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+                  <span>كيف يعمل</span>
+                </div>
+              </a>
+              <Link 
+                to="/signin" 
+                className="text-muted-foreground hover:text-foreground transition-all duration-300 py-3 px-4 text-lg font-medium rounded-lg hover:bg-muted/50 hover:transform hover:scale-105 active:scale-95"
+                onClick={closeMobileMenu}
+              >
+                <div className="flex items-center space-x-3 space-x-reverse">
+                  <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                  <span>تسجيل الدخول</span>
+                </div>
+              </Link>
+              <div className="pt-4 border-t border-border/20">
+                <Button 
+                  variant="default" 
+                  size="lg" 
+                  className="w-full text-lg py-4 rounded-full bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 transform hover:scale-105 active:scale-95 transition-all duration-300 shadow-lg"
+                  asChild
+                >
+                  <Link to="/signup" onClick={closeMobileMenu}>أنشئ ملفك</Link>
+                </Button>
+              </div>
             </div>
           </div>
         </div>
@@ -118,7 +228,7 @@ const Index = () => {
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button 
                 size="lg" 
-                className="bg-gray-900 hover:bg-gray-800 text-white text-lg px-8 py-4 rounded-full"
+                className="bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white text-lg px-8 py-4 rounded-full transform hover:scale-105 active:scale-95 transition-all duration-300 shadow-lg hover:shadow-xl"
                 asChild
               >
                 <Link to="/signup">
@@ -128,7 +238,7 @@ const Index = () => {
               <Button 
                 size="lg" 
                 variant="outline" 
-                className="text-lg px-8 py-4 rounded-full"
+                className="text-lg px-8 py-4 rounded-full border-2 border-purple-500 text-purple-600 hover:bg-purple-500 hover:text-white transform hover:scale-105 active:scale-95 transition-all duration-300 shadow-md hover:shadow-lg"
                 asChild
               >
                 <Link to="/example">
@@ -262,7 +372,7 @@ const Index = () => {
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button 
               size="lg" 
-              className="bg-gray-900 hover:bg-gray-800 text-white text-lg px-12 py-4 rounded-full" 
+              className="bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white text-lg px-12 py-4 rounded-full transform hover:scale-105 active:scale-95 transition-all duration-300 shadow-lg hover:shadow-xl" 
               asChild
             >
               <Link to="/signup">أنشئ ملفك الآن</Link>
@@ -270,7 +380,7 @@ const Index = () => {
             <Button 
               size="lg" 
               variant="outline" 
-              className="text-lg px-12 py-4 rounded-full" 
+              className="text-lg px-12 py-4 rounded-full border-2 border-purple-500 text-purple-600 hover:bg-purple-500 hover:text-white transform hover:scale-105 active:scale-95 transition-all duration-300 shadow-md hover:shadow-lg" 
               onClick={handleContactUs}
             >
               {t('contactUs')}
@@ -278,6 +388,7 @@ const Index = () => {
           </div>
         </div>
       </section>
+      </div>
     </div>
   );
 };

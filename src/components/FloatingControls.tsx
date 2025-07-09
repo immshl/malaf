@@ -1,14 +1,14 @@
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Globe, Moon, Sun } from "lucide-react";
+import { useLanguage, type Language } from "@/hooks/useLanguage";
 
 type Theme = "light" | "dark";
-type Language = "ar" | "en";
 
 const FloatingControls = () => {
   const [theme, setTheme] = useState<Theme>("light");
-  const [language, setLanguage] = useState<Language>("ar");
   const [isTransitioning, setIsTransitioning] = useState(false);
+  const { language, setLanguage } = useLanguage();
 
   useEffect(() => {
     // Apply theme to document
@@ -19,16 +19,6 @@ const FloatingControls = () => {
     }
   }, [theme]);
 
-  useEffect(() => {
-    // Apply language direction
-    if (language === "ar") {
-      document.documentElement.dir = "rtl";
-      document.documentElement.lang = "ar";
-    } else {
-      document.documentElement.dir = "ltr";
-      document.documentElement.lang = "en";
-    }
-  }, [language]);
 
   const handleTransition = (callback: () => void) => {
     setIsTransitioning(true);
@@ -61,7 +51,7 @@ const FloatingControls = () => {
 
   const toggleLanguage = () => {
     handleTransition(() => {
-      setLanguage(prev => prev === "ar" ? "en" : "ar");
+      setLanguage(language === "ar" ? "en" : "ar");
     });
   };
 

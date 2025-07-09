@@ -1,37 +1,71 @@
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { ArrowLeft, Users, Calendar, Link2, Star, Zap, Shield, Smartphone } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useLanguage } from "@/hooks/useLanguage";
 import heroImage from "@/assets/hero-image.jpg";
 import profileMockup from "@/assets/profile-mockup.jpg";
 
 const Index = () => {
+  const { t } = useLanguage();
+  const [showWelcome, setShowWelcome] = useState(false);
+
+  useEffect(() => {
+    // Show welcome animation only on first visit
+    const hasVisited = localStorage.getItem('hasVisited');
+    if (!hasVisited) {
+      setShowWelcome(true);
+      localStorage.setItem('hasVisited', 'true');
+      
+      // Hide welcome animation after 2 seconds
+      setTimeout(() => {
+        setShowWelcome(false);
+      }, 2000);
+    }
+  }, []);
+
+  const handleContactUs = () => {
+    window.open('mailto:info@malaf.me?subject=استفسار عن منصة ملف', '_blank');
+  };
+
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background relative">
+      {/* Welcome Animation */}
+      {showWelcome && (
+        <div className="fixed inset-0 z-50 bg-gradient-primary flex items-center justify-center">
+          <div className="text-center animate-fade-in">
+            <div className="w-24 h-24 bg-white rounded-full flex items-center justify-center mb-6 mx-auto animate-scale-in">
+              <span className="text-3xl font-bold text-primary">ملف</span>
+            </div>
+            <h1 className="text-4xl font-bold text-white mb-4">مرحباً بك في ملف</h1>
+            <p className="text-xl text-white/90">منصتك لبناء حضور رقمي متميز</p>
+          </div>
+        </div>
+      )}
       {/* Hero Section */}
       <section className="relative py-20 md:py-32 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-hero opacity-10"></div>
         <div className="container mx-auto px-4 relative z-10">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div className="text-center lg:text-right">
-              <p className="text-lg text-muted-foreground mb-4">لتمكين العمل الحر</p>
+              <p className="text-lg text-muted-foreground mb-4">{t('heroSubtitle')}</p>
               <h1 className="text-4xl md:text-6xl font-bold text-foreground mb-6 leading-tight">
-                <span className="text-transparent bg-clip-text bg-gradient-primary">ملف مهني خاص بك</span>
+                <span className="text-transparent bg-clip-text bg-gradient-primary">{t('heroTitle')}</span>
               </h1>
               <p className="text-xl text-muted-foreground mb-8 leading-relaxed">
-                أنشئ صفحة تعريفية احترافية تجمع كل روابطك وخدماتك في مكان واحد. 
-                اسمح لعملائك بحجز اجتماع معك بسهولة وسرعة.
+                {t('heroDescription')}
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-end">
                 <Button size="lg" variant="hero" className="text-lg px-8 py-4" asChild>
-                  <Link to="/signup">أنشئ ملفك المهني</Link>
+                  <Link to="/signup">{t('createProfile')}</Link>
                 </Button>
-                <Button size="lg" variant="outline" className="text-lg px-8 py-4">
-                  شاهد نموذج
+                <Button size="lg" variant="outline" className="text-lg px-8 py-4" asChild>
+                  <Link to="/example">{t('viewExample')}</Link>
                 </Button>
               </div>
               <p className="text-sm text-muted-foreground mt-4">
-                مجاني تماماً • لا حاجة لبطاقة ائتمانية
+                {t('freePlatform')}
               </p>
             </div>
             <div className="relative">
@@ -54,10 +88,10 @@ const Index = () => {
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-              كل ما تحتاجه لبناء حضور رقمي فعّال
+              {t('featuresTitle')}
             </h2>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-              منصة شاملة تمكنك من إنشاء حضور رقمي قوي وجذب المزيد من العملاء
+              {t('featuresSubtitle')}
             </p>
           </div>
           
@@ -65,18 +99,18 @@ const Index = () => {
             {[
               {
                 icon: <Users className="w-8 h-8 text-primary" />,
-                title: "واجهة احترافية منظمة",
-                description: "قوالب أنيقة ومتجاوبة تعكس مهنيتك وخبرتك"
+                title: t('feature1Title'),
+                description: t('feature1Desc')
               },
               {
                 icon: <Calendar className="w-8 h-8 text-primary" />,
-                title: "نظام حجز ذكي",
-                description: "اسمح لعملائك بحجز اجتماع معك مباشرة من ملفك الشخصي"
+                title: t('feature2Title'),
+                description: t('feature2Desc')
               },
               {
                 icon: <Link2 className="w-8 h-8 text-primary" />,
-                title: "رابط رقمي مخصص",
-                description: "احصل على رابط شخصي مميز يمكنك مشاركته بسهولة"
+                title: t('feature3Title'),
+                description: t('feature3Desc')
               }
             ].map((feature, index) => (
               <Card key={index} className="border-0 shadow-soft hover:shadow-medium transition-smooth bg-white">
@@ -100,10 +134,10 @@ const Index = () => {
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-              كيف يعمل ملف؟
+              {t('howItWorksTitle')}
             </h2>
             <p className="text-xl text-muted-foreground">
-              ثلاث خطوات بسيطة لإنشاء ملفك المهني
+              {t('howItWorksSubtitle')}
             </p>
           </div>
           
@@ -111,18 +145,18 @@ const Index = () => {
             {[
               {
                 step: "1",
-                title: "أنشئ ملفك",
-                description: "سجل بياناتك الأساسية وأنشئ ملفك المهني في دقائق معدودة"
+                title: t('step1Title'),
+                description: t('step1Desc')
               },
               {
                 step: "2", 
-                title: "شارك ملفك",
-                description: "احصل على رابطك الخاص وشاركه مع عملائك وجمهورك"
+                title: t('step2Title'),
+                description: t('step2Desc')
               },
               {
                 step: "3",
-                title: "استقبل الطلبات",
-                description: "ابدأ في استقبال طلبات العمل والاجتماعات من عملائك الجدد"
+                title: t('step3Title'),
+                description: t('step3Desc')
               }
             ].map((step, index) => (
               <div key={index} className="text-center">
@@ -144,17 +178,17 @@ const Index = () => {
         <div className="absolute inset-0 bg-gradient-hero opacity-5"></div>
         <div className="container mx-auto px-4 text-center relative z-10">
           <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6">
-            ابدأ ملفك المميز
+            {t('ctaTitle')}
           </h2>
           <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
-            انضم إلى آلاف المحترفين المستقلين الذين يستخدمون ملف لتنمية أعمالهم
+            {t('ctaSubtitle')}
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button size="lg" variant="hero" className="text-lg px-12 py-4" asChild>
-              <Link to="/signup">أنشئ ملفك الآن</Link>
+              <Link to="/signup">{t('startNow')}</Link>
             </Button>
-            <Button size="lg" variant="outline" className="text-lg px-12 py-4">
-              تواصل معنا
+            <Button size="lg" variant="outline" className="text-lg px-12 py-4" onClick={handleContactUs}>
+              {t('contactUs')}
             </Button>
           </div>
         </div>

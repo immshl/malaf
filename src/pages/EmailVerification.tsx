@@ -122,7 +122,8 @@ const EmailVerification = () => {
     setIsResending(true);
     
     try {
-      const { error } = await supabase.auth.resend({
+      // First try using Supabase resend
+      const { error: supabaseError } = await supabase.auth.resend({
         type: 'signup',
         email: user.email,
         options: {
@@ -130,13 +131,22 @@ const EmailVerification = () => {
         }
       });
 
-      if (error) {
-        toast({
-          variant: "destructive",
-          title: "خطأ في الإرسال",
-          description: error.message
+      // If Supabase resend fails, try our custom edge function
+      if (supabaseError) {
+        console.log('Supabase resend failed, trying custom function:', supabaseError.message);
+        
+        const { error: functionError } = await supabase.functions.invoke('send-email', {
+          body: {
+            email: user.email,
+            token: Math.floor(100000 + Math.random() * 900000).toString(),
+            email_action_type: 'signup',
+            redirect_to: `${window.location.origin}/verify-email`
+          }
         });
-        return;
+
+        if (functionError) {
+          throw functionError;
+        }
       }
 
       toast({

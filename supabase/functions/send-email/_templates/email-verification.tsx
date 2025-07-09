@@ -51,7 +51,7 @@ export const EmailVerificationTemplate = ({
           </Text>
           
           <div style={codeContainer}>
-            <Text style={code}>{token.slice(0, 4)}</Text>
+            <Text style={code}>{token.slice(0, 6)}</Text>
           </div>
 
           <Text style={noteText}>

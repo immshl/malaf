@@ -59,11 +59,11 @@ const EmailVerification = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    if (code.length !== 6) {
+    if (code.length !== 4) {
       toast({
         variant: "destructive",
         title: "كود غير مكتمل",
-        description: "يرجى إدخال كود التحقق المكون من 6 أرقام"
+        description: "يرجى إدخال كود التحقق المكون من 4 أرقام"
       });
       return;
     }
@@ -214,18 +214,18 @@ const EmailVerification = () => {
                   <div className="bg-gradient-to-r from-purple-50 to-blue-50 dark:from-purple-900/20 dark:to-blue-900/20 p-6 rounded-2xl mb-4">
                     <div style={{ direction: 'ltr' }}>
                       <InputOTP
-                        maxLength={6}
+                        maxLength={4}
                         value={code}
                         onChange={(value) => setCode(value)}
                         className="justify-center"
                         style={{ direction: 'ltr' }}
                       >
-                        <InputOTPGroup className="gap-3" style={{ direction: 'ltr' }}>
-                          {[...Array(6)].map((_, index) => (
+                        <InputOTPGroup className="gap-4" style={{ direction: 'ltr' }}>
+                          {[...Array(4)].map((_, index) => (
                             <InputOTPSlot 
                               key={index}
                               index={index} 
-                              className="w-12 h-12 text-lg font-bold border-2 rounded-xl transition-all duration-200 hover:border-purple-400 focus:border-purple-500 focus:shadow-lg focus:shadow-purple-200 dark:focus:shadow-purple-800/50" 
+                              className="w-14 h-14 text-xl font-bold border-2 rounded-xl transition-all duration-200 hover:border-purple-400 focus:border-purple-500 focus:shadow-lg focus:shadow-purple-200 dark:focus:shadow-purple-800/50" 
                               style={{ direction: 'ltr' }}
                             />
                           ))}
@@ -236,7 +236,7 @@ const EmailVerification = () => {
                   
                   <p className="text-sm text-muted-foreground flex items-center justify-center gap-2">
                     <Mail className="w-4 h-4" />
-                    أدخل الكود المكون من 6 أرقام
+                    أدخل الكود المكون من 4 أرقام
                   </p>
                 </div>
 
@@ -246,7 +246,7 @@ const EmailVerification = () => {
                   className="w-full" 
                   variant="hero"
                   size="lg"
-                  disabled={isVerifying || code.length !== 6}
+                  disabled={isVerifying || code.length !== 4}
                 >
                   {isVerifying ? (
                     <>

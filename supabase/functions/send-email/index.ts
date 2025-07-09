@@ -60,9 +60,9 @@ Deno.serve(async (req) => {
 
     // Send email using Resend
     const { error } = await resend.emails.send({
-      from: 'ملف - Malaf <verification@malaf.me>',
+      from: 'ملف - Malaf <noreply@malaf.me>',
       to: [user.email],
-      subject: 'تحقق من بريدك الإلكتروني - ملف',
+      subject: 'كود التحقق من ملف - منصة الفريلانسرز',
       html,
     })
 

@@ -70,32 +70,38 @@ const EmailVerification = () => {
               <div className="space-y-6">
                 <div className="text-center">
                   <div className="bg-gradient-to-r from-purple-50 to-blue-50 dark:from-purple-900/20 dark:to-blue-900/20 p-6 rounded-2xl mb-4">
-                    <InputOTP
-                      maxLength={4}
-                      value={code}
-                      onChange={(value) => setCode(value)}
-                      className="justify-center"
-                      dir="ltr"
-                    >
-                      <InputOTPGroup className="gap-3">
-                        <InputOTPSlot 
-                          index={0} 
-                          className="w-14 h-14 text-xl font-bold border-2 rounded-xl transition-all duration-200 hover:border-purple-400 focus:border-purple-500 focus:shadow-lg focus:shadow-purple-200 dark:focus:shadow-purple-800/50" 
-                        />
-                        <InputOTPSlot 
-                          index={1} 
-                          className="w-14 h-14 text-xl font-bold border-2 rounded-xl transition-all duration-200 hover:border-purple-400 focus:border-purple-500 focus:shadow-lg focus:shadow-purple-200 dark:focus:shadow-purple-800/50" 
-                        />
-                        <InputOTPSlot 
-                          index={2} 
-                          className="w-14 h-14 text-xl font-bold border-2 rounded-xl transition-all duration-200 hover:border-purple-400 focus:border-purple-500 focus:shadow-lg focus:shadow-purple-200 dark:focus:shadow-purple-800/50" 
-                        />
-                        <InputOTPSlot 
-                          index={3} 
-                          className="w-14 h-14 text-xl font-bold border-2 rounded-xl transition-all duration-200 hover:border-purple-400 focus:border-purple-500 focus:shadow-lg focus:shadow-purple-200 dark:focus:shadow-purple-800/50" 
-                        />
-                      </InputOTPGroup>
-                    </InputOTP>
+                    <div style={{ direction: 'ltr' }}>
+                      <InputOTP
+                        maxLength={4}
+                        value={code}
+                        onChange={(value) => setCode(value)}
+                        className="justify-center"
+                        style={{ direction: 'ltr' }}
+                      >
+                        <InputOTPGroup className="gap-3" style={{ direction: 'ltr' }}>
+                          <InputOTPSlot 
+                            index={0} 
+                            className="w-14 h-14 text-xl font-bold border-2 rounded-xl transition-all duration-200 hover:border-purple-400 focus:border-purple-500 focus:shadow-lg focus:shadow-purple-200 dark:focus:shadow-purple-800/50" 
+                            style={{ direction: 'ltr' }}
+                          />
+                          <InputOTPSlot 
+                            index={1} 
+                            className="w-14 h-14 text-xl font-bold border-2 rounded-xl transition-all duration-200 hover:border-purple-400 focus:border-purple-500 focus:shadow-lg focus:shadow-purple-200 dark:focus:shadow-purple-800/50" 
+                            style={{ direction: 'ltr' }}
+                          />
+                          <InputOTPSlot 
+                            index={2} 
+                            className="w-14 h-14 text-xl font-bold border-2 rounded-xl transition-all duration-200 hover:border-purple-400 focus:border-purple-500 focus:shadow-lg focus:shadow-purple-200 dark:focus:shadow-purple-800/50" 
+                            style={{ direction: 'ltr' }}
+                          />
+                          <InputOTPSlot 
+                            index={3} 
+                            className="w-14 h-14 text-xl font-bold border-2 rounded-xl transition-all duration-200 hover:border-purple-400 focus:border-purple-500 focus:shadow-lg focus:shadow-purple-200 dark:focus:shadow-purple-800/50" 
+                            style={{ direction: 'ltr' }}
+                          />
+                        </InputOTPGroup>
+                      </InputOTP>
+                    </div>
                   </div>
                   
                   <p className="text-sm text-muted-foreground flex items-center justify-center gap-2">

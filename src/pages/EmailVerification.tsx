@@ -74,7 +74,7 @@ const EmailVerification = () => {
       const { error } = await supabase.auth.verifyOtp({
         email: user?.email || '',
         token: code,
-        type: 'signup'
+        type: 'email'
       });
 
       if (error) {

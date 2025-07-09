@@ -33,11 +33,18 @@ const Index = () => {
       {showWelcome && (
         <div className="fixed inset-0 z-50 bg-gradient-primary flex items-center justify-center">
           <div className="text-center animate-fade-in">
-            <div className="w-24 h-24 bg-white rounded-2xl flex items-center justify-center mb-6 mx-auto animate-scale-in p-3">
-              <div className="w-full h-full bg-gradient-to-br from-purple-600 to-blue-600 rounded-xl flex flex-col justify-center items-center space-y-1">
-                <div className="w-8 h-1.5 bg-white rounded-full"></div>
-                <div className="w-8 h-1.5 bg-white rounded-full"></div>
-                <div className="w-8 h-1.5 bg-white rounded-full"></div>
+            <div className="w-24 h-24 bg-white rounded-2xl flex items-center justify-center mb-6 mx-auto animate-scale-in p-2">
+              <div className="relative w-full h-full">
+                <div className="w-full h-full bg-gradient-to-br from-purple-600 to-blue-600 rounded-xl relative overflow-hidden">
+                  {/* Folder tab */}
+                  <div className="absolute top-0 right-0 w-8 h-3 bg-gradient-to-br from-purple-600 to-blue-600 rounded-br-lg"></div>
+                  {/* Lines */}
+                  <div className="absolute inset-0 flex flex-col justify-center items-center space-y-2">
+                    <div className="w-12 h-1 bg-white rounded-full"></div>
+                    <div className="w-12 h-1 bg-white rounded-full"></div>
+                    <div className="w-12 h-1 bg-white rounded-full"></div>
+                  </div>
+                </div>
               </div>
             </div>
             <h1 className="text-4xl font-bold text-white mb-4">مرحباً بك في ملف</h1>
@@ -52,10 +59,17 @@ const Index = () => {
           <div className="flex items-center justify-between h-16">
             {/* Logo */}
             <div className="flex items-center space-x-2 space-x-reverse">
-              <div className="w-10 h-10 bg-gradient-to-br from-purple-600 to-blue-600 rounded-lg flex flex-col justify-center items-center space-y-0.5 p-2">
-                <div className="w-5 h-0.5 bg-white rounded-full"></div>
-                <div className="w-5 h-0.5 bg-white rounded-full"></div>
-                <div className="w-5 h-0.5 bg-white rounded-full"></div>
+              <div className="w-10 h-10 relative">
+                <div className="w-full h-full bg-gradient-to-br from-purple-600 to-blue-600 rounded-lg relative overflow-hidden">
+                  {/* Folder tab */}
+                  <div className="absolute top-0 right-0 w-3 h-2 bg-gradient-to-br from-purple-600 to-blue-600 rounded-br-md"></div>
+                  {/* Lines */}
+                  <div className="absolute inset-0 flex flex-col justify-center items-center space-y-1">
+                    <div className="w-5 h-0.5 bg-white rounded-full"></div>
+                    <div className="w-5 h-0.5 bg-white rounded-full"></div>
+                    <div className="w-5 h-0.5 bg-white rounded-full"></div>
+                  </div>
+                </div>
               </div>
               <span className="font-bold text-xl text-foreground">Malaf</span>
             </div>

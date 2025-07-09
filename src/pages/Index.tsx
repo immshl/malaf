@@ -34,9 +34,9 @@ const Index = () => {
         <div className="container mx-auto px-4 relative z-10">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div className="text-center lg:text-right">
+              <p className="text-lg text-muted-foreground mb-4">لتمكين العمل الحر</p>
               <h1 className="text-4xl md:text-6xl font-bold text-foreground mb-6 leading-tight">
-                ملفك المهني
-                <span className="block text-transparent bg-clip-text bg-gradient-primary">في رابط واحد</span>
+                <span className="text-transparent bg-clip-text bg-gradient-primary">ملف مهني خاص بك</span>
               </h1>
               <p className="text-xl text-muted-foreground mb-8 leading-relaxed">
                 أنشئ صفحة تعريفية احترافية تجمع كل روابطك وخدماتك في مكان واحد. 
@@ -44,10 +44,10 @@ const Index = () => {
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-end">
                 <Button size="lg" variant="hero" className="text-lg px-8 py-4">
-                  ابدأ مجاناً الآن
+                  أنشئ ملفك المهني
                 </Button>
                 <Button size="lg" variant="outline" className="text-lg px-8 py-4">
-                  شاهد مثال
+                  شاهد نموذج
                 </Button>
               </div>
               <p className="text-sm text-muted-foreground mt-4">
@@ -74,29 +74,29 @@ const Index = () => {
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-              لماذا تختار ملف؟
+              كل ما تحتاجه لبناء حضور رقمي فعّال
             </h2>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-              كل ما تحتاجه لبناء حضور رقمي احترافي وجذب المزيد من العملاء
+              منصة شاملة تمكنك من إنشاء حضور رقمي قوي وجذب المزيد من العملاء
             </p>
           </div>
           
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {[
               {
-                icon: <Link2 className="w-8 h-8 text-primary" />,
-                title: "رابط واحد لكل شيء",
-                description: "اجمع كل روابطك المهنية في رابط واحد سهل المشاركة"
+                icon: <Users className="w-8 h-8 text-primary" />,
+                title: "واجهة احترافية منظمة",
+                description: "قوالب أنيقة ومتجاوبة تعكس مهنيتك وخبرتك"
               },
               {
                 icon: <Calendar className="w-8 h-8 text-primary" />,
-                title: "حجز الاجتماعات",
+                title: "نظام حجز ذكي",
                 description: "اسمح لعملائك بحجز اجتماع معك مباشرة من ملفك الشخصي"
               },
               {
-                icon: <Users className="w-8 h-8 text-primary" />,
-                title: "عرض احترافي",
-                description: "قوالب أنيقة ومتجاوبة تعكس مهنيتك وخبرتك"
+                icon: <Link2 className="w-8 h-8 text-primary" />,
+                title: "رابط رقمي مخصص",
+                description: "احصل على رابط شخصي مميز يمكنك مشاركته بسهولة"
               },
               {
                 icon: <Zap className="w-8 h-8 text-primary" />,
@@ -188,18 +188,18 @@ const Index = () => {
             {[
               {
                 step: "1",
-                title: "أنشئ حسابك",
-                description: "سجل بياناتك الأساسية وأنشئ حسابك في أقل من دقيقة واحدة"
+                title: "أنشئ ملفك",
+                description: "سجل بياناتك الأساسية وأنشئ ملفك المهني في دقائق معدودة"
               },
               {
                 step: "2", 
-                title: "خصص ملفك",
-                description: "أضف معلوماتك المهنية وخدماتك وروابطك بطريقة سهلة وسريعة"
+                title: "شارك ملفك",
+                description: "احصل على رابطك الخاص وشاركه مع عملائك وجمهورك"
               },
               {
                 step: "3",
-                title: "شارك رابطك",
-                description: "احصل على رابطك الخاص وشاركه مع عملائك لتبدأ في الحصول على طلبات"
+                title: "استقبل الطلبات",
+                description: "ابدأ في استقبال طلبات العمل والاجتماعات من عملائك الجدد"
               }
             ].map((step, index) => (
               <div key={index} className="text-center">
@@ -221,14 +221,14 @@ const Index = () => {
         <div className="absolute inset-0 bg-gradient-hero opacity-5"></div>
         <div className="container mx-auto px-4 text-center relative z-10">
           <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6">
-            جاهز لبناء ملفك المهني؟
+            ابدأ ملفك المميز
           </h2>
           <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
             انضم إلى آلاف المحترفين المستقلين الذين يستخدمون ملف لتنمية أعمالهم
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button size="lg" variant="hero" className="text-lg px-12 py-4">
-              ابدأ مجاناً الآن
+              أنشئ ملفك الآن
             </Button>
             <Button size="lg" variant="outline" className="text-lg px-12 py-4">
               تواصل معنا

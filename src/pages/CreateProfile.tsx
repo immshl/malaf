@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -9,8 +9,13 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { ArrowRight, Upload, User, Instagram, Twitter, Mail, Link as LinkIcon, Plus, X } from "lucide-react";
+import { useAuth } from "@/hooks/useAuth";
+import { supabase } from "@/integrations/supabase/client";
+import { toast } from "@/hooks/use-toast";
 
 const CreateProfile = () => {
+  const { user, loading } = useAuth();
+  const navigate = useNavigate();
   const [profileData, setProfileData] = useState({
     fullName: "",
     username: "",
@@ -27,31 +32,145 @@ const CreateProfile = () => {
     availableDays: [] as string[],
     timeSlot: ""
   });
-  const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  // Redirect if not logged in
+  useEffect(() => {
+    if (!loading && !user) {
+      navigate('/signin');
+    }
+  }, [user, loading, navigate]);
+
+  // Load user data from auth
+  useEffect(() => {
+    if (user) {
+      setProfileData(prev => ({
+        ...prev,
+        fullName: user.user_metadata?.full_name || "",
+        username: user.user_metadata?.username || "",
+        workEmail: user.email || ""
+      }));
+    }
+  }, [user]);
+
+  if (loading) {
+    return <div className="min-h-screen bg-muted/30 flex items-center justify-center">
+      <div className="animate-pulse text-muted-foreground">جاري التحميل...</div>
+    </div>;
+  }
+
+  if (!user) {
+    return null;
+  }
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
     // التحقق من البيانات المطلوبة
     if (!profileData.availableDays.length || !profileData.timeSlot) {
-      alert("يرجى تحديد الأيام المتاحة والفترة الزمنية للحجز");
+      toast({
+        variant: "destructive",
+        title: "بيانات ناقصة",
+        description: "يرجى تحديد الأيام المتاحة والفترة الزمنية للحجز"
+      });
       return;
     }
-    
-    // مؤقت - سيتم ربطه بـ Supabase لاحقاً
-    console.log("بيانات الملف:", profileData);
-    alert("تم إنشاء ملفك بنجاح!");
-    
-    // الانتقال إلى صفحة الملف الشخصي
-    navigate(`/profile/${profileData.username}`);
+
+    setIsLoading(true);
+
+    try {
+      // Filter out empty services and clients
+      const services = profileData.services.filter(service => service.trim() !== "");
+      const topClients = profileData.topClients.filter(client => client.trim() !== "");
+
+      // Create or update profile
+      const { error } = await supabase
+        .from('profiles')
+        .upsert({
+          user_id: user.id,
+          username: profileData.username,
+          full_name: profileData.fullName,
+          bio: profileData.bio,
+          profession: profileData.profession,
+          location: profileData.location || null,
+          contact_email: profileData.workEmail,
+          instagram_url: profileData.instagram || null,
+          twitter_url: profileData.twitter || null,
+          website: profileData.externalLink || null,
+          avatar_url: profileData.profileImage || null
+        });
+
+      if (error) {
+        console.error('Error creating profile:', error);
+        toast({
+          variant: "destructive",
+          title: "خطأ في إنشاء الملف",
+          description: error.message
+        });
+        return;
+      }
+
+      toast({
+        title: "تم إنشاء ملفك بنجاح!",
+        description: "يمكنك الآن مشاركة ملفك مع العملاء"
+      });
+      
+      // الانتقال إلى صفحة الملف الشخصي
+      navigate(`/profile/${profileData.username}`);
+      
+    } catch (error) {
+      console.error('Error:', error);
+      toast({
+        variant: "destructive",
+        title: "خطأ غير متوقع",
+        description: "حدث خطأ أثناء إنشاء الملف"
+      });
+    } finally {
+      setIsLoading(false);
+    }
   };
 
-  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
-    if (file) {
-      // مؤقت - سيتم رفعها إلى Supabase Storage لاحقاً
-      const imageUrl = URL.createObjectURL(file);
-      setProfileData(prev => ({ ...prev, profileImage: imageUrl }));
+    if (file && user) {
+      try {
+        // Upload to Supabase Storage
+        const fileExt = file.name.split('.').pop();
+        const fileName = `${user.id}/${Date.now()}.${fileExt}`;
+        
+        const { error: uploadError } = await supabase.storage
+          .from('avatars')
+          .upload(fileName, file);
+
+        if (uploadError) {
+          toast({
+            variant: "destructive",
+            title: "خطأ في رفع الصورة",
+            description: uploadError.message
+          });
+          return;
+        }
+
+        // Get public URL
+        const { data } = supabase.storage
+          .from('avatars')
+          .getPublicUrl(fileName);
+
+        setProfileData(prev => ({ ...prev, profileImage: data.publicUrl }));
+        
+        toast({
+          title: "تم رفع الصورة بنجاح",
+          description: "تم حفظ صورتك الشخصية"
+        });
+        
+      } catch (error) {
+        console.error('Error uploading image:', error);
+        toast({
+          variant: "destructive", 
+          title: "خطأ في رفع الصورة",
+          description: "حدث خطأ أثناء رفع الصورة"
+        });
+      }
     }
   };
 
@@ -493,14 +612,16 @@ const CreateProfile = () => {
                 className="flex-1" 
                 variant="hero"
                 size="lg"
+                disabled={isLoading}
               >
-                إنشاء الملف
+                {isLoading ? "جاري إنشاء الملف..." : "إنشاء الملف"}
                 <ArrowRight className="mr-2 h-5 w-5" />
               </Button>
               <Button 
                 type="button" 
                 variant="outline"
-                onClick={() => navigate("/signup")}
+                onClick={() => navigate("/")}
+                disabled={isLoading}
               >
                 العودة
               </Button>

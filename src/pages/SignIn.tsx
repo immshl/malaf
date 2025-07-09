@@ -5,21 +5,60 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Eye, EyeOff, ArrowRight } from "lucide-react";
+import { useAuth } from "@/hooks/useAuth";
+import { toast } from "@/hooks/use-toast";
 
 const SignIn = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
+  const { signIn, user } = useAuth();
+  const [formData, setFormData] = useState({
+    email: "",
+    password: ""
+  });
+  const [showPassword, setShowPassword] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  // Redirect if already logged in
+  if (user) {
+    navigate('/');
+    return null;
+  }
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    // مؤقت - سيتم ربطه بـ Supabase لاحقاً
-    console.log("تسجيل دخول:", { email, password });
-    
-    // الانتقال لصفحة الملف الشخصي (محاكاة نجاح تسجيل الدخول)
-    navigate("/profile/ahmed-salem");
+    setIsLoading(true);
+
+    try {
+      const { error } = await signIn(formData.email, formData.password);
+
+      if (error) {
+        toast({
+          variant: "destructive",
+          title: "خطأ في تسجيل الدخول",
+          description: error.message,
+        });
+        return;
+      }
+      
+      // Success toast
+      toast({
+        title: "تم تسجيل الدخول بنجاح",
+        description: "مرحباً بك مرة أخرى",
+      });
+
+      // Navigate to dashboard or home
+      navigate("/");
+      
+    } catch (error) {
+      toast({
+        variant: "destructive",
+        title: "خطأ في تسجيل الدخول",
+        description: "البريد الإلكتروني أو كلمة المرور غير صحيحة",
+      });
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -57,8 +96,8 @@ const SignIn = () => {
                 <Input
                   id="email"
                   type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
+                  value={formData.email}
+                  onChange={(e) => setFormData({...formData, email: e.target.value})}
                   placeholder="اكتب بريدك الإلكتروني"
                   required
                   className="text-right"
@@ -74,8 +113,8 @@ const SignIn = () => {
                   <Input
                     id="password"
                     type={showPassword ? "text" : "password"}
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
+                    value={formData.password}
+                    onChange={(e) => setFormData({...formData, password: e.target.value})}
                     placeholder="اكتب كلمة المرور"
                     required
                     className="text-right pl-10"
@@ -106,8 +145,9 @@ const SignIn = () => {
                 className="w-full" 
                 variant="hero"
                 size="lg"
+                disabled={isLoading}
               >
-                تسجيل الدخول
+                {isLoading ? "جاري تسجيل الدخول..." : "تسجيل الدخول"}
                 <ArrowRight className="mr-2 h-5 w-5" />
               </Button>
 

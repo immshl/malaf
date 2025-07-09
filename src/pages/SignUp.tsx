@@ -5,28 +5,76 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Eye, EyeOff, ArrowRight } from "lucide-react";
+import { useAuth } from "@/hooks/useAuth";
+import { toast } from "@/hooks/use-toast";
 
 const SignUp = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
+  const navigate = useNavigate();
+  const { signUp, user } = useAuth();
+  const [formData, setFormData] = useState({
+    username: "",
+    fullName: "",
+    email: "",
+    password: "",
+    confirmPassword: ""
+  });
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  // Redirect if already logged in
+  if (user) {
+    navigate('/');
+    return null;
+  }
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    if (password !== confirmPassword) {
-      alert("كلمتا المرور غير متطابقتان");
+    if (formData.password !== formData.confirmPassword) {
+      toast({
+        variant: "destructive",
+        title: "خطأ في كلمة المرور",
+        description: "كلمتا المرور غير متطابقتان",
+      });
       return;
     }
-    
-    // مؤقت - سيتم ربطه بـ Supabase لاحقاً
-    console.log("تسجيل حساب جديد:", { email, password });
-    
-    // الانتقال إلى صفحة التحقق
-    navigate("/verify-email");
+
+    setIsLoading(true);
+
+    try {
+      const { error } = await signUp(formData.email, formData.password, {
+        username: formData.username,
+        full_name: formData.fullName
+      });
+
+      if (error) {
+        toast({
+          variant: "destructive",
+          title: "خطأ في إنشاء الحساب",
+          description: error.message,
+        });
+        return;
+      }
+      
+      // Success toast
+      toast({
+        title: "تم إنشاء الحساب بنجاح",
+        description: "يرجى التحقق من بريدك الإلكتروني",
+      });
+
+      // Navigate to email verification
+      navigate("/verify-email");
+      
+    } catch (error) {
+      toast({
+        variant: "destructive",
+        title: "خطأ في إنشاء الحساب",
+        description: "حدث خطأ أثناء إنشاء الحساب",
+      });
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -56,6 +104,38 @@ const SignUp = () => {
           
           <CardContent>
             <form onSubmit={handleSubmit} className="space-y-6">
+              {/* اسم المستخدم */}
+              <div className="space-y-2">
+                <Label htmlFor="username" className="text-foreground font-medium">
+                  اسم المستخدم
+                </Label>
+                <Input
+                  id="username"
+                  type="text"
+                  value={formData.username}
+                  onChange={(e) => setFormData({...formData, username: e.target.value})}
+                  placeholder="اكتب اسم المستخدم"
+                  required
+                  className="text-right"
+                />
+              </div>
+
+              {/* الاسم الكامل */}
+              <div className="space-y-2">
+                <Label htmlFor="fullName" className="text-foreground font-medium">
+                  الاسم الكامل
+                </Label>
+                <Input
+                  id="fullName"
+                  type="text"
+                  value={formData.fullName}
+                  onChange={(e) => setFormData({...formData, fullName: e.target.value})}
+                  placeholder="اكتب اسمك الكامل"
+                  required
+                  className="text-right"
+                />
+              </div>
+
               {/* البريد الإلكتروني */}
               <div className="space-y-2">
                 <Label htmlFor="email" className="text-foreground font-medium">
@@ -64,8 +144,8 @@ const SignUp = () => {
                 <Input
                   id="email"
                   type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
+                  value={formData.email}
+                  onChange={(e) => setFormData({...formData, email: e.target.value})}
                   placeholder="اكتب بريدك الإلكتروني"
                   required
                   className="text-right"
@@ -81,8 +161,8 @@ const SignUp = () => {
                   <Input
                     id="password"
                     type={showPassword ? "text" : "password"}
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
+                    value={formData.password}
+                    onChange={(e) => setFormData({...formData, password: e.target.value})}
                     placeholder="اكتب كلمة المرور"
                     required
                     className="text-right pl-10"
@@ -95,31 +175,6 @@ const SignUp = () => {
                     {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
                   </button>
                 </div>
-                <div className="text-sm text-muted-foreground space-y-1">
-                  <p>متطلبات كلمة المرور:</p>
-                  <ul className="text-xs space-y-1 text-right">
-                    <li className="flex items-center justify-end space-x-2 space-x-reverse">
-                      <span>لا تقل عن 8 أحرف</span>
-                      <div className={`w-2 h-2 rounded-full ${password.length >= 8 ? 'bg-green-500' : 'bg-gray-300'}`}></div>
-                    </li>
-                    <li className="flex items-center justify-end space-x-2 space-x-reverse">
-                      <span>تحتوي على حرف كبير</span>
-                      <div className={`w-2 h-2 rounded-full ${/[A-Z]/.test(password) ? 'bg-green-500' : 'bg-gray-300'}`}></div>
-                    </li>
-                    <li className="flex items-center justify-end space-x-2 space-x-reverse">
-                      <span>تحتوي على حرف صغير</span>
-                      <div className={`w-2 h-2 rounded-full ${/[a-z]/.test(password) ? 'bg-green-500' : 'bg-gray-300'}`}></div>
-                    </li>
-                    <li className="flex items-center justify-end space-x-2 space-x-reverse">
-                      <span>تحتوي على رقم</span>
-                      <div className={`w-2 h-2 rounded-full ${/\d/.test(password) ? 'bg-green-500' : 'bg-gray-300'}`}></div>
-                    </li>
-                    <li className="flex items-center justify-end space-x-2 space-x-reverse">
-                      <span>تحتوي على رمز خاص</span>
-                      <div className={`w-2 h-2 rounded-full ${/[!@#$%^&*(),.?":{}|<>]/.test(password) ? 'bg-green-500' : 'bg-gray-300'}`}></div>
-                    </li>
-                  </ul>
-                </div>
               </div>
 
               {/* تأكيد كلمة المرور */}
@@ -131,8 +186,8 @@ const SignUp = () => {
                   <Input
                     id="confirmPassword"
                     type={showConfirmPassword ? "text" : "password"}
-                    value={confirmPassword}
-                    onChange={(e) => setConfirmPassword(e.target.value)}
+                    value={formData.confirmPassword}
+                    onChange={(e) => setFormData({...formData, confirmPassword: e.target.value})}
                     placeholder="أعد كتابة كلمة المرور"
                     required
                     className="text-right pl-10"
@@ -153,8 +208,9 @@ const SignUp = () => {
                 className="w-full" 
                 variant="hero"
                 size="lg"
+                disabled={isLoading}
               >
-                إنشاء حساب جديد
+                {isLoading ? "جاري إنشاء الحساب..." : "إنشاء حساب جديد"}
                 <ArrowRight className="mr-2 h-5 w-5" />
               </Button>
 

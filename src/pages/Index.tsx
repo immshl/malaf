@@ -4,6 +4,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { ArrowLeft, Users, Calendar, Link2, Star, Zap, Shield, Smartphone, Menu, X } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useLanguage } from "@/hooks/useLanguage";
+import AuthButton from "@/components/AuthButton";
 
 const Index = () => {
   const { t } = useLanguage();
@@ -121,12 +122,7 @@ const Index = () => {
               <a href="#how-it-works" className="text-muted-foreground hover:text-foreground transition-smooth">
                 كيف يعمل
               </a>
-              <Link to="/signin" className="text-muted-foreground hover:text-foreground transition-smooth">
-                تسجيل الدخول
-              </Link>
-              <Button variant="default" size="sm" asChild>
-                <Link to="/signup">أنشئ ملفك</Link>
-              </Button>
+              <AuthButton />
             </div>
 
             {/* Mobile Menu Button */}

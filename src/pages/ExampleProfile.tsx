@@ -41,8 +41,12 @@ const ExampleProfile = () => {
       <div className="sticky top-0 bg-background/80 backdrop-blur-md border-b z-40">
         <div className="container mx-auto px-4 py-4 flex justify-between items-center">
           <Link to="/" className="flex items-center space-x-2 space-x-reverse">
-            <div className="w-8 h-8 bg-gradient-primary rounded-lg flex items-center justify-center">
-              <span className="text-white font-bold text-sm">ملف</span>
+            <div className="w-8 h-8 flex items-center justify-center">
+              <img 
+                src="/lovable-uploads/053ffcb6-5dac-4834-a5ef-585d29be4be9.png" 
+                alt="ملف" 
+                className="w-full h-full object-contain"
+              />
             </div>
             <span className="font-bold text-foreground">malaf</span>
           </Link>

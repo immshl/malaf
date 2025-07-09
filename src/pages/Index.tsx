@@ -8,30 +8,6 @@ import profileMockup from "@/assets/profile-mockup.jpg";
 const Index = () => {
   return (
     <div className="min-h-screen bg-background">
-      {/* Header */}
-      <header className="border-b glass-soft sticky top-0 z-50">
-        <div className="container mx-auto px-4 py-4 flex items-center justify-between">
-          <div className="flex items-center space-x-2">
-            <div className="w-8 h-8 bg-gradient-primary rounded-lg flex items-center justify-center">
-              <span className="text-white font-bold text-sm">ملف</span>
-            </div>
-            <span className="text-xl font-bold text-foreground">malaf</span>
-          </div>
-          <nav className="hidden md:flex items-center space-x-8">
-            <a href="#features" className="text-muted-foreground hover:text-foreground transition-smooth">المميزات</a>
-            <a href="#how-it-works" className="text-muted-foreground hover:text-foreground transition-smooth">كيف يعمل</a>
-          </nav>
-          <div className="flex items-center space-x-4">
-            <Button variant="ghost" asChild>
-              <Link to="/signin">تسجيل الدخول</Link>
-            </Button>
-            <Button variant="hero" asChild>
-              <Link to="/signup">إنشاء ملف مجاني</Link>
-            </Button>
-          </div>
-        </div>
-      </header>
-
       {/* Hero Section */}
       <section className="relative py-20 md:py-32 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-hero opacity-10"></div>
@@ -50,8 +26,8 @@ const Index = () => {
                 <Button size="lg" variant="hero" className="text-lg px-8 py-4" asChild>
                   <Link to="/signup">أنشئ ملفك المهني</Link>
                 </Button>
-                <Button size="lg" variant="outline" className="text-lg px-8 py-4" asChild>
-                  <Link to="/example">شاهد نموذج</Link>
+                <Button size="lg" variant="outline" className="text-lg px-8 py-4">
+                  شاهد نموذج
                 </Button>
               </div>
               <p className="text-sm text-muted-foreground mt-4">
@@ -85,7 +61,7 @@ const Index = () => {
             </p>
           </div>
           
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid md:grid-cols-3 gap-8">
             {[
               {
                 icon: <Users className="w-8 h-8 text-primary" />,
@@ -101,21 +77,6 @@ const Index = () => {
                 icon: <Link2 className="w-8 h-8 text-primary" />,
                 title: "رابط رقمي مخصص",
                 description: "احصل على رابط شخصي مميز يمكنك مشاركته بسهولة"
-              },
-              {
-                icon: <Zap className="w-8 h-8 text-primary" />,
-                title: "سرعة في التحميل",
-                description: "صفحات فائقة السرعة تضمن تجربة ممتازة لزوارك"
-              },
-              {
-                icon: <Smartphone className="w-8 h-8 text-primary" />,
-                title: "متوافق مع الجوال",
-                description: "تصميم متجاوب يعمل بسلاسة على جميع الأجهزة"
-              },
-              {
-                icon: <Shield className="w-8 h-8 text-primary" />,
-                title: "أمان وخصوصية",
-                description: "بياناتك آمنة ومحمية بأعلى معايير الأمان"
               }
             ].map((feature, index) => (
               <Card key={index} className="border-0 shadow-soft hover:shadow-medium transition-smooth bg-white">
@@ -130,48 +91,6 @@ const Index = () => {
                 </CardContent>
               </Card>
             ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Profile Preview Section */}
-      <section className="py-20">
-        <div className="container mx-auto px-4">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-            <div className="relative">
-              <img 
-                src={profileMockup} 
-                alt="معاينة الملف الشخصي" 
-                className="w-full max-w-md mx-auto rounded-2xl shadow-strong"
-              />
-            </div>
-            <div className="text-center lg:text-right">
-              <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6">
-                ملف شخصي يعكس
-                <span className="block text-transparent bg-clip-text bg-gradient-primary">احترافيتك</span>
-              </h2>
-              <p className="text-lg text-muted-foreground mb-8 leading-relaxed">
-                اعرض خدماتك ومهاراتك بطريقة جذابة ومنظمة. أضف روابط حساباتك الاجتماعية 
-                ونماذج من أعمالك السابقة. اجعل من السهل على العملاء التواصل معك وحجز استشارة.
-              </p>
-              <div className="space-y-4 mb-8">
-                {[
-                  "إضافة صورة شخصية احترافية",
-                  "عرض خدماتك وأسعارها",
-                  "ربط حساباتك الاجتماعية",
-                  "نماذج من أعمالك السابقة",
-                  "معلومات التواصل وحجز المواعيد"
-                ].map((item, index) => (
-                  <div key={index} className="flex items-center justify-center lg:justify-end space-x-reverse space-x-3">
-                    <Star className="w-5 h-5 text-primary fill-current" />
-                    <span className="text-foreground">{item}</span>
-                  </div>
-                ))}
-              </div>
-              <Button variant="hero" size="lg" className="px-8" asChild>
-                <Link to="/signup">ابدأ إنشاء ملفك</Link>
-              </Button>
-            </div>
           </div>
         </div>
       </section>
@@ -240,51 +159,6 @@ const Index = () => {
           </div>
         </div>
       </section>
-
-      {/* Footer */}
-      <footer className="bg-foreground text-white py-12">
-        <div className="container mx-auto px-4">
-          <div className="grid md:grid-cols-4 gap-8">
-            <div>
-              <div className="flex items-center space-x-2 mb-4">
-                <div className="w-8 h-8 bg-gradient-primary rounded-lg flex items-center justify-center">
-                  <span className="text-white font-bold text-sm">ملف</span>
-                </div>
-                <span className="text-xl font-bold">malaf</span>
-              </div>
-              <p className="text-gray-400 leading-relaxed">
-                منصة احترافية للفريلانسرز لإنشاء ملف تعريفي رقمي وإدارة علاقاتهم مع العملاء.
-              </p>
-            </div>
-            <div>
-              <h4 className="font-semibold mb-4">المنتج</h4>
-              <ul className="space-y-2 text-gray-400">
-                <li><a href="#features" className="hover:text-white transition-smooth">المميزات</a></li>
-                <li><a href="#how-it-works" className="hover:text-white transition-smooth">كيف يعمل</a></li>
-              </ul>
-            </div>
-            <div>
-              <h4 className="font-semibold mb-4">الدعم</h4>
-              <ul className="space-y-2 text-gray-400">
-                <li><a href="#" className="hover:text-white transition-smooth">مركز المساعدة</a></li>
-                <li><a href="#" className="hover:text-white transition-smooth">تواصل معنا</a></li>
-                <li><a href="#" className="hover:text-white transition-smooth">الحالة</a></li>
-              </ul>
-            </div>
-            <div>
-              <h4 className="font-semibold mb-4">الشركة</h4>
-              <ul className="space-y-2 text-gray-400">
-                <li><a href="#" className="hover:text-white transition-smooth">من نحن</a></li>
-                <li><a href="#" className="hover:text-white transition-smooth">الخصوصية</a></li>
-                <li><a href="#" className="hover:text-white transition-smooth">الشروط</a></li>
-              </ul>
-            </div>
-          </div>
-          <div className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
-            <p>&copy; 2024 ملف. جميع الحقوق محفوظة.</p>
-          </div>
-        </div>
-      </footer>
     </div>
   );
 };

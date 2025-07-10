@@ -21,7 +21,7 @@ const ScrollHero = () => {
         pin: true,
       });
 
-      // Animate background gradients
+      // Animate background gradients with new theme
       const backgroundTl = gsap.timeline({
         scrollTrigger: {
           trigger: heroRef.current,
@@ -33,40 +33,38 @@ const ScrollHero = () => {
 
       backgroundTl
         .to(backgroundRef.current, {
-          background: "linear-gradient(135deg, hsl(183 55% 62%) 0%, hsl(195 6% 13%) 50%, hsl(183 65% 70%) 100%)",
+          background: "linear-gradient(135deg, hsl(195 6% 13%) 0%, hsl(183 55% 62%) 50%, hsl(195 6% 25%) 100%)",
           duration: 1,
         })
         .to(backgroundRef.current, {
-          background: "linear-gradient(135deg, hsl(195 6% 13%) 0%, hsl(183 55% 62%) 50%, hsl(0 1% 44%) 100%)",
+          background: "linear-gradient(135deg, hsl(183 55% 62%) 0%, hsl(195 6% 13%) 50%, hsl(0 1% 15%) 100%)",
           duration: 1,
         })
         .to(backgroundRef.current, {
-          background: "linear-gradient(135deg, hsl(183 65% 70%) 0%, hsl(195 6% 13%) 50%, hsl(183 55% 62%) 100%)",
+          background: "linear-gradient(135deg, hsl(0 1% 15%) 0%, hsl(183 55% 62%) 50%, hsl(195 6% 13%) 100%)",
           duration: 1,
         });
 
-      // Animate text lines with scroll
+      // Animate text lines with scroll - simplified for better visibility
       textLinesRef.current.forEach((line, index) => {
         if (line) {
           gsap.fromTo(line,
             {
               opacity: 0,
-              y: 100,
-              scale: 0.8,
-              clipPath: "polygon(0 100%, 100% 100%, 100% 100%, 0 100%)",
+              y: 50,
+              scale: 0.9,
             },
             {
               opacity: 1,
               y: 0,
               scale: 1,
-              clipPath: "polygon(0 0%, 100% 0%, 100% 100%, 0 100%)",
-              duration: 1,
-              ease: "power3.out",
+              duration: 0.8,
+              ease: "power2.out",
               scrollTrigger: {
                 trigger: heroRef.current,
-                start: `top+=${index * 20}% top`,
-                end: `top+=${(index + 1) * 20}% top`,
-                scrub: 1,
+                start: `top+=${index * 15}% top`,
+                end: `top+=${(index + 1) * 15}% top`,
+                scrub: 0.5,
                 toggleActions: "play none none reverse",
               },
             }
@@ -74,22 +72,22 @@ const ScrollHero = () => {
         }
       });
 
-      // Animate buttons
+      // Animate buttons - simplified
       gsap.fromTo(".hero-buttons",
         {
           opacity: 0,
-          y: 50,
+          y: 30,
         },
         {
           opacity: 1,
           y: 0,
-          duration: 1,
-          ease: "power3.out",
+          duration: 0.6,
+          ease: "power2.out",
           scrollTrigger: {
             trigger: heroRef.current,
-            start: "top+=80% top",
+            start: "top+=60% top",
             end: "bottom top",
-            scrub: 1,
+            scrub: 0.3,
           },
         }
       );
@@ -105,68 +103,68 @@ const ScrollHero = () => {
 
   return (
     <section ref={heroRef} className="relative h-screen overflow-hidden">
-      {/* Animated Background */}
+      {/* Animated Background with new theme */}
       <div 
         ref={backgroundRef}
         className="absolute inset-0 transition-all duration-1000 ease-in-out"
         style={{
-          background: "linear-gradient(135deg, hsl(183 55% 62%) 0%, hsl(195 6% 13%) 100%)",
+          background: "linear-gradient(135deg, hsl(195 6% 13%) 0%, hsl(183 55% 62%) 100%)",
         }}
       />
       
-      {/* Floating particles animation */}
+      {/* Enhanced floating particles */}
       <div className="absolute inset-0 overflow-hidden">
-        {[...Array(20)].map((_, i) => (
+        {[...Array(15)].map((_, i) => (
           <div
             key={i}
-            className="absolute w-2 h-2 bg-white/20 rounded-full animate-pulse"
+            className="absolute w-1 h-1 bg-white/30 rounded-full animate-pulse"
             style={{
               left: `${Math.random() * 100}%`,
               top: `${Math.random() * 100}%`,
               animationDelay: `${Math.random() * 3}s`,
-              animationDuration: `${3 + Math.random() * 2}s`,
+              animationDuration: `${2 + Math.random() * 3}s`,
             }}
           />
         ))}
       </div>
 
-      {/* Content */}
-      <div className="relative z-10 h-full flex items-center justify-center">
+      {/* Content with improved visibility */}
+      <div className="relative z-20 h-full flex items-center justify-center">
         <div className="max-w-4xl mx-auto text-center px-4">
           <div className="space-y-8">
             <div
               ref={setTextLineRef(0)}
-              className="text-sm text-white/80 font-medium opacity-0"
+              className="text-sm text-white/90 font-medium opacity-100 backdrop-blur-sm bg-white/10 rounded-full px-4 py-2 inline-block"
             >
               لتمكين العمل الحر
             </div>
             
             <div
               ref={setTextLineRef(1)}
-              className="text-4xl md:text-6xl lg:text-7xl font-bold leading-tight opacity-0"
+              className="text-4xl md:text-6xl lg:text-7xl font-bold leading-tight opacity-100"
             >
-              <span className="text-white">
+              <span className="text-white drop-shadow-lg">
                 ملف مهني
               </span>
             </div>
             
             <div
               ref={setTextLineRef(2)}
-              className="text-4xl md:text-6xl lg:text-7xl font-bold leading-tight opacity-0"
+              className="text-4xl md:text-6xl lg:text-7xl font-bold leading-tight opacity-100"
             >
-              <span className="text-white/90">
+              <span className="text-white/95 drop-shadow-lg">
                 خاص بك
               </span>
             </div>
 
             <div
               ref={setTextLineRef(3)}
-              className="text-lg md:text-xl text-white/80 max-w-2xl mx-auto leading-relaxed opacity-0"
+              className="text-lg md:text-xl text-white/90 max-w-2xl mx-auto leading-relaxed opacity-100 backdrop-blur-sm bg-white/5 rounded-lg p-4"
             >
               اعرض خدماتك بطريقة مهنية واستقبل طلبات العملاء بسهولة
             </div>
 
-            <div className="hero-buttons flex flex-col sm:flex-row gap-4 justify-center opacity-0">
+            <div className="hero-buttons flex flex-col sm:flex-row gap-4 justify-center opacity-100 pt-4">
               <Button 
                 size="lg" 
                 className="bg-white text-foreground hover:bg-white/90 text-lg px-8 py-4 rounded-full transform hover:scale-105 active:scale-95 transition-all duration-300 shadow-lg hover:shadow-xl"

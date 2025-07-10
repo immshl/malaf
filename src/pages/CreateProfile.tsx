@@ -123,13 +123,30 @@ const CreateProfile = () => {
         return;
       }
 
+      // Verify the profile was created and get the correct username
+      const { data: createdProfile, error: fetchError } = await supabase
+        .from('profiles')
+        .select('username')
+        .eq('user_id', user.id)
+        .single();
+
+      if (fetchError || !createdProfile) {
+        console.error('Error fetching created profile:', fetchError);
+        toast({
+          variant: "destructive",
+          title: "خطأ في الوصول للملف",
+          description: "تم إنشاء الملف ولكن حدث خطأ في الانتقال إليه"
+        });
+        return;
+      }
+
       toast({
         title: "تم إنشاء ملفك بنجاح!",
         description: "يمكنك الآن مشاركة ملفك مع العملاء"
       });
       
-      // الانتقال إلى صفحة الملف الشخصي
-      navigate(`/profile/${profileData.username}`);
+      // الانتقال إلى صفحة الملف الشخصي باستخدام اسم المستخدم المحفوظ
+      navigate(`/profile/${createdProfile.username}`);
       
     } catch (error) {
       console.error('Error:', error);

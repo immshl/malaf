@@ -101,7 +101,7 @@ const Index = () => {
                 variant="ghost" 
                 size="sm"
                 onClick={toggleMobileMenu}
-                className="p-2 hover:bg-muted/50 transition-smooth"
+                className="p-2 hover:bg-muted/50 transition-colors"
               >
                 {isMobileMenuOpen ? (
                   <X className="w-6 h-6 text-foreground" />
@@ -113,74 +113,62 @@ const Index = () => {
           </div>
         </div>
 
+        {/* Mobile Menu Overlay */}
+        {isMobileMenuOpen && (
+          <div className="md:hidden fixed inset-0 z-50 bg-black/50" onClick={closeMobileMenu} />
+        )}
+
         {/* Mobile Dropdown Menu */}
-        <div 
-          className={`mobile-menu-container md:hidden transition-all duration-300 ease-in-out ${
-            isMobileMenuOpen ? 'block' : 'hidden'
-          }`}
-          style={{ 
-            position: 'absolute',
-            top: '100%',
-            left: 0,
-            right: 0,
-            zIndex: 50,
-            backgroundColor: 'var(--background)',
-            border: '1px solid var(--border)',
-            borderRadius: '0 0 8px 8px',
-            boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)'
-          }}
-        >
-          <div className="px-4 py-6 bg-gradient-to-b from-background/95 to-background/90 backdrop-blur-sm border-t border-border/50 shadow-lg">
-            <div className="flex flex-col space-y-4">
-              <a 
-                href="#features" 
-                className="text-muted-foreground hover:text-foreground transition-all duration-300 py-3 px-4 text-lg font-medium rounded-lg hover:bg-muted/50 hover:transform hover:scale-105 active:scale-95"
-                onClick={closeMobileMenu}
-              >
-                <div className="flex items-center space-x-3 space-x-reverse">
-                  <div className="w-2 h-2 bg-purple-500 rounded-full"></div>
-                  <span>المميزات</span>
-                </div>
-              </a>
-              <a 
-                href="#how-it-works" 
-                className="text-muted-foreground hover:text-foreground transition-all duration-300 py-3 px-4 text-lg font-medium rounded-lg hover:bg-muted/50 hover:transform hover:scale-105 active:scale-95"
-                onClick={closeMobileMenu}
-              >
-                <div className="flex items-center space-x-3 space-x-reverse">
-                  <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
-                  <span>كيف يعمل</span>
-                </div>
-              </a>
-              
-              <div className="pt-4 border-t border-border/20">
-                <div className="flex flex-col space-y-3">
-                  <Link 
-                    to="/signin" 
-                    className="w-full"
-                    onClick={closeMobileMenu}
-                  >
-                    <Button 
-                      variant="outline" 
-                      size="lg" 
-                      className="w-full text-lg py-4 rounded-full border-2 border-purple-500 text-purple-600 hover:bg-purple-500 hover:text-white transform hover:scale-105 active:scale-95 transition-all duration-300 shadow-md hover:shadow-lg"
-                    >
-                      تسجيل الدخول
-                    </Button>
-                  </Link>
-                  <Button 
-                    variant="default" 
-                    size="lg" 
-                    className="w-full text-lg py-4 rounded-full bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 transform hover:scale-105 active:scale-95 transition-all duration-300 shadow-lg"
-                    asChild
-                  >
-                    <Link to="/signup" onClick={closeMobileMenu}>أنشئ ملفك المهني</Link>
-                  </Button>
+        {isMobileMenuOpen && (
+          <div className="md:hidden fixed top-16 left-0 right-0 z-50 bg-white dark:bg-gray-900 border-b shadow-lg">
+            <div className="px-4 py-6">
+              <div className="flex flex-col space-y-4">
+                <a 
+                  href="#features" 
+                  className="text-gray-700 dark:text-gray-300 hover:text-purple-600 dark:hover:text-purple-400 transition-colors py-2 px-3 text-lg font-medium rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800"
+                  onClick={closeMobileMenu}
+                >
+                  <div className="flex items-center space-x-3 space-x-reverse">
+                    <div className="w-2 h-2 bg-purple-500 rounded-full"></div>
+                    <span>المميزات</span>
+                  </div>
+                </a>
+                <a 
+                  href="#how-it-works" 
+                  className="text-gray-700 dark:text-gray-300 hover:text-purple-600 dark:hover:text-purple-400 transition-colors py-2 px-3 text-lg font-medium rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800"
+                  onClick={closeMobileMenu}
+                >
+                  <div className="flex items-center space-x-3 space-x-reverse">
+                    <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+                    <span>كيف يعمل</span>
+                  </div>
+                </a>
+                
+                <div className="pt-4 border-t border-gray-200 dark:border-gray-700">
+                  <div className="flex flex-col space-y-3">
+                    <Link to="/signin" onClick={closeMobileMenu}>
+                      <Button 
+                        variant="outline" 
+                        size="lg" 
+                        className="w-full text-lg py-3 rounded-full border-2 border-purple-500 text-purple-600 hover:bg-purple-500 hover:text-white transition-all duration-300"
+                      >
+                        تسجيل الدخول
+                      </Button>
+                    </Link>
+                    <Link to="/signup" onClick={closeMobileMenu}>
+                      <Button 
+                        size="lg" 
+                        className="w-full text-lg py-3 rounded-full bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 transition-all duration-300"
+                      >
+                        أنشئ ملفك المهني
+                      </Button>
+                    </Link>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
+        )}
       </nav>
 
       {/* Hero Section */}

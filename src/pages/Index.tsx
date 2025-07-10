@@ -99,7 +99,7 @@ const Index = () => {
             <button 
               className="md:hidden p-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
               onClick={() => {
-                console.log('Mobile menu clicked!', !isMobileMenuOpen);
+                console.log("Mobile menu clicked!", !isMobileMenuOpen);
                 setIsMobileMenuOpen(!isMobileMenuOpen);
               }}
             >

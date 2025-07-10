@@ -696,25 +696,30 @@ const CreateProfile = () => {
                 </div>
 
                 {/* الفترة الزمنية */}
-                <div className="space-y-2">
+                <div className="space-y-4">
                   <Label className="text-foreground font-medium">
                     الفترة الزمنية *
                   </Label>
-                  <Select
-                    value={profileData.timeSlot}
-                    onValueChange={(value) => setProfileData(prev => ({ ...prev, timeSlot: value }))}
-                  >
-                    <SelectTrigger className="text-right">
-                      <SelectValue placeholder="اختر الفترة المناسبة" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {timeSlots.map((slot) => (
-                        <SelectItem key={slot.value} value={slot.value}>
-                          {slot.label}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
+                  <div className="grid grid-cols-1 gap-3">
+                    {timeSlots.map((slot) => (
+                      <Button
+                        key={slot.value}
+                        type="button"
+                        variant={profileData.timeSlot === slot.value ? "default" : "outline"}
+                        className={`h-14 justify-start text-right transition-all duration-200 hover:scale-105 ${
+                          profileData.timeSlot === slot.value
+                            ? "bg-gradient-primary text-white shadow-md ring-2 ring-primary/20 border-primary"
+                            : "hover:bg-gradient-primary/10 hover:border-primary/30"
+                        }`}
+                        onClick={() => setProfileData(prev => ({ ...prev, timeSlot: slot.value }))}
+                      >
+                        <span className="font-medium">{slot.label}</span>
+                        {profileData.timeSlot === slot.value && (
+                          <div className="absolute top-2 left-2 w-2 h-2 bg-white rounded-full animate-scale-in"></div>
+                        )}
+                      </Button>
+                    ))}
+                  </div>
                   <p className="text-xs text-muted-foreground">
                     ستطبق هذه الفترة على جميع الأيام المختارة
                   </p>

@@ -143,8 +143,8 @@ const UserProfile = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-muted/30 py-8">
-      <div className="container mx-auto px-4 max-w-4xl">
+    <div className="min-h-screen bg-background py-8">
+      <div className="container mx-auto px-4 max-w-2xl">
         {/* رأس الصفحة مع الرابط والأزرار */}
         <div className="bg-white rounded-2xl shadow-strong p-6 mb-8">
           <div className="flex flex-col md:flex-row items-center justify-between gap-4">
@@ -166,7 +166,7 @@ const UserProfile = () => {
                     حجز اجتماع
                   </Button>
                 </DialogTrigger>
-                <DialogContent className="max-w-lg max-h-[90vh] overflow-y-auto">
+                <DialogContent className="max-w-lg max-h-[90vh] overflow-y-auto z-50 bg-background">
                   <DialogHeader>
                     <DialogTitle>حجز اجتماع</DialogTitle>
                     <DialogDescription>
@@ -188,12 +188,12 @@ const UserProfile = () => {
                         <div className="space-y-2">
                           <Label>اختر اليوم</Label>
                           <Select value={selectedDay} onValueChange={setSelectedDay}>
-                            <SelectTrigger>
+                            <SelectTrigger className="bg-background">
                               <SelectValue placeholder="اختر يوم من الأيام المتاحة" />
                             </SelectTrigger>
-                            <SelectContent className="bg-white">
+                            <SelectContent className="bg-background border shadow-lg z-50">
                               {profileData.availableDays.map((day) => (
-                                <SelectItem key={day} value={day}>
+                                <SelectItem key={day} value={day} className="bg-background hover:bg-muted">
                                   {dayLabels[day as keyof typeof dayLabels]}
                                 </SelectItem>
                               ))}
@@ -205,12 +205,12 @@ const UserProfile = () => {
                         <div className="space-y-2">
                           <Label>اختر الوقت</Label>
                           <Select value={selectedTime} onValueChange={setSelectedTime}>
-                            <SelectTrigger>
+                            <SelectTrigger className="bg-background">
                               <SelectValue placeholder="اختر وقت محدد" />
                             </SelectTrigger>
-                            <SelectContent className="bg-white">
+                            <SelectContent className="bg-background border shadow-lg z-50">
                               {getCurrentTimeSlots().map((time) => (
-                                <SelectItem key={time} value={time}>
+                                <SelectItem key={time} value={time} className="bg-background hover:bg-muted">
                                   {time}
                                 </SelectItem>
                               ))}
@@ -244,12 +244,12 @@ const UserProfile = () => {
                         <div className="space-y-2">
                           <Label>اليوم المقترح</Label>
                           <Select value={alternativeDay} onValueChange={setAlternativeDay}>
-                            <SelectTrigger>
+                            <SelectTrigger className="bg-background">
                               <SelectValue placeholder="اختر يوم" />
                             </SelectTrigger>
-                            <SelectContent className="bg-white">
+                            <SelectContent className="bg-background border shadow-lg z-50">
                               {Object.entries(dayLabels).map(([value, label]) => (
-                                <SelectItem key={value} value={value}>
+                                <SelectItem key={value} value={value} className="bg-background hover:bg-muted">
                                   {label}
                                 </SelectItem>
                               ))}
@@ -261,12 +261,12 @@ const UserProfile = () => {
                         <div className="space-y-2">
                           <Label>الفترة المقترحة</Label>
                           <Select value={alternativeTimeSlot} onValueChange={setAlternativeTimeSlot}>
-                            <SelectTrigger>
+                            <SelectTrigger className="bg-background">
                               <SelectValue placeholder="اختر فترة" />
                             </SelectTrigger>
-                            <SelectContent className="bg-white">
+                            <SelectContent className="bg-background border shadow-lg z-50">
                               {Object.entries(timeSlotLabels).map(([value, label]) => (
-                                <SelectItem key={value} value={value}>
+                                <SelectItem key={value} value={value} className="bg-background hover:bg-muted">
                                   {label}
                                 </SelectItem>
                               ))}
@@ -299,7 +299,7 @@ const UserProfile = () => {
                           value={bookingForm.name}
                           onChange={(e) => setBookingForm(prev => ({ ...prev, name: e.target.value }))}
                           placeholder="اكتب اسمك الكامل"
-                          className="text-right"
+                          className="text-right bg-background"
                           required
                         />
                       </div>
@@ -312,7 +312,7 @@ const UserProfile = () => {
                           value={bookingForm.email}
                           onChange={(e) => setBookingForm(prev => ({ ...prev, email: e.target.value }))}
                           placeholder="example@email.com"
-                          className="text-left"
+                          className="text-left bg-background"
                           required
                         />
                       </div>
@@ -323,12 +323,12 @@ const UserProfile = () => {
                           value={bookingForm.preferredContact} 
                           onValueChange={(value) => setBookingForm(prev => ({ ...prev, preferredContact: value }))}
                         >
-                          <SelectTrigger>
+                          <SelectTrigger className="bg-background">
                             <SelectValue placeholder="اختر وسيلة التواصل" />
                           </SelectTrigger>
-                          <SelectContent className="bg-white">
+                          <SelectContent className="bg-background border shadow-lg z-50">
                             {contactMethods.map((method) => (
-                              <SelectItem key={method.value} value={method.value}>
+                              <SelectItem key={method.value} value={method.value} className="bg-background hover:bg-muted">
                                 {method.label}
                               </SelectItem>
                             ))}
@@ -343,7 +343,7 @@ const UserProfile = () => {
                           value={bookingForm.notes}
                           onChange={(e) => setBookingForm(prev => ({ ...prev, notes: e.target.value }))}
                           placeholder="أي معلومات إضافية تود مشاركتها..."
-                          className="text-right resize-none"
+                          className="text-right resize-none bg-background"
                           rows={3}
                         />
                       </div>
@@ -368,151 +368,324 @@ const UserProfile = () => {
           </div>
         </div>
 
-        <div className="grid lg:grid-cols-3 gap-8">
-          {/* العمود الأيسر - المعلومات الأساسية */}
-          <div className="lg:col-span-1 space-y-6">
-            {/* بطاقة المعلومات الشخصية */}
-            <Card className="border-0 shadow-strong">
-              <CardContent className="p-6 text-center">
-                <Avatar className="w-32 h-32 mx-auto mb-4 border-4 border-primary/20">
-                  <AvatarImage src={profileData.profileImage} />
-                  <AvatarFallback className="bg-gradient-primary text-white text-3xl">
-                    <User className="w-16 h-16" />
-                  </AvatarFallback>
-                </Avatar>
-                <h1 className="text-2xl font-bold text-foreground mb-2">
-                  {profileData.fullName}
-                </h1>
-                <Badge variant="secondary" className="mb-4">
-                  <CheckCircle className="ml-2 h-3 w-3" />
-                  ملف معتمد
-                </Badge>
-              </CardContent>
-            </Card>
-
-            {/* وسائل التواصل */}
-            <Card className="border-0 shadow-soft">
-              <CardContent className="p-6">
-                <h3 className="text-lg font-semibold mb-4">وسائل التواصل</h3>
-                <div className="space-y-3">
-                  {profileData.workEmail && (
-                    <a 
-                      href={`mailto:${profileData.workEmail}`}
-                      className="flex items-center text-muted-foreground hover:text-primary transition-smooth"
-                    >
-                      <Mail className="ml-3 h-4 w-4" />
-                      <span className="text-sm">{profileData.workEmail}</span>
-                    </a>
-                  )}
-                  {profileData.instagram && (
-                    <a 
-                      href={`https://instagram.com/${profileData.instagram.replace('@', '')}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex items-center text-muted-foreground hover:text-primary transition-smooth"
-                    >
-                      <Instagram className="ml-3 h-4 w-4" />
-                      <span className="text-sm">{profileData.instagram}</span>
-                    </a>
-                  )}
-                  {profileData.twitter && (
-                    <a 
-                      href={`https://twitter.com/${profileData.twitter.replace('@', '')}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex items-center text-muted-foreground hover:text-primary transition-smooth"
-                    >
-                      <Twitter className="ml-3 h-4 w-4" />
-                      <span className="text-sm">{profileData.twitter}</span>
-                    </a>
-                  )}
-                  {profileData.externalLink && (
-                    <a 
-                      href={profileData.externalLink}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex items-center text-muted-foreground hover:text-primary transition-smooth"
-                    >
-                      <ExternalLink className="ml-3 h-4 w-4" />
-                      <span className="text-sm">الموقع الشخصي</span>
-                    </a>
-                  )}
-                </div>
-              </CardContent>
-            </Card>
-
-            {/* أوقات الحجز */}
-            <Card className="border-0 shadow-soft">
-              <CardContent className="p-6">
-                <h3 className="text-lg font-semibold mb-4 flex items-center">
-                  <Clock className="ml-2 h-5 w-5" />
-                  أوقات الحجز
-                </h3>
-                <div className="space-y-3">
-                  <div>
-                    <p className="text-sm text-muted-foreground mb-2">الأيام المتاحة:</p>
-                    <div className="flex flex-wrap gap-2">
-                      {profileData.availableDays.map((day) => (
-                        <Badge key={day} variant="outline">
-                          {dayLabels[day as keyof typeof dayLabels]}
-                        </Badge>
-                      ))}
-                    </div>
-                  </div>
-                  <div>
-                    <p className="text-sm text-muted-foreground mb-2">الوقت:</p>
-                    <Badge variant="secondary">
-                      {timeSlotLabels[profileData.timeSlot as keyof typeof timeSlotLabels]}
-                    </Badge>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
+        {/* الملف الشخصي المركزي */}
+        <div className="text-center space-y-8">
+          {/* الصورة الشخصية والمعلومات الأساسية */}
+          <div className="space-y-6">
+            <div className="relative inline-block">
+              <Avatar className="w-32 h-32 mx-auto border-4 border-muted">
+                <AvatarImage src={profileData.profileImage} />
+                <AvatarFallback className="bg-gradient-primary text-white text-3xl">
+                  <User className="w-16 h-16" />
+                </AvatarFallback>
+              </Avatar>
+            </div>
+            
+            <div className="space-y-4">
+              <h1 className="text-3xl font-bold text-foreground">
+                {profileData.fullName}
+              </h1>
+              
+              <p className="text-muted-foreground leading-relaxed max-w-md mx-auto text-lg">
+                {profileData.bio}
+              </p>
+            </div>
           </div>
 
-          {/* العمود الأيمن - المحتوى الرئيسي */}
-          <div className="lg:col-span-2 space-y-6">
-            {/* النبذة التعريفية */}
-            <Card className="border-0 shadow-soft">
-              <CardContent className="p-6">
-                <h2 className="text-xl font-semibold mb-4">نبذة تعريفية</h2>
-                <p className="text-muted-foreground leading-relaxed">
-                  {profileData.bio}
-                </p>
-              </CardContent>
-            </Card>
+          {/* الخدمات */}
+          <div className="space-y-6">
+            <h2 className="text-2xl font-bold text-foreground">الخدمات</h2>
+            <div className="grid grid-cols-2 gap-6">
+              {profileData.services.map((service, index) => (
+                <Card key={index} className="border-0 shadow-soft hover:shadow-medium transition-all duration-300 p-6">
+                  <CardContent className="p-0 text-center">
+                    <h3 className="font-semibold text-foreground text-lg">{service}</h3>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          </div>
 
-            {/* الخدمات */}
-            <Card className="border-0 shadow-soft">
-              <CardContent className="p-6">
-                <h2 className="text-xl font-semibold mb-4">الخدمات المقدّمة</h2>
-                <div className="grid md:grid-cols-2 gap-3">
-                  {profileData.services.map((service, index) => (
-                    <div key={index} className="flex items-center p-3 bg-muted/50 rounded-lg">
-                      <Star className="ml-3 h-4 w-4 text-primary" />
-                      <span className="text-sm font-medium">{service}</span>
-                    </div>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
-
-            {/* أبرز العملاء */}
-            {profileData.topClients.length > 0 && profileData.topClients[0] && (
-              <Card className="border-0 shadow-soft">
-                <CardContent className="p-6">
-                  <h2 className="text-xl font-semibold mb-4">أبرز العملاء</h2>
-                  <div className="space-y-3">
-                    {profileData.topClients.filter(client => client.trim()).map((client, index) => (
-                      <div key={index} className="flex items-center p-3 bg-muted/50 rounded-lg">
-                        <CheckCircle className="ml-3 h-4 w-4 text-green-500" />
-                        <span className="text-sm font-medium">{client}</span>
+          {/* احجز موعد */}
+          <div className="space-y-6">
+            <div className="space-y-4">
+              <h2 className="text-2xl font-bold text-foreground">احجز موعد</h2>
+              <p className="text-muted-foreground">
+                احجز موعد لمناقشة مشروعك
+              </p>
+            </div>
+            
+            <Dialog>
+              <DialogTrigger asChild>
+                <Button 
+                  size="lg" 
+                  className="w-full max-w-sm mx-auto bg-foreground text-background hover:bg-foreground/90 rounded-2xl h-14 text-lg font-medium"
+                >
+                  <CalendarIcon className="ml-3 h-5 w-5" />
+                  احجز موعد
+                </Button>
+              </DialogTrigger>
+              <DialogContent className="max-w-lg max-h-[90vh] overflow-y-auto z-50 bg-background">
+                <DialogHeader>
+                  <DialogTitle>حجز اجتماع</DialogTitle>
+                  <DialogDescription>
+                    اختر الموعد المناسب لك أو اقترح موعد مختلف
+                  </DialogDescription>
+                </DialogHeader>
+                <div className="space-y-6">
+                  {!showAlternativeBooking ? (
+                    <>
+                      {/* الحجز العادي */}
+                      <div className="bg-muted/50 p-4 rounded-lg">
+                        <h4 className="font-medium mb-2">الأوقات المتاحة</h4>
+                        <div className="text-sm text-muted-foreground mb-3">
+                          <p>الفترة: {timeSlotLabels[profileData.timeSlot as keyof typeof timeSlotLabels]}</p>
+                        </div>
                       </div>
-                    ))}
+
+                      {/* اختيار اليوم */}
+                      <div className="space-y-2">
+                        <Label>اختر اليوم</Label>
+                        <Select value={selectedDay} onValueChange={setSelectedDay}>
+                          <SelectTrigger className="bg-background">
+                            <SelectValue placeholder="اختر يوم من الأيام المتاحة" />
+                          </SelectTrigger>
+                          <SelectContent className="bg-background border shadow-lg z-50">
+                            {profileData.availableDays.map((day) => (
+                              <SelectItem key={day} value={day} className="bg-background hover:bg-muted">
+                                {dayLabels[day as keyof typeof dayLabels]}
+                              </SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                      </div>
+
+                      {/* اختيار الوقت */}
+                      <div className="space-y-2">
+                        <Label>اختر الوقت</Label>
+                        <Select value={selectedTime} onValueChange={setSelectedTime}>
+                          <SelectTrigger className="bg-background">
+                            <SelectValue placeholder="اختر وقت محدد" />
+                          </SelectTrigger>
+                          <SelectContent className="bg-background border shadow-lg z-50">
+                            {getCurrentTimeSlots().map((time) => (
+                              <SelectItem key={time} value={time} className="bg-background hover:bg-muted">
+                                {time}
+                              </SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                      </div>
+
+                      {/* رابط اقتراح موعد مختلف */}
+                      <div className="text-center">
+                        <Button
+                          type="button"
+                          variant="link"
+                          onClick={() => setShowAlternativeBooking(true)}
+                          className="text-primary"
+                        >
+                          أو اقترح موعد مختلف
+                        </Button>
+                      </div>
+                    </>
+                  ) : (
+                    <>
+                      {/* اقتراح موعد مختلف */}
+                      <div className="bg-blue-50 border border-blue-200 p-4 rounded-lg">
+                        <h4 className="font-medium text-blue-900 mb-2">اقتراح موعد مختلف</h4>
+                        <p className="text-sm text-blue-700">
+                          اقترح يوم وفترة مناسبة لك، وسيتم مراجعة طلبك والرد عليك
+                        </p>
+                      </div>
+
+                      {/* اختيار يوم مختلف */}
+                      <div className="space-y-2">
+                        <Label>اليوم المقترح</Label>
+                        <Select value={alternativeDay} onValueChange={setAlternativeDay}>
+                          <SelectTrigger className="bg-background">
+                            <SelectValue placeholder="اختر يوم" />
+                          </SelectTrigger>
+                          <SelectContent className="bg-background border shadow-lg z-50">
+                            {Object.entries(dayLabels).map(([value, label]) => (
+                              <SelectItem key={value} value={value} className="bg-background hover:bg-muted">
+                                {label}
+                              </SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                      </div>
+
+                      {/* اختيار فترة مختلفة */}
+                      <div className="space-y-2">
+                        <Label>الفترة المقترحة</Label>
+                        <Select value={alternativeTimeSlot} onValueChange={setAlternativeTimeSlot}>
+                          <SelectTrigger className="bg-background">
+                            <SelectValue placeholder="اختر فترة" />
+                          </SelectTrigger>
+                          <SelectContent className="bg-background border shadow-lg z-50">
+                            {Object.entries(timeSlotLabels).map(([value, label]) => (
+                              <SelectItem key={value} value={value} className="bg-background hover:bg-muted">
+                                {label}
+                              </SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                      </div>
+
+                      {/* رابط العودة للحجز العادي */}
+                      <div className="text-center">
+                        <Button
+                          type="button"
+                          variant="link"
+                          onClick={() => setShowAlternativeBooking(false)}
+                          className="text-muted-foreground"
+                        >
+                          العودة للأوقات المتاحة
+                        </Button>
+                      </div>
+                    </>
+                  )}
+
+                  {/* بيانات العميل */}
+                  <div className="border-t pt-4 space-y-4">
+                    <h4 className="font-medium">بياناتك</h4>
+                    
+                    <div className="space-y-2">
+                      <Label htmlFor="name2">الاسم الكامل *</Label>
+                      <Input
+                        id="name2"
+                        value={bookingForm.name}
+                        onChange={(e) => setBookingForm(prev => ({ ...prev, name: e.target.value }))}
+                        placeholder="اكتب اسمك الكامل"
+                        className="text-right bg-background"
+                        required
+                      />
+                    </div>
+                    
+                    <div className="space-y-2">
+                      <Label htmlFor="email2">البريد الإلكتروني *</Label>
+                      <Input
+                        id="email2"
+                        type="email"
+                        value={bookingForm.email}
+                        onChange={(e) => setBookingForm(prev => ({ ...prev, email: e.target.value }))}
+                        placeholder="example@email.com"
+                        className="text-left bg-background"
+                        required
+                      />
+                    </div>
+                    
+                    <div className="space-y-2">
+                      <Label htmlFor="contact2">وسيلة التواصل المفضلة (اختياري)</Label>
+                      <Select 
+                        value={bookingForm.preferredContact} 
+                        onValueChange={(value) => setBookingForm(prev => ({ ...prev, preferredContact: value }))}
+                      >
+                        <SelectTrigger className="bg-background">
+                          <SelectValue placeholder="اختر وسيلة التواصل" />
+                        </SelectTrigger>
+                        <SelectContent className="bg-background border shadow-lg z-50">
+                          {contactMethods.map((method) => (
+                            <SelectItem key={method.value} value={method.value} className="bg-background hover:bg-muted">
+                              {method.label}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    </div>
+                    
+                    <div className="space-y-2">
+                      <Label htmlFor="notes2">ملاحظة إضافية (اختياري)</Label>
+                      <Textarea
+                        id="notes2"
+                        value={bookingForm.notes}
+                        onChange={(e) => setBookingForm(prev => ({ ...prev, notes: e.target.value }))}
+                        placeholder="أي معلومات إضافية تود مشاركتها..."
+                        className="text-right resize-none bg-background"
+                        rows={3}
+                      />
+                    </div>
                   </div>
-                </CardContent>
-              </Card>
-            )}
+
+                  <Button 
+                    onClick={handleBooking} 
+                    className="w-full" 
+                    variant="hero"
+                    disabled={
+                      !bookingForm.name || 
+                      !bookingForm.email || 
+                      (!showAlternativeBooking ? (!selectedDay || !selectedTime) : (!alternativeDay || !alternativeTimeSlot))
+                    }
+                  >
+                    {showAlternativeBooking ? "إرسال اقتراح الموعد" : "إرسال طلب الحجز"}
+                  </Button>
+                </div>
+              </DialogContent>
+            </Dialog>
+          </div>
+
+          {/* أبرز العملاء */}
+          {profileData.topClients && profileData.topClients.length > 0 && profileData.topClients[0] && (
+            <div className="space-y-6">
+              <h2 className="text-2xl font-bold text-foreground">عملاء مميزون</h2>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                {profileData.topClients.filter(client => client.trim()).slice(0, 4).map((client, index) => (
+                  <div key={index} className="bg-muted/30 rounded-lg p-4">
+                    <p className="font-medium text-foreground text-center">{client}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* وسائل التواصل الاجتماعي */}
+          <div className="space-y-6 pt-8 border-t border-border">
+            <h2 className="text-2xl font-bold text-foreground">وسائل التواصل الاجتماعي</h2>
+            <div className="space-y-4">
+              {profileData.workEmail && (
+                <a 
+                  href={`mailto:${profileData.workEmail}`}
+                  className="flex items-center justify-center gap-3 text-muted-foreground hover:text-primary transition-smooth"
+                >
+                  <Mail className="w-5 h-5" />
+                  <span className="text-lg">{profileData.workEmail}</span>
+                </a>
+              )}
+              {profileData.instagram && (
+                <a 
+                  href={`https://instagram.com/${profileData.instagram.replace('@', '')}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center justify-center gap-3 text-muted-foreground hover:text-primary transition-smooth"
+                >
+                  <Instagram className="w-5 h-5" />
+                  <span className="text-lg">{profileData.instagram}</span>
+                </a>
+              )}
+              {profileData.twitter && (
+                <a 
+                  href={`https://x.com/${profileData.twitter.replace('@', '')}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center justify-center gap-3 text-muted-foreground hover:text-primary transition-smooth"
+                >
+                  <Twitter className="w-5 h-5" />
+                  <span className="text-lg">{profileData.twitter}</span>
+                </a>
+              )}
+              {profileData.externalLink && (
+                <a 
+                  href={profileData.externalLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center justify-center gap-3 text-muted-foreground hover:text-primary transition-smooth"
+                >
+                  <ExternalLink className="w-5 h-5" />
+                  <span className="text-lg">الموقع الشخصي</span>
+                </a>
+              )}
+            </div>
           </div>
         </div>
       </div>

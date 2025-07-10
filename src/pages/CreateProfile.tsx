@@ -95,7 +95,8 @@ const CreateProfile = () => {
           instagram_url: profileData.instagram || null,
           twitter_url: profileData.twitter || null,
           website: profileData.externalLink || null,
-          avatar_url: profileData.profileImage || null
+          avatar_url: profileData.profileImage || null,
+          emoji: profileData.emoji || null
         });
 
       if (error) {

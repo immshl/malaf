@@ -20,6 +20,7 @@ export type Database = {
           bio: string | null
           contact_email: string | null
           created_at: string
+          emoji: string | null
           experience_years: number | null
           full_name: string | null
           github_url: string | null
@@ -42,6 +43,7 @@ export type Database = {
           bio?: string | null
           contact_email?: string | null
           created_at?: string
+          emoji?: string | null
           experience_years?: number | null
           full_name?: string | null
           github_url?: string | null
@@ -64,6 +66,7 @@ export type Database = {
           bio?: string | null
           contact_email?: string | null
           created_at?: string
+          emoji?: string | null
           experience_years?: number | null
           full_name?: string | null
           github_url?: string | null

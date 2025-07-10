@@ -99,7 +99,7 @@ const Index = () => {
       )}
 
       {/* Navigation */}
-      <nav className="sticky top-0 bg-background/95 backdrop-blur-sm border-b border-border/50 z-40">
+      <nav className="sticky top-0 glass-nav z-40">
         <div className="container mx-auto px-4">
           <div className="flex items-center justify-between h-16">
             {/* Logo */}
@@ -147,7 +147,7 @@ const Index = () => {
         <div className={`mobile-menu-container md:hidden transition-all duration-500 ease-in-out ${
           isMobileMenuOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
         }`}>
-          <div className="px-4 py-6 bg-gradient-to-b from-background/95 to-background/90 backdrop-blur-sm border-t border-border/50 shadow-lg">
+          <div className="px-4 py-6 glass-card border-t border-border/50 shadow-lg">
             <div className="flex flex-col space-y-4">
               <a 
                 href="#features" 
@@ -196,23 +196,36 @@ const Index = () => {
 
       {/* Hero Section */}
       <section className="relative py-20 md:py-32 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-hero opacity-5"></div>
+        <div className="absolute inset-0 bg-gradient-hero opacity-10"></div>
+        
+        {/* Floating particles */}
+        <div className="absolute inset-0">
+          <div className="absolute top-20 left-10 w-2 h-2 bg-primary/30 rounded-full animate-float"></div>
+          <div className="absolute top-40 right-20 w-3 h-3 bg-accent/40 rounded-full animate-float stagger-2"></div>
+          <div className="absolute bottom-40 left-1/4 w-1 h-1 bg-primary/50 rounded-full animate-float stagger-3"></div>
+          <div className="absolute bottom-20 right-1/3 w-2 h-2 bg-accent/30 rounded-full animate-float stagger-4"></div>
+        </div>
+        
         <div className="container mx-auto px-4 relative z-10">
           <div className="max-w-4xl mx-auto text-center">
-            <p className="text-sm text-muted-foreground mb-4 font-medium">
+            <p className="text-sm text-muted-foreground mb-4 font-medium animate-fade-in opacity-0 [animation-fill-mode:forwards]">
               لتمكين العمل الحر
             </p>
             
-            <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight">
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-600 via-pink-500 to-blue-500">
+            <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight animate-slide-up opacity-0 [animation-fill-mode:forwards] stagger-1">
+              <span className="text-gradient">
                 ملف مهني خاص بك
               </span>
             </h1>
             
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <p className="text-lg md:text-xl text-muted-foreground mb-8 max-w-2xl mx-auto animate-fade-in opacity-0 [animation-fill-mode:forwards] stagger-2">
+              منصة شاملة لبناء حضورك الرقمي وعرض خدماتك بطريقة احترافية
+            </p>
+            
+            <div className="flex flex-col sm:flex-row gap-4 justify-center animate-slide-up opacity-0 [animation-fill-mode:forwards] stagger-3">
               <Button 
                 size="lg" 
-                className="bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white text-lg px-8 py-4 rounded-full transform hover:scale-105 active:scale-95 transition-all duration-300 shadow-lg hover:shadow-xl"
+                className="glass-button text-white text-lg px-8 py-4 rounded-full animate-glow"
                 asChild
               >
                 <Link to="/signup">
@@ -222,7 +235,7 @@ const Index = () => {
               <Button 
                 size="lg" 
                 variant="outline" 
-                className="text-lg px-8 py-4 rounded-full border-2 border-purple-500 text-purple-600 hover:bg-purple-500 hover:text-white transform hover:scale-105 active:scale-95 transition-all duration-300 shadow-md hover:shadow-lg"
+                className="text-lg px-8 py-4 rounded-full border-2 glass-soft hover-lift"
                 asChild
               >
                 <Link to="/example">
@@ -247,43 +260,46 @@ const Index = () => {
           </div>
           
           <div className="grid md:grid-cols-3 gap-8">
-            <Card className="border-0 shadow-soft hover:shadow-medium transition-smooth bg-white group">
-              <CardContent className="p-8 text-center">
-                <div className="mb-6 flex justify-center">
-                  <div className="w-16 h-16 bg-purple-100 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-smooth">
-                    <Link2 className="w-8 h-8 text-purple-600" />
+            <Card className="glass-card border-0 group hover-lift animate-fade-in opacity-0 [animation-fill-mode:forwards] stagger-1">
+              <CardContent className="p-8 text-center relative overflow-hidden">
+                <div className="absolute inset-0 animate-shimmer opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                <div className="mb-6 flex justify-center relative z-10">
+                  <div className="w-16 h-16 bg-gradient-to-br from-primary/20 to-accent/20 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-smooth animate-float">
+                    <Link2 className="w-8 h-8 text-primary" />
                   </div>
                 </div>
-                <h3 className="text-xl font-bold mb-4 text-foreground">واجهة مميزة</h3>
-                <p className="text-muted-foreground leading-relaxed">
+                <h3 className="text-xl font-bold mb-4 text-foreground relative z-10">واجهة مميزة</h3>
+                <p className="text-muted-foreground leading-relaxed relative z-10">
                   اعرض خدماتك وبياناتك بطريقة منظمة لتبني ثقة مع العميل من اللحظة الأولى.
                 </p>
               </CardContent>
             </Card>
 
-            <Card className="border-0 shadow-soft hover:shadow-medium transition-smooth bg-white group">
-              <CardContent className="p-8 text-center">
-                <div className="mb-6 flex justify-center">
-                  <div className="w-16 h-16 bg-blue-100 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-smooth">
-                    <Calendar className="w-8 h-8 text-blue-600" />
+            <Card className="glass-card border-0 group hover-lift animate-fade-in opacity-0 [animation-fill-mode:forwards] stagger-2">
+              <CardContent className="p-8 text-center relative overflow-hidden">
+                <div className="absolute inset-0 animate-shimmer opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                <div className="mb-6 flex justify-center relative z-10">
+                  <div className="w-16 h-16 bg-gradient-to-br from-primary/20 to-accent/20 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-smooth animate-float stagger-2">
+                    <Calendar className="w-8 h-8 text-primary" />
                   </div>
                 </div>
-                <h3 className="text-xl font-bold mb-4 text-foreground">نظام حجز ذكي</h3>
-                <p className="text-muted-foreground leading-relaxed">
+                <h3 className="text-xl font-bold mb-4 text-foreground relative z-10">نظام حجز ذكي</h3>
+                <p className="text-muted-foreground leading-relaxed relative z-10">
                   امنح عملاءك سهولة طلب المواعيد معك مباشرة، إدارة ذكية لجدولك مع إشعارات فورية لكل طلب جديد.
                 </p>
               </CardContent>
             </Card>
 
-            <Card className="border-0 shadow-soft hover:shadow-medium transition-smooth bg-white group">
-              <CardContent className="p-8 text-center">
-                <div className="mb-6 flex justify-center">
-                  <div className="w-16 h-16 bg-green-100 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-smooth">
-                    <Users className="w-8 h-8 text-green-600" />
+            <Card className="glass-card border-0 group hover-lift animate-fade-in opacity-0 [animation-fill-mode:forwards] stagger-3">
+              <CardContent className="p-8 text-center relative overflow-hidden">
+                <div className="absolute inset-0 animate-shimmer opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                <div className="mb-6 flex justify-center relative z-10">
+                  <div className="w-16 h-16 bg-gradient-to-br from-primary/20 to-accent/20 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-smooth animate-float stagger-3">
+                    <Users className="w-8 h-8 text-primary" />
                   </div>
                 </div>
-                <h3 className="text-xl font-bold mb-4 text-foreground">عنوان رقمي مخصص</h3>
-                <p className="text-muted-foreground leading-relaxed">
+                <h3 className="text-xl font-bold mb-4 text-foreground relative z-10">عنوان رقمي مخصص</h3>
+                <p className="text-muted-foreground leading-relaxed relative z-10">
                   احصل على رابط شخصي يعكس هويتك، سهل المشاركة، يُحفظ بسهولة، ويتيح الوصول إليك من أي مكان.
                 </p>
               </CardContent>
@@ -305,9 +321,9 @@ const Index = () => {
           </div>
           
           <div className="grid md:grid-cols-3 gap-8 max-w-4xl mx-auto">
-            <div className="text-center">
+            <div className="text-center animate-slide-up opacity-0 [animation-fill-mode:forwards] stagger-1">
               <div className="mb-6 flex justify-center">
-                <div className="w-16 h-16 bg-gradient-to-r from-purple-500 to-pink-500 rounded-2xl flex items-center justify-center text-white text-2xl font-bold">
+                <div className="w-16 h-16 bg-gradient-primary rounded-2xl flex items-center justify-center text-white text-2xl font-bold hover-scale animate-glow">
                   1
                 </div>
               </div>
@@ -317,9 +333,9 @@ const Index = () => {
               </p>
             </div>
 
-            <div className="text-center">
+            <div className="text-center animate-slide-up opacity-0 [animation-fill-mode:forwards] stagger-2">
               <div className="mb-6 flex justify-center">
-                <div className="w-16 h-16 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-2xl flex items-center justify-center text-white text-2xl font-bold">
+                <div className="w-16 h-16 bg-gradient-primary rounded-2xl flex items-center justify-center text-white text-2xl font-bold hover-scale animate-glow">
                   2
                 </div>
               </div>
@@ -329,9 +345,9 @@ const Index = () => {
               </p>
             </div>
 
-            <div className="text-center">
+            <div className="text-center animate-slide-up opacity-0 [animation-fill-mode:forwards] stagger-3">
               <div className="mb-6 flex justify-center">
-                <div className="w-16 h-16 bg-gradient-to-r from-green-500 to-emerald-500 rounded-2xl flex items-center justify-center text-white text-2xl font-bold">
+                <div className="w-16 h-16 bg-gradient-primary rounded-2xl flex items-center justify-center text-white text-2xl font-bold hover-scale animate-glow">
                   3
                 </div>
               </div>
@@ -345,30 +361,35 @@ const Index = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 relative overflow-hidden bg-muted/30">
-        <div className="container mx-auto px-4 text-center relative z-10">
-          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6">
-            ابدأ ملفك المميز
-          </h2>
-          <p className="text-lg text-muted-foreground mb-8 max-w-2xl mx-auto">
-            انضم إلى ملف واحصل على ظهور رقمي فعال
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button 
-              size="lg" 
-              className="bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white text-lg px-12 py-4 rounded-full transform hover:scale-105 active:scale-95 transition-all duration-300 shadow-lg hover:shadow-xl" 
-              asChild
-            >
-              <Link to="/signup">أنشئ ملفك الآن</Link>
-            </Button>
-            <Button 
-              size="lg" 
-              variant="outline" 
-              className="text-lg px-12 py-4 rounded-full border-2 border-purple-500 text-purple-600 hover:bg-purple-500 hover:text-white transform hover:scale-105 active:scale-95 transition-all duration-300 shadow-md hover:shadow-lg" 
-              onClick={handleContactUs}
-            >
-              {language === "ar" ? "تواصل معنا" : "Contact Us"}
-            </Button>
+      <section className="py-20 relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-primary opacity-5"></div>
+        
+        {/* Glass CTA Card */}
+        <div className="container mx-auto px-4 relative z-10">
+          <div className="max-w-4xl mx-auto glass-card p-12 text-center">
+            <h2 className="text-3xl md:text-4xl font-bold text-gradient mb-6 animate-fade-in">
+              ابدأ ملفك المميز
+            </h2>
+            <p className="text-lg text-muted-foreground mb-8 max-w-2xl mx-auto animate-slide-up stagger-1">
+              انضم إلى ملف واحصل على ظهور رقمي فعال يميزك في سوق العمل الحر
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center animate-slide-up stagger-2">
+              <Button 
+                size="lg" 
+                className="glass-button text-white text-lg px-12 py-4 rounded-full animate-glow" 
+                asChild
+              >
+                <Link to="/signup">أنشئ ملفك الآن</Link>
+              </Button>
+              <Button 
+                size="lg" 
+                variant="outline" 
+                className="text-lg px-12 py-4 rounded-full glass-soft hover-lift" 
+                onClick={handleContactUs}
+              >
+                {language === "ar" ? "تواصل معنا" : "Contact Us"}
+              </Button>
+            </div>
           </div>
         </div>
       </section>

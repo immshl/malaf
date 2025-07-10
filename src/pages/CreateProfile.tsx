@@ -672,21 +672,27 @@ const CreateProfile = () => {
                   </Label>
                   <div className="grid grid-cols-2 gap-3">
                     {days.map((day) => (
-                      <div key={day.value} className="flex items-center space-x-2 space-x-reverse">
-                        <Checkbox
-                          id={day.value}
-                          checked={profileData.availableDays.includes(day.value)}
-                          onCheckedChange={() => toggleDay(day.value)}
-                        />
-                        <Label
-                          htmlFor={day.value}
-                          className="text-sm font-normal cursor-pointer"
-                        >
-                          {day.label}
-                        </Label>
-                      </div>
+                      <Button
+                        key={day.value}
+                        type="button"
+                        variant={profileData.availableDays.includes(day.value) ? "default" : "outline"}
+                        className={`h-12 relative transition-all duration-200 hover:scale-105 ${
+                          profileData.availableDays.includes(day.value)
+                            ? "bg-gradient-primary text-white shadow-md ring-2 ring-primary/20 border-primary"
+                            : "hover:bg-gradient-primary/10 hover:border-primary/30"
+                        }`}
+                        onClick={() => toggleDay(day.value)}
+                      >
+                        <span className="font-medium">{day.label}</span>
+                        {profileData.availableDays.includes(day.value) && (
+                          <div className="absolute top-1 right-1 w-2 h-2 bg-white rounded-full animate-scale-in"></div>
+                        )}
+                      </Button>
                     ))}
                   </div>
+                  <p className="text-xs text-muted-foreground">
+                    اختر الأيام التي تكون متاحاً فيها لاستقبال الاجتماعات
+                  </p>
                 </div>
 
                 {/* الفترة الزمنية */}

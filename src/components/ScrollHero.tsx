@@ -21,7 +21,7 @@ const ScrollHero = () => {
         pin: true,
       });
 
-      // Animate background gradients with new theme
+      // Animate background gradients with 2 scrolls only
       const backgroundTl = gsap.timeline({
         scrollTrigger: {
           trigger: heroRef.current,
@@ -33,10 +33,6 @@ const ScrollHero = () => {
 
       backgroundTl
         .to(backgroundRef.current, {
-          background: "linear-gradient(135deg, hsl(195 6% 13%) 0%, hsl(183 55% 62%) 50%, hsl(195 6% 25%) 100%)",
-          duration: 1,
-        })
-        .to(backgroundRef.current, {
           background: "linear-gradient(135deg, hsl(183 55% 62%) 0%, hsl(195 6% 13%) 50%, hsl(0 1% 15%) 100%)",
           duration: 1,
         })
@@ -45,9 +41,22 @@ const ScrollHero = () => {
           duration: 1,
         });
 
-      // Animate text lines with scroll - simplified for better visibility
+      // Animate text lines with scroll - 2 scrolls only
       textLinesRef.current.forEach((line, index) => {
         if (line) {
+          let startPercent, endPercent;
+          
+          // First scroll: elements 0 and 1
+          if (index <= 1) {
+            startPercent = index * 25;
+            endPercent = (index + 1) * 25;
+          } 
+          // Second scroll: elements 2 and 3
+          else {
+            startPercent = 50 + ((index - 2) * 25);
+            endPercent = 50 + ((index - 1) * 25);
+          }
+          
           gsap.fromTo(line,
             {
               opacity: 0,
@@ -62,8 +71,8 @@ const ScrollHero = () => {
               ease: "power2.out",
               scrollTrigger: {
                 trigger: heroRef.current,
-                start: `top+=${index * 15}% top`,
-                end: `top+=${(index + 1) * 15}% top`,
+                start: `top+=${startPercent}% top`,
+                end: `top+=${endPercent}% top`,
                 scrub: 0.5,
                 toggleActions: "play none none reverse",
               },
@@ -72,7 +81,7 @@ const ScrollHero = () => {
         }
       });
 
-      // Animate buttons - simplified
+      // Animate buttons - appears on second scroll
       gsap.fromTo(".hero-buttons",
         {
           opacity: 0,
@@ -85,7 +94,7 @@ const ScrollHero = () => {
           ease: "power2.out",
           scrollTrigger: {
             trigger: heroRef.current,
-            start: "top+=60% top",
+            start: "top+=75% top",
             end: "bottom top",
             scrub: 0.3,
           },

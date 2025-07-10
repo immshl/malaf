@@ -113,7 +113,7 @@ const Index = () => {
         </div>
 
         {/* Mobile Dropdown Menu */}
-        <div className={`mobile-menu-container md:hidden transition-all duration-500 ease-in-out ${
+        <div className={`mobile-menu-container md:hidden overflow-hidden transition-all duration-500 ease-in-out ${
           isMobileMenuOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
         }`}>
           <div className="px-4 py-6 bg-gradient-to-b from-background/95 to-background/90 backdrop-blur-sm border-t border-border/50 shadow-lg">
@@ -138,25 +138,31 @@ const Index = () => {
                   <span>كيف يعمل</span>
                 </div>
               </a>
-              <Link 
-                to="/signin" 
-                className="text-muted-foreground hover:text-foreground transition-all duration-300 py-3 px-4 text-lg font-medium rounded-lg hover:bg-muted/50 hover:transform hover:scale-105 active:scale-95"
-                onClick={closeMobileMenu}
-              >
-                <div className="flex items-center space-x-3 space-x-reverse">
-                  <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-                  <span>تسجيل الدخول</span>
-                </div>
-              </Link>
+              
               <div className="pt-4 border-t border-border/20">
-                <Button 
-                  variant="default" 
-                  size="lg" 
-                  className="w-full text-lg py-4 rounded-full bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 transform hover:scale-105 active:scale-95 transition-all duration-300 shadow-lg"
-                  asChild
-                >
-                  <Link to="/signup" onClick={closeMobileMenu}>أنشئ ملفك</Link>
-                </Button>
+                <div className="flex flex-col space-y-3">
+                  <Link 
+                    to="/signin" 
+                    className="w-full"
+                    onClick={closeMobileMenu}
+                  >
+                    <Button 
+                      variant="outline" 
+                      size="lg" 
+                      className="w-full text-lg py-4 rounded-full border-2 border-purple-500 text-purple-600 hover:bg-purple-500 hover:text-white transform hover:scale-105 active:scale-95 transition-all duration-300 shadow-md hover:shadow-lg"
+                    >
+                      تسجيل الدخول
+                    </Button>
+                  </Link>
+                  <Button 
+                    variant="default" 
+                    size="lg" 
+                    className="w-full text-lg py-4 rounded-full bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 transform hover:scale-105 active:scale-95 transition-all duration-300 shadow-lg"
+                    asChild
+                  >
+                    <Link to="/signup" onClick={closeMobileMenu}>أنشئ ملفك المهني</Link>
+                  </Button>
+                </div>
               </div>
             </div>
           </div>

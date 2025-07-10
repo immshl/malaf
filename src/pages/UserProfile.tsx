@@ -43,7 +43,6 @@ const UserProfile = () => {
   const profileData = {
     fullName: "أحمد محمد السالم",
     username: "ahmed-salem",
-    profession: "مطور ويب وتطبيقات",
     location: "الرياض، السعودية",
     bio: "مطور ويب محترف بخبرة تزيد عن 5 سنوات في تطوير التطبيقات والمواقع الإلكترونية. أساعد الشركات والأفراد على تحويل أفكارهم إلى واقع رقمي باستخدام أحدث التقنيات.",
     profileImage: "/placeholder.svg",
@@ -385,9 +384,6 @@ const UserProfile = () => {
                 <h1 className="text-2xl font-bold text-foreground mb-2">
                   {profileData.fullName}
                 </h1>
-                <p className="text-lg text-primary font-medium mb-3">
-                  {profileData.profession}
-                </p>
                 {profileData.location && (
                   <div className="flex items-center justify-center text-muted-foreground mb-4">
                     <MapPin className="ml-2 h-4 w-4" />

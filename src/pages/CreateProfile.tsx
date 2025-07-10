@@ -20,7 +20,6 @@ const CreateProfile = () => {
     fullName: "",
     username: "",
     bio: "",
-    profession: "",
     location: "",
     profileImage: "",
     services: [""],
@@ -91,7 +90,6 @@ const CreateProfile = () => {
           username: profileData.username,
           full_name: profileData.fullName,
           bio: profileData.bio,
-          profession: profileData.profession,
           location: profileData.location || null,
           contact_email: profileData.workEmail,
           instagram_url: profileData.instagram || null,
@@ -335,21 +333,6 @@ const CreateProfile = () => {
                   <p className="text-xs text-muted-foreground">
                     سيكون رابطك: malaf.me/{profileData.username || "username"}
                   </p>
-                </div>
-
-                {/* المهنة */}
-                <div className="space-y-2">
-                  <Label htmlFor="profession" className="text-foreground font-medium">
-                    المهنة *
-                  </Label>
-                  <Input
-                    id="profession"
-                    value={profileData.profession}
-                    onChange={(e) => setProfileData(prev => ({ ...prev, profession: e.target.value }))}
-                    placeholder="مثل: مطور ويب، مصمم جرافيك، مترجم"
-                    required
-                    className="text-right"
-                  />
                 </div>
 
                 {/* الموقع */}

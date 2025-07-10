@@ -19,8 +19,27 @@ export default {
 		},
 		extend: {
 			fontFamily: {
+				'inter': ['Inter', 'sans-serif'],
 				'arabic': ['Cairo', 'Tajawal', 'system-ui', 'sans-serif'],
-				'sans': ['Cairo', 'Tajawal', 'system-ui', 'sans-serif'],
+				'sans': ['Inter', 'Cairo', 'Tajawal', 'system-ui', 'sans-serif'],
+			},
+			fontSize: {
+				'xs': ['0.75rem', { lineHeight: '1.5', letterSpacing: '0.025em' }],
+				'sm': ['0.875rem', { lineHeight: '1.5', letterSpacing: '0.01em' }],
+				'base': ['1rem', { lineHeight: '1.6', letterSpacing: '0' }],
+				'lg': ['1.125rem', { lineHeight: '1.6', letterSpacing: '-0.01em' }],
+				'xl': ['1.25rem', { lineHeight: '1.5', letterSpacing: '-0.01em' }],
+				'2xl': ['1.5rem', { lineHeight: '1.4', letterSpacing: '-0.02em' }],
+				'3xl': ['1.875rem', { lineHeight: '1.3', letterSpacing: '-0.02em' }],
+				'4xl': ['2.25rem', { lineHeight: '1.2', letterSpacing: '-0.03em' }],
+				'5xl': ['3rem', { lineHeight: '1.1', letterSpacing: '-0.03em' }],
+			},
+			spacing: {
+				'18': '4.5rem',
+				'22': '5.5rem',
+				'26': '6.5rem',
+				'30': '7.5rem',
+				'34': '8.5rem',
 			},
 			colors: {
 				border: 'hsl(var(--border))',
@@ -84,9 +103,12 @@ export default {
 				'bounce': 'var(--transition-bounce)'
 			},
 			borderRadius: {
-				lg: 'var(--radius)',
-				md: 'calc(var(--radius) - 2px)',
-				sm: 'calc(var(--radius) - 4px)'
+				'lg': '12px',
+				'xl': '16px',
+				'2xl': '20px', 
+				'3xl': '24px',
+				'md': '8px',
+				'sm': '6px'
 			},
 			keyframes: {
 				'accordion-down': {

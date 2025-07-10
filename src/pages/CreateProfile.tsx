@@ -384,7 +384,10 @@ const CreateProfile = () => {
                         variant={profileData.emoji === emoji ? "default" : "outline"}
                         size="sm"
                         className="w-10 h-10 p-0 text-lg"
-                        onClick={() => setProfileData(prev => ({ ...prev, emoji }))}
+                        onClick={() => setProfileData(prev => ({ 
+                          ...prev, 
+                          emoji: prev.emoji === emoji ? "" : emoji 
+                        }))}
                       >
                         {emoji}
                       </Button>
@@ -434,7 +437,10 @@ const CreateProfile = () => {
                                         ? "bg-gradient-primary text-white shadow-md ring-2 ring-primary/20" 
                                         : "hover:bg-gradient-primary/10 hover:shadow-sm"
                                     }`}
-                                    onClick={() => setProfileData(prev => ({ ...prev, emoji }))}
+                                    onClick={() => setProfileData(prev => ({ 
+                                      ...prev, 
+                                      emoji: prev.emoji === emoji ? "" : emoji 
+                                    }))}
                                   >
                                     {emoji}
                                   </Button>

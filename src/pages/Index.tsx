@@ -7,7 +7,7 @@ import { useLanguage } from "@/hooks/useLanguage";
 import AuthButton from "@/components/AuthButton";
 
 const Index = () => {
-  const { language } = useLanguage();
+  const { language, t } = useLanguage();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const toggleMobileMenu = () => {
@@ -87,10 +87,10 @@ const Index = () => {
             {/* Navigation Links */}
             <div className="hidden md:flex items-center space-x-8 space-x-reverse">
               <a href="#features" className="text-muted-foreground hover:text-foreground transition-smooth">
-                المميزات
+                {language === "ar" ? "المميزات" : "Features"}
               </a>
               <a href="#how-it-works" className="text-muted-foreground hover:text-foreground transition-smooth">
-                كيف يعمل
+                {language === "ar" ? "كيف يعمل" : "How It Works"}
               </a>
               <AuthButton />
             </div>
@@ -138,7 +138,7 @@ const Index = () => {
                       onClick={() => setIsMobileMenuOpen(false)}
                     >
                       <div className="w-3 h-3 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full shadow-sm"></div>
-                      <span className="text-lg font-medium">المميزات</span>
+                      <span className="text-lg font-medium">{language === "ar" ? "المميزات" : "Features"}</span>
                     </a>
                     <a 
                       href="#how-it-works" 
@@ -146,7 +146,7 @@ const Index = () => {
                       onClick={() => setIsMobileMenuOpen(false)}
                     >
                       <div className="w-3 h-3 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-full shadow-sm"></div>
-                      <span className="text-lg font-medium">كيف يعمل</span>
+                      <span className="text-lg font-medium">{language === "ar" ? "كيف يعمل" : "How It Works"}</span>
                     </a>
                   </div>
                   
@@ -158,7 +158,7 @@ const Index = () => {
                       className="block"
                     >
                       <button className="w-full py-4 px-6 text-lg font-medium text-purple-600 bg-white/50 hover:bg-white dark:bg-gray-800/50 dark:hover:bg-gray-800 border-2 border-purple-500/30 hover:border-purple-500 rounded-2xl hover:text-white hover:bg-gradient-to-r hover:from-purple-500 hover:to-purple-600 transition-all duration-300 transform hover:scale-[1.02] hover:shadow-lg backdrop-blur-sm">
-                        تسجيل الدخول
+                        {language === "ar" ? "تسجيل الدخول" : "Sign In"}
                       </button>
                     </Link>
                     <Link 
@@ -167,7 +167,7 @@ const Index = () => {
                       className="block"
                     >
                       <button className="w-full py-4 px-6 text-lg font-medium text-white bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 rounded-2xl transition-all duration-300 transform hover:scale-[1.02] hover:shadow-xl shadow-lg">
-                        أنشئ ملفك المهني
+                        {language === "ar" ? "أنشئ ملفك المهني" : "Create Your Profile"}
                       </button>
                     </Link>
                   </div>
@@ -184,12 +184,12 @@ const Index = () => {
         <div className="container mx-auto px-4 relative z-10">
           <div className="max-w-4xl mx-auto text-center">
             <p className="text-sm text-muted-foreground mb-4 font-medium">
-              لتمكين العمل الحر
+              {language === "ar" ? "لتمكين العمل الحر" : "Empowering Freelancers"}
             </p>
             
             <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight">
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-600 via-pink-500 to-blue-500">
-                ملف مهني خاص بك
+                {language === "ar" ? "ملف مهني خاص بك" : "Your Professional Profile"}
               </span>
             </h1>
             
@@ -200,7 +200,7 @@ const Index = () => {
                 asChild
               >
                 <Link to="/signup">
-                  اصنع ملفك المهني
+                  {language === "ar" ? "اصنع ملفك المهني" : "Create Your Profile"}
                 </Link>
               </Button>
               <Button 
@@ -210,7 +210,7 @@ const Index = () => {
                 asChild
               >
                 <Link to="/example">
-                  شاهد نموذج
+                  {language === "ar" ? "شاهد نموذج" : "View Example"}
                 </Link>
               </Button>
             </div>
@@ -223,10 +223,10 @@ const Index = () => {
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-              كل ما تحتاجه لبناء حضور رقمي فعال
+              {language === "ar" ? "كل ما تحتاجه لبناء حضور رقمي فعال" : "Everything You Need for Effective Digital Presence"}
             </h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              حلول ذكية ومبتكرة تساعدك على التميز في سوق العمل الحر وجذب المزيد من الفرص.
+              {language === "ar" ? "حلول ذكية ومبتكرة تساعدك على التميز في سوق العمل الحر وجذب المزيد من الفرص." : "Smart and innovative solutions that help you stand out in the freelance market and attract more opportunities."}
             </p>
           </div>
           
@@ -238,9 +238,11 @@ const Index = () => {
                     <Link2 className="w-8 h-8 text-purple-600" />
                   </div>
                 </div>
-                <h3 className="text-xl font-bold mb-4 text-foreground">واجهة مميزة</h3>
+                <h3 className="text-xl font-bold mb-4 text-foreground">
+                  {language === "ar" ? "واجهة مميزة" : "Professional Interface"}
+                </h3>
                 <p className="text-muted-foreground leading-relaxed">
-                  اعرض خدماتك وبياناتك بطريقة منظمة لتبني ثقة مع العميل من اللحظة الأولى.
+                  {language === "ar" ? "اعرض خدماتك وبياناتك بطريقة منظمة لتبني ثقة مع العميل من اللحظة الأولى." : "Showcase your services and data in an organized way to build trust with clients from the first moment."}
                 </p>
               </CardContent>
             </Card>
@@ -252,9 +254,11 @@ const Index = () => {
                     <Calendar className="w-8 h-8 text-blue-600" />
                   </div>
                 </div>
-                <h3 className="text-xl font-bold mb-4 text-foreground">نظام حجز ذكي</h3>
+                <h3 className="text-xl font-bold mb-4 text-foreground">
+                  {language === "ar" ? "نظام حجز ذكي" : "Smart Booking System"}
+                </h3>
                 <p className="text-muted-foreground leading-relaxed">
-                  امنح عملاءك سهولة طلب المواعيد معك مباشرة، إدارة ذكية لجدولك مع إشعارات فورية لكل طلب جديد.
+                  {language === "ar" ? "امنح عملاءك سهولة طلب المواعيد معك مباشرة، إدارة ذكية لجدولك مع إشعارات فورية لكل طلب جديد." : "Allow your clients to easily book appointments with you directly, smart management for your schedule with instant notifications for every new request."}
                 </p>
               </CardContent>
             </Card>
@@ -266,9 +270,11 @@ const Index = () => {
                     <Users className="w-8 h-8 text-green-600" />
                   </div>
                 </div>
-                <h3 className="text-xl font-bold mb-4 text-foreground">عنوان رقمي مخصص</h3>
+                <h3 className="text-xl font-bold mb-4 text-foreground">
+                  {language === "ar" ? "عنوان رقمي مخصص" : "Custom Digital Address"}
+                </h3>
                 <p className="text-muted-foreground leading-relaxed">
-                  احصل على رابط شخصي يعكس هويتك، سهل المشاركة، يُحفظ بسهولة، ويتيح الوصول إليك من أي مكان.
+                  {language === "ar" ? "احصل على رابط شخصي يعكس هويتك، سهل المشاركة، يُحفظ بسهولة، ويتيح الوصول إليك من أي مكان." : "Get a personal link that reflects your identity, easy to share, easy to remember, and allows access to you from anywhere."}
                 </p>
               </CardContent>
             </Card>
@@ -281,10 +287,10 @@ const Index = () => {
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-              كيف يعمل ملف؟
+              {language === "ar" ? "كيف يعمل ملف؟" : "How Does Malaf Work?"}
             </h2>
             <p className="text-lg text-muted-foreground">
-              ثلاث خطوات بسيطة
+              {language === "ar" ? "ثلاث خطوات بسيطة" : "Three Simple Steps"}
             </p>
           </div>
           
@@ -295,9 +301,11 @@ const Index = () => {
                   1
                 </div>
               </div>
-              <h3 className="text-xl font-bold mb-4 text-foreground">أنشئ ملفك</h3>
+              <h3 className="text-xl font-bold mb-4 text-foreground">
+                {language === "ar" ? "أنشئ ملفك" : "Create Your Profile"}
+              </h3>
               <p className="text-muted-foreground leading-relaxed">
-                أدخل معلوماتك وخدماتك بخطوات بسيطة
+                {language === "ar" ? "أدخل معلوماتك وخدماتك بخطوات بسيطة" : "Enter your information and services in simple steps"}
               </p>
             </div>
 
@@ -307,9 +315,11 @@ const Index = () => {
                   2
                 </div>
               </div>
-              <h3 className="text-xl font-bold mb-4 text-foreground">شارك ملفك</h3>
+              <h3 className="text-xl font-bold mb-4 text-foreground">
+                {language === "ar" ? "شارك ملفك" : "Share Your Profile"}
+              </h3>
               <p className="text-muted-foreground leading-relaxed">
-                احصل على رابط شخصي لمشاركته مع العملاء
+                {language === "ar" ? "احصل على رابط شخصي لمشاركته مع العملاء" : "Get a personal link to share with clients"}
               </p>
             </div>
 
@@ -319,9 +329,11 @@ const Index = () => {
                   3
                 </div>
               </div>
-              <h3 className="text-xl font-bold mb-4 text-foreground">استقبل الطلبات</h3>
+              <h3 className="text-xl font-bold mb-4 text-foreground">
+                {language === "ar" ? "استقبل الطلبات" : "Receive Requests"}
+              </h3>
               <p className="text-muted-foreground leading-relaxed">
-                اربط مع العملاء واستقبل طلبات المشاريع
+                {language === "ar" ? "اربط مع العملاء واستقبل طلبات المشاريع" : "Connect with clients and receive project requests"}
               </p>
             </div>
           </div>
@@ -332,10 +344,10 @@ const Index = () => {
       <section className="py-20 relative overflow-hidden bg-muted/30">
         <div className="container mx-auto px-4 text-center relative z-10">
           <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6">
-            ابدأ ملفك المميز
+            {language === "ar" ? "ابدأ ملفك المميز" : "Start Your Distinguished Profile"}
           </h2>
           <p className="text-lg text-muted-foreground mb-8 max-w-2xl mx-auto">
-            انضم إلى ملف واحصل على ظهور رقمي فعال
+            {language === "ar" ? "انضم إلى ملف واحصل على ظهور رقمي فعال" : "Join Malaf and get an effective digital presence"}
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button 
@@ -343,7 +355,7 @@ const Index = () => {
               className="bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white text-lg px-12 py-4 rounded-full transform hover:scale-105 active:scale-95 transition-all duration-300 shadow-lg hover:shadow-xl" 
               asChild
             >
-              <Link to="/signup">أنشئ ملفك الآن</Link>
+              <Link to="/signup">{language === "ar" ? "أنشئ ملفك الآن" : "Create Your Profile Now"}</Link>
             </Button>
             <Button 
               size="lg" 

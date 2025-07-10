@@ -241,7 +241,7 @@ const Index = () => {
               <CardContent className="p-8 text-center">
                 <div className="mb-6 flex justify-center">
                   <div className="w-16 h-16 bg-purple-100 dark:bg-purple-900/20 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-smooth">
-                    <Link2 className="w-8 h-8 text-purple-600 dark:text-purple-400" />
+                    <Users className="w-8 h-8 text-purple-600 dark:text-purple-400" />
                   </div>
                 </div>
                 <h3 className="text-xl font-bold mb-4 text-card-foreground">
@@ -273,7 +273,7 @@ const Index = () => {
               <CardContent className="p-8 text-center">
                 <div className="mb-6 flex justify-center">
                   <div className="w-16 h-16 bg-green-100 dark:bg-green-900/20 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-smooth">
-                    <Users className="w-8 h-8 text-green-600 dark:text-green-400" />
+                    <Link2 className="w-8 h-8 text-green-600 dark:text-green-400" />
                   </div>
                 </div>
                 <h3 className="text-xl font-bold mb-4 text-card-foreground">

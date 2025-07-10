@@ -3,198 +3,204 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { 
-  Copy, 
-  Calendar as CalendarIcon, 
+  Calendar, 
   MapPin, 
   Star, 
   Clock, 
   Mail, 
+  Phone, 
+  Globe, 
   Instagram, 
   Twitter, 
-  ExternalLink,
-  User,
-  CheckCircle
+  Linkedin,
+  Copy,
+  Check
 } from "lucide-react";
 import { Link } from "react-router-dom";
-import { useToast } from "@/hooks/use-toast";
 
 
 const ExampleProfile = () => {
-  const { toast } = useToast();
-  
-  // بيانات المستخدم التجريبية
-  const profileData = {
-    fullName: "مشعل ثاني",
-    username: "immshl",
-    bio: "أعرف أفكر — أساعد الشركات والأفراد على ابتكار حلول أعمال إبداعية وسويت هذي المنصة عشان الكل يستفيد منها. خبرة واسعة في تطوير الاستراتيجيات والحلول المبتكرة للأعمال.",
-    profileImage: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face",
-    emoji: "👑",
-    services: [
-      "استشارة أعمال",
-      "تطوير استراتيجية", 
-      "حلول إبداعية",
-      "تطوير الأعمال"
-    ],
-    skills: ["استشارة أعمال", "حلول إبداعية", "استراتيجية", "تطوير الأعمال", "ريادة الأعمال"],
-    topClients: [
-      "stc",
-      "وزارة الاتصالات", 
-      "anb",
-      "هدف"
-    ],
-    instagram: "@immshl",
-    twitter: "@immshl", 
-    workEmail: "iimmshl@gmail.com",
-    externalLink: "",
-    location: "الرياض، المملكة العربية السعودية",
-    rating: 4.9,
-    reviewCount: 47,
-    availableDays: ["saturday", "sunday", "monday", "tuesday", "wednesday", "thursday"],
-    timeSlot: "morning"
+  const [copied, setCopied] = useState(false);
+
+  const handleCopyLink = () => {
+    navigator.clipboard.writeText("https://malaf.me/ahmad-salem");
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
   };
 
-  const copyLink = () => {
-    const profileUrl = `https://malaf.me/${profileData.username}`;
-    navigator.clipboard.writeText(profileUrl);
-    toast({
-      title: "تم نسخ الرابط",
-      description: "تم نسخ رابط الملف الشخصي بنجاح",
-    });
-  };
+  const services = [
+    { name: "تصميم المواقع", price: "من 500 ريال", duration: "5-7 أيام" },
+    { name: "تطوير التطبيقات", price: "من 1500 ريال", duration: "2-3 أسابيع" },
+    { name: "استشارة تقنية", price: "200 ريال/ساعة", duration: "ساعة واحدة" },
+  ];
 
   return (
-    <div className="min-h-screen bg-background py-8">
-      <div className="container mx-auto px-4 max-w-2xl">
-        {/* الملف الشخصي المركزي */}
-        <div className="text-center space-y-8">
-          {/* الصورة الشخصية والمعلومات الأساسية */}
-          <div className="space-y-6">
-            <div className="relative inline-block">
-              <Avatar className="w-32 h-32 mx-auto border-4 border-muted">
-                <AvatarImage src={profileData.profileImage} />
-                <AvatarFallback className="bg-gradient-primary text-white text-3xl">
-                  <User className="w-16 h-16" />
-                </AvatarFallback>
+    <div className="min-h-screen bg-background">
+      {/* Header */}
+      <div className="sticky top-0 bg-background/80 backdrop-blur-md border-b z-40">
+        <div className="container mx-auto px-4 py-4 flex justify-between items-center">
+          <Link to="/" className="flex items-center space-x-2 space-x-reverse">
+            <div className="w-8 h-8 flex items-center justify-center">
+              <img 
+                src="/lovable-uploads/053ffcb6-5dac-4834-a5ef-585d29be4be9.png" 
+                alt="ملف" 
+                className="w-full h-full object-contain"
+              />
+            </div>
+            <span className="font-bold text-foreground">malaf</span>
+          </Link>
+          <Button variant="outline" asChild>
+            <Link to="/signup">أنشئ ملفك المجاني</Link>
+          </Button>
+        </div>
+      </div>
+
+      <div className="container mx-auto px-4 py-8 max-w-4xl">
+        {/* Profile Header */}
+        <Card className="border-0 shadow-soft mb-8">
+          <CardContent className="p-8">
+            <div className="flex flex-col md:flex-row gap-6 items-start">
+              <Avatar className="w-24 h-24 border-4 border-primary/20">
+                <AvatarFallback className="text-xl font-bold bg-gradient-primary text-white">أس</AvatarFallback>
               </Avatar>
-              {profileData.emoji && (
-                <div className="absolute -top-2 -right-2 w-10 h-10 bg-background border-2 border-background rounded-full flex items-center justify-center text-xl shadow-sm">
-                  {profileData.emoji}
-                </div>
-              )}
-            </div>
-            
-            <div className="space-y-4">
-              <h1 className="text-3xl font-bold text-foreground">
-                {profileData.fullName}
-              </h1>
               
-              <p className="text-muted-foreground leading-relaxed max-w-md mx-auto text-lg">
-                {profileData.bio}
-              </p>
-              
-              {profileData.location && (
-                <div className="flex items-center justify-center text-sm text-muted-foreground">
-                  <MapPin className="w-4 h-4 ml-2" />
-                  {profileData.location}
-                </div>
-              )}
-            </div>
-          </div>
-
-          {/* الخدمات */}
-          <div className="space-y-6">
-            <h2 className="text-2xl font-bold text-foreground">الخدمات</h2>
-            <div className="grid grid-cols-2 gap-6">
-              {profileData.services.map((service, index) => (
-                <Card key={index} className="border-0 shadow-soft hover:shadow-medium transition-all duration-300 p-6">
-                  <CardContent className="p-0 text-center">
-                    <h3 className="font-semibold text-foreground text-lg">{service}</h3>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-          </div>
-
-          {/* احجز موعد */}
-          <div className="space-y-6">
-            <div className="space-y-4">
-              <h2 className="text-2xl font-bold text-foreground">احجز موعد</h2>
-              <p className="text-muted-foreground">
-                احجز موعد لمناقشة مشروعك
-              </p>
-            </div>
-            
-            <Button 
-              size="lg" 
-              className="w-full max-w-sm mx-auto bg-foreground text-background hover:bg-foreground/90 rounded-2xl h-14 text-lg font-medium"
-            >
-              <CalendarIcon className="ml-3 h-5 w-5" />
-              احجز موعد
-            </Button>
-          </div>
-
-          {/* عملاء مميزون */}
-          {profileData.topClients && profileData.topClients.length > 0 && (
-            <div className="space-y-6">
-              <h2 className="text-2xl font-bold text-foreground">عملاء مميزون</h2>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                {/* عرض أول 4 عملاء فقط */}
-                {profileData.topClients.slice(0, 4).map((client, index) => (
-                  <div key={index} className="bg-muted/30 rounded-lg p-4">
-                    <p className="font-medium text-foreground text-center">{client}</p>
+              <div className="flex-1">
+                <div className="flex flex-col md:flex-row md:items-center justify-between mb-4">
+                  <div>
+                    <h1 className="text-3xl font-bold text-foreground mb-2">أحمد سالم</h1>
+                    <p className="text-xl text-muted-foreground mb-3">مطور ويب ومصمم واجهات</p>
+                    <div className="flex items-center text-sm text-muted-foreground mb-4">
+                      <MapPin className="w-4 h-4 ml-1" />
+                      الرياض، المملكة العربية السعودية
+                    </div>
                   </div>
-                ))}
+                  
+                  <div className="flex flex-col gap-2">
+                    <div className="flex items-center gap-2">
+                      <div className="flex items-center text-yellow-500">
+                        <Star className="w-4 h-4 fill-current" />
+                        <span className="font-semibold mr-1">4.9</span>
+                      </div>
+                      <span className="text-sm text-muted-foreground">(47 تقييم)</span>
+                    </div>
+                    <Button 
+                      variant="outline" 
+                      size="sm" 
+                      onClick={handleCopyLink}
+                      className="flex items-center gap-2"
+                    >
+                      {copied ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
+                      {copied ? "تم النسخ!" : "نسخ الرابط"}
+                    </Button>
+                  </div>
+                </div>
+                
+                <p className="text-muted-foreground leading-relaxed mb-4">
+                  مطور ويب محترف مع أكثر من 5 سنوات من الخبرة في تطوير المواقع والتطبيقات. 
+                  أتخصص في React، Node.js، وتصميم تجارب المستخدم الحديثة. أسعى دائماً لتقديم حلول تقنية مبتكرة تلبي احتياجات العملاء.
+                </p>
+                
+                <div className="flex flex-wrap gap-2 mb-6">
+                  {["React", "Node.js", "TypeScript", "UI/UX", "Mobile Apps"].map((skill) => (
+                    <Badge key={skill} variant="secondary">{skill}</Badge>
+                  ))}
+                </div>
+                
+                <div className="flex flex-wrap gap-4">
+                  <a href="mailto:ahmad@example.com" className="flex items-center gap-2 text-primary hover:text-primary-hover transition-smooth">
+                    <Mail className="w-4 h-4" />
+                    ahmad@example.com
+                  </a>
+                  <a href="tel:+966500000000" className="flex items-center gap-2 text-primary hover:text-primary-hover transition-smooth">
+                    <Phone className="w-4 h-4" />
+                    +966 50 000 0000
+                  </a>
+                  <a href="https://ahmad-portfolio.com" className="flex items-center gap-2 text-primary hover:text-primary-hover transition-smooth">
+                    <Globe className="w-4 h-4" />
+                    ahmad-portfolio.com
+                  </a>
+                </div>
               </div>
             </div>
-          )}
+          </CardContent>
+        </Card>
 
-          {/* وسائل التواصل الاجتماعي */}
-          <div className="space-y-6 pt-8 border-t border-border">
-            <h2 className="text-2xl font-bold text-foreground">وسائل التواصل الاجتماعي</h2>
-            <div className="space-y-4">
-              {profileData.instagram && (
-                <a 
-                  href={`https://instagram.com/${profileData.instagram.replace('@', '')}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center justify-center gap-3 text-muted-foreground hover:text-primary transition-smooth"
-                >
-                  <Instagram className="w-5 h-5" />
-                  <span className="text-lg">{profileData.instagram}</span>
-                </a>
-              )}
-              {profileData.twitter && (
-                <a 
-                  href={`https://x.com/${profileData.twitter.replace('@', '')}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center justify-center gap-3 text-muted-foreground hover:text-primary transition-smooth"
-                >
-                  <Twitter className="w-5 h-5" />
-                  <span className="text-lg">{profileData.twitter}</span>
-                </a>
-              )}
-            </div>
+        <div className="grid lg:grid-cols-3 gap-8">
+          {/* Services */}
+          <div className="lg:col-span-2">
+            <Card className="border-0 shadow-soft">
+              <CardContent className="p-6">
+                <h2 className="text-2xl font-bold text-foreground mb-6">خدماتي</h2>
+                <div className="space-y-4">
+                  {services.map((service, index) => (
+                    <div key={index} className="border border-border rounded-lg p-4 hover:shadow-soft transition-smooth">
+                      <div className="flex justify-between items-start mb-3">
+                        <h3 className="font-semibold text-foreground">{service.name}</h3>
+                        <span className="font-bold text-primary">{service.price}</span>
+                      </div>
+                      <div className="flex items-center text-sm text-muted-foreground mb-4">
+                        <Clock className="w-4 h-4 ml-1" />
+                        مدة التسليم: {service.duration}
+                      </div>
+                      <Button size="sm" className="w-full">
+                        اطلب الخدمة
+                      </Button>
+                    </div>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
           </div>
 
-          {/* رابط النسخ في الأسفل */}
-          <div className="pt-8">
-            <Button variant="outline" onClick={copyLink} className="mx-auto">
-              <Copy className="ml-2 h-4 w-4" />
-              نسخ الرابط
-            </Button>
-            <p className="text-sm text-muted-foreground mt-2">
-              malaf.me/{profileData.username}
-            </p>
-          </div>
+          {/* Booking & Contact */}
+          <div className="space-y-6">
+            {/* Book Meeting */}
+            <Card className="border-0 shadow-soft">
+              <CardContent className="p-6">
+                <h3 className="text-xl font-bold text-foreground mb-4">احجز اجتماع</h3>
+                <p className="text-muted-foreground mb-4">
+                  احجز استشارة مجانية لمناقشة مشروعك
+                </p>
+                <Button className="w-full mb-4" variant="hero">
+                  <Calendar className="w-4 h-4 ml-2" />
+                  احجز موعد مجاني
+                </Button>
+                <div className="text-center">
+                  <div className="flex items-center justify-center text-sm text-muted-foreground">
+                    <Clock className="w-4 h-4 ml-1" />
+                    متاح: السبت - الخميس، 9ص - 6م
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
 
-          {/* رابط إنشاء ملف جديد */}
-          <div className="pt-4 pb-8">
-            <Button variant="outline" asChild>
-              <Link to="/signup">أنشئ ملفك المجاني</Link>
-            </Button>
+            {/* Social Links */}
+            <Card className="border-0 shadow-soft">
+              <CardContent className="p-6">
+                <h3 className="text-xl font-bold text-foreground mb-4">تواصل معي</h3>
+                <div className="space-y-3">
+                  <a href="#" className="flex items-center gap-3 p-3 rounded-lg hover:bg-muted/50 transition-smooth">
+                    <div className="w-10 h-10 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center">
+                      <Instagram className="w-5 h-5 text-white" />
+                    </div>
+                    <span className="font-medium">@ahmad_designs</span>
+                  </a>
+                  <a href="#" className="flex items-center gap-3 p-3 rounded-lg hover:bg-muted/50 transition-smooth">
+                    <div className="w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center">
+                      <Twitter className="w-5 h-5 text-white" />
+                    </div>
+                    <span className="font-medium">@ahmad_dev</span>
+                  </a>
+                  <a href="#" className="flex items-center gap-3 p-3 rounded-lg hover:bg-muted/50 transition-smooth">
+                    <div className="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center">
+                      <Linkedin className="w-5 h-5 text-white" />
+                    </div>
+                    <span className="font-medium">Ahmad Salem</span>
+                  </a>
+                </div>
+              </CardContent>
+            </Card>
           </div>
         </div>
       </div>

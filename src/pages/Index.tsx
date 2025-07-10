@@ -144,49 +144,45 @@ const Index = () => {
         </div>
 
         {/* Mobile Dropdown Menu */}
-        <div className={`mobile-menu-container md:hidden transition-all duration-500 ease-in-out ${
+        <div className={`mobile-menu-container md:hidden overflow-hidden transition-all duration-500 ease-in-out ${
           isMobileMenuOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
-        }`}>
-          <div className="px-4 py-6 glass-card border-t border-border/50 shadow-lg">
+        }`} style={{ zIndex: 50 }}>
+          <div className="px-4 py-6 bg-background/95 backdrop-blur-lg border-t border-border/50 shadow-xl">
             <div className="flex flex-col space-y-4">
-              <a 
-                href="#features" 
-                className="text-muted-foreground hover:text-foreground transition-all duration-300 py-3 px-4 text-lg font-medium rounded-lg hover:bg-muted/50 hover:transform hover:scale-105 active:scale-95"
-                onClick={closeMobileMenu}
-              >
-                <div className="flex items-center space-x-3 space-x-reverse">
-                  <div className="w-2 h-2 bg-purple-500 rounded-full"></div>
+              {/* أولاً: تسجيل الدخول بشكل بارز */}
+              <div className="mb-4">
+                <AuthButton />
+              </div>
+              
+              {/* ثانياً: روابط التنقل */}
+              <div className="border-t border-border/20 pt-4 space-y-2">
+                <a 
+                  href="#features" 
+                  className="flex items-center space-x-3 space-x-reverse text-muted-foreground hover:text-foreground transition-all duration-300 py-3 px-4 text-lg font-medium rounded-lg hover:bg-muted/50 hover:transform hover:scale-105 active:scale-95"
+                  onClick={closeMobileMenu}
+                >
+                  <div className="w-2 h-2 bg-primary rounded-full"></div>
                   <span>المميزات</span>
-                </div>
-              </a>
-              <a 
-                href="#how-it-works" 
-                className="text-muted-foreground hover:text-foreground transition-all duration-300 py-3 px-4 text-lg font-medium rounded-lg hover:bg-muted/50 hover:transform hover:scale-105 active:scale-95"
-                onClick={closeMobileMenu}
-              >
-                <div className="flex items-center space-x-3 space-x-reverse">
-                  <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+                </a>
+                <a 
+                  href="#how-it-works" 
+                  className="flex items-center space-x-3 space-x-reverse text-muted-foreground hover:text-foreground transition-all duration-300 py-3 px-4 text-lg font-medium rounded-lg hover:bg-muted/50 hover:transform hover:scale-105 active:scale-95"
+                  onClick={closeMobileMenu}
+                >
+                  <div className="w-2 h-2 bg-accent rounded-full"></div>
                   <span>كيف يعمل</span>
-                </div>
-              </a>
-              <Link 
-                to="/signin" 
-                className="text-muted-foreground hover:text-foreground transition-all duration-300 py-3 px-4 text-lg font-medium rounded-lg hover:bg-muted/50 hover:transform hover:scale-105 active:scale-95"
-                onClick={closeMobileMenu}
-              >
-                <div className="flex items-center space-x-3 space-x-reverse">
-                  <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-                  <span>تسجيل الدخول</span>
-                </div>
-              </Link>
+                </a>
+              </div>
+              
+              {/* ثالثاً: زر إنشاء الملف */}
               <div className="pt-4 border-t border-border/20">
                 <Button 
-                  variant="default" 
+                  variant="glass" 
                   size="lg" 
-                  className="w-full text-lg py-4 rounded-full bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 transform hover:scale-105 active:scale-95 transition-all duration-300 shadow-lg"
+                  className="w-full text-lg py-4 rounded-full glass-button animate-glow"
                   asChild
                 >
-                  <Link to="/signup" onClick={closeMobileMenu}>أنشئ ملفك</Link>
+                  <Link to="/signup" onClick={closeMobileMenu}>أنشئ ملفك الآن</Link>
                 </Button>
               </div>
             </div>

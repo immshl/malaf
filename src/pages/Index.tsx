@@ -122,53 +122,55 @@ const Index = () => {
           <>
             {/* Overlay */}
             <div 
-              className="fixed inset-0 bg-black bg-opacity-50 z-40"
+              className="fixed inset-0 bg-black/20 backdrop-blur-sm z-40 animate-fade-in"
               onClick={() => setIsMobileMenuOpen(false)}
             />
             
             {/* Menu Content */}
-            <div className="fixed top-16 left-0 right-0 bg-white dark:bg-gray-900 shadow-lg z-50 border-b">
-              <div className="p-6 space-y-4">
-                {/* Navigation Links */}
-                <div className="space-y-3">
-                  <a 
-                    href="#features" 
-                    className="flex items-center gap-3 p-3 text-gray-700 dark:text-gray-300 hover:text-purple-600 dark:hover:text-purple-400 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-lg transition-colors"
-                    onClick={() => setIsMobileMenuOpen(false)}
-                  >
-                    <div className="w-2 h-2 bg-purple-500 rounded-full"></div>
-                    <span className="text-lg font-medium">المميزات</span>
-                  </a>
-                  <a 
-                    href="#how-it-works" 
-                    className="flex items-center gap-3 p-3 text-gray-700 dark:text-gray-300 hover:text-purple-600 dark:hover:text-purple-400 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-lg transition-colors"
-                    onClick={() => setIsMobileMenuOpen(false)}
-                  >
-                    <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
-                    <span className="text-lg font-medium">كيف يعمل</span>
-                  </a>
-                </div>
-                
-                {/* Auth Buttons */}
-                <div className="pt-4 border-t border-gray-200 dark:border-gray-700 space-y-3">
-                  <Link 
-                    to="/signin" 
-                    onClick={() => setIsMobileMenuOpen(false)}
-                    className="block"
-                  >
-                    <button className="w-full py-3 px-4 text-lg font-medium text-purple-600 border-2 border-purple-500 rounded-full hover:bg-purple-500 hover:text-white transition-all duration-300">
-                      تسجيل الدخول
-                    </button>
-                  </Link>
-                  <Link 
-                    to="/signup" 
-                    onClick={() => setIsMobileMenuOpen(false)}
-                    className="block"
-                  >
-                    <button className="w-full py-3 px-4 text-lg font-medium text-white bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 rounded-full transition-all duration-300">
-                      أنشئ ملفك المهني
-                    </button>
-                  </Link>
+            <div className="fixed top-16 left-0 right-0 z-50 animate-slide-down">
+              <div className="mx-4 mt-2 bg-white/80 dark:bg-gray-900/90 backdrop-blur-md rounded-2xl shadow-2xl border border-white/20 dark:border-gray-700/50 overflow-hidden">
+                <div className="p-6 space-y-4">
+                  {/* Navigation Links */}
+                  <div className="space-y-2">
+                    <a 
+                      href="#features" 
+                      className="flex items-center gap-4 p-4 text-gray-700 dark:text-gray-300 hover:text-purple-600 dark:hover:text-purple-400 hover:bg-purple-50/50 dark:hover:bg-purple-900/20 rounded-xl transition-all duration-300 transform hover:scale-[1.02] hover:shadow-md"
+                      onClick={() => setIsMobileMenuOpen(false)}
+                    >
+                      <div className="w-3 h-3 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full shadow-sm"></div>
+                      <span className="text-lg font-medium">المميزات</span>
+                    </a>
+                    <a 
+                      href="#how-it-works" 
+                      className="flex items-center gap-4 p-4 text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-blue-50/50 dark:hover:bg-blue-900/20 rounded-xl transition-all duration-300 transform hover:scale-[1.02] hover:shadow-md"
+                      onClick={() => setIsMobileMenuOpen(false)}
+                    >
+                      <div className="w-3 h-3 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-full shadow-sm"></div>
+                      <span className="text-lg font-medium">كيف يعمل</span>
+                    </a>
+                  </div>
+                  
+                  {/* Auth Buttons */}
+                  <div className="pt-4 border-t border-gray-200/50 dark:border-gray-700/50 space-y-3">
+                    <Link 
+                      to="/signin" 
+                      onClick={() => setIsMobileMenuOpen(false)}
+                      className="block"
+                    >
+                      <button className="w-full py-4 px-6 text-lg font-medium text-purple-600 bg-white/50 hover:bg-white dark:bg-gray-800/50 dark:hover:bg-gray-800 border-2 border-purple-500/30 hover:border-purple-500 rounded-2xl hover:text-white hover:bg-gradient-to-r hover:from-purple-500 hover:to-purple-600 transition-all duration-300 transform hover:scale-[1.02] hover:shadow-lg backdrop-blur-sm">
+                        تسجيل الدخول
+                      </button>
+                    </Link>
+                    <Link 
+                      to="/signup" 
+                      onClick={() => setIsMobileMenuOpen(false)}
+                      className="block"
+                    >
+                      <button className="w-full py-4 px-6 text-lg font-medium text-white bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 rounded-2xl transition-all duration-300 transform hover:scale-[1.02] hover:shadow-xl shadow-lg">
+                        أنشئ ملفك المهني
+                      </button>
+                    </Link>
+                  </div>
                 </div>
               </div>
             </div>

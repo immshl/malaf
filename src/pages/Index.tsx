@@ -97,11 +97,16 @@ const Index = () => {
 
             {/* Mobile Menu Button */}
             <button 
-              className="md:hidden p-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
-              onClick={() => {
-                console.log("Mobile menu clicked!", !isMobileMenuOpen);
-                setIsMobileMenuOpen(!isMobileMenuOpen);
+              type="button"
+              className="md:hidden p-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors focus:outline-none focus:ring-2 focus:ring-purple-500"
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                const newState = !isMobileMenuOpen;
+                console.log("Button clicked! Changing from", isMobileMenuOpen, "to", newState);
+                setIsMobileMenuOpen(newState);
               }}
+              aria-label="فتح القائمة"
             >
               {isMobileMenuOpen ? (
                 <X className="w-6 h-6 text-gray-700 dark:text-gray-300" />

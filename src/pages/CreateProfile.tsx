@@ -20,7 +20,6 @@ const CreateProfile = () => {
     fullName: "",
     username: "",
     bio: "",
-    location: "",
     profileImage: "",
     services: [""],
     topClients: [""],
@@ -90,7 +89,6 @@ const CreateProfile = () => {
           username: profileData.username,
           full_name: profileData.fullName,
           bio: profileData.bio,
-          location: profileData.location || null,
           contact_email: profileData.workEmail,
           instagram_url: profileData.instagram || null,
           twitter_url: profileData.twitter || null,
@@ -333,20 +331,6 @@ const CreateProfile = () => {
                   <p className="text-xs text-muted-foreground">
                     سيكون رابطك: malaf.me/{profileData.username || "username"}
                   </p>
-                </div>
-
-                {/* الموقع */}
-                <div className="space-y-2">
-                  <Label htmlFor="location" className="text-foreground font-medium">
-                    الموقع
-                  </Label>
-                  <Input
-                    id="location"
-                    value={profileData.location}
-                    onChange={(e) => setProfileData(prev => ({ ...prev, location: e.target.value }))}
-                    placeholder="مثل: الرياض، السعودية"
-                    className="text-right"
-                  />
                 </div>
 
                 {/* النبذة التعريفية */}

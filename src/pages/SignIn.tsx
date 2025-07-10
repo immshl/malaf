@@ -33,10 +33,25 @@ const SignIn = () => {
       const { error } = await signIn(formData.email, formData.password);
 
       if (error) {
+        console.log('Login error:', error); // للتتبع
+        
+        let errorMessage = "حدث خطأ أثناء تسجيل الدخول";
+        
+        // تخصيص رسائل الخطأ حسب النوع
+        if (error.message.includes("Invalid login credentials") || error.message.includes("invalid_credentials")) {
+          errorMessage = "البريد الإلكتروني أو كلمة المرور غير صحيحة";
+        } else if (error.message.includes("Email not confirmed")) {
+          errorMessage = "يجب تأكيد البريد الإلكتروني أولاً";
+        } else if (error.message.includes("Too many requests")) {
+          errorMessage = "تم تجاوز عدد المحاولات المسموح، حاول مرة أخرى لاحقاً";
+        } else {
+          errorMessage = `خطأ: ${error.message}`;
+        }
+        
         toast({
           variant: "destructive",
-          title: "خطأ في تسجيل الدخول",
-          description: error.message,
+          title: "فشل تسجيل الدخول",
+          description: errorMessage,
         });
         return;
       }

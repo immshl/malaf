@@ -56,6 +56,9 @@ const SignIn = () => {
         return;
       }
       
+      // انتظار قصير للتأكد من تحديث حالة المستخدم
+      await new Promise(resolve => setTimeout(resolve, 100));
+      
       // Success toast
       toast({
         title: "تم تسجيل الدخول بنجاح",
@@ -66,10 +69,11 @@ const SignIn = () => {
       navigate("/");
       
     } catch (error) {
+      console.error('Unexpected error:', error);
       toast({
         variant: "destructive",
         title: "خطأ في تسجيل الدخول",
-        description: "البريد الإلكتروني أو كلمة المرور غير صحيحة",
+        description: "حدث خطأ غير متوقع، حاول مرة أخرى",
       });
     } finally {
       setIsLoading(false);

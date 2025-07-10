@@ -194,8 +194,8 @@ const Index = () => {
             
             <p className="text-lg md:text-xl text-muted-foreground mb-8 max-w-3xl mx-auto leading-relaxed">
               {language === "ar" 
-                ? "اصنع هويتك الرقمية واجذب العملاء المناسبين. عرض خدماتك، تلقي طلبات المشاريع، وإدارة عملك بسهولة — كل ذلك برابط واحد مميز."
-                : "Create your digital identity and attract the right clients. Showcase your services, receive project requests, and manage your work easily — all with one distinctive link."
+                ? "اصنع هويتك الرقمية واجذب العملاء المناسبين 🎯. عرض خدماتك، تلقي طلبات المشاريع، وإدارة عملك بسهولة — كل ذلك برابط واحد مميز ✨"
+                : "Create your digital identity and attract the right clients 🎯. Showcase your services, receive project requests, and manage your work easily — all with one distinctive link ✨"
               }
             </p>
             
@@ -232,7 +232,7 @@ const Index = () => {
               {language === "ar" ? "كل ما تحتاجه لبناء حضور رقمي فعال" : "Everything You Need for Effective Digital Presence"}
             </h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              {language === "ar" ? "حلول ذكية ومبتكرة تساعدك على التميز في سوق العمل الحر وجذب المزيد من الفرص." : "Smart and innovative solutions that help you stand out in the freelance market and attract more opportunities."}
+              {language === "ar" ? "حلول ذكية ومبتكرة تساعدك على التميز في سوق العمل الحر وجذب المزيد من الفرص 💼" : "Smart and innovative solutions that help you stand out in the freelance market and attract more opportunities 💼"}
             </p>
           </div>
           
@@ -248,7 +248,7 @@ const Index = () => {
                   {language === "ar" ? "واجهة مميزة" : "Professional Interface"}
                 </h3>
                 <p className="text-muted-foreground leading-relaxed">
-                  {language === "ar" ? "اعرض خدماتك وبياناتك بطريقة منظمة لتبني ثقة مع العميل من اللحظة الأولى." : "Showcase your services and data in an organized way to build trust with clients from the first moment."}
+                  {language === "ar" ? "اعرض خدماتك وبياناتك بطريقة منظمة لتبني ثقة مع العميل من اللحظة الأولى 🤝" : "Showcase your services and data in an organized way to build trust with clients from the first moment 🤝"}
                 </p>
               </CardContent>
             </Card>
@@ -264,7 +264,7 @@ const Index = () => {
                   {language === "ar" ? "نظام حجز ذكي" : "Smart Booking System"}
                 </h3>
                 <p className="text-muted-foreground leading-relaxed">
-                  {language === "ar" ? "امنح عملاءك سهولة طلب المواعيد معك مباشرة، إدارة ذكية لجدولك مع إشعارات فورية لكل طلب جديد." : "Allow your clients to easily book appointments with you directly, smart management for your schedule with instant notifications for every new request."}
+                  {language === "ar" ? "امنح عملاءك سهولة طلب المواعيد معك مباشرة، إدارة ذكية لجدولك مع إشعارات فورية لكل طلب جديد 📅" : "Allow your clients to easily book appointments with you directly, smart management for your schedule with instant notifications for every new request 📅"}
                 </p>
               </CardContent>
             </Card>
@@ -280,7 +280,7 @@ const Index = () => {
                   {language === "ar" ? "عنوان رقمي مخصص" : "Custom Digital Address"}
                 </h3>
                 <p className="text-muted-foreground leading-relaxed">
-                  {language === "ar" ? "احصل على رابط شخصي يعكس هويتك، سهل المشاركة، يُحفظ بسهولة، ويتيح الوصول إليك من أي مكان." : "Get a personal link that reflects your identity, easy to share, easy to remember, and allows access to you from anywhere."}
+                  {language === "ar" ? "احصل على رابط شخصي يعكس هويتك، سهل المشاركة، يُحفظ بسهولة، ويتيح الوصول إليك من أي مكان 🌐" : "Get a personal link that reflects your identity, easy to share, easy to remember, and allows access to you from anywhere 🌐"}
                 </p>
               </CardContent>
             </Card>

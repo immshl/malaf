@@ -127,8 +127,7 @@ export const LanguageProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const t = (key: string): string => {
-    const currentTranslations = translations[language];
-    return currentTranslations[key as keyof typeof currentTranslations] || key;
+    return translations[language][key as keyof typeof translations[Language]] || key;
   };
 
   useEffect(() => {

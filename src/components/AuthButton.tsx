@@ -35,21 +35,14 @@ const AuthButton = () => {
   }
 
   return (
-    <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 w-full sm:w-auto">
-      <Link to="/signin" className="w-full sm:w-auto">
-        <Button 
-          variant="glass" 
-          size="lg" 
-          className="w-full sm:w-auto text-lg py-3 px-6 rounded-full glass-button"
-        >
+    <div className="flex items-center gap-2">
+      <Link to="/signin">
+        <Button variant="ghost" size="sm">
           {language === "ar" ? "تسجيل الدخول" : "Sign In"}
         </Button>
       </Link>
-      <Link to="/signup" className="w-full sm:w-auto">
-        <Button 
-          size="lg" 
-          className="w-full sm:w-auto text-lg py-3 px-6 rounded-full bg-primary hover:bg-primary-hover"
-        >
+      <Link to="/signup">
+        <Button size="sm">
           {language === "ar" ? "إنشاء حساب" : "Sign Up"}
         </Button>
       </Link>

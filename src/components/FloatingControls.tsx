@@ -11,12 +11,22 @@ const FloatingControls = () => {
   const { language, setLanguage } = useLanguage();
 
   useEffect(() => {
-    // Apply theme to document
+    // Check for saved theme or default to light
+    const savedTheme = localStorage.getItem('theme') as Theme;
+    if (savedTheme) {
+      setTheme(savedTheme);
+    }
+  }, []);
+
+  useEffect(() => {
+    // Apply theme to document and save to localStorage
+    localStorage.setItem('theme', theme);
     if (theme === "dark") {
       document.documentElement.classList.add("dark");
     } else {
       document.documentElement.classList.remove("dark");
     }
+    console.log("Theme changed to:", theme);
   }, [theme]);
 
 

@@ -128,13 +128,13 @@ const Index = () => {
             
             {/* Menu Content */}
             <div className="fixed top-16 left-0 right-0 z-50 animate-slide-down">
-              <div className="mx-4 mt-2 bg-white/80 dark:bg-gray-900/90 backdrop-blur-md rounded-2xl shadow-2xl border border-white/20 dark:border-gray-700/50 overflow-hidden">
+              <div className="mx-4 mt-2 bg-background/95 dark:bg-background/95 backdrop-blur-md rounded-2xl shadow-2xl border border-border overflow-hidden">
                 <div className="p-6 space-y-4">
                   {/* Navigation Links */}
                   <div className="space-y-2">
                     <a 
                       href="#features" 
-                      className="flex items-center gap-4 p-4 text-gray-700 dark:text-gray-300 hover:text-purple-600 dark:hover:text-purple-400 hover:bg-purple-50/50 dark:hover:bg-purple-900/20 rounded-xl transition-all duration-300 transform hover:scale-[1.02] hover:shadow-md"
+                      className="flex items-center gap-4 p-4 text-foreground hover:text-primary hover:bg-muted/50 rounded-xl transition-all duration-300 transform hover:scale-[1.02] hover:shadow-md"
                       onClick={() => setIsMobileMenuOpen(false)}
                     >
                       <div className="w-3 h-3 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full shadow-sm"></div>
@@ -142,7 +142,7 @@ const Index = () => {
                     </a>
                     <a 
                       href="#how-it-works" 
-                      className="flex items-center gap-4 p-4 text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-blue-50/50 dark:hover:bg-blue-900/20 rounded-xl transition-all duration-300 transform hover:scale-[1.02] hover:shadow-md"
+                      className="flex items-center gap-4 p-4 text-foreground hover:text-primary hover:bg-muted/50 rounded-xl transition-all duration-300 transform hover:scale-[1.02] hover:shadow-md"
                       onClick={() => setIsMobileMenuOpen(false)}
                     >
                       <div className="w-3 h-3 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-full shadow-sm"></div>
@@ -151,24 +151,23 @@ const Index = () => {
                   </div>
                   
                   {/* Auth Buttons */}
-                  <div className="pt-4 border-t border-gray-200/50 dark:border-gray-700/50 space-y-3">
-                    <Link 
-                      to="/signin" 
-                      onClick={() => setIsMobileMenuOpen(false)}
-                      className="block"
-                    >
-                      <button className="w-full py-4 px-6 text-lg font-medium text-purple-600 bg-white/50 hover:bg-white dark:bg-gray-800/50 dark:hover:bg-gray-800 border-2 border-purple-500/30 hover:border-purple-500 rounded-2xl hover:text-white hover:bg-gradient-to-r hover:from-purple-500 hover:to-purple-600 transition-all duration-300 transform hover:scale-[1.02] hover:shadow-lg backdrop-blur-sm">
+                  <div className="pt-4 border-t border-border space-y-3">
+                    <Link to="/signin" onClick={() => setIsMobileMenuOpen(false)}>
+                      <Button 
+                        variant="outline" 
+                        size="lg" 
+                        className="w-full text-lg py-4 rounded-2xl border-2 border-primary/30 text-primary hover:border-primary hover:bg-primary hover:text-primary-foreground transition-all duration-300 transform hover:scale-[1.02] hover:shadow-lg backdrop-blur-sm"
+                      >
                         {language === "ar" ? "تسجيل الدخول" : "Sign In"}
-                      </button>
+                      </Button>
                     </Link>
-                    <Link 
-                      to="/signup" 
-                      onClick={() => setIsMobileMenuOpen(false)}
-                      className="block"
-                    >
-                      <button className="w-full py-4 px-6 text-lg font-medium text-white bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 rounded-2xl transition-all duration-300 transform hover:scale-[1.02] hover:shadow-xl shadow-lg">
+                    <Link to="/signup" onClick={() => setIsMobileMenuOpen(false)}>
+                      <Button 
+                        size="lg" 
+                        className="w-full text-lg py-4 rounded-2xl bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white transition-all duration-300 transform hover:scale-[1.02] hover:shadow-xl shadow-lg"
+                      >
                         {language === "ar" ? "أنشئ ملفك المهني" : "Create Your Profile"}
-                      </button>
+                      </Button>
                     </Link>
                   </div>
                 </div>
@@ -231,14 +230,14 @@ const Index = () => {
           </div>
           
           <div className="grid md:grid-cols-3 gap-8">
-            <Card className="border-0 shadow-soft hover:shadow-medium transition-smooth bg-white group">
+            <Card className="border-0 shadow-soft hover:shadow-medium transition-smooth bg-card group">
               <CardContent className="p-8 text-center">
                 <div className="mb-6 flex justify-center">
-                  <div className="w-16 h-16 bg-purple-100 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-smooth">
-                    <Link2 className="w-8 h-8 text-purple-600" />
+                  <div className="w-16 h-16 bg-purple-100 dark:bg-purple-900/20 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-smooth">
+                    <Link2 className="w-8 h-8 text-purple-600 dark:text-purple-400" />
                   </div>
                 </div>
-                <h3 className="text-xl font-bold mb-4 text-foreground">
+                <h3 className="text-xl font-bold mb-4 text-card-foreground">
                   {language === "ar" ? "واجهة مميزة" : "Professional Interface"}
                 </h3>
                 <p className="text-muted-foreground leading-relaxed">
@@ -247,14 +246,14 @@ const Index = () => {
               </CardContent>
             </Card>
 
-            <Card className="border-0 shadow-soft hover:shadow-medium transition-smooth bg-white group">
+            <Card className="border-0 shadow-soft hover:shadow-medium transition-smooth bg-card group">
               <CardContent className="p-8 text-center">
                 <div className="mb-6 flex justify-center">
-                  <div className="w-16 h-16 bg-blue-100 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-smooth">
-                    <Calendar className="w-8 h-8 text-blue-600" />
+                  <div className="w-16 h-16 bg-blue-100 dark:bg-blue-900/20 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-smooth">
+                    <Calendar className="w-8 h-8 text-blue-600 dark:text-blue-400" />
                   </div>
                 </div>
-                <h3 className="text-xl font-bold mb-4 text-foreground">
+                <h3 className="text-xl font-bold mb-4 text-card-foreground">
                   {language === "ar" ? "نظام حجز ذكي" : "Smart Booking System"}
                 </h3>
                 <p className="text-muted-foreground leading-relaxed">
@@ -263,14 +262,14 @@ const Index = () => {
               </CardContent>
             </Card>
 
-            <Card className="border-0 shadow-soft hover:shadow-medium transition-smooth bg-white group">
+            <Card className="border-0 shadow-soft hover:shadow-medium transition-smooth bg-card group">
               <CardContent className="p-8 text-center">
                 <div className="mb-6 flex justify-center">
-                  <div className="w-16 h-16 bg-green-100 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-smooth">
-                    <Users className="w-8 h-8 text-green-600" />
+                  <div className="w-16 h-16 bg-green-100 dark:bg-green-900/20 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-smooth">
+                    <Users className="w-8 h-8 text-green-600 dark:text-green-400" />
                   </div>
                 </div>
-                <h3 className="text-xl font-bold mb-4 text-foreground">
+                <h3 className="text-xl font-bold mb-4 text-card-foreground">
                   {language === "ar" ? "عنوان رقمي مخصص" : "Custom Digital Address"}
                 </h3>
                 <p className="text-muted-foreground leading-relaxed">

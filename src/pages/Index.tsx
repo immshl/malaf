@@ -11,6 +11,7 @@ const Index = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const toggleMobileMenu = () => {
+    console.log('Toggling mobile menu:', !isMobileMenuOpen);
     setIsMobileMenuOpen(!isMobileMenuOpen);
   };
 

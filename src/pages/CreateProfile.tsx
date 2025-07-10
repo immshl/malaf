@@ -406,9 +406,12 @@ const CreateProfile = () => {
                         </Button>
                       </PopoverTrigger>
                       <PopoverContent 
-                        className="w-80 p-0 bg-background/95 backdrop-blur-md border shadow-xl rounded-xl z-50" 
-                        align="start"
+                        className="w-72 p-0 bg-background/95 backdrop-blur-md border shadow-xl rounded-xl z-50" 
+                        align="center"
+                        side="bottom"
                         sideOffset={8}
+                        avoidCollisions={true}
+                        collisionPadding={16}
                       >
                         <div className="p-4 border-b bg-gradient-to-r from-primary/5 to-accent/5 rounded-t-xl">
                           <h4 className="font-semibold text-sm text-center text-foreground">اختر إيموجي مميز</h4>

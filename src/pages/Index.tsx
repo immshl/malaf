@@ -188,14 +188,14 @@ const Index = () => {
             
             <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight">
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-600 via-pink-500 to-blue-500">
-                {language === "ar" ? "ملف مهني خاص بك" : "Your Professional Profile"}
+                {language === "ar" ? "ملف مهني خاص بك 🚀" : "Your Professional Profile 🚀"}
               </span>
             </h1>
             
             <p className="text-lg md:text-xl text-muted-foreground mb-8 max-w-3xl mx-auto leading-relaxed">
               {language === "ar" 
-                ? "اصنع هويتك الرقمية واجذب العملاء المناسبين. عرض خدماتك، تلقي طلبات المشاريع، وإدارة عملك بسهولة — كل ذلك برابط واحد مميز."
-                : "Create your digital identity and attract the right clients. Showcase your services, receive project requests, and manage your work easily — all with one distinctive link."
+                ? "اصنع هويتك الرقمية واجذب العملاء المناسبين 🎯. عرض خدماتك، تلقي طلبات المشاريع، وإدارة عملك بسهولة — كل ذلك برابط واحد مميز ✨"
+                : "Create your digital identity and attract the right clients 🎯. Showcase your services, receive project requests, and manage your work easily — all with one distinctive link ✨"
               }
             </p>
             

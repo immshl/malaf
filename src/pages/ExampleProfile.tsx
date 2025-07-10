@@ -38,6 +38,12 @@ const ExampleProfile = () => {
       "تطوير الأعمال"
     ],
     skills: ["استشارة أعمال", "حلول إبداعية", "استراتيجية", "تطوير الأعمال", "ريادة الأعمال"],
+    topClients: [
+      "stc",
+      "وزارة الاتصالات", 
+      "anb",
+      "هدف"
+    ],
     instagram: "@immshl",
     twitter: "@immshl", 
     workEmail: "iimmshl@gmail.com",
@@ -59,186 +65,136 @@ const ExampleProfile = () => {
   };
 
   return (
-    <div className="min-h-screen bg-muted/30 py-8">
-      <div className="container mx-auto px-4 max-w-4xl">
-        {/* رأس الصفحة مع الرابط والأزرار */}
-        <div className="bg-white rounded-2xl shadow-strong p-6 mb-8">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-            <div className="text-center md:text-right">
-              <p className="text-sm text-muted-foreground mb-2">رابط الملف الشخصي</p>
-              <p className="text-lg font-mono bg-muted px-4 py-2 rounded-lg">
-                malaf.me/{profileData.username}
+    <div className="min-h-screen bg-background py-8">
+      <div className="container mx-auto px-4 max-w-2xl">
+        {/* الملف الشخصي المركزي */}
+        <div className="text-center space-y-8">
+          {/* الصورة الشخصية والمعلومات الأساسية */}
+          <div className="space-y-6">
+            <div className="relative inline-block">
+              <Avatar className="w-32 h-32 mx-auto border-4 border-muted">
+                <AvatarImage src={profileData.profileImage} />
+                <AvatarFallback className="bg-gradient-primary text-white text-3xl">
+                  <User className="w-16 h-16" />
+                </AvatarFallback>
+              </Avatar>
+              {profileData.emoji && (
+                <div className="absolute -top-2 -right-2 w-10 h-10 bg-background border-2 border-background rounded-full flex items-center justify-center text-xl shadow-sm">
+                  {profileData.emoji}
+                </div>
+              )}
+            </div>
+            
+            <div className="space-y-4">
+              <h1 className="text-3xl font-bold text-foreground">
+                {profileData.fullName}
+              </h1>
+              
+              <p className="text-muted-foreground leading-relaxed max-w-md mx-auto text-lg">
+                {profileData.bio}
+              </p>
+              
+              {profileData.location && (
+                <div className="flex items-center justify-center text-sm text-muted-foreground">
+                  <MapPin className="w-4 h-4 ml-2" />
+                  {profileData.location}
+                </div>
+              )}
+            </div>
+          </div>
+
+          {/* الخدمات */}
+          <div className="space-y-6">
+            <h2 className="text-2xl font-bold text-foreground">الخدمات</h2>
+            <div className="grid grid-cols-2 gap-6">
+              {profileData.services.map((service, index) => (
+                <Card key={index} className="border-0 shadow-soft hover:shadow-medium transition-all duration-300 p-6">
+                  <CardContent className="p-0 text-center">
+                    <h3 className="font-semibold text-foreground text-lg">{service}</h3>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          </div>
+
+          {/* احجز موعد */}
+          <div className="space-y-6">
+            <div className="space-y-4">
+              <h2 className="text-2xl font-bold text-foreground">احجز موعد</h2>
+              <p className="text-muted-foreground">
+                احجز موعد لمناقشة مشروعك
               </p>
             </div>
-            <div className="flex flex-wrap gap-3">
-              <Button variant="outline" onClick={copyLink}>
-                <Copy className="ml-2 h-4 w-4" />
-                نسخ الرابط
-              </Button>
-              <Button variant="outline" asChild>
-                <Link to="/signup">أنشئ ملفك المجاني</Link>
-              </Button>
+            
+            <Button 
+              size="lg" 
+              className="w-full max-w-sm mx-auto bg-foreground text-background hover:bg-foreground/90 rounded-2xl h-14 text-lg font-medium"
+            >
+              <CalendarIcon className="ml-3 h-5 w-5" />
+              احجز موعد
+            </Button>
+          </div>
+
+          {/* عملاء مميزون */}
+          {profileData.topClients && profileData.topClients.length > 0 && (
+            <div className="space-y-6">
+              <h2 className="text-2xl font-bold text-foreground">عملاء مميزون</h2>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                {/* عرض أول 4 عملاء فقط */}
+                {profileData.topClients.slice(0, 4).map((client, index) => (
+                  <div key={index} className="bg-muted/30 rounded-lg p-4">
+                    <p className="font-medium text-foreground text-center">{client}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* وسائل التواصل الاجتماعي */}
+          <div className="space-y-6 pt-8 border-t border-border">
+            <h2 className="text-2xl font-bold text-foreground">وسائل التواصل الاجتماعي</h2>
+            <div className="space-y-4">
+              {profileData.instagram && (
+                <a 
+                  href={`https://instagram.com/${profileData.instagram.replace('@', '')}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center justify-center gap-3 text-muted-foreground hover:text-primary transition-smooth"
+                >
+                  <Instagram className="w-5 h-5" />
+                  <span className="text-lg">{profileData.instagram}</span>
+                </a>
+              )}
+              {profileData.twitter && (
+                <a 
+                  href={`https://x.com/${profileData.twitter.replace('@', '')}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center justify-center gap-3 text-muted-foreground hover:text-primary transition-smooth"
+                >
+                  <Twitter className="w-5 h-5" />
+                  <span className="text-lg">{profileData.twitter}</span>
+                </a>
+              )}
             </div>
           </div>
-        </div>
 
-        <div className="grid lg:grid-cols-3 gap-8">
-          {/* العمود الأيسر - المعلومات الأساسية */}
-          <div className="lg:col-span-1 space-y-6">
-            {/* بطاقة المعلومات الشخصية */}
-            <Card className="border-0 shadow-strong">
-              <CardContent className="p-6 text-center">
-                <div className="relative w-32 h-32 mx-auto mb-4">
-                  <Avatar className="w-32 h-32 border-4 border-primary/20">
-                    <AvatarImage src={profileData.profileImage} />
-                    <AvatarFallback className="bg-gradient-primary text-white text-3xl">
-                      <User className="w-16 h-16" />
-                    </AvatarFallback>
-                  </Avatar>
-                  {profileData.emoji && (
-                    <div className="absolute -top-2 -right-2 w-10 h-10 bg-background border-2 border-background rounded-full flex items-center justify-center text-xl shadow-sm">
-                      {profileData.emoji}
-                    </div>
-                  )}
-                </div>
-                
-                <h1 className="text-2xl font-bold text-foreground mb-2">
-                  {profileData.fullName}
-                </h1>
-                
-                <div className="flex items-center justify-center gap-2 mb-4">
-                  <Badge variant="secondary">
-                    <CheckCircle className="ml-2 h-3 w-3" />
-                    ملف معتمد
-                  </Badge>
-                  <div className="flex items-center text-yellow-500">
-                    <Star className="w-4 h-4 fill-current" />
-                    <span className="font-semibold mr-1 text-foreground">{profileData.rating}</span>
-                    <span className="text-sm text-muted-foreground">({profileData.reviewCount})</span>
-                  </div>
-                </div>
-
-                {profileData.location && (
-                  <div className="flex items-center justify-center text-sm text-muted-foreground mb-4">
-                    <MapPin className="w-4 h-4 ml-1" />
-                    {profileData.location}
-                  </div>
-                )}
-              </CardContent>
-            </Card>
-
-            {/* وسائل التواصل */}
-            <Card className="border-0 shadow-soft">
-              <CardContent className="p-6">
-                <h3 className="text-lg font-semibold mb-4">وسائل التواصل</h3>
-                <div className="space-y-3">
-                  {profileData.workEmail && (
-                    <a 
-                      href={`mailto:${profileData.workEmail}`}
-                      className="flex items-center text-muted-foreground hover:text-primary transition-smooth"
-                    >
-                      <Mail className="ml-3 h-4 w-4" />
-                      {profileData.workEmail}
-                    </a>
-                  )}
-                  {profileData.instagram && (
-                    <a 
-                      href={`https://instagram.com/${profileData.instagram.replace('@', '')}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex items-center text-muted-foreground hover:text-primary transition-smooth"
-                    >
-                      <Instagram className="ml-3 h-4 w-4" />
-                      {profileData.instagram}
-                    </a>
-                  )}
-                  {profileData.twitter && (
-                    <a 
-                      href={`https://x.com/${profileData.twitter.replace('@', '')}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex items-center text-muted-foreground hover:text-primary transition-smooth"
-                    >
-                      <Twitter className="ml-3 h-4 w-4" />
-                      {profileData.twitter}
-                    </a>
-                  )}
-                  {profileData.externalLink && (
-                    <a 
-                      href={profileData.externalLink}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex items-center text-muted-foreground hover:text-primary transition-smooth"
-                    >
-                      <ExternalLink className="ml-3 h-4 w-4" />
-                      الموقع الشخصي
-                    </a>
-                  )}
-                </div>
-              </CardContent>
-            </Card>
+          {/* رابط النسخ في الأسفل */}
+          <div className="pt-8">
+            <Button variant="outline" onClick={copyLink} className="mx-auto">
+              <Copy className="ml-2 h-4 w-4" />
+              نسخ الرابط
+            </Button>
+            <p className="text-sm text-muted-foreground mt-2">
+              malaf.me/{profileData.username}
+            </p>
           </div>
 
-          {/* العمود الأيمن - المحتوى الرئيسي */}
-          <div className="lg:col-span-2 space-y-6">
-            {/* النبذة التعريفية */}
-            <Card className="border-0 shadow-soft">
-              <CardContent className="p-6">
-                <h2 className="text-xl font-semibold mb-4">نبذة تعريفية</h2>
-                <p className="text-muted-foreground leading-relaxed">
-                  {profileData.bio}
-                </p>
-              </CardContent>
-            </Card>
-
-            {/* الخدمات */}
-            <Card className="border-0 shadow-soft">
-              <CardContent className="p-6">
-                <h2 className="text-xl font-semibold mb-4">الخدمات المقدمة</h2>
-                <div className="flex flex-wrap gap-2">
-                  {profileData.services.map((service, index) => (
-                    <Badge key={index} variant="outline" className="text-sm">
-                      {service}
-                    </Badge>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
-
-            {/* المهارات */}
-            <Card className="border-0 shadow-soft">
-              <CardContent className="p-6">
-                <h2 className="text-xl font-semibold mb-4">المهارات</h2>
-                <div className="flex flex-wrap gap-2">
-                  {profileData.skills.map((skill, index) => (
-                    <Badge key={index} variant="secondary" className="text-sm">
-                      {skill}
-                    </Badge>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
-
-            {/* أوقات التوفر */}
-            <Card className="border-0 shadow-soft">
-              <CardContent className="p-6">
-                <h2 className="text-xl font-semibold mb-4">أوقات التوفر</h2>
-                <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    <h4 className="font-medium text-sm text-muted-foreground mb-2">الأيام المتاحة</h4>
-                    <p className="text-sm">السبت - الخميس</p>
-                  </div>
-                  <div>
-                    <h4 className="font-medium text-sm text-muted-foreground mb-2">أوقات العمل</h4>
-                    <p className="text-sm">9:00 ص - 6:00 م</p>
-                  </div>
-                </div>
-                <Button className="w-full mt-4" variant="hero">
-                  <CalendarIcon className="ml-2 h-4 w-4" />
-                  احجز استشارة مجانية
-                </Button>
-              </CardContent>
-            </Card>
+          {/* رابط إنشاء ملف جديد */}
+          <div className="pt-4 pb-8">
+            <Button variant="outline" asChild>
+              <Link to="/signup">أنشئ ملفك المجاني</Link>
+            </Button>
           </div>
         </div>
       </div>

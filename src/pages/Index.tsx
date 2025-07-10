@@ -114,9 +114,22 @@ const Index = () => {
         </div>
 
         {/* Mobile Dropdown Menu */}
-        <div className={`mobile-menu-container md:hidden transition-all duration-500 ease-in-out ${
-          isMobileMenuOpen ? 'max-h-screen opacity-100 visible' : 'max-h-0 opacity-0 invisible overflow-hidden'
-        }`}>
+        <div 
+          className={`mobile-menu-container md:hidden transition-all duration-300 ease-in-out ${
+            isMobileMenuOpen ? 'block' : 'hidden'
+          }`}
+          style={{ 
+            position: 'absolute',
+            top: '100%',
+            left: 0,
+            right: 0,
+            zIndex: 50,
+            backgroundColor: 'var(--background)',
+            border: '1px solid var(--border)',
+            borderRadius: '0 0 8px 8px',
+            boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)'
+          }}
+        >
           <div className="px-4 py-6 bg-gradient-to-b from-background/95 to-background/90 backdrop-blur-sm border-t border-border/50 shadow-lg">
             <div className="flex flex-col space-y-4">
               <a 

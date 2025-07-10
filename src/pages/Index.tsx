@@ -151,7 +151,7 @@ const Index = () => {
                   </div>
                   
                   {/* Auth Buttons */}
-                  <div className="pt-6 border-t border-border space-y-6">
+                  <div className="pt-6 border-t border-border space-y-8">
                     <Link to="/signin" onClick={() => setIsMobileMenuOpen(false)}>
                       <Button 
                         variant="outline" 

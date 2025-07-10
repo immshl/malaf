@@ -38,15 +38,15 @@ const ScrollHero = () => {
 
       backgroundTl
         .to(backgroundRef.current, {
-          background: "linear-gradient(135deg, hsl(211 100% 53%) 0%, hsl(280 100% 60%) 50%, hsl(211 100% 60%) 100%)",
+          background: "linear-gradient(135deg, hsl(183 55% 62%) 0%, hsl(195 6% 13%) 50%, hsl(183 65% 70%) 100%)",
           duration: 1,
         })
         .to(backgroundRef.current, {
-          background: "linear-gradient(135deg, hsl(280 100% 60%) 0%, hsl(320 100% 65%) 50%, hsl(211 100% 53%) 100%)",
+          background: "linear-gradient(135deg, hsl(195 6% 13%) 0%, hsl(183 55% 62%) 50%, hsl(0 1% 44%) 100%)",
           duration: 1,
         })
         .to(backgroundRef.current, {
-          background: "linear-gradient(135deg, hsl(320 100% 65%) 0%, hsl(211 100% 53%) 50%, hsl(280 100% 60%) 100%)",
+          background: "linear-gradient(135deg, hsl(183 65% 70%) 0%, hsl(195 6% 13%) 50%, hsl(183 55% 62%) 100%)",
           duration: 1,
         });
 
@@ -115,7 +115,7 @@ const ScrollHero = () => {
         ref={backgroundRef}
         className="absolute inset-0 transition-all duration-1000 ease-in-out"
         style={{
-          background: "linear-gradient(135deg, hsl(211 100% 53%) 0%, hsl(211 100% 60%) 100%)",
+          background: "linear-gradient(135deg, hsl(183 55% 62%) 0%, hsl(195 6% 13%) 100%)",
         }}
       />
       
@@ -174,7 +174,7 @@ const ScrollHero = () => {
             <div className="hero-buttons flex flex-col sm:flex-row gap-4 justify-center opacity-0">
               <Button 
                 size="lg" 
-                className="bg-white text-blue-600 hover:bg-white/90 text-lg px-8 py-4 rounded-full transform hover:scale-105 active:scale-95 transition-all duration-300 shadow-lg hover:shadow-xl"
+                className="bg-white text-foreground hover:bg-white/90 text-lg px-8 py-4 rounded-full transform hover:scale-105 active:scale-95 transition-all duration-300 shadow-lg hover:shadow-xl"
                 asChild
               >
                 <Link to="/signup">
@@ -184,7 +184,7 @@ const ScrollHero = () => {
               <Button 
                 size="lg" 
                 variant="outline" 
-                className="text-lg px-8 py-4 rounded-full border-2 border-white text-white hover:bg-white hover:text-blue-600 transform hover:scale-105 active:scale-95 transition-all duration-300 shadow-md hover:shadow-lg"
+                className="text-lg px-8 py-4 rounded-full border-2 border-white text-white hover:bg-white hover:text-foreground transform hover:scale-105 active:scale-95 transition-all duration-300 shadow-md hover:shadow-lg"
                 asChild
               >
                 <Link to="/example">

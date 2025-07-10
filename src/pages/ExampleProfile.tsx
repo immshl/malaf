@@ -24,15 +24,15 @@ const ExampleProfile = () => {
   const [copied, setCopied] = useState(false);
 
   const handleCopyLink = () => {
-    navigator.clipboard.writeText("https://malaf.me/ahmad-salem");
+    navigator.clipboard.writeText("https://malaf.me/immshl");
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
 
   const services = [
-    { name: "تصميم المواقع", price: "من 500 ريال", duration: "5-7 أيام" },
-    { name: "تطوير التطبيقات", price: "من 1500 ريال", duration: "2-3 أسابيع" },
-    { name: "استشارة تقنية", price: "200 ريال/ساعة", duration: "ساعة واحدة" },
+    { name: "استشارة أعمال", price: "من 300 ريال", duration: "ساعة واحدة" },
+    { name: "تطوير استراتيجية", price: "من 1000 ريال", duration: "3-5 أيام" },
+    { name: "حلول إبداعية", price: "من 800 ريال", duration: "أسبوع" },
   ];
 
   return (
@@ -61,15 +61,18 @@ const ExampleProfile = () => {
         <Card className="border-0 shadow-soft mb-8">
           <CardContent className="p-8">
             <div className="flex flex-col md:flex-row gap-6 items-start">
-              <Avatar className="w-24 h-24 border-4 border-primary/20">
-                <AvatarFallback className="text-xl font-bold bg-gradient-primary text-white">أس</AvatarFallback>
+              <Avatar className="w-24 h-24 border-4 border-primary/20 relative">
+                <AvatarFallback className="text-xl font-bold bg-gradient-primary text-white">مث</AvatarFallback>
+                <div className="absolute -top-1 -right-1 w-8 h-8 bg-background border-2 border-background rounded-full flex items-center justify-center text-lg shadow-sm">
+                  👑
+                </div>
               </Avatar>
               
               <div className="flex-1">
                 <div className="flex flex-col md:flex-row md:items-center justify-between mb-4">
                   <div>
-                    <h1 className="text-3xl font-bold text-foreground mb-2">أحمد سالم</h1>
-                    <p className="text-xl text-muted-foreground mb-3">مطور ويب ومصمم واجهات</p>
+                    <h1 className="text-3xl font-bold text-foreground mb-2">مشعل ثاني</h1>
+                    <p className="text-xl text-muted-foreground mb-3">خبير أعمال ومستشار إبداعي</p>
                     <div className="flex items-center text-sm text-muted-foreground mb-4">
                       <MapPin className="w-4 h-4 ml-1" />
                       الرياض، المملكة العربية السعودية
@@ -97,28 +100,28 @@ const ExampleProfile = () => {
                 </div>
                 
                 <p className="text-muted-foreground leading-relaxed mb-4">
-                  مطور ويب محترف مع أكثر من 5 سنوات من الخبرة في تطوير المواقع والتطبيقات. 
-                  أتخصص في React، Node.js، وتصميم تجارب المستخدم الحديثة. أسعى دائماً لتقديم حلول تقنية مبتكرة تلبي احتياجات العملاء.
+                  أعرف أفكر — أساعد الشركات والأفراد على ابتكار حلول أعمال إبداعية وسويت هذي المنصة عشان الكل يستفيد منها.
+                  خبرة واسعة في تطوير الاستراتيجيات والحلول المبتكرة للأعمال.
                 </p>
                 
                 <div className="flex flex-wrap gap-2 mb-6">
-                  {["React", "Node.js", "TypeScript", "UI/UX", "Mobile Apps"].map((skill) => (
+                  {["استشارة أعمال", "حلول إبداعية", "استراتيجية", "تطوير الأعمال", "ريادة الأعمال"].map((skill) => (
                     <Badge key={skill} variant="secondary">{skill}</Badge>
                   ))}
                 </div>
                 
                 <div className="flex flex-wrap gap-4">
-                  <a href="mailto:ahmad@example.com" className="flex items-center gap-2 text-primary hover:text-primary-hover transition-smooth">
+                  <a href="mailto:iimmshl@gmail.com" className="flex items-center gap-2 text-primary hover:text-primary-hover transition-smooth">
                     <Mail className="w-4 h-4" />
-                    ahmad@example.com
+                    iimmshl@gmail.com
                   </a>
-                  <a href="tel:+966500000000" className="flex items-center gap-2 text-primary hover:text-primary-hover transition-smooth">
-                    <Phone className="w-4 h-4" />
-                    +966 50 000 0000
+                  <a href="https://instagram.com/immshl" className="flex items-center gap-2 text-primary hover:text-primary-hover transition-smooth">
+                    <Instagram className="w-4 h-4" />
+                    @immshl
                   </a>
-                  <a href="https://ahmad-portfolio.com" className="flex items-center gap-2 text-primary hover:text-primary-hover transition-smooth">
-                    <Globe className="w-4 h-4" />
-                    ahmad-portfolio.com
+                  <a href="https://x.com/immshl" className="flex items-center gap-2 text-primary hover:text-primary-hover transition-smooth">
+                    <Twitter className="w-4 h-4" />
+                    @immshl
                   </a>
                 </div>
               </div>
@@ -180,23 +183,23 @@ const ExampleProfile = () => {
               <CardContent className="p-6">
                 <h3 className="text-xl font-bold text-foreground mb-4">تواصل معي</h3>
                 <div className="space-y-3">
-                  <a href="#" className="flex items-center gap-3 p-3 rounded-lg hover:bg-muted/50 transition-smooth">
+                  <a href="https://instagram.com/immshl" className="flex items-center gap-3 p-3 rounded-lg hover:bg-muted/50 transition-smooth">
                     <div className="w-10 h-10 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center">
                       <Instagram className="w-5 h-5 text-white" />
                     </div>
-                    <span className="font-medium">@ahmad_designs</span>
+                    <span className="font-medium">@immshl</span>
                   </a>
-                  <a href="#" className="flex items-center gap-3 p-3 rounded-lg hover:bg-muted/50 transition-smooth">
+                  <a href="https://x.com/immshl" className="flex items-center gap-3 p-3 rounded-lg hover:bg-muted/50 transition-smooth">
                     <div className="w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center">
                       <Twitter className="w-5 h-5 text-white" />
                     </div>
-                    <span className="font-medium">@ahmad_dev</span>
+                    <span className="font-medium">@immshl</span>
                   </a>
-                  <a href="#" className="flex items-center gap-3 p-3 rounded-lg hover:bg-muted/50 transition-smooth">
+                  <a href="mailto:iimmshl@gmail.com" className="flex items-center gap-3 p-3 rounded-lg hover:bg-muted/50 transition-smooth">
                     <div className="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center">
-                      <Linkedin className="w-5 h-5 text-white" />
+                      <Mail className="w-5 h-5 text-white" />
                     </div>
-                    <span className="font-medium">Ahmad Salem</span>
+                    <span className="font-medium">iimmshl@gmail.com</span>
                   </a>
                 </div>
               </CardContent>

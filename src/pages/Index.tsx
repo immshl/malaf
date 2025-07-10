@@ -26,11 +26,13 @@ const Index = () => {
     }
   }, []);
 
-  const toggleMobileMenu = () => {
+  const toggleMobileMenu = (e?: React.MouseEvent) => {
+    e?.stopPropagation();
     setIsMobileMenuOpen(!isMobileMenuOpen);
   };
 
-  const closeMobileMenu = () => {
+  const closeMobileMenu = (e?: React.MouseEvent) => {
+    e?.stopPropagation();
     setIsMobileMenuOpen(false);
   };
 
@@ -38,21 +40,29 @@ const Index = () => {
     window.open('mailto:info@malaf.me?subject=استفسار عن منصة ملف', '_blank');
   };
 
-  // Close mobile menu when clicking outside
+  // Close mobile menu when clicking outside or pressing escape
   useEffect(() => {
     const handleOutsideClick = (event: MouseEvent) => {
       const target = event.target as HTMLElement;
-      if (isMobileMenuOpen && !target.closest('.mobile-menu-container')) {
+      if (isMobileMenuOpen && !target.closest('.mobile-menu-container') && !target.closest('[aria-expanded="true"]')) {
+        closeMobileMenu();
+      }
+    };
+
+    const handleEscapeKey = (event: KeyboardEvent) => {
+      if (event.key === 'Escape' && isMobileMenuOpen) {
         closeMobileMenu();
       }
     };
 
     if (isMobileMenuOpen) {
       document.addEventListener('click', handleOutsideClick);
+      document.addEventListener('keydown', handleEscapeKey);
     }
 
     return () => {
       document.removeEventListener('click', handleOutsideClick);
+      document.removeEventListener('keydown', handleEscapeKey);
     };
   }, [isMobileMenuOpen]);
 
@@ -76,12 +86,12 @@ const Index = () => {
       {/* Mobile Menu Overlay */}
       {isMobileMenuOpen && (
         <div 
-          className="fixed inset-0 bg-black/20 backdrop-blur-sm z-30 md:hidden"
+          className="fixed inset-0 bg-black/50 backdrop-blur-sm z-40 md:hidden"
           onClick={closeMobileMenu}
         />
       )}
       
-      <div className="relative z-40">
+      <div className="relative z-50">
       {/* Welcome Animation */}
       {showWelcome && (
         <div className="fixed inset-0 z-50 bg-gradient-primary flex items-center justify-center">
@@ -100,7 +110,7 @@ const Index = () => {
       )}
 
       {/* Navigation */}
-      <nav className="sticky top-0 bg-background/95 backdrop-blur-sm border-b border-border/50 z-40">
+      <nav className="sticky top-0 bg-background/95 backdrop-blur-sm border-b border-border/50 z-50">
         <div className="container mx-auto px-4">
           <div className="flex items-center justify-between h-16">
             {/* Logo */}
@@ -132,7 +142,9 @@ const Index = () => {
                 variant="ghost" 
                 size="sm"
                 onClick={toggleMobileMenu}
-                className="p-2 hover:bg-muted/50 transition-smooth"
+                className="p-2 hover:bg-muted/50 transition-smooth relative z-50"
+                aria-label="القائمة"
+                aria-expanded={isMobileMenuOpen}
               >
                 {isMobileMenuOpen ? (
                   <X className="w-6 h-6 text-foreground" />
@@ -145,10 +157,10 @@ const Index = () => {
         </div>
 
         {/* Mobile Dropdown Menu */}
-        <div className={`mobile-menu-container md:hidden transition-all duration-500 ease-in-out ${
-          isMobileMenuOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
+        <div className={`mobile-menu-container md:hidden overflow-hidden transition-all duration-300 ease-in-out bg-background/98 backdrop-blur-md border-t border-border/50 shadow-xl ${
+          isMobileMenuOpen ? 'max-h-96 opacity-100 visible' : 'max-h-0 opacity-0 invisible'
         }`}>
-          <div className="px-4 py-6 bg-gradient-to-b from-background/95 to-background/90 backdrop-blur-sm border-t border-border/50 shadow-lg">
+          <div className="px-4 py-6">
             <div className="flex flex-col space-y-4">
               <a 
                 href="#features" 

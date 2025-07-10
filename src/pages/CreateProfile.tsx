@@ -83,6 +83,18 @@ const CreateProfile = () => {
       const services = profileData.services.filter(service => service.trim() !== "");
       const topClients = profileData.topClients.filter(client => client.trim() !== "");
 
+      // Process social media URLs
+      const processUsername = (username: string, platform: string) => {
+        if (!username || username.trim() === "") return null;
+        const cleanUsername = username.replace(/^@/, "").trim();
+        if (platform === "instagram") {
+          return `https://instagram.com/${cleanUsername}`;
+        } else if (platform === "twitter") {
+          return `https://x.com/${cleanUsername}`;
+        }
+        return null;
+      };
+
       // Create or update profile
       const { error } = await supabase
         .from('profiles')
@@ -92,8 +104,8 @@ const CreateProfile = () => {
           full_name: profileData.fullName,
           bio: profileData.bio,
           contact_email: profileData.workEmail,
-          instagram_url: profileData.instagram || null,
-          twitter_url: profileData.twitter || null,
+          instagram_url: processUsername(profileData.instagram, "instagram"),
+          twitter_url: processUsername(profileData.twitter, "twitter"),
           website: profileData.externalLink || null,
           avatar_url: profileData.profileImage || null,
           emoji: profileData.emoji || null
@@ -581,9 +593,12 @@ const CreateProfile = () => {
                     id="instagram"
                     value={profileData.instagram}
                     onChange={(e) => setProfileData(prev => ({ ...prev, instagram: e.target.value }))}
-                    placeholder="@username"
+                    placeholder="username (بدون @)"
                     className="text-left"
                   />
+                  <p className="text-xs text-muted-foreground">
+                    سيتم إنشاء الرابط: instagram.com/{profileData.instagram || "username"}
+                  </p>
                 </div>
 
                 {/* Twitter/X */}
@@ -596,9 +611,12 @@ const CreateProfile = () => {
                     id="twitter"
                     value={profileData.twitter}
                     onChange={(e) => setProfileData(prev => ({ ...prev, twitter: e.target.value }))}
-                    placeholder="@username"
+                    placeholder="username (بدون @)"
                     className="text-left"
                   />
+                  <p className="text-xs text-muted-foreground">
+                    سيتم إنشاء الرابط: x.com/{profileData.twitter || "username"}
+                  </p>
                 </div>
 
                 {/* بريد العمل */}

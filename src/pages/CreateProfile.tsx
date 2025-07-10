@@ -397,25 +397,43 @@ const CreateProfile = () => {
                           type="button"
                           variant="outline"
                           size="sm"
-                          className="w-10 h-10 p-0"
+                          className="w-10 h-10 p-0 hover:bg-gradient-primary hover:text-white transition-all duration-200"
                         >
                           <Plus className="h-4 w-4" />
                         </Button>
                       </PopoverTrigger>
-                      <PopoverContent className="w-80 p-4" align="start">
-                        <div className="space-y-4">
-                          <h4 className="font-medium text-sm text-center">اختر إيموجي</h4>
+                      <PopoverContent 
+                        className="w-80 p-0 bg-background/95 backdrop-blur-md border shadow-xl rounded-xl z-50" 
+                        align="start"
+                        sideOffset={8}
+                      >
+                        <div className="p-4 border-b bg-gradient-to-r from-primary/5 to-accent/5 rounded-t-xl">
+                          <h4 className="font-semibold text-sm text-center text-foreground">اختر إيموجي مميز</h4>
+                          <p className="text-xs text-muted-foreground text-center mt-1">اختر ما يعبر عن شخصيتك</p>
+                        </div>
+                        
+                        <div className="max-h-80 overflow-y-auto overscroll-contain p-4 space-y-4">
                           {Object.entries(emojiCategories).map(([category, emojis]) => (
-                            <div key={category} className="space-y-2">
-                              <h5 className="text-xs font-medium text-muted-foreground">{category}</h5>
-                              <div className="grid grid-cols-8 gap-1">
+                            <div key={category} className="space-y-3">
+                              <div className="flex items-center gap-2">
+                                <div className="h-px bg-gradient-primary flex-1"></div>
+                                <h5 className="text-xs font-medium text-primary px-2 bg-background rounded-full">
+                                  {category}
+                                </h5>
+                                <div className="h-px bg-gradient-primary flex-1"></div>
+                              </div>
+                              <div className="grid grid-cols-8 gap-2">
                                 {emojis.map((emoji) => (
                                   <Button
                                     key={emoji}
                                     type="button"
                                     variant={profileData.emoji === emoji ? "default" : "ghost"}
                                     size="sm"
-                                    className="w-8 h-8 p-0 text-base hover:bg-accent"
+                                    className={`w-9 h-9 p-0 text-lg rounded-lg hover:scale-110 transition-all duration-200 ${
+                                      profileData.emoji === emoji 
+                                        ? "bg-gradient-primary text-white shadow-md ring-2 ring-primary/20" 
+                                        : "hover:bg-gradient-primary/10 hover:shadow-sm"
+                                    }`}
                                     onClick={() => setProfileData(prev => ({ ...prev, emoji }))}
                                   >
                                     {emoji}
@@ -424,20 +442,22 @@ const CreateProfile = () => {
                               </div>
                             </div>
                           ))}
-                          {profileData.emoji && (
-                            <div className="pt-2 border-t">
-                              <Button
-                                type="button"
-                                variant="outline"
-                                size="sm"
-                                className="w-full"
-                                onClick={() => setProfileData(prev => ({ ...prev, emoji: "" }))}
-                              >
-                                إزالة الإيموجي
-                              </Button>
-                            </div>
-                          )}
                         </div>
+                        
+                        {profileData.emoji && (
+                          <div className="p-4 border-t bg-muted/30 rounded-b-xl">
+                            <Button
+                              type="button"
+                              variant="outline"
+                              size="sm"
+                              className="w-full hover:bg-destructive hover:text-destructive-foreground transition-colors"
+                              onClick={() => setProfileData(prev => ({ ...prev, emoji: "" }))}
+                            >
+                              <X className="h-4 w-4 ml-2" />
+                              إزالة الإيموجي
+                            </Button>
+                          </div>
+                        )}
                       </PopoverContent>
                     </Popover>
                   </div>

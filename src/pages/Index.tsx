@@ -156,7 +156,7 @@ const Index = () => {
                 onClick={closeMobileMenu}
               >
                 <div className="flex items-center space-x-3 space-x-reverse">
-                  <div className="w-2 h-2 bg-purple-500 rounded-full"></div>
+                  <div className="w-2 h-2 bg-primary rounded-full"></div>
                   <span>المميزات</span>
                 </div>
               </a>
@@ -166,7 +166,7 @@ const Index = () => {
                 onClick={closeMobileMenu}
               >
                 <div className="flex items-center space-x-3 space-x-reverse">
-                  <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+                  <div className="w-2 h-2 bg-accent rounded-full"></div>
                   <span>كيف يعمل</span>
                 </div>
               </a>
@@ -176,7 +176,7 @@ const Index = () => {
                 onClick={closeMobileMenu}
               >
                 <div className="flex items-center space-x-3 space-x-reverse">
-                  <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                  <div className="w-2 h-2 bg-primary/80 rounded-full"></div>
                   <span>تسجيل الدخول</span>
                 </div>
               </Link>
@@ -184,7 +184,7 @@ const Index = () => {
                 <Button 
                   variant="default" 
                   size="lg" 
-                  className="w-full text-lg py-4 rounded-full bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 transform hover:scale-105 active:scale-95 transition-all duration-300 shadow-lg"
+                  className="w-full text-lg py-4 rounded-full bg-gradient-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90 transform hover:scale-105 active:scale-95 transition-all duration-300 shadow-lg"
                   asChild
                 >
                   <Link to="/signup" onClick={closeMobileMenu}>أنشئ ملفك</Link>
@@ -211,11 +211,11 @@ const Index = () => {
           </div>
           
           <div className="grid md:grid-cols-3 gap-8">
-            <Card className="border-0 shadow-soft hover:shadow-medium transition-smooth bg-white group">
+            <Card className="border-0 shadow-soft hover:shadow-medium transition-smooth bg-card group">
               <CardContent className="p-8 text-center">
                 <div className="mb-6 flex justify-center">
-                  <div className="w-16 h-16 bg-purple-100 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-smooth">
-                    <Link2 className="w-8 h-8 text-purple-600" />
+                  <div className="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-smooth">
+                    <Link2 className="w-8 h-8 text-primary" />
                   </div>
                 </div>
                 <h3 className="text-xl font-bold mb-4 text-foreground">واجهة مميزة</h3>
@@ -225,11 +225,11 @@ const Index = () => {
               </CardContent>
             </Card>
 
-            <Card className="border-0 shadow-soft hover:shadow-medium transition-smooth bg-white group">
+            <Card className="border-0 shadow-soft hover:shadow-medium transition-smooth bg-card group">
               <CardContent className="p-8 text-center">
                 <div className="mb-6 flex justify-center">
-                  <div className="w-16 h-16 bg-blue-100 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-smooth">
-                    <Calendar className="w-8 h-8 text-blue-600" />
+                  <div className="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-smooth">
+                    <Calendar className="w-8 h-8 text-primary" />
                   </div>
                 </div>
                 <h3 className="text-xl font-bold mb-4 text-foreground">نظام حجز ذكي</h3>
@@ -239,11 +239,11 @@ const Index = () => {
               </CardContent>
             </Card>
 
-            <Card className="border-0 shadow-soft hover:shadow-medium transition-smooth bg-white group">
+            <Card className="border-0 shadow-soft hover:shadow-medium transition-smooth bg-card group">
               <CardContent className="p-8 text-center">
                 <div className="mb-6 flex justify-center">
-                  <div className="w-16 h-16 bg-green-100 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-smooth">
-                    <Users className="w-8 h-8 text-green-600" />
+                  <div className="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-smooth">
+                    <Users className="w-8 h-8 text-primary" />
                   </div>
                 </div>
                 <h3 className="text-xl font-bold mb-4 text-foreground">عنوان رقمي مخصص</h3>
@@ -271,7 +271,7 @@ const Index = () => {
           <div className="grid md:grid-cols-3 gap-8 max-w-4xl mx-auto">
             <div className="text-center">
               <div className="mb-6 flex justify-center">
-                <div className="w-16 h-16 bg-gradient-to-r from-purple-500 to-pink-500 rounded-2xl flex items-center justify-center text-white text-2xl font-bold">
+                <div className="w-16 h-16 bg-gradient-to-r from-primary to-primary/80 rounded-2xl flex items-center justify-center text-white text-2xl font-bold">
                   1
                 </div>
               </div>
@@ -283,7 +283,7 @@ const Index = () => {
 
             <div className="text-center">
               <div className="mb-6 flex justify-center">
-                <div className="w-16 h-16 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-2xl flex items-center justify-center text-white text-2xl font-bold">
+                <div className="w-16 h-16 bg-gradient-to-r from-primary to-accent rounded-2xl flex items-center justify-center text-white text-2xl font-bold">
                   2
                 </div>
               </div>
@@ -295,7 +295,7 @@ const Index = () => {
 
             <div className="text-center">
               <div className="mb-6 flex justify-center">
-                <div className="w-16 h-16 bg-gradient-to-r from-green-500 to-emerald-500 rounded-2xl flex items-center justify-center text-white text-2xl font-bold">
+                <div className="w-16 h-16 bg-gradient-to-r from-accent to-primary rounded-2xl flex items-center justify-center text-white text-2xl font-bold">
                   3
                 </div>
               </div>
@@ -320,7 +320,7 @@ const Index = () => {
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button 
               size="lg" 
-              className="bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white text-lg px-12 py-4 rounded-full transform hover:scale-105 active:scale-95 transition-all duration-300 shadow-lg hover:shadow-xl" 
+              className="bg-gradient-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90 text-primary-foreground text-lg px-12 py-4 rounded-full transform hover:scale-105 active:scale-95 transition-all duration-300 shadow-lg hover:shadow-xl" 
               asChild
             >
               <Link to="/signup">أنشئ ملفك الآن</Link>
@@ -328,7 +328,7 @@ const Index = () => {
             <Button 
               size="lg" 
               variant="outline" 
-              className="text-lg px-12 py-4 rounded-full border-2 border-purple-500 text-purple-600 hover:bg-purple-500 hover:text-white transform hover:scale-105 active:scale-95 transition-all duration-300 shadow-md hover:shadow-lg" 
+              className="text-lg px-12 py-4 rounded-full border-2 border-primary text-primary hover:bg-primary hover:text-primary-foreground transform hover:scale-105 active:scale-95 transition-all duration-300 shadow-md hover:shadow-lg" 
               onClick={handleContactUs}
             >
               {language === "ar" ? "تواصل معنا" : "Contact Us"}

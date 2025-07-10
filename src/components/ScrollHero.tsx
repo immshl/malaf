@@ -19,11 +19,6 @@ const ScrollHero = () => {
         start: "top top",
         end: "bottom top",
         pin: true,
-        snap: {
-          snapTo: "labels",
-          duration: { min: 0.2, max: 3 },
-          delay: 0.2,
-        },
       });
 
       // Animate background gradients

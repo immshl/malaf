@@ -76,7 +76,17 @@ const Index = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-background relative">
+    <div className="min-h-screen bg-background relative overflow-hidden">
+      {/* Floating Glass Particles Background */}
+      <div className="fixed inset-0 pointer-events-none z-0">
+        <div className="floating-particle w-3 h-3 top-20 left-10 animate-float"></div>
+        <div className="floating-particle w-2 h-2 top-40 right-20 animate-float-reverse"></div>
+        <div className="floating-particle w-4 h-4 bottom-40 left-1/4 animate-float stagger-2"></div>
+        <div className="floating-particle w-1 h-1 top-60 right-1/3 animate-float-reverse stagger-3"></div>
+        <div className="floating-particle w-2 h-2 bottom-20 right-1/6 animate-float stagger-4"></div>
+        <div className="floating-particle w-3 h-3 top-1/3 left-1/6 animate-float-reverse stagger-5"></div>
+      </div>
+
       {/* Mobile Menu Overlay */}
       {isMobileMenuOpen && (
         <div 
@@ -200,201 +210,212 @@ const Index = () => {
         </div>
       </nav>
 
-      {/* Hero Section */}
-      <section className="relative py-20 md:py-32 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-hero opacity-10"></div>
-        
-        {/* Floating particles */}
+      {/* Hero Section - Enhanced Glassmorphism */}
+      <section className="relative py-24 md:py-40 overflow-hidden">
+        {/* Hero Background Effects */}
         <div className="absolute inset-0">
-          <div className="absolute top-20 left-10 w-2 h-2 bg-primary/30 rounded-full animate-float"></div>
-          <div className="absolute top-40 right-20 w-3 h-3 bg-accent/40 rounded-full animate-float stagger-2"></div>
-          <div className="absolute bottom-40 left-1/4 w-1 h-1 bg-primary/50 rounded-full animate-float stagger-3"></div>
-          <div className="absolute bottom-20 right-1/3 w-2 h-2 bg-accent/30 rounded-full animate-float stagger-4"></div>
+          <div className="absolute inset-0 bg-gradient-hero opacity-5"></div>
+          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/5 rounded-full blur-3xl animate-pulse-glow"></div>
+          <div className="absolute bottom-1/3 right-1/4 w-80 h-80 bg-accent/5 rounded-full blur-3xl animate-pulse-glow stagger-2"></div>
         </div>
         
         <div className="container mx-auto px-4 relative z-10">
-          <div className="max-w-4xl mx-auto text-center">
-            <p className="text-sm text-muted-foreground mb-4 font-medium animate-fade-in opacity-0 [animation-fill-mode:forwards]">
-              لتمكين العمل الحر
-            </p>
-            
-            <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight animate-slide-up opacity-0 [animation-fill-mode:forwards] stagger-1">
-              <span className="text-gradient">
-                ملف مهني خاص بك
-              </span>
-            </h1>
-            
-            <p className="text-lg md:text-xl text-muted-foreground mb-8 max-w-2xl mx-auto animate-fade-in opacity-0 [animation-fill-mode:forwards] stagger-2">
-              منصة شاملة لبناء حضورك الرقمي وعرض خدماتك بطريقة احترافية
-            </p>
-            
-            <div className="flex flex-col sm:flex-row gap-4 justify-center animate-slide-up opacity-0 [animation-fill-mode:forwards] stagger-3">
-              <Button 
-                size="lg" 
-                className="glass-button text-white text-lg px-8 py-4 rounded-full animate-glow"
-                asChild
-              >
-                <Link to="/signup">
-                  اصنع ملفك المهني
-                </Link>
-              </Button>
-              <Button 
-                size="lg" 
-                variant="outline" 
-                className="text-lg px-8 py-4 rounded-full border-2 glass-soft hover-lift"
-                asChild
-              >
-                <Link to="/example">
-                  شاهد نموذج
-                </Link>
-              </Button>
+          <div className="max-w-5xl mx-auto text-center">
+            {/* Hero Glass Card */}
+            <div className="glass-card p-12 md:p-16 animate-slide-in-glass">
+              <p className="text-lg text-muted-foreground mb-6 font-medium animate-fade-in-up opacity-0 stagger-1">
+                ✨ لتمكين العمل الحر والإبداع الرقمي
+              </p>
+              
+              <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold mb-8 leading-tight animate-fade-in-up opacity-0 stagger-2">
+                <span className="text-gradient block mb-4">
+                  ملف مهني
+                </span>
+                <span className="text-foreground/90 text-4xl md:text-5xl lg:text-6xl">
+                  خاص بك
+                </span>
+              </h1>
+              
+              <p className="text-xl md:text-2xl text-muted-foreground mb-10 max-w-3xl mx-auto leading-relaxed animate-fade-in-up opacity-0 stagger-3">
+                منصة شاملة لبناء حضورك الرقمي المتميز وعرض خدماتك بطريقة احترافية تلفت الأنظار
+              </p>
+              
+              <div className="flex flex-col sm:flex-row gap-6 justify-center animate-fade-in-up opacity-0 stagger-4">
+                <Button 
+                  size="lg" 
+                  className="glass-button text-white text-xl px-10 py-5 rounded-full font-semibold shadow-2xl"
+                  asChild
+                >
+                  <Link to="/signup">
+                    🚀 اصنع ملفك المهني
+                  </Link>
+                </Button>
+                <Button 
+                  size="lg" 
+                  variant="outline" 
+                  className="text-xl px-10 py-5 rounded-full glass border-2 hover-lift font-semibold"
+                  asChild
+                >
+                  <Link to="/example">
+                    👁️ شاهد نموذج حي
+                  </Link>
+                </Button>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Features Section */}
-      <section id="features" className="py-20 bg-muted/30">
+      {/* Features Section - Glass Cards */}
+      <section id="features" className="py-24 relative">
         <div className="container mx-auto px-4">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-              كل ما تحتاجه لبناء حضور رقمي فعال
-            </h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              حلول ذكية ومبتكرة تساعدك على التميز في سوق العمل الحر وجذب المزيد من الفرص.
-            </p>
+          <div className="text-center mb-20">
+            <div className="glass-card p-8 max-w-4xl mx-auto">
+              <h2 className="text-4xl md:text-5xl font-bold text-gradient mb-6">
+                كل ما تحتاجه لبناء حضور رقمي فعال
+              </h2>
+              <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
+                حلول ذكية ومبتكرة تساعدك على التميز في سوق العمل الحر وجذب المزيد من الفرص بأسلوب احترافي.
+              </p>
+            </div>
           </div>
           
-          <div className="grid md:grid-cols-3 gap-8">
-            <Card className="glass-card border-0 group hover-lift animate-fade-in opacity-0 [animation-fill-mode:forwards] stagger-1">
-              <CardContent className="p-8 text-center relative overflow-hidden">
-                <div className="absolute inset-0 animate-shimmer opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                <div className="mb-6 flex justify-center relative z-10">
-                  <div className="w-16 h-16 bg-gradient-to-br from-primary/20 to-accent/20 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-smooth animate-float">
-                    <Link2 className="w-8 h-8 text-primary" />
+          <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+            <div className="glass-card group hover-lift animate-slide-in-glass opacity-0 stagger-1">
+              <div className="p-10 text-center relative overflow-hidden">
+                <div className="shimmer-effect absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                <div className="mb-8 flex justify-center relative z-10">
+                  <div className="w-20 h-20 glass rounded-3xl flex items-center justify-center group-hover:scale-110 transition-all duration-500 animate-pulse-glow">
+                    <Link2 className="w-10 h-10 text-primary" />
                   </div>
                 </div>
-                <h3 className="text-xl font-bold mb-4 text-foreground relative z-10">واجهة مميزة</h3>
-                <p className="text-muted-foreground leading-relaxed relative z-10">
-                  اعرض خدماتك وبياناتك بطريقة منظمة لتبني ثقة مع العميل من اللحظة الأولى.
+                <h3 className="text-2xl font-bold mb-6 text-gradient relative z-10">واجهة مميزة</h3>
+                <p className="text-muted-foreground leading-relaxed text-lg relative z-10">
+                  اعرض خدماتك وبياناتك بطريقة منظمة ومبتكرة لتبني ثقة قوية مع العميل من اللحظة الأولى.
                 </p>
-              </CardContent>
-            </Card>
+              </div>
+            </div>
 
-            <Card className="glass-card border-0 group hover-lift animate-fade-in opacity-0 [animation-fill-mode:forwards] stagger-2">
-              <CardContent className="p-8 text-center relative overflow-hidden">
-                <div className="absolute inset-0 animate-shimmer opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                <div className="mb-6 flex justify-center relative z-10">
-                  <div className="w-16 h-16 bg-gradient-to-br from-primary/20 to-accent/20 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-smooth animate-float stagger-2">
-                    <Calendar className="w-8 h-8 text-primary" />
+            <div className="glass-card group hover-lift animate-slide-in-glass opacity-0 stagger-2">
+              <div className="p-10 text-center relative overflow-hidden">
+                <div className="shimmer-effect absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                <div className="mb-8 flex justify-center relative z-10">
+                  <div className="w-20 h-20 glass rounded-3xl flex items-center justify-center group-hover:scale-110 transition-all duration-500 animate-pulse-glow stagger-2">
+                    <Calendar className="w-10 h-10 text-primary" />
                   </div>
                 </div>
-                <h3 className="text-xl font-bold mb-4 text-foreground relative z-10">نظام حجز ذكي</h3>
-                <p className="text-muted-foreground leading-relaxed relative z-10">
+                <h3 className="text-2xl font-bold mb-6 text-gradient relative z-10">نظام حجز ذكي</h3>
+                <p className="text-muted-foreground leading-relaxed text-lg relative z-10">
                   امنح عملاءك سهولة طلب المواعيد معك مباشرة، إدارة ذكية لجدولك مع إشعارات فورية لكل طلب جديد.
                 </p>
-              </CardContent>
-            </Card>
+              </div>
+            </div>
 
-            <Card className="glass-card border-0 group hover-lift animate-fade-in opacity-0 [animation-fill-mode:forwards] stagger-3">
-              <CardContent className="p-8 text-center relative overflow-hidden">
-                <div className="absolute inset-0 animate-shimmer opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                <div className="mb-6 flex justify-center relative z-10">
-                  <div className="w-16 h-16 bg-gradient-to-br from-primary/20 to-accent/20 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-smooth animate-float stagger-3">
-                    <Users className="w-8 h-8 text-primary" />
+            <div className="glass-card group hover-lift animate-slide-in-glass opacity-0 stagger-3">
+              <div className="p-10 text-center relative overflow-hidden">
+                <div className="shimmer-effect absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                <div className="mb-8 flex justify-center relative z-10">
+                  <div className="w-20 h-20 glass rounded-3xl flex items-center justify-center group-hover:scale-110 transition-all duration-500 animate-pulse-glow stagger-3">
+                    <Users className="w-10 h-10 text-primary" />
                   </div>
                 </div>
-                <h3 className="text-xl font-bold mb-4 text-foreground relative z-10">عنوان رقمي مخصص</h3>
-                <p className="text-muted-foreground leading-relaxed relative z-10">
-                  احصل على رابط شخصي يعكس هويتك، سهل المشاركة، يُحفظ بسهولة، ويتيح الوصول إليك من أي مكان.
+                <h3 className="text-2xl font-bold mb-6 text-gradient relative z-10">عنوان رقمي مخصص</h3>
+                <p className="text-muted-foreground leading-relaxed text-lg relative z-10">
+                  احصل على رابط شخصي يعكس هويتك المهنية، سهل المشاركة، يُحفظ بسهولة، ويتيح الوصول إليك من أي مكان.
                 </p>
-              </CardContent>
-            </Card>
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* How It Works Section */}
-      <section id="how-it-works" className="py-20">
+      {/* How It Works Section - Glass Steps */}
+      <section id="how-it-works" className="py-24 relative">
         <div className="container mx-auto px-4">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-              كيف يعمل ملف؟
-            </h2>
-            <p className="text-lg text-muted-foreground">
-              ثلاث خطوات بسيطة
-            </p>
+          <div className="text-center mb-20">
+            <div className="glass-card p-8 max-w-3xl mx-auto">
+              <h2 className="text-4xl md:text-5xl font-bold text-gradient mb-6">
+                كيف يعمل ملف؟
+              </h2>
+              <p className="text-xl text-muted-foreground">
+                ثلاث خطوات بسيطة لإنشاء ملفك المهني المتميز
+              </p>
+            </div>
           </div>
           
-          <div className="grid md:grid-cols-3 gap-8 max-w-4xl mx-auto">
-            <div className="text-center animate-slide-up opacity-0 [animation-fill-mode:forwards] stagger-1">
-              <div className="mb-6 flex justify-center">
-                <div className="w-16 h-16 bg-gradient-primary rounded-2xl flex items-center justify-center text-white text-2xl font-bold hover-scale animate-glow">
+          <div className="grid md:grid-cols-3 gap-10 max-w-5xl mx-auto">
+            <div className="text-center glass-card p-8 hover-lift animate-slide-in-glass opacity-0 stagger-1">
+              <div className="mb-8 flex justify-center">
+                <div className="w-20 h-20 glass-button rounded-3xl flex items-center justify-center text-white text-3xl font-bold animate-pulse-glow">
                   1
                 </div>
               </div>
-              <h3 className="text-xl font-bold mb-4 text-foreground">أنشئ ملفك</h3>
-              <p className="text-muted-foreground leading-relaxed">
-                أدخل معلوماتك وخدماتك بخطوات بسيطة
+              <h3 className="text-2xl font-bold mb-6 text-gradient">أنشئ ملفك</h3>
+              <p className="text-muted-foreground leading-relaxed text-lg">
+                أدخل معلوماتك وخدماتك بخطوات بسيطة وسهلة مع إرشادات واضحة
               </p>
             </div>
 
-            <div className="text-center animate-slide-up opacity-0 [animation-fill-mode:forwards] stagger-2">
-              <div className="mb-6 flex justify-center">
-                <div className="w-16 h-16 bg-gradient-primary rounded-2xl flex items-center justify-center text-white text-2xl font-bold hover-scale animate-glow">
+            <div className="text-center glass-card p-8 hover-lift animate-slide-in-glass opacity-0 stagger-2">
+              <div className="mb-8 flex justify-center">
+                <div className="w-20 h-20 glass-button rounded-3xl flex items-center justify-center text-white text-3xl font-bold animate-pulse-glow stagger-2">
                   2
                 </div>
               </div>
-              <h3 className="text-xl font-bold mb-4 text-foreground">شارك ملفك</h3>
-              <p className="text-muted-foreground leading-relaxed">
-                احصل على رابط شخصي لمشاركته مع العملاء
+              <h3 className="text-2xl font-bold mb-6 text-gradient">شارك ملفك</h3>
+              <p className="text-muted-foreground leading-relaxed text-lg">
+                احصل على رابط شخصي مميز لمشاركته مع العملاء والشركاء
               </p>
             </div>
 
-            <div className="text-center animate-slide-up opacity-0 [animation-fill-mode:forwards] stagger-3">
-              <div className="mb-6 flex justify-center">
-                <div className="w-16 h-16 bg-gradient-primary rounded-2xl flex items-center justify-center text-white text-2xl font-bold hover-scale animate-glow">
+            <div className="text-center glass-card p-8 hover-lift animate-slide-in-glass opacity-0 stagger-3">
+              <div className="mb-8 flex justify-center">
+                <div className="w-20 h-20 glass-button rounded-3xl flex items-center justify-center text-white text-3xl font-bold animate-pulse-glow stagger-3">
                   3
                 </div>
               </div>
-              <h3 className="text-xl font-bold mb-4 text-foreground">استقبل الطلبات</h3>
-              <p className="text-muted-foreground leading-relaxed">
-                اربط مع العملاء واستقبل طلبات المشاريع
+              <h3 className="text-2xl font-bold mb-6 text-gradient">استقبل الطلبات</h3>
+              <p className="text-muted-foreground leading-relaxed text-lg">
+                اربط مع العملاء واستقبل طلبات المشاريع والتعاون المثمر
               </p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="py-20 relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-primary opacity-5"></div>
+      {/* CTA Section - Grand Glass Finale */}
+      <section className="py-24 relative overflow-hidden">
+        <div className="absolute inset-0">
+          <div className="absolute inset-0 bg-gradient-hero opacity-5"></div>
+          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-primary/10 rounded-full blur-3xl animate-pulse-glow"></div>
+        </div>
         
-        {/* Glass CTA Card */}
         <div className="container mx-auto px-4 relative z-10">
-          <div className="max-w-4xl mx-auto glass-card p-12 text-center">
-            <h2 className="text-3xl md:text-4xl font-bold text-gradient mb-6 animate-fade-in">
-              ابدأ ملفك المميز
-            </h2>
-            <p className="text-lg text-muted-foreground mb-8 max-w-2xl mx-auto animate-slide-up stagger-1">
-              انضم إلى ملف واحصل على ظهور رقمي فعال يميزك في سوق العمل الحر
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center animate-slide-up stagger-2">
-              <Button 
-                size="lg" 
-                className="glass-button text-white text-lg px-12 py-4 rounded-full animate-glow" 
-                asChild
-              >
-                <Link to="/signup">أنشئ ملفك الآن</Link>
-              </Button>
-              <Button 
-                size="lg" 
-                variant="outline" 
-                className="text-lg px-12 py-4 rounded-full glass-soft hover-lift" 
-                onClick={handleContactUs}
-              >
-                {language === "ar" ? "تواصل معنا" : "Contact Us"}
-              </Button>
+          <div className="max-w-5xl mx-auto">
+            <div className="glass-card p-16 text-center animate-slide-in-glass">
+              <h2 className="text-5xl md:text-6xl font-bold text-gradient mb-8">
+                ابدأ ملفك المميز
+              </h2>
+              <p className="text-2xl text-muted-foreground mb-12 max-w-3xl mx-auto leading-relaxed">
+                انضم إلى ملف واحصل على ظهور رقمي فعال يميزك في سوق العمل الحر ويفتح لك آفاق جديدة
+              </p>
+              <div className="flex flex-col sm:flex-row gap-6 justify-center">
+                <Button 
+                  size="lg" 
+                  className="glass-button text-white text-2xl px-16 py-6 rounded-full font-bold shadow-2xl" 
+                  asChild
+                >
+                  <Link to="/signup">🎯 أنشئ ملفك الآن</Link>
+                </Button>
+                <Button 
+                  size="lg" 
+                  variant="outline" 
+                  className="text-2xl px-16 py-6 rounded-full glass hover-lift font-bold border-2" 
+                  onClick={handleContactUs}
+                >
+                  💬 {language === "ar" ? "تواصل معنا" : "Contact Us"}
+                </Button>
+              </div>
             </div>
           </div>
         </div>

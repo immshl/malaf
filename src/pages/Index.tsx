@@ -128,14 +128,9 @@ const Index = () => {
           style={{ zIndex: 50 }}
         >
           <div className="px-4 py-6 glass-card border-t border-border/50 shadow-xl">
-            <div className="flex flex-col space-y-4">
-              {/* أولاً: تسجيل الدخول بشكل بارز */}
-              <div className="mb-4">
-                <AuthButton />
-              </div>
-              
-              {/* ثانياً: روابط التنقل */}
-              <div className="border-t border-border/20 pt-4 space-y-2">
+            <div className="flex flex-col space-y-6">
+              {/* أولاً: أقسام المنصة */}
+              <div className="space-y-2">
                 <a 
                   href="#features" 
                   className="flex items-center space-x-3 space-x-reverse text-muted-foreground hover:text-foreground transition-all duration-300 py-3 px-4 text-lg font-medium rounded-lg hover:bg-muted/50 hover:transform hover:scale-105 active:scale-95"
@@ -154,16 +149,15 @@ const Index = () => {
                 </a>
               </div>
               
-              {/* ثالثاً: زر إنشاء الملف */}
+              {/* ثانياً: أزرار تسجيل الدخول وإنشاء الحساب */}
               <div className="pt-4 border-t border-border/20">
-                <Button 
-                  variant="glass" 
-                  size="lg" 
-                  className="w-full text-lg py-4 rounded-full glass-button animate-glow"
-                  asChild
-                >
-                  <Link to="/signup" onClick={closeMobileMenu}>{t('createProfile')}</Link>
-                </Button>
+                <div className="text-center mb-4">
+                  <p className="text-sm text-muted-foreground mb-4">
+                    {language === "ar" ? "ابدأ رحلتك معنا" : "Start your journey with us"}
+                  </p>
+                </div>
+                
+                <AuthButton />
               </div>
             </div>
           </div>

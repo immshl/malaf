@@ -8,6 +8,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { ArrowRight, Upload, User, Instagram, Twitter, Mail, Link as LinkIcon, Plus, X } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
@@ -21,6 +22,7 @@ const CreateProfile = () => {
     username: "",
     bio: "",
     profileImage: "",
+    emoji: "",
     services: [""],
     topClients: [""],
     instagram: "",
@@ -237,6 +239,17 @@ const CreateProfile = () => {
     { value: "evening", label: "المساء (5:00 م - 9:00 م)" }
   ];
 
+  // الإيموجيات المقترحة (أول 3)
+  const suggestedEmojis = ["😊", "🚀", "💎"];
+  
+  // كل الإيموجيات منظمة بفئات
+  const emojiCategories = {
+    "الوجوه": ["😊", "😎", "🤓", "😇", "🥳", "🤗", "🙂", "😌", "😍", "🤩"],
+    "النشاطات": ["🚀", "⭐", "🔥", "💪", "⚡", "🎯", "🏆", "🎨", "💻", "📱"],
+    "الرموز": ["💎", "👑", "🌟", "✨", "🎭", "🎪", "🎨", "🔮", "💝", "🎁"],
+    "الطبيعة": ["🌈", "🌸", "🌺", "🌻", "🍀", "🌿", "🌱", "🦋", "🐝", "🌙"]
+  };
+
   return (
     <div className="min-h-screen bg-muted/30 py-8">
       <div className="container mx-auto px-4 max-w-2xl">
@@ -267,16 +280,23 @@ const CreateProfile = () => {
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-6">
-                {/* الصورة الشخصية */}
+                 {/* الصورة الشخصية */}
                 <div className="space-y-4">
                   <Label className="text-foreground font-medium">الصورة الشخصية</Label>
                   <div className="flex items-center space-x-4 space-x-reverse">
-                    <Avatar className="w-20 h-20">
-                      <AvatarImage src={profileData.profileImage} />
-                      <AvatarFallback className="bg-gradient-primary text-white">
-                        <User className="w-8 h-8" />
-                      </AvatarFallback>
-                    </Avatar>
+                    <div className="relative">
+                      <Avatar className="w-20 h-20">
+                        <AvatarImage src={profileData.profileImage} />
+                        <AvatarFallback className="bg-gradient-primary text-white">
+                          <User className="w-8 h-8" />
+                        </AvatarFallback>
+                      </Avatar>
+                      {profileData.emoji && (
+                        <div className="absolute -top-1 -right-1 w-8 h-8 bg-background border-2 border-background rounded-full flex items-center justify-center text-lg shadow-sm">
+                          {profileData.emoji}
+                        </div>
+                      )}
+                    </div>
                     <div>
                       <Button type="button" variant="outline" className="relative overflow-hidden">
                         <Upload className="ml-2 h-4 w-4" />
@@ -347,6 +367,82 @@ const CreateProfile = () => {
                     className="text-right resize-none"
                     required
                   />
+                </div>
+
+                {/* اختيار الإيموجي */}
+                <div className="space-y-3">
+                  <Label className="text-foreground font-medium">
+                    اختر إيموجي يعبر عنك (اختياري)
+                  </Label>
+                  <div className="flex items-center gap-2">
+                    {/* الإيموجيات المقترحة */}
+                    {suggestedEmojis.map((emoji) => (
+                      <Button
+                        key={emoji}
+                        type="button"
+                        variant={profileData.emoji === emoji ? "default" : "outline"}
+                        size="sm"
+                        className="w-10 h-10 p-0 text-lg"
+                        onClick={() => setProfileData(prev => ({ ...prev, emoji }))}
+                      >
+                        {emoji}
+                      </Button>
+                    ))}
+                    
+                    {/* زر المزيد */}
+                    <Popover>
+                      <PopoverTrigger asChild>
+                        <Button
+                          type="button"
+                          variant="outline"
+                          size="sm"
+                          className="w-10 h-10 p-0"
+                        >
+                          <Plus className="h-4 w-4" />
+                        </Button>
+                      </PopoverTrigger>
+                      <PopoverContent className="w-80 p-4" align="start">
+                        <div className="space-y-4">
+                          <h4 className="font-medium text-sm text-center">اختر إيموجي</h4>
+                          {Object.entries(emojiCategories).map(([category, emojis]) => (
+                            <div key={category} className="space-y-2">
+                              <h5 className="text-xs font-medium text-muted-foreground">{category}</h5>
+                              <div className="grid grid-cols-8 gap-1">
+                                {emojis.map((emoji) => (
+                                  <Button
+                                    key={emoji}
+                                    type="button"
+                                    variant={profileData.emoji === emoji ? "default" : "ghost"}
+                                    size="sm"
+                                    className="w-8 h-8 p-0 text-base hover:bg-accent"
+                                    onClick={() => setProfileData(prev => ({ ...prev, emoji }))}
+                                  >
+                                    {emoji}
+                                  </Button>
+                                ))}
+                              </div>
+                            </div>
+                          ))}
+                          {profileData.emoji && (
+                            <div className="pt-2 border-t">
+                              <Button
+                                type="button"
+                                variant="outline"
+                                size="sm"
+                                className="w-full"
+                                onClick={() => setProfileData(prev => ({ ...prev, emoji: "" }))}
+                              >
+                                إزالة الإيموجي
+                              </Button>
+                            </div>
+                          )}
+                        </div>
+                      </PopoverContent>
+                    </Popover>
+                  </div>
+                  <p className="text-xs text-muted-foreground">
+                    سيظهر الإيموجي بجانب صورتك الشخصية
+                  </p>
                 </div>
               </CardContent>
             </Card>

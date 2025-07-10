@@ -5,6 +5,7 @@ import { ArrowLeft, Users, Calendar, Link2, Star, Zap, Shield, Smartphone, Menu,
 import { Link } from "react-router-dom";
 import { useLanguage } from "@/hooks/useLanguage";
 import AuthButton from "@/components/AuthButton";
+import ScrollHero from "@/components/ScrollHero";
 
 const Index = () => {
   const { language } = useLanguage();
@@ -194,45 +195,8 @@ const Index = () => {
         </div>
       </nav>
 
-      {/* Hero Section */}
-      <section className="relative py-20 md:py-32 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-hero opacity-5"></div>
-        <div className="container mx-auto px-4 relative z-10">
-          <div className="max-w-4xl mx-auto text-center">
-            <p className="text-sm text-muted-foreground mb-4 font-medium">
-              لتمكين العمل الحر
-            </p>
-            
-            <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight">
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-600 via-pink-500 to-blue-500">
-                ملف مهني خاص بك
-              </span>
-            </h1>
-            
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button 
-                size="lg" 
-                className="bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white text-lg px-8 py-4 rounded-full transform hover:scale-105 active:scale-95 transition-all duration-300 shadow-lg hover:shadow-xl"
-                asChild
-              >
-                <Link to="/signup">
-                  اصنع ملفك المهني
-                </Link>
-              </Button>
-              <Button 
-                size="lg" 
-                variant="outline" 
-                className="text-lg px-8 py-4 rounded-full border-2 border-purple-500 text-purple-600 hover:bg-purple-500 hover:text-white transform hover:scale-105 active:scale-95 transition-all duration-300 shadow-md hover:shadow-lg"
-                asChild
-              >
-                <Link to="/example">
-                  شاهد نموذج
-                </Link>
-              </Button>
-            </div>
-          </div>
-        </div>
-      </section>
+      {/* Scroll Hero Section */}
+      <ScrollHero />
 
       {/* Features Section */}
       <section id="features" className="py-20 bg-muted/30">

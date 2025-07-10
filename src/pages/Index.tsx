@@ -9,22 +9,8 @@ import FloatingControls from "@/components/FloatingControls";
 
 const Index = () => {
   const { language, t } = useLanguage();
-  const [showWelcome, setShowWelcome] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
-  useEffect(() => {
-    // Show welcome animation only on first visit
-    const hasVisited = localStorage.getItem('hasVisited');
-    if (!hasVisited) {
-      setShowWelcome(true);
-      localStorage.setItem('hasVisited', 'true');
-      
-      // Hide welcome animation after 2 seconds
-      setTimeout(() => {
-        setShowWelcome(false);
-      }, 2000);
-    }
-  }, []);
 
   const toggleMobileMenu = () => {
     console.log('Toggling mobile menu:', !isMobileMenuOpen);
@@ -85,24 +71,7 @@ const Index = () => {
           onClick={closeMobileMenu}
         />
       )}
-      
       <div className="relative z-40">
-      {/* Welcome Animation */}
-      {showWelcome && (
-        <div className="fixed inset-0 z-50 bg-gradient-primary flex items-center justify-center">
-          <div className="text-center animate-fade-in">
-            <div className="w-24 h-24 flex items-center justify-center mb-6 mx-auto animate-scale-in">
-              <img 
-                src="/lovable-uploads/053ffcb6-5dac-4834-a5ef-585d29be4be9.png" 
-                alt="ملف" 
-                className="w-full h-full object-contain"
-              />
-            </div>
-            <h1 className="text-4xl font-bold text-white mb-4">مرحباً بك في ملف</h1>
-            <p className="text-xl text-white/90">منصتك لبناء حضور رقمي متميز</p>
-          </div>
-        </div>
-      )}
 
       {/* Navigation */}
       <nav className="sticky top-0 glass-nav z-40">

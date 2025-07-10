@@ -5,9 +5,10 @@ import { ArrowLeft, Users, Calendar, Link2, Star, Zap, Shield, Smartphone, Menu,
 import { Link } from "react-router-dom";
 import { useLanguage } from "@/hooks/useLanguage";
 import AuthButton from "@/components/AuthButton";
+import FloatingControls from "@/components/FloatingControls";
 
 const Index = () => {
-  const { language } = useLanguage();
+  const { language, t } = useLanguage();
   const [showWelcome, setShowWelcome] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
@@ -122,10 +123,10 @@ const Index = () => {
             {/* Navigation Links */}
             <div className="hidden md:flex items-center space-x-8 space-x-reverse">
               <a href="#features" className="text-muted-foreground hover:text-foreground transition-smooth">
-                المميزات
+                {t('featuresTitle')}
               </a>
               <a href="#how-it-works" className="text-muted-foreground hover:text-foreground transition-smooth">
-                كيف يعمل
+                {t('howItWorksTitle')}
               </a>
               <AuthButton />
             </div>
@@ -157,7 +158,7 @@ const Index = () => {
           }`} 
           style={{ zIndex: 50 }}
         >
-          <div className="px-4 py-6 bg-background border-t border-border/50 shadow-xl">
+          <div className="px-4 py-6 glass-card border-t border-border/50 shadow-xl">
             <div className="flex flex-col space-y-4">
               {/* أولاً: تسجيل الدخول بشكل بارز */}
               <div className="mb-4">
@@ -172,7 +173,7 @@ const Index = () => {
                   onClick={closeMobileMenu}
                 >
                   <div className="w-2 h-2 bg-primary rounded-full"></div>
-                  <span>المميزات</span>
+                  <span>{t('featuresTitle')}</span>
                 </a>
                 <a 
                   href="#how-it-works" 
@@ -180,7 +181,7 @@ const Index = () => {
                   onClick={closeMobileMenu}
                 >
                   <div className="w-2 h-2 bg-accent rounded-full"></div>
-                  <span>كيف يعمل</span>
+                  <span>{t('howItWorksTitle')}</span>
                 </a>
               </div>
               
@@ -192,7 +193,7 @@ const Index = () => {
                   className="w-full text-lg py-4 rounded-full glass-button animate-glow"
                   asChild
                 >
-                  <Link to="/signup" onClick={closeMobileMenu}>أنشئ ملفك الآن</Link>
+                  <Link to="/signup" onClick={closeMobileMenu}>{t('createProfile')}</Link>
                 </Button>
               </div>
             </div>
@@ -215,17 +216,17 @@ const Index = () => {
         <div className="container mx-auto px-4 relative z-10">
           <div className="max-w-4xl mx-auto text-center">
             <p className="text-sm text-muted-foreground mb-4 font-medium animate-fade-in opacity-0 [animation-fill-mode:forwards]">
-              لتمكين العمل الحر
+              {t('heroSubtitle')}
             </p>
             
             <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight animate-slide-up opacity-0 [animation-fill-mode:forwards] stagger-1">
               <span className="text-gradient">
-                ملف مهني خاص بك
+                {t('heroTitle')}
               </span>
             </h1>
             
             <p className="text-lg md:text-xl text-muted-foreground mb-8 max-w-2xl mx-auto animate-fade-in opacity-0 [animation-fill-mode:forwards] stagger-2">
-              منصة شاملة لبناء حضورك الرقمي وعرض خدماتك بطريقة احترافية
+              {t('heroDescription')}
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4 justify-center animate-slide-up opacity-0 [animation-fill-mode:forwards] stagger-3">
@@ -235,7 +236,7 @@ const Index = () => {
                 asChild
               >
                 <Link to="/signup">
-                  اصنع ملفك المهني
+                  {t('createProfile')}
                 </Link>
               </Button>
               <Button 
@@ -245,10 +246,14 @@ const Index = () => {
                 asChild
               >
                 <Link to="/example">
-                  شاهد نموذج
+                  {t('viewExample')}
                 </Link>
               </Button>
             </div>
+            
+            <p className="text-xs text-muted-foreground mt-6 animate-fade-in opacity-0 [animation-fill-mode:forwards] stagger-4">
+              {t('freePlatform')}
+            </p>
           </div>
         </div>
       </section>
@@ -258,10 +263,10 @@ const Index = () => {
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-              كل ما تحتاجه لبناء حضور رقمي فعال
+              {t('featuresTitle')}
             </h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              حلول ذكية ومبتكرة تساعدك على التميز في سوق العمل الحر وجذب المزيد من الفرص.
+              {t('featuresSubtitle')}
             </p>
           </div>
           
@@ -274,9 +279,9 @@ const Index = () => {
                     <Link2 className="w-8 h-8 text-primary" />
                   </div>
                 </div>
-                <h3 className="text-xl font-bold mb-4 text-foreground relative z-10">واجهة مميزة</h3>
+                <h3 className="text-xl font-bold mb-4 text-foreground relative z-10">{t('feature1Title')}</h3>
                 <p className="text-muted-foreground leading-relaxed relative z-10">
-                  اعرض خدماتك وبياناتك بطريقة منظمة لتبني ثقة مع العميل من اللحظة الأولى.
+                  {t('feature1Desc')}
                 </p>
               </CardContent>
             </Card>
@@ -289,9 +294,9 @@ const Index = () => {
                     <Calendar className="w-8 h-8 text-primary" />
                   </div>
                 </div>
-                <h3 className="text-xl font-bold mb-4 text-foreground relative z-10">نظام حجز ذكي</h3>
+                <h3 className="text-xl font-bold mb-4 text-foreground relative z-10">{t('feature2Title')}</h3>
                 <p className="text-muted-foreground leading-relaxed relative z-10">
-                  امنح عملاءك سهولة طلب المواعيد معك مباشرة، إدارة ذكية لجدولك مع إشعارات فورية لكل طلب جديد.
+                  {t('feature2Desc')}
                 </p>
               </CardContent>
             </Card>
@@ -304,9 +309,9 @@ const Index = () => {
                     <Users className="w-8 h-8 text-primary" />
                   </div>
                 </div>
-                <h3 className="text-xl font-bold mb-4 text-foreground relative z-10">عنوان رقمي مخصص</h3>
+                <h3 className="text-xl font-bold mb-4 text-foreground relative z-10">{t('feature3Title')}</h3>
                 <p className="text-muted-foreground leading-relaxed relative z-10">
-                  احصل على رابط شخصي يعكس هويتك، سهل المشاركة، يُحفظ بسهولة، ويتيح الوصول إليك من أي مكان.
+                  {t('feature3Desc')}
                 </p>
               </CardContent>
             </Card>
@@ -319,10 +324,10 @@ const Index = () => {
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-              كيف يعمل ملف؟
+              {t('howItWorksTitle')}
             </h2>
             <p className="text-lg text-muted-foreground">
-              ثلاث خطوات بسيطة
+              {t('howItWorksSubtitle')}
             </p>
           </div>
           
@@ -333,9 +338,9 @@ const Index = () => {
                   1
                 </div>
               </div>
-              <h3 className="text-xl font-bold mb-4 text-foreground">أنشئ ملفك</h3>
+              <h3 className="text-xl font-bold mb-4 text-foreground">{t('step1Title')}</h3>
               <p className="text-muted-foreground leading-relaxed">
-                أدخل معلوماتك وخدماتك بخطوات بسيطة
+                {t('step1Desc')}
               </p>
             </div>
 
@@ -345,9 +350,9 @@ const Index = () => {
                   2
                 </div>
               </div>
-              <h3 className="text-xl font-bold mb-4 text-foreground">شارك ملفك</h3>
+              <h3 className="text-xl font-bold mb-4 text-foreground">{t('step2Title')}</h3>
               <p className="text-muted-foreground leading-relaxed">
-                احصل على رابط شخصي لمشاركته مع العملاء
+                {t('step2Desc')}
               </p>
             </div>
 
@@ -357,9 +362,9 @@ const Index = () => {
                   3
                 </div>
               </div>
-              <h3 className="text-xl font-bold mb-4 text-foreground">استقبل الطلبات</h3>
+              <h3 className="text-xl font-bold mb-4 text-foreground">{t('step3Title')}</h3>
               <p className="text-muted-foreground leading-relaxed">
-                اربط مع العملاء واستقبل طلبات المشاريع
+                {t('step3Desc')}
               </p>
             </div>
           </div>
@@ -372,34 +377,37 @@ const Index = () => {
         
         {/* Glass CTA Card */}
         <div className="container mx-auto px-4 relative z-10">
-          <div className="max-w-4xl mx-auto glass-card p-12 text-center">
-            <h2 className="text-3xl md:text-4xl font-bold text-gradient mb-6 animate-fade-in">
-              ابدأ ملفك المميز
+          <div className="max-w-4xl mx-auto glass-card p-8 md:p-12 text-center">
+            <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-gradient mb-6 animate-fade-in">
+              {t('ctaTitle')}
             </h2>
-            <p className="text-lg text-muted-foreground mb-8 max-w-2xl mx-auto animate-slide-up stagger-1">
-              انضم إلى ملف واحصل على ظهور رقمي فعال يميزك في سوق العمل الحر
+            <p className="text-base md:text-lg text-muted-foreground mb-8 max-w-2xl mx-auto animate-slide-up stagger-1">
+              {t('ctaSubtitle')}
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center animate-slide-up stagger-2">
               <Button 
                 size="lg" 
-                className="glass-button text-white text-lg px-12 py-4 rounded-full animate-glow" 
+                className="glass-button text-white text-base md:text-lg px-8 md:px-12 py-4 rounded-full animate-glow" 
                 asChild
               >
-                <Link to="/signup">أنشئ ملفك الآن</Link>
+                <Link to="/signup">{t('startNow')}</Link>
               </Button>
               <Button 
                 size="lg" 
                 variant="outline" 
-                className="text-lg px-12 py-4 rounded-full glass-soft hover-lift" 
+                className="text-base md:text-lg px-8 md:px-12 py-4 rounded-full glass-soft hover-lift" 
                 onClick={handleContactUs}
               >
-                {language === "ar" ? "تواصل معنا" : "Contact Us"}
+                {t('contactUs')}
               </Button>
             </div>
           </div>
         </div>
       </section>
       </div>
+      
+      {/* Floating Controls */}
+      <FloatingControls />
     </div>
   );
 };

@@ -124,7 +124,7 @@ All colors MUST be HSL.
   body {
     @apply bg-background text-foreground;
     font-family: 'IBM Plex Sans Arabic', 'Cairo', 'Tajawal', system-ui, -apple-system, sans-serif;
-    direction: rtl;
+    transition: var(--transition-smooth);
   }
 
   /* English text override */
@@ -341,5 +341,35 @@ All colors MUST be HSL.
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
+  }
+
+  /* Responsive improvements */
+  @media (max-width: 768px) {
+    .container {
+      @apply px-4;
+    }
+    
+    .glass-card {
+      @apply p-6;
+    }
+    
+    .animate-fade-in,
+    .animate-slide-up,
+    .animate-scale-in {
+      animation-duration: 0.6s;
+    }
+  }
+
+  /* Enhanced mobile menu */
+  .mobile-menu-container {
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+  }
+
+  /* Better focus states for accessibility */
+  .focus-visible\:ring-2:focus-visible {
+    outline: 2px solid hsl(var(--primary));
+    outline-offset: 2px;
   }
 }

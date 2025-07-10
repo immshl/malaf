@@ -5,7 +5,6 @@ import { ArrowLeft, Users, Calendar, Link2, Star, Zap, Shield, Smartphone, Menu,
 import { Link } from "react-router-dom";
 import { useLanguage } from "@/hooks/useLanguage";
 import AuthButton from "@/components/AuthButton";
-import ScrollHero from "@/components/ScrollHero";
 
 const Index = () => {
   const { language } = useLanguage();
@@ -26,13 +25,11 @@ const Index = () => {
     }
   }, []);
 
-  const toggleMobileMenu = (e?: React.MouseEvent) => {
-    e?.stopPropagation();
+  const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
   };
 
-  const closeMobileMenu = (e?: React.MouseEvent) => {
-    e?.stopPropagation();
+  const closeMobileMenu = () => {
     setIsMobileMenuOpen(false);
   };
 
@@ -40,29 +37,21 @@ const Index = () => {
     window.open('mailto:info@malaf.me?subject=استفسار عن منصة ملف', '_blank');
   };
 
-  // Close mobile menu when clicking outside or pressing escape
+  // Close mobile menu when clicking outside
   useEffect(() => {
     const handleOutsideClick = (event: MouseEvent) => {
       const target = event.target as HTMLElement;
-      if (isMobileMenuOpen && !target.closest('.mobile-menu-container') && !target.closest('[aria-expanded="true"]')) {
-        closeMobileMenu();
-      }
-    };
-
-    const handleEscapeKey = (event: KeyboardEvent) => {
-      if (event.key === 'Escape' && isMobileMenuOpen) {
+      if (isMobileMenuOpen && !target.closest('.mobile-menu-container')) {
         closeMobileMenu();
       }
     };
 
     if (isMobileMenuOpen) {
       document.addEventListener('click', handleOutsideClick);
-      document.addEventListener('keydown', handleEscapeKey);
     }
 
     return () => {
       document.removeEventListener('click', handleOutsideClick);
-      document.removeEventListener('keydown', handleEscapeKey);
     };
   }, [isMobileMenuOpen]);
 
@@ -86,12 +75,12 @@ const Index = () => {
       {/* Mobile Menu Overlay */}
       {isMobileMenuOpen && (
         <div 
-          className="fixed inset-0 bg-black/50 backdrop-blur-sm z-40 md:hidden"
+          className="fixed inset-0 bg-black/20 backdrop-blur-sm z-30 md:hidden"
           onClick={closeMobileMenu}
         />
       )}
       
-      <div className="relative z-50">
+      <div className="relative z-40">
       {/* Welcome Animation */}
       {showWelcome && (
         <div className="fixed inset-0 z-50 bg-gradient-primary flex items-center justify-center">
@@ -110,7 +99,7 @@ const Index = () => {
       )}
 
       {/* Navigation */}
-      <nav className="sticky top-0 bg-background/95 backdrop-blur-sm border-b border-border/50 z-50">
+      <nav className="sticky top-0 bg-background/95 backdrop-blur-sm border-b border-border/50 z-40">
         <div className="container mx-auto px-4">
           <div className="flex items-center justify-between h-16">
             {/* Logo */}
@@ -142,9 +131,7 @@ const Index = () => {
                 variant="ghost" 
                 size="sm"
                 onClick={toggleMobileMenu}
-                className="p-2 hover:bg-muted/50 transition-smooth relative z-50"
-                aria-label="القائمة"
-                aria-expanded={isMobileMenuOpen}
+                className="p-2 hover:bg-muted/50 transition-smooth"
               >
                 {isMobileMenuOpen ? (
                   <X className="w-6 h-6 text-foreground" />
@@ -157,10 +144,10 @@ const Index = () => {
         </div>
 
         {/* Mobile Dropdown Menu */}
-        <div className={`mobile-menu-container md:hidden overflow-hidden transition-all duration-300 ease-in-out bg-background/98 backdrop-blur-md border-t border-border/50 shadow-xl ${
-          isMobileMenuOpen ? 'max-h-96 opacity-100 visible' : 'max-h-0 opacity-0 invisible'
+        <div className={`mobile-menu-container md:hidden transition-all duration-500 ease-in-out ${
+          isMobileMenuOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
         }`}>
-          <div className="px-4 py-6">
+          <div className="px-4 py-6 bg-gradient-to-b from-background/95 to-background/90 backdrop-blur-sm border-t border-border/50 shadow-lg">
             <div className="flex flex-col space-y-4">
               <a 
                 href="#features" 
@@ -168,7 +155,7 @@ const Index = () => {
                 onClick={closeMobileMenu}
               >
                 <div className="flex items-center space-x-3 space-x-reverse">
-                  <div className="w-2 h-2 bg-primary rounded-full"></div>
+                  <div className="w-2 h-2 bg-purple-500 rounded-full"></div>
                   <span>المميزات</span>
                 </div>
               </a>
@@ -178,30 +165,28 @@ const Index = () => {
                 onClick={closeMobileMenu}
               >
                 <div className="flex items-center space-x-3 space-x-reverse">
-                  <div className="w-2 h-2 bg-accent rounded-full"></div>
+                  <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
                   <span>كيف يعمل</span>
                 </div>
               </a>
-              <div className="pt-2 pb-4 border-t border-border/20">
+              <Link 
+                to="/signin" 
+                className="text-muted-foreground hover:text-foreground transition-all duration-300 py-3 px-4 text-lg font-medium rounded-lg hover:bg-muted/50 hover:transform hover:scale-105 active:scale-95"
+                onClick={closeMobileMenu}
+              >
+                <div className="flex items-center space-x-3 space-x-reverse">
+                  <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                  <span>تسجيل الدخول</span>
+                </div>
+              </Link>
+              <div className="pt-4 border-t border-border/20">
                 <Button 
                   variant="default" 
                   size="lg" 
-                  className="w-full text-lg py-4 mb-3 rounded-full bg-gradient-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90 text-primary-foreground font-semibold shadow-lg hover:shadow-xl transform hover:scale-105 active:scale-95 transition-all duration-300"
+                  className="w-full text-lg py-4 rounded-full bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 transform hover:scale-105 active:scale-95 transition-all duration-300 shadow-lg"
                   asChild
                 >
-                  <Link to="/signin" onClick={closeMobileMenu}>
-                    <div className="flex items-center justify-center space-x-2 space-x-reverse">
-                      <span>تسجيل الدخول</span>
-                    </div>
-                  </Link>
-                </Button>
-                <Button 
-                  variant="outline" 
-                  size="lg" 
-                  className="w-full text-lg py-4 rounded-full border-2 border-primary text-primary hover:bg-primary hover:text-primary-foreground transform hover:scale-105 active:scale-95 transition-all duration-300 shadow-md hover:shadow-lg"
-                  asChild
-                >
-                  <Link to="/signup" onClick={closeMobileMenu}>أنشئ ملفك المجاني</Link>
+                  <Link to="/signup" onClick={closeMobileMenu}>أنشئ ملفك</Link>
                 </Button>
               </div>
             </div>
@@ -209,8 +194,45 @@ const Index = () => {
         </div>
       </nav>
 
-      {/* Scroll Hero Section */}
-      <ScrollHero />
+      {/* Hero Section */}
+      <section className="relative py-20 md:py-32 overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-hero opacity-5"></div>
+        <div className="container mx-auto px-4 relative z-10">
+          <div className="max-w-4xl mx-auto text-center">
+            <p className="text-sm text-muted-foreground mb-4 font-medium">
+              لتمكين العمل الحر
+            </p>
+            
+            <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight">
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-600 via-pink-500 to-blue-500">
+                ملف مهني خاص بك
+              </span>
+            </h1>
+            
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Button 
+                size="lg" 
+                className="bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white text-lg px-8 py-4 rounded-full transform hover:scale-105 active:scale-95 transition-all duration-300 shadow-lg hover:shadow-xl"
+                asChild
+              >
+                <Link to="/signup">
+                  اصنع ملفك المهني
+                </Link>
+              </Button>
+              <Button 
+                size="lg" 
+                variant="outline" 
+                className="text-lg px-8 py-4 rounded-full border-2 border-purple-500 text-purple-600 hover:bg-purple-500 hover:text-white transform hover:scale-105 active:scale-95 transition-all duration-300 shadow-md hover:shadow-lg"
+                asChild
+              >
+                <Link to="/example">
+                  شاهد نموذج
+                </Link>
+              </Button>
+            </div>
+          </div>
+        </div>
+      </section>
 
       {/* Features Section */}
       <section id="features" className="py-20 bg-muted/30">
@@ -225,11 +247,11 @@ const Index = () => {
           </div>
           
           <div className="grid md:grid-cols-3 gap-8">
-            <Card className="border-0 shadow-soft hover:shadow-medium transition-smooth bg-card group">
+            <Card className="border-0 shadow-soft hover:shadow-medium transition-smooth bg-white group">
               <CardContent className="p-8 text-center">
                 <div className="mb-6 flex justify-center">
-                  <div className="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-smooth">
-                    <Link2 className="w-8 h-8 text-primary" />
+                  <div className="w-16 h-16 bg-purple-100 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-smooth">
+                    <Link2 className="w-8 h-8 text-purple-600" />
                   </div>
                 </div>
                 <h3 className="text-xl font-bold mb-4 text-foreground">واجهة مميزة</h3>
@@ -239,11 +261,11 @@ const Index = () => {
               </CardContent>
             </Card>
 
-            <Card className="border-0 shadow-soft hover:shadow-medium transition-smooth bg-card group">
+            <Card className="border-0 shadow-soft hover:shadow-medium transition-smooth bg-white group">
               <CardContent className="p-8 text-center">
                 <div className="mb-6 flex justify-center">
-                  <div className="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-smooth">
-                    <Calendar className="w-8 h-8 text-primary" />
+                  <div className="w-16 h-16 bg-blue-100 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-smooth">
+                    <Calendar className="w-8 h-8 text-blue-600" />
                   </div>
                 </div>
                 <h3 className="text-xl font-bold mb-4 text-foreground">نظام حجز ذكي</h3>
@@ -253,11 +275,11 @@ const Index = () => {
               </CardContent>
             </Card>
 
-            <Card className="border-0 shadow-soft hover:shadow-medium transition-smooth bg-card group">
+            <Card className="border-0 shadow-soft hover:shadow-medium transition-smooth bg-white group">
               <CardContent className="p-8 text-center">
                 <div className="mb-6 flex justify-center">
-                  <div className="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-smooth">
-                    <Users className="w-8 h-8 text-primary" />
+                  <div className="w-16 h-16 bg-green-100 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-smooth">
+                    <Users className="w-8 h-8 text-green-600" />
                   </div>
                 </div>
                 <h3 className="text-xl font-bold mb-4 text-foreground">عنوان رقمي مخصص</h3>
@@ -285,7 +307,7 @@ const Index = () => {
           <div className="grid md:grid-cols-3 gap-8 max-w-4xl mx-auto">
             <div className="text-center">
               <div className="mb-6 flex justify-center">
-                <div className="w-16 h-16 bg-gradient-to-r from-primary to-primary/80 rounded-2xl flex items-center justify-center text-white text-2xl font-bold">
+                <div className="w-16 h-16 bg-gradient-to-r from-purple-500 to-pink-500 rounded-2xl flex items-center justify-center text-white text-2xl font-bold">
                   1
                 </div>
               </div>
@@ -297,7 +319,7 @@ const Index = () => {
 
             <div className="text-center">
               <div className="mb-6 flex justify-center">
-                <div className="w-16 h-16 bg-gradient-to-r from-primary to-accent rounded-2xl flex items-center justify-center text-white text-2xl font-bold">
+                <div className="w-16 h-16 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-2xl flex items-center justify-center text-white text-2xl font-bold">
                   2
                 </div>
               </div>
@@ -309,7 +331,7 @@ const Index = () => {
 
             <div className="text-center">
               <div className="mb-6 flex justify-center">
-                <div className="w-16 h-16 bg-gradient-to-r from-accent to-primary rounded-2xl flex items-center justify-center text-white text-2xl font-bold">
+                <div className="w-16 h-16 bg-gradient-to-r from-green-500 to-emerald-500 rounded-2xl flex items-center justify-center text-white text-2xl font-bold">
                   3
                 </div>
               </div>
@@ -334,7 +356,7 @@ const Index = () => {
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button 
               size="lg" 
-              className="bg-gradient-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90 text-primary-foreground text-lg px-12 py-4 rounded-full transform hover:scale-105 active:scale-95 transition-all duration-300 shadow-lg hover:shadow-xl" 
+              className="bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white text-lg px-12 py-4 rounded-full transform hover:scale-105 active:scale-95 transition-all duration-300 shadow-lg hover:shadow-xl" 
               asChild
             >
               <Link to="/signup">أنشئ ملفك الآن</Link>
@@ -342,7 +364,7 @@ const Index = () => {
             <Button 
               size="lg" 
               variant="outline" 
-              className="text-lg px-12 py-4 rounded-full border-2 border-primary text-primary hover:bg-primary hover:text-primary-foreground transform hover:scale-105 active:scale-95 transition-all duration-300 shadow-md hover:shadow-lg" 
+              className="text-lg px-12 py-4 rounded-full border-2 border-purple-500 text-purple-600 hover:bg-purple-500 hover:text-white transform hover:scale-105 active:scale-95 transition-all duration-300 shadow-md hover:shadow-lg" 
               onClick={handleContactUs}
             >
               {language === "ar" ? "تواصل معنا" : "Contact Us"}

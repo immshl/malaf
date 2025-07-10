@@ -96,78 +96,78 @@ const Index = () => {
             </div>
 
             {/* Mobile Menu Button */}
-            <div className="md:hidden">
-              <Button 
-                variant="ghost" 
-                size="sm"
-                onClick={toggleMobileMenu}
-                className="p-2 hover:bg-muted/50 transition-colors"
-              >
-                {isMobileMenuOpen ? (
-                  <X className="w-6 h-6 text-foreground" />
-                ) : (
-                  <Menu className="w-6 h-6 text-foreground" />
-                )}
-              </Button>
-            </div>
+            <button 
+              className="md:hidden p-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+              onClick={() => {
+                console.log('Mobile menu clicked!', !isMobileMenuOpen);
+                setIsMobileMenuOpen(!isMobileMenuOpen);
+              }}
+            >
+              {isMobileMenuOpen ? (
+                <X className="w-6 h-6 text-gray-700 dark:text-gray-300" />
+              ) : (
+                <Menu className="w-6 h-6 text-gray-700 dark:text-gray-300" />
+              )}
+            </button>
           </div>
         </div>
 
-        {/* Mobile Menu Overlay */}
+        {/* Mobile Menu */}
         {isMobileMenuOpen && (
-          <div className="md:hidden fixed inset-0 z-50 bg-black/50" onClick={closeMobileMenu} />
-        )}
-
-        {/* Mobile Dropdown Menu */}
-        {isMobileMenuOpen && (
-          <div className="md:hidden fixed top-16 left-0 right-0 z-50 bg-white dark:bg-gray-900 border-b shadow-lg">
-            <div className="px-4 py-6">
-              <div className="flex flex-col space-y-4">
-                <a 
-                  href="#features" 
-                  className="text-gray-700 dark:text-gray-300 hover:text-purple-600 dark:hover:text-purple-400 transition-colors py-2 px-3 text-lg font-medium rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800"
-                  onClick={closeMobileMenu}
-                >
-                  <div className="flex items-center space-x-3 space-x-reverse">
+          <>
+            {/* Overlay */}
+            <div 
+              className="fixed inset-0 bg-black bg-opacity-50 z-40"
+              onClick={() => setIsMobileMenuOpen(false)}
+            />
+            
+            {/* Menu Content */}
+            <div className="fixed top-16 left-0 right-0 bg-white dark:bg-gray-900 shadow-lg z-50 border-b">
+              <div className="p-6 space-y-4">
+                {/* Navigation Links */}
+                <div className="space-y-3">
+                  <a 
+                    href="#features" 
+                    className="flex items-center gap-3 p-3 text-gray-700 dark:text-gray-300 hover:text-purple-600 dark:hover:text-purple-400 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-lg transition-colors"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                  >
                     <div className="w-2 h-2 bg-purple-500 rounded-full"></div>
-                    <span>المميزات</span>
-                  </div>
-                </a>
-                <a 
-                  href="#how-it-works" 
-                  className="text-gray-700 dark:text-gray-300 hover:text-purple-600 dark:hover:text-purple-400 transition-colors py-2 px-3 text-lg font-medium rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800"
-                  onClick={closeMobileMenu}
-                >
-                  <div className="flex items-center space-x-3 space-x-reverse">
+                    <span className="text-lg font-medium">المميزات</span>
+                  </a>
+                  <a 
+                    href="#how-it-works" 
+                    className="flex items-center gap-3 p-3 text-gray-700 dark:text-gray-300 hover:text-purple-600 dark:hover:text-purple-400 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-lg transition-colors"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                  >
                     <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
-                    <span>كيف يعمل</span>
-                  </div>
-                </a>
+                    <span className="text-lg font-medium">كيف يعمل</span>
+                  </a>
+                </div>
                 
-                <div className="pt-4 border-t border-gray-200 dark:border-gray-700">
-                  <div className="flex flex-col space-y-3">
-                    <Link to="/signin" onClick={closeMobileMenu}>
-                      <Button 
-                        variant="outline" 
-                        size="lg" 
-                        className="w-full text-lg py-3 rounded-full border-2 border-purple-500 text-purple-600 hover:bg-purple-500 hover:text-white transition-all duration-300"
-                      >
-                        تسجيل الدخول
-                      </Button>
-                    </Link>
-                    <Link to="/signup" onClick={closeMobileMenu}>
-                      <Button 
-                        size="lg" 
-                        className="w-full text-lg py-3 rounded-full bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 transition-all duration-300"
-                      >
-                        أنشئ ملفك المهني
-                      </Button>
-                    </Link>
-                  </div>
+                {/* Auth Buttons */}
+                <div className="pt-4 border-t border-gray-200 dark:border-gray-700 space-y-3">
+                  <Link 
+                    to="/signin" 
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    className="block"
+                  >
+                    <button className="w-full py-3 px-4 text-lg font-medium text-purple-600 border-2 border-purple-500 rounded-full hover:bg-purple-500 hover:text-white transition-all duration-300">
+                      تسجيل الدخول
+                    </button>
+                  </Link>
+                  <Link 
+                    to="/signup" 
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    className="block"
+                  >
+                    <button className="w-full py-3 px-4 text-lg font-medium text-white bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 rounded-full transition-all duration-300">
+                      أنشئ ملفك المهني
+                    </button>
+                  </Link>
                 </div>
               </div>
             </div>
-          </div>
+          </>
         )}
       </nav>
 

@@ -89,7 +89,6 @@ All colors MUST be HSL.
     --sidebar-border: 226 232 240;
     --sidebar-ring: 219 234 254;
   }
-  }
 
   .dark {
     /* Dark mode with soft, elegant colors */
@@ -150,7 +149,6 @@ All colors MUST be HSL.
     --sidebar-accent-foreground: 248 250 252;
     --sidebar-border: 39 45 58;
     --sidebar-ring: 147 197 253;
-  }
   }
 }
 

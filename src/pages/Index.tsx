@@ -26,10 +26,12 @@ const Index = () => {
   }, []);
 
   const toggleMobileMenu = () => {
+    console.log('Toggling mobile menu:', !isMobileMenuOpen);
     setIsMobileMenuOpen(!isMobileMenuOpen);
   };
 
   const closeMobileMenu = () => {
+    console.log('Closing mobile menu');
     setIsMobileMenuOpen(false);
   };
 
@@ -41,7 +43,10 @@ const Index = () => {
   useEffect(() => {
     const handleOutsideClick = (event: MouseEvent) => {
       const target = event.target as HTMLElement;
-      if (isMobileMenuOpen && !target.closest('.mobile-menu-container')) {
+      const menuContainer = target.closest('.mobile-menu-container');
+      const menuButton = target.closest('[data-mobile-menu-button]');
+      
+      if (isMobileMenuOpen && !menuContainer && !menuButton) {
         closeMobileMenu();
       }
     };
@@ -131,7 +136,9 @@ const Index = () => {
                 variant="ghost" 
                 size="sm"
                 onClick={toggleMobileMenu}
-                className="p-2 hover:bg-muted/50 transition-smooth"
+                data-mobile-menu-button="true"
+                className="p-2 hover:bg-muted/50 transition-smooth relative z-50"
+                aria-label="Toggle mobile menu"
               >
                 {isMobileMenuOpen ? (
                   <X className="w-6 h-6 text-foreground" />
@@ -144,10 +151,13 @@ const Index = () => {
         </div>
 
         {/* Mobile Dropdown Menu */}
-        <div className={`mobile-menu-container md:hidden overflow-hidden transition-all duration-500 ease-in-out ${
-          isMobileMenuOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
-        }`} style={{ zIndex: 50 }}>
-          <div className="px-4 py-6 bg-background/95 backdrop-blur-lg border-t border-border/50 shadow-xl">
+        <div 
+          className={`mobile-menu-container md:hidden overflow-hidden transition-all duration-500 ease-in-out ${
+            isMobileMenuOpen ? 'max-h-screen opacity-100 visible' : 'max-h-0 opacity-0 invisible'
+          }`} 
+          style={{ zIndex: 50 }}
+        >
+          <div className="px-4 py-6 bg-background border-t border-border/50 shadow-xl">
             <div className="flex flex-col space-y-4">
               {/* أولاً: تسجيل الدخول بشكل بارز */}
               <div className="mb-4">

@@ -109,6 +109,8 @@ const CreateProfile = () => {
           website: profileData.externalLink || null,
           avatar_url: profileData.profileImage || null,
           emoji: profileData.emoji || null
+        }, {
+          onConflict: 'user_id'
         });
 
       if (error) {

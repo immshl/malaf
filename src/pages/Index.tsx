@@ -182,24 +182,26 @@ const Index = () => {
                   <span>كيف يعمل</span>
                 </div>
               </a>
-              <Link 
-                to="/signin" 
-                className="text-muted-foreground hover:text-foreground transition-all duration-300 py-3 px-4 text-lg font-medium rounded-lg hover:bg-muted/50 hover:transform hover:scale-105 active:scale-95"
-                onClick={closeMobileMenu}
-              >
-                <div className="flex items-center space-x-3 space-x-reverse">
-                  <div className="w-2 h-2 bg-primary/80 rounded-full"></div>
-                  <span>تسجيل الدخول</span>
-                </div>
-              </Link>
-              <div className="pt-4 border-t border-border/20">
+              <div className="pt-2 pb-4 border-t border-border/20">
                 <Button 
                   variant="default" 
                   size="lg" 
-                  className="w-full text-lg py-4 rounded-full bg-gradient-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90 transform hover:scale-105 active:scale-95 transition-all duration-300 shadow-lg"
+                  className="w-full text-lg py-4 mb-3 rounded-full bg-gradient-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90 text-primary-foreground font-semibold shadow-lg hover:shadow-xl transform hover:scale-105 active:scale-95 transition-all duration-300"
                   asChild
                 >
-                  <Link to="/signup" onClick={closeMobileMenu}>أنشئ ملفك</Link>
+                  <Link to="/signin" onClick={closeMobileMenu}>
+                    <div className="flex items-center justify-center space-x-2 space-x-reverse">
+                      <span>تسجيل الدخول</span>
+                    </div>
+                  </Link>
+                </Button>
+                <Button 
+                  variant="outline" 
+                  size="lg" 
+                  className="w-full text-lg py-4 rounded-full border-2 border-primary text-primary hover:bg-primary hover:text-primary-foreground transform hover:scale-105 active:scale-95 transition-all duration-300 shadow-md hover:shadow-lg"
+                  asChild
+                >
+                  <Link to="/signup" onClick={closeMobileMenu}>أنشئ ملفك المجاني</Link>
                 </Button>
               </div>
             </div>

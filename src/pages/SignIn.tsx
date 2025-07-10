@@ -20,7 +20,7 @@ const SignIn = () => {
 
   // Redirect if already logged in
   if (user) {
-    navigate('/');
+    navigate('/create-profile');
     return null;
   }
 
@@ -65,8 +65,8 @@ const SignIn = () => {
         description: "مرحباً بك مرة أخرى",
       });
 
-      // Navigate to dashboard or home
-      navigate("/");
+      // Navigate to profile creation page
+      navigate("/create-profile");
       
     } catch (error) {
       console.error('Unexpected error:', error);

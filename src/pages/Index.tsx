@@ -150,25 +150,9 @@ const Index = () => {
                     </a>
                   </div>
                   
-                  {/* Auth Buttons */}
+                  {/* Auth Section */}
                   <div className="pt-6 border-t border-border space-y-8">
-                    <Link to="/signin" onClick={() => setIsMobileMenuOpen(false)}>
-                      <Button 
-                        variant="outline" 
-                        size="lg" 
-                        className="w-full text-lg py-4 rounded-2xl border-2 border-primary/30 text-primary hover:border-primary hover:bg-primary hover:text-primary-foreground transition-all duration-300 transform hover:scale-[1.02] hover:shadow-lg backdrop-blur-sm"
-                      >
-                        {language === "ar" ? "تسجيل الدخول" : "Sign In"}
-                      </Button>
-                    </Link>
-                    <Link to="/signup" onClick={() => setIsMobileMenuOpen(false)}>
-                      <Button 
-                        size="lg" 
-                        className="w-full text-lg py-4 rounded-2xl bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white transition-all duration-300 transform hover:scale-[1.02] hover:shadow-xl shadow-lg"
-                      >
-                        {language === "ar" ? "أنشئ ملفك المهني" : "Create Your Profile"}
-                      </Button>
-                    </Link>
+                    <AuthButton isMobile={true} />
                   </div>
                 </div>
               </div>

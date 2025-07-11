@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { ArrowLeft, Users, Calendar, Link2, Star, Zap, Shield, Smartphone, Menu, X, Mail, Twitter, Instagram } from "lucide-react";
+import { ArrowLeft, Users, Calendar, Link2, Star, Zap, Shield, Smartphone, Menu, X, Mail, Instagram } from "lucide-react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Badge } from "@/components/ui/badge";
 import { Link } from "react-router-dom";
@@ -435,7 +435,7 @@ const Index = () => {
                           onClick={() => window.open('mailto:iimmshl@gmail.com', '_blank')}
                         >
                           <Mail className="w-5 h-5 text-muted-foreground" />
-                          <span>البريد الإلكتروني</span>
+                          <span>iimmshl@gmail.com</span>
                         </Button>
                         
                         <Button 
@@ -443,8 +443,8 @@ const Index = () => {
                           className="w-full justify-start gap-3 p-4 rounded-2xl bg-background/60 hover:bg-background/80 backdrop-blur-sm transition-all duration-200 border border-border/20 hover:border-border/40 shadow-sm hover:shadow-md"
                           onClick={() => window.open('https://x.com/immshl', '_blank')}
                         >
-                          <Twitter className="w-5 h-5 text-muted-foreground" />
-                          <span>تويتر</span>
+                          <X className="w-5 h-5 text-muted-foreground" />
+                          <span>@immshl</span>
                         </Button>
                         
                         <Button 
@@ -453,7 +453,7 @@ const Index = () => {
                           onClick={() => window.open('https://instagram.com/immshl', '_blank')}
                         >
                           <Instagram className="w-5 h-5 text-muted-foreground" />
-                          <span>إنستقرام</span>
+                          <span>@immshl</span>
                         </Button>
                       </div>
                     </CardContent>

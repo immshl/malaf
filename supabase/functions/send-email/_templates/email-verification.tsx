@@ -34,8 +34,15 @@ export const EmailVerificationTemplate = ({
         {/* Header with Malaf branding */}
         <Section style={header}>
           <div style={brandSection}>
+            <Img 
+              src="https://mfchmiwxlkvkwtucizzl.supabase.co/storage/v1/object/public/portfolio/malaf-logo.png"
+              alt="شعار ملف"
+              width="80"
+              height="80"
+              style={logoStyle}
+            />
             <h1 style={brandName}>ملف</h1>
-            <p style={brandTagline}>منصة الملفات الشخصية الاحترافية</p>
+            <p style={brandTagline}>ملف مهني خاص بك</p>
           </div>
         </Section>
 
@@ -126,6 +133,11 @@ const brandName = {
   margin: '0 0 8px 0',
   color: '#ffffff',
   letterSpacing: '2px',
+}
+
+const logoStyle = {
+  marginBottom: '16px',
+  borderRadius: '12px',
 }
 
 const brandTagline = {

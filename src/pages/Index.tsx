@@ -381,14 +381,14 @@ const Index = () => {
           </div>
 
           {/* Navigation Dots */}
-          <div className="flex justify-center mt-8 gap-3">
+          <div className="flex justify-center mt-8 gap-4">
             {[0, 1, 2].map((index) => (
               <button
                 key={index}
-                className={`w-4 h-4 rounded-full transition-all duration-500 border-2 ${
+                className={`w-4 h-4 rounded-full transition-all duration-500 ${
                   index === selectedIndex % 3 
-                    ? 'bg-primary border-primary scale-125 shadow-lg' 
-                    : 'bg-muted border-muted-foreground/50 hover:bg-muted-foreground/30 hover:scale-110'
+                    ? 'bg-primary scale-125 shadow-lg ring-2 ring-primary/30' 
+                    : 'bg-gray-400 hover:bg-gray-500 hover:scale-110'
                 }`}
                 onClick={() => emblaApi?.scrollTo(index)}
                 aria-label={`انتقل إلى الخطوة ${index + 1}`}

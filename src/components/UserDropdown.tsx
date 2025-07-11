@@ -130,8 +130,8 @@ const UserDropdown = () => {
         }}
       >
         {/* صورة المستخدم في المنتصف */}
-        <div className="flex flex-col items-center p-6">
-          <Avatar className="h-16 w-16 border-2 border-primary/20 mb-4">
+        <div className="flex flex-col items-center p-6 pb-4">
+          <Avatar className="h-16 w-16 border-2 border-primary/20 mb-3">
             <AvatarImage 
               src={profile?.avatar_url || ''} 
               alt={profile?.full_name || user.email || 'User'} 
@@ -142,34 +142,32 @@ const UserDropdown = () => {
           </Avatar>
           
           {/* مرحبا + اسم المستخدم */}
-          <div className="text-center mb-4">
+          <div className="text-center">
             <p className="text-sm font-medium text-foreground">
               مرحبا {profile?.full_name || (language === "ar" ? "مستخدم" : "User")}
             </p>
           </div>
         </div>
         
-        <DropdownMenuSeparator />
-        
-        {/* تحرير الملف */}
-        <DropdownMenuItem 
-          onClick={handleEditProfile}
-          className="cursor-pointer focus:bg-muted hover:bg-muted transition-colors m-2 rounded-lg"
-        >
-          <Edit className="mr-2 h-4 w-4" />
-          <span>{language === "ar" ? "تحرير الملف" : "Edit Profile"}</span>
-        </DropdownMenuItem>
-        
-        <DropdownMenuSeparator />
-        
-        {/* تسجيل خروج */}
-        <DropdownMenuItem 
-          onClick={handleSignOut}
-          className="cursor-pointer text-destructive focus:text-destructive focus:bg-destructive/20 hover:bg-destructive/20 transition-colors m-2 rounded-lg"
-        >
-          <LogOut className="mr-2 h-4 w-4" />
-          <span>{language === "ar" ? "تسجيل خروج" : "Sign out"}</span>
-        </DropdownMenuItem>
+        <div className="px-2 pb-2">
+          {/* تحرير الملف */}
+          <DropdownMenuItem 
+            onClick={handleEditProfile}
+            className="cursor-pointer focus:bg-muted hover:bg-muted transition-colors rounded-lg mb-1 justify-start"
+          >
+            <Edit className="mr-2 h-4 w-4" />
+            <span>{language === "ar" ? "تحرير الملف" : "Edit Profile"}</span>
+          </DropdownMenuItem>
+          
+          {/* تسجيل خروج */}
+          <DropdownMenuItem 
+            onClick={handleSignOut}
+            className="cursor-pointer text-destructive focus:text-destructive focus:bg-destructive/20 hover:bg-destructive/20 transition-colors rounded-lg justify-start"
+          >
+            <LogOut className="mr-2 h-4 w-4" />
+            <span>{language === "ar" ? "تسجيل خروج" : "Sign out"}</span>
+          </DropdownMenuItem>
+        </div>
       </DropdownMenuContent>
     </DropdownMenu>
   );

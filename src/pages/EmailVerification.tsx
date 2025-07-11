@@ -75,29 +75,64 @@ const EmailVerification = () => {
     }
 
     try {
-      const { error } = await supabase.auth.resend({
+      const redirectUrl = window.location.hostname.includes('malaf.me') 
+        ? `${window.location.origin}/verify-email`
+        : 'https://malaf.me';
+
+      // محاولة إعادة إرسال إيميل التحقق أولاً
+      const { error: resendError } = await supabase.auth.resend({
         type: 'signup',
         email: user.email,
         options: {
-          emailRedirectTo: `${window.location.origin}/verify-email`
+          emailRedirectTo: redirectUrl
         }
       });
 
-      if (error) {
-        throw error;
+      // إذا فشلت إعادة الإرسال، نحاول signInWithOtp كبديل
+      if (resendError) {
+        console.log('Resend failed, trying OTP:', resendError.message);
+        
+        const { error: otpError } = await supabase.auth.signInWithOtp({
+          email: user.email,
+          options: {
+            emailRedirectTo: redirectUrl
+          }
+        });
+
+        if (otpError) {
+          // إذا فشلت كل المحاولات، نعرض رسالة للمستخدم لإعادة التسجيل
+          if (otpError.message.includes("User not found") || otpError.message.includes("Invalid email")) {
+            toast({
+              variant: "destructive",
+              title: "مطلوب إعادة التسجيل",
+              description: "يبدو أن حسابك غير مكتمل. يرجى العودة وإعادة التسجيل.",
+              action: (
+                <Button 
+                  variant="outline" 
+                  size="sm"
+                  onClick={() => navigate("/signup")}
+                >
+                  إعادة التسجيل
+                </Button>
+              )
+            });
+            return;
+          }
+          throw otpError;
+        }
       }
 
       toast({
         title: "تم إرسال الرابط مجدداً 📧",
-        description: "تفقد بريدك الإلكتروني للرابط الجديد"
+        description: "تفقد بريدك الإلكتروني للرابط الجديد. تحقق من مجلد الرسائل المزعجة أيضاً."
       });
       
-    } catch (error) {
+    } catch (error: any) {
       console.error('Resend error:', error);
       toast({
         variant: "destructive",
         title: "خطأ في الإرسال",
-        description: "حدث خطأ أثناء إرسال رابط التحقق"
+        description: error.message || "حدث خطأ أثناء إرسال رابط التحقق"
       });
     }
   };

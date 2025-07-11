@@ -139,6 +139,12 @@ All colors MUST be HSL.
     direction: rtl;
     line-height: 1.6;
     letter-spacing: -0.02em;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+
+  /* Theme transition for the entire page */
+  html {
+    transition: filter 0.3s ease-in-out;
   }
 
   /* English text override */

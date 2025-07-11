@@ -42,10 +42,21 @@ const FloatingControls = () => {
 
   const handleTransition = (callback: () => void) => {
     setIsTransitioning(true);
-    callback();
+    
+    // Add page transition animation
+    document.documentElement.style.transition = 'all 0.3s ease-in-out';
+    document.documentElement.style.filter = 'brightness(0.7)';
+    
     setTimeout(() => {
-      setIsTransitioning(false);
-    }, 300);
+      callback();
+      setTimeout(() => {
+        document.documentElement.style.filter = 'brightness(1)';
+        setTimeout(() => {
+          document.documentElement.style.transition = '';
+          setIsTransitioning(false);
+        }, 300);
+      }, 50);
+    }, 150);
   };
 
   const toggleTheme = () => {

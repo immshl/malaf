@@ -361,7 +361,40 @@ const CreateProfile = () => {
     try {
       setIsLoading(true);
 
-      // Delete user profile first
+      // الحصول على معرف الملف الشخصي أولاً
+      const { data: existingProfile, error: fetchError } = await supabase
+        .from('profiles')
+        .select('id')
+        .eq('user_id', user.id)
+        .single();
+
+      if (fetchError || !existingProfile) {
+        console.error('Error fetching profile:', fetchError);
+        toast({
+          variant: "destructive",
+          title: "خطأ في الوصول للملف",
+          description: "لا يمكن العثور على ملفك الشخصي"
+        });
+        return;
+      }
+
+      // حذف جميع الحجوزات المرتبطة بالملف الشخصي أولاً
+      const { error: bookingsError } = await supabase
+        .from('bookings')
+        .delete()
+        .eq('profile_id', existingProfile.id);
+
+      if (bookingsError) {
+        console.error('Error deleting bookings:', bookingsError);
+        toast({
+          variant: "destructive",
+          title: "خطأ في حذف الحجوزات",
+          description: "حدث خطأ أثناء حذف الحجوزات المرتبطة بالملف"
+        });
+        return;
+      }
+
+      // حذف الملف الشخصي
       const { error: profileError } = await supabase
         .from('profiles')
         .delete()
@@ -377,25 +410,12 @@ const CreateProfile = () => {
         return;
       }
 
-      // Delete user account from auth
-      const { error: authError } = await supabase.auth.admin.deleteUser(user.id);
-
-      if (authError) {
-        console.error('Error deleting user:', authError);
-        toast({
-          variant: "destructive", 
-          title: "خطأ في حذف الحساب",
-          description: "حدث خطأ أثناء حذف الحساب"
-        });
-        return;
-      }
-
       toast({
-        title: "تم حذف الحساب",
-        description: "تم حذف حسابك وجميع بياناتك بنجاح"
+        title: "تم حذف الملف الشخصي",
+        description: "تم حذف ملفك الشخصي وجميع البيانات المرتبطة به بنجاح"
       });
 
-      // Sign out and redirect
+      // تسجيل الخروج وإعادة التوجيه
       await supabase.auth.signOut();
       navigate('/');
 

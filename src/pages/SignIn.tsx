@@ -6,6 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Eye, EyeOff, ArrowRight } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
+import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
 
 const SignIn = () => {
@@ -29,44 +30,58 @@ const SignIn = () => {
     
     setIsLoading(true);
 
-    try {
-      const { error } = await signIn(formData.email, formData.password);
+  try {
+    const { error } = await signIn(formData.email, formData.password);
 
-      if (error) {
-        console.log('Login error:', error); // للتتبع
-        
-        let errorMessage = "حدث خطأ أثناء تسجيل الدخول";
-        
-        // تخصيص رسائل الخطأ حسب النوع
-        if (error.message.includes("Invalid login credentials") || error.message.includes("invalid_credentials")) {
-          errorMessage = "البريد الإلكتروني أو كلمة المرور غير صحيحة";
-        } else if (error.message.includes("Email not confirmed")) {
-          errorMessage = "يجب تأكيد البريد الإلكتروني أولاً";
-        } else if (error.message.includes("Too many requests")) {
-          errorMessage = "تم تجاوز عدد المحاولات المسموح، حاول مرة أخرى لاحقاً";
-        } else {
-          errorMessage = `خطأ: ${error.message}`;
-        }
-        
-        toast({
-          variant: "destructive",
-          title: "فشل تسجيل الدخول",
-          description: errorMessage,
-        });
-        return;
+    if (error) {
+      console.log('Login error:', error); // للتتبع
+      
+      let errorMessage = "حدث خطأ أثناء تسجيل الدخول";
+      
+      // تخصيص رسائل الخطأ حسب النوع
+      if (error.message.includes("Invalid login credentials") || error.message.includes("invalid_credentials")) {
+        errorMessage = "البريد الإلكتروني أو كلمة المرور غير صحيحة";
+      } else if (error.message.includes("Email not confirmed")) {
+        errorMessage = "يجب تأكيد البريد الإلكتروني أولاً";
+      } else if (error.message.includes("Too many requests")) {
+        errorMessage = "تم تجاوز عدد المحاولات المسموح، حاول مرة أخرى لاحقاً";
+      } else {
+        errorMessage = `خطأ: ${error.message}`;
       }
       
-      // انتظار قصير للتأكد من تحديث حالة المستخدم
-      await new Promise(resolve => setTimeout(resolve, 100));
-      
-      // Success toast
+      toast({
+        variant: "destructive",
+        title: "فشل تسجيل الدخول",
+        description: errorMessage,
+      });
+      return;
+    }
+    
+    // انتظار قصير للتأكد من تحديث حالة المستخدم
+    await new Promise(resolve => setTimeout(resolve, 100));
+    
+    // Check if user has a profile
+    const { data: userSession } = await supabase.auth.getUser();
+    if (userSession.user) {
+      const { data: profile } = await supabase
+        .from('profiles')
+        .select('username')
+        .eq('user_id', userSession.user.id)
+        .single();
+
       toast({
         title: "تم تسجيل الدخول بنجاح",
         description: "مرحباً بك مرة أخرى",
       });
 
-      // Navigate to profile creation page
-      navigate("/create-profile");
+      if (profile?.username) {
+        // Navigate to their profile
+        navigate(`/profile/${profile.username}`);
+      } else {
+        // Navigate to create profile
+        navigate('/create-profile');
+      }
+    }
       
     } catch (error) {
       console.error('Unexpected error:', error);

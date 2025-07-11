@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -9,6 +10,8 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
+import { supabase } from "@/integrations/supabase/client";
+import type { Tables } from "@/integrations/supabase/types";
 import { 
   Copy, 
   Edit, 
@@ -21,11 +24,19 @@ import {
   Clock,
   User,
   Star,
-  CheckCircle
+  CheckCircle,
+  ArrowLeft,
+  Globe
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
+type Profile = Tables<'profiles'>;
+
 const UserProfile = () => {
+  const { username } = useParams<{ username: string }>();
+  const navigate = useNavigate();
+  const [profile, setProfile] = useState<Profile | null>(null);
+  const [loading, setLoading] = useState(true);
   const [selectedDay, setSelectedDay] = useState("");
   const [selectedTime, setSelectedTime] = useState("");
   const [showAlternativeBooking, setShowAlternativeBooking] = useState(false);
@@ -39,33 +50,42 @@ const UserProfile = () => {
   });
   const { toast } = useToast();
 
-  // بيانات المستخدم التجريبية - ستأتي من قاعدة البيانات لاحقاً
-  const profileData = {
-    fullName: "أحمد محمد السالم",
-    username: "ahmed-salem",
-    bio: "مطور ويب محترف بخبرة تزيد عن 5 سنوات في تطوير التطبيقات والمواقع الإلكترونية. أساعد الشركات والأفراد على تحويل أفكارهم إلى واقع رقمي باستخدام أحدث التقنيات.",
-    profileImage: "/placeholder.svg",
-    services: [
-      "تطوير مواقع الويب",
-      "تطوير تطبيقات الجوال",
-      "تصميم واجهات المستخدم",
-      "استشارات تقنية"
-    ],
-    topClients: [
-      "شركة تقنية المستقبل",
-      "مؤسسة الابتكار الرقمي",
-      "متجر الإلكترونيات الذكية"
-    ],
-    instagram: "@ahmed_salem_dev",
-    twitter: "@ahmedsalem",
-    workEmail: "ahmed@example.com",
-    externalLink: "https://ahmed-portfolio.com",
-    availableDays: ["sunday", "tuesday", "thursday"],
-    timeSlot: "evening"
-  };
+  // Load profile data
+  useEffect(() => {
+    const fetchProfile = async () => {
+      if (!username) {
+        navigate('/');
+        return;
+      }
+
+      try {
+        const { data: profileData, error } = await supabase
+          .from('profiles')
+          .select('*')
+          .eq('username', username)
+          .eq('is_public', true)
+          .single();
+
+        if (error || !profileData) {
+          console.error('Profile not found:', error);
+          navigate('/');
+          return;
+        }
+
+        setProfile(profileData);
+      } catch (error) {
+        console.error('Error fetching profile:', error);
+        navigate('/');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProfile();
+  }, [username, navigate]);
 
   const copyLink = () => {
-    const profileUrl = `https://malaf.me/${profileData.username}`;
+    const profileUrl = `${window.location.origin}/profile/${username}`;
     navigator.clipboard.writeText(profileUrl);
     toast({
       title: "تم نسخ الرابط",
@@ -77,6 +97,7 @@ const UserProfile = () => {
     if (showAlternativeBooking) {
       // طلب موعد مختلف
       console.log("طلب موعد مختلف:", {
+        profileId: profile?.id,
         suggestedDay: alternativeDay,
         suggestedTimeSlot: alternativeTimeSlot,
         ...bookingForm
@@ -89,6 +110,7 @@ const UserProfile = () => {
     } else {
       // حجز عادي
       console.log("حجز اجتماع:", {
+        profileId: profile?.id,
         day: selectedDay,
         time: selectedTime,
         ...bookingForm
@@ -132,7 +154,7 @@ const UserProfile = () => {
   };
 
   const getCurrentTimeSlots = () => {
-    return availableTimeSlots[profileData.timeSlot as keyof typeof availableTimeSlots] || [];
+    return availableTimeSlots["evening"] || [];
   };
 
   const contactMethods = [
@@ -142,16 +164,63 @@ const UserProfile = () => {
     { value: "telegram", label: "تلقرام" }
   ];
 
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-muted/30 flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto mb-4"></div>
+          <p className="text-muted-foreground">جاري تحميل الملف الشخصي...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (!profile) {
+    return (
+      <div className="min-h-screen bg-muted/30 flex items-center justify-center">
+        <div className="text-center">
+          <h1 className="text-2xl font-bold text-foreground mb-4">الملف الشخصي غير موجود</h1>
+          <p className="text-muted-foreground mb-6">عذراً، لم نتمكن من العثور على هذا الملف الشخصي</p>
+          <Button onClick={() => navigate('/')} variant="outline">
+            <ArrowLeft className="ml-2 h-4 w-4" />
+            العودة للرئيسية
+          </Button>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-muted/30 py-8">
       <div className="container mx-auto px-4 max-w-4xl">
+        {/* Header with logo */}
+        <div className="flex items-center justify-between mb-6">
+          <Button 
+            onClick={() => navigate('/')} 
+            variant="ghost" 
+            size="sm"
+            className="flex items-center gap-2"
+          >
+            <ArrowLeft className="h-4 w-4" />
+            العودة
+          </Button>
+          <div className="flex items-center gap-2">
+            <img 
+              src="/lovable-uploads/053ffcb6-5dac-4834-a5ef-585d29be4be9.png" 
+              alt="ملف" 
+              className="w-6 h-6"
+            />
+            <span className="font-bold text-lg">malaf</span>
+          </div>
+        </div>
+
         {/* رأس الصفحة مع الرابط والأزرار */}
-        <div className="bg-white rounded-2xl shadow-strong p-6 mb-8">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-4">
+        <div className="bg-background border border-border/10 rounded-3xl shadow-soft p-8 mb-8">
+          <div className="flex flex-col md:flex-row items-center justify-between gap-6">
             <div className="text-center md:text-right">
               <p className="text-sm text-muted-foreground mb-2">رابط الملف الشخصي</p>
               <p className="text-lg font-mono bg-muted px-4 py-2 rounded-lg">
-                malaf.me/{profileData.username}
+                malaf.me/{profile.username}
               </p>
             </div>
             <div className="flex flex-wrap gap-3">
@@ -161,7 +230,7 @@ const UserProfile = () => {
               </Button>
               <Dialog>
                 <DialogTrigger asChild>
-                  <Button variant="hero">
+                  <Button variant="default" className="bg-foreground text-background hover:bg-foreground/90">
                     <CalendarIcon className="ml-2 h-4 w-4" />
                     حجز اجتماع
                   </Button>
@@ -180,7 +249,7 @@ const UserProfile = () => {
                         <div className="bg-muted/50 p-4 rounded-lg">
                           <h4 className="font-medium mb-2">الأوقات المتاحة</h4>
                           <div className="text-sm text-muted-foreground mb-3">
-                            <p>الفترة: {timeSlotLabels[profileData.timeSlot as keyof typeof timeSlotLabels]}</p>
+                            <p>الفترة: المساء (5:00 م - 9:00 م)</p>
                           </div>
                         </div>
 
@@ -192,7 +261,7 @@ const UserProfile = () => {
                               <SelectValue placeholder="اختر يوم من الأيام المتاحة" />
                             </SelectTrigger>
                             <SelectContent className="bg-white">
-                              {profileData.availableDays.map((day) => (
+                              {["sunday", "tuesday", "thursday"].map((day) => (
                                 <SelectItem key={day} value={day}>
                                   {dayLabels[day as keyof typeof dayLabels]}
                                 </SelectItem>
@@ -372,21 +441,31 @@ const UserProfile = () => {
           {/* العمود الأيسر - المعلومات الأساسية */}
           <div className="lg:col-span-1 space-y-6">
             {/* بطاقة المعلومات الشخصية */}
-            <Card className="border-0 shadow-strong">
+            <Card className="border-0 shadow-soft">
               <CardContent className="p-6 text-center">
-                <Avatar className="w-32 h-32 mx-auto mb-4 border-4 border-primary/20">
-                  <AvatarImage src={profileData.profileImage} />
-                  <AvatarFallback className="bg-gradient-primary text-white text-3xl">
-                    <User className="w-16 h-16" />
-                  </AvatarFallback>
-                </Avatar>
+                <div className="relative flex justify-center mb-4">
+                  <Avatar className="w-32 h-32 border-4 border-border/20">
+                    <AvatarImage src={profile.avatar_url || undefined} />
+                    <AvatarFallback className="bg-gradient-to-br from-primary to-primary/80 text-white text-3xl font-light">
+                      {profile.full_name?.split(' ').map(n => n[0]).join('') || <User className="w-16 h-16" />}
+                    </AvatarFallback>
+                  </Avatar>
+                  {profile.emoji && (
+                    <div className="absolute -top-2 -right-2 w-12 h-12 bg-background border-2 border-border/20 rounded-full flex items-center justify-center text-2xl shadow-soft">
+                      {profile.emoji}
+                    </div>
+                  )}
+                </div>
                 <h1 className="text-2xl font-bold text-foreground mb-2">
-                  {profileData.fullName}
+                  {profile.full_name}
                 </h1>
                 <Badge variant="secondary" className="mb-4">
                   <CheckCircle className="ml-2 h-3 w-3" />
                   ملف معتمد
                 </Badge>
+                {profile.profession && (
+                  <p className="text-muted-foreground text-sm">{profile.profession}</p>
+                )}
               </CardContent>
             </Card>
 
@@ -395,76 +474,59 @@ const UserProfile = () => {
               <CardContent className="p-6">
                 <h3 className="text-lg font-semibold mb-4">وسائل التواصل</h3>
                 <div className="space-y-3">
-                  {profileData.workEmail && (
+                  {profile.contact_email && (
                     <a 
-                      href={`mailto:${profileData.workEmail}`}
+                      href={`mailto:${profile.contact_email}`}
                       className="flex items-center text-muted-foreground hover:text-primary transition-smooth"
                     >
                       <Mail className="ml-3 h-4 w-4" />
-                      <span className="text-sm">{profileData.workEmail}</span>
+                      <span className="text-sm">{profile.contact_email}</span>
                     </a>
                   )}
-                  {profileData.instagram && (
+                  {profile.instagram_url && (
                     <a 
-                      href={`https://instagram.com/${profileData.instagram.replace('@', '')}`}
+                      href={profile.instagram_url}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="flex items-center text-muted-foreground hover:text-primary transition-smooth"
                     >
                       <Instagram className="ml-3 h-4 w-4" />
-                      <span className="text-sm">{profileData.instagram}</span>
+                      <span className="text-sm">Instagram</span>
                     </a>
                   )}
-                  {profileData.twitter && (
+                  {profile.twitter_url && (
                     <a 
-                      href={`https://twitter.com/${profileData.twitter.replace('@', '')}`}
+                      href={profile.twitter_url}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="flex items-center text-muted-foreground hover:text-primary transition-smooth"
                     >
                       <Twitter className="ml-3 h-4 w-4" />
-                      <span className="text-sm">{profileData.twitter}</span>
+                      <span className="text-sm">Twitter</span>
                     </a>
                   )}
-                  {profileData.externalLink && (
+                  {profile.website && (
                     <a 
-                      href={profileData.externalLink}
+                      href={profile.website}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center text-muted-foreground hover:text-primary transition-smooth"
+                    >
+                      <Globe className="ml-3 h-4 w-4" />
+                      <span className="text-sm">الموقع الشخصي</span>
+                    </a>
+                  )}
+                  {profile.linkedin_url && (
+                    <a 
+                      href={profile.linkedin_url}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="flex items-center text-muted-foreground hover:text-primary transition-smooth"
                     >
                       <ExternalLink className="ml-3 h-4 w-4" />
-                      <span className="text-sm">الموقع الشخصي</span>
+                      <span className="text-sm">LinkedIn</span>
                     </a>
                   )}
-                </div>
-              </CardContent>
-            </Card>
-
-            {/* أوقات الحجز */}
-            <Card className="border-0 shadow-soft">
-              <CardContent className="p-6">
-                <h3 className="text-lg font-semibold mb-4 flex items-center">
-                  <Clock className="ml-2 h-5 w-5" />
-                  أوقات الحجز
-                </h3>
-                <div className="space-y-3">
-                  <div>
-                    <p className="text-sm text-muted-foreground mb-2">الأيام المتاحة:</p>
-                    <div className="flex flex-wrap gap-2">
-                      {profileData.availableDays.map((day) => (
-                        <Badge key={day} variant="outline">
-                          {dayLabels[day as keyof typeof dayLabels]}
-                        </Badge>
-                      ))}
-                    </div>
-                  </div>
-                  <div>
-                    <p className="text-sm text-muted-foreground mb-2">الوقت:</p>
-                    <Badge variant="secondary">
-                      {timeSlotLabels[profileData.timeSlot as keyof typeof timeSlotLabels]}
-                    </Badge>
-                  </div>
                 </div>
               </CardContent>
             </Card>
@@ -477,38 +539,48 @@ const UserProfile = () => {
               <CardContent className="p-6">
                 <h2 className="text-xl font-semibold mb-4">نبذة تعريفية</h2>
                 <p className="text-muted-foreground leading-relaxed">
-                  {profileData.bio}
+                  {profile.bio || "لم يتم إضافة نبذة تعريفية بعد."}
                 </p>
               </CardContent>
             </Card>
 
-            {/* الخدمات */}
-            <Card className="border-0 shadow-soft">
-              <CardContent className="p-6">
-                <h2 className="text-xl font-semibold mb-4">الخدمات المقدّمة</h2>
-                <div className="grid md:grid-cols-2 gap-3">
-                  {profileData.services.map((service, index) => (
-                    <div key={index} className="flex items-center p-3 bg-muted/50 rounded-lg">
-                      <Star className="ml-3 h-4 w-4 text-primary" />
-                      <span className="text-sm font-medium">{service}</span>
-                    </div>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
-
-            {/* أبرز العملاء */}
-            {profileData.topClients.length > 0 && profileData.topClients[0] && (
+            {/* المهارات */}
+            {profile.skills && profile.skills.length > 0 && (
               <Card className="border-0 shadow-soft">
                 <CardContent className="p-6">
-                  <h2 className="text-xl font-semibold mb-4">أبرز العملاء</h2>
-                  <div className="space-y-3">
-                    {profileData.topClients.filter(client => client.trim()).map((client, index) => (
-                      <div key={index} className="flex items-center p-3 bg-muted/50 rounded-lg">
-                        <CheckCircle className="ml-3 h-4 w-4 text-green-500" />
-                        <span className="text-sm font-medium">{client}</span>
-                      </div>
+                  <h2 className="text-xl font-semibold mb-4">المهارات</h2>
+                  <div className="flex flex-wrap gap-2">
+                    {profile.skills.map((skill, index) => (
+                      <Badge key={index} variant="secondary" className="text-sm">
+                        {skill}
+                      </Badge>
                     ))}
+                  </div>
+                </CardContent>
+              </Card>
+            )}
+
+            {/* الخبرة */}
+            {profile.experience_years && (
+              <Card className="border-0 shadow-soft">
+                <CardContent className="p-6">
+                  <h2 className="text-xl font-semibold mb-4">سنوات الخبرة</h2>
+                  <div className="flex items-center gap-2">
+                    <Star className="h-5 w-5 text-yellow-500" />
+                    <span className="text-lg font-medium">{profile.experience_years} سنة</span>
+                  </div>
+                </CardContent>
+              </Card>
+            )}
+
+            {/* الموقع */}
+            {profile.location && (
+              <Card className="border-0 shadow-soft">
+                <CardContent className="p-6">
+                  <h2 className="text-xl font-semibold mb-4">الموقع</h2>
+                  <div className="flex items-center gap-2">
+                    <MapPin className="h-5 w-5 text-muted-foreground" />
+                    <span className="text-muted-foreground">{profile.location}</span>
                   </div>
                 </CardContent>
               </Card>

@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { ArrowLeft, Users, Calendar, Link2, Star, Zap, Shield, Smartphone, Menu, X } from "lucide-react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Badge } from "@/components/ui/badge";
 import { Link } from "react-router-dom";
 import { useLanguage } from "@/hooks/useLanguage";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
@@ -385,46 +386,84 @@ const Index = () => {
                   {language === "ar" ? "تواصل معنا" : "Contact Us"}
                 </Button>
               </DialogTrigger>
-              <DialogContent className="sm:max-w-[500px] glass backdrop-blur-md border border-border/20">
-                <DialogHeader>
-                  <DialogTitle className="text-2xl font-bold text-center mb-4">
-                    {language === "ar" ? "مشعل ثاني" : "Meshaal Thani"}
-                  </DialogTitle>
-                </DialogHeader>
-                <div className="text-center space-y-6">
-                  {/* Profile Image */}
-                  <div className="w-24 h-24 mx-auto rounded-full bg-gradient-to-r from-blue-500 to-purple-500 flex items-center justify-center text-white text-3xl font-bold shadow-lg">
-                    م
-                  </div>
+              <DialogContent className="sm:max-w-[600px] glass backdrop-blur-xl border border-white/20 shadow-2xl animate-scale-in overflow-hidden">
+                <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent"></div>
+                <div className="relative z-10 p-8">
+                  <DialogHeader className="text-center mb-8">
+                    <div className="relative">
+                      {/* Profile Image */}
+                      <div className="w-32 h-32 mx-auto mb-6 relative">
+                        <img 
+                          src="https://mfchmiwxlkvkwtucizzl.supabase.co/storage/v1/object/public/avatars/33f23058-2dc9-4785-b96f-248a6ea24d13/1752183589032.jpeg"
+                          alt="مشعل ثاني"
+                          className="w-full h-full object-cover rounded-full border-4 border-white/20 shadow-2xl hover:scale-105 transition-transform duration-300"
+                        />
+                        <div className="absolute -top-2 -right-2 text-3xl animate-pulse">👑</div>
+                      </div>
+                      
+                      <DialogTitle className="text-3xl font-bold mb-2 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+                        مشعل ثاني
+                      </DialogTitle>
+                      <p className="text-lg text-muted-foreground font-medium">
+                        @immshl
+                      </p>
+                    </div>
+                  </DialogHeader>
                   
-                  {/* Info */}
-                  <div className="space-y-4">
-                    <div>
-                      <h3 className="font-semibold text-lg text-foreground">
-                        {language === "ar" ? "مؤسس منصة ملف" : "Founder of Malaf Platform"}
-                      </h3>
-                      <p className="text-muted-foreground">
-                        {language === "ar" ? "خبير في تطوير المنصات الرقمية" : "Expert in Digital Platform Development"}
+                  <div className="space-y-8">
+                    {/* Bio */}
+                    <div className="text-center">
+                      <p className="text-lg leading-relaxed text-foreground font-light">
+                        أعرف أفكر — أساعد الشركات والأفراد على ابتكار حلول أعمال إبداعية وسويت هذي المنصة عشان الكل يستفيد منها.
                       </p>
                     </div>
                     
-                    <div className="text-center text-muted-foreground leading-relaxed">
-                      <p>
-                        {language === "ar" 
-                          ? "مختص في بناء الحلول التقنية التي تمكن المستقلين من عرض أعمالهم وجذب العملاء بطريقة احترافية ومميزة."
-                          : "Specialized in building technical solutions that enable freelancers to showcase their work and attract clients professionally and distinctively."
-                        }
-                      </p>
+                    {/* Skills */}
+                    <div>
+                      <h4 className="font-semibold text-foreground mb-4 text-center">المهارات</h4>
+                      <div className="flex flex-wrap gap-2 justify-center">
+                        <Badge variant="secondary" className="hover:scale-105 transition-transform">التخطيط الإستراتيجي</Badge>
+                        <Badge variant="secondary" className="hover:scale-105 transition-transform">الأفكار الإبداعية</Badge>
+                        <Badge variant="secondary" className="hover:scale-105 transition-transform">استشارات حلول الأعمال</Badge>
+                        <Badge variant="secondary" className="hover:scale-105 transition-transform">صناعة المحتوى</Badge>
+                      </div>
+                    </div>
+                    
+                    {/* Featured Clients */}
+                    <div>
+                      <h4 className="font-semibold text-foreground mb-4 text-center">عملاء مميزون</h4>
+                      <div className="space-y-2">
+                        <Badge variant="outline" className="block text-center hover:bg-muted/50 transition-colors">🏛️ وزارة الإتصالات وتقنية المعلومات</Badge>
+                        <Badge variant="outline" className="block text-center hover:bg-muted/50 transition-colors">🏦 البنك العربي - anb</Badge>
+                        <Badge variant="outline" className="block text-center hover:bg-muted/50 transition-colors">🎯 هدف</Badge>
+                        <Badge variant="outline" className="block text-center hover:bg-muted/50 transition-colors">⚡ جاهز</Badge>
+                      </div>
                     </div>
                     
                     {/* Contact Info */}
-                    <div className="pt-4 border-t border-border/20">
+                    <div className="space-y-4 pt-6 border-t border-white/10">
+                      <div className="flex gap-4">
+                        <Button 
+                          variant="outline" 
+                          className="flex-1 hover:bg-blue-500/10 hover:border-blue-500/50 transition-all"
+                          onClick={() => window.open('mailto:iimmshl@gmail.com', '_blank')}
+                        >
+                          📧 البريد الإلكتروني
+                        </Button>
+                        <Button 
+                          variant="outline" 
+                          className="flex-1 hover:bg-blue-500/10 hover:border-blue-500/50 transition-all"
+                          onClick={() => window.open('https://x.com/immshl', '_blank')}
+                        >
+                          🐦 تويتر
+                        </Button>
+                      </div>
                       <Button 
                         variant="outline" 
-                        className="w-full hover:bg-muted/50"
-                        onClick={() => window.open('mailto:info@malaf.me?subject=استفسار عن منصة ملف', '_blank')}
+                        className="w-full hover:bg-purple-500/10 hover:border-purple-500/50 transition-all"
+                        onClick={() => window.open('https://instagram.com/immshl', '_blank')}
                       >
-                        {language === "ar" ? "راسلني عبر البريد الإلكتروني" : "Email Me"}
+                        📸 إنستقرام
                       </Button>
                     </div>
                   </div>

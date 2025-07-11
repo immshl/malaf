@@ -88,10 +88,9 @@ const Index = () => {
                   className="w-full h-full object-contain hidden dark:block"
                 />
               </div>
-              <div className="flex flex-col">
-                <span className="font-bold text-sm text-foreground leading-tight">ملف</span>
-                <span className="font-medium text-xs text-foreground/80 leading-tight">malaf</span>
-              </div>
+              <span className="font-bold text-lg text-foreground">
+                {language === "ar" ? "ملف" : "malaf"}
+              </span>
             </div>
 
             {/* Navigation Links */}

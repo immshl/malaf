@@ -302,7 +302,7 @@ const UserProfile = () => {
           <Card className="border border-border rounded-3xl shadow-soft hover:shadow-medium transition-smooth mb-8 animate-fade-in hover-scale" style={{ animationDelay: '0.1s' }}>
             <CardContent className="p-10 lg:p-12">
               <div className="bg-background/80 backdrop-blur-sm border border-border/30 rounded-2xl p-4 mb-8 shadow-sm">
-                <h2 className="text-2xl lg:text-3xl font-bold text-foreground tracking-tight text-center">
+                <h2 className="text-2xl lg:text-3xl font-bold text-foreground tracking-tight text-center pb-3 border-b border-muted/40">
                   الخدمات
                 </h2>
               </div>
@@ -328,7 +328,7 @@ const UserProfile = () => {
           <CardContent className="p-8 lg:p-10">
             <div className="text-center mb-8">
               <div className="bg-background/80 backdrop-blur-sm border border-border/30 rounded-2xl p-4 mb-6 shadow-sm">
-                <h2 className="text-2xl lg:text-3xl font-bold text-foreground tracking-tight">
+                <h2 className="text-2xl lg:text-3xl font-bold text-foreground tracking-tight pb-3 border-b border-muted/40">
                   احجز اجتماع
                 </h2>
               </div>
@@ -546,7 +546,7 @@ const UserProfile = () => {
           <Card className="border border-border rounded-3xl shadow-soft hover:shadow-medium transition-smooth mb-8 animate-fade-in hover-scale" style={{ animationDelay: '0.3s' }}>
             <CardContent className="p-10 lg:p-12">
               <div className="bg-background/80 backdrop-blur-sm border border-border/30 rounded-2xl p-4 mb-8 shadow-sm">
-                <h2 className="text-2xl lg:text-3xl font-bold text-foreground tracking-tight text-center">
+                <h2 className="text-2xl lg:text-3xl font-bold text-foreground tracking-tight text-center pb-3 border-b border-muted/40">
                   تواصل معي
                 </h2>
               </div>

@@ -386,42 +386,52 @@ const Index = () => {
                   {language === "ar" ? "تواصل معنا" : "Contact Us"}
                 </Button>
               </DialogTrigger>
-              <DialogContent className="sm:max-w-[500px] glass backdrop-blur-xl border border-white/20 shadow-2xl animate-scale-in overflow-hidden p-6">
-                <div className="space-y-6">
-                  {/* Profile Card */}
-                  <Card className="border-0 shadow-soft hover:shadow-medium transition-smooth glass group p-6">
-                    <div className="text-center space-y-4">
-                      {/* Profile Image */}
-                      <div className="w-24 h-24 mx-auto relative">
-                        <img 
-                          src="https://mfchmiwxlkvkwtucizzl.supabase.co/storage/v1/object/public/avatars/33f23058-2dc9-4785-b96f-248a6ea24d13/1752183589032.jpeg"
-                          alt="مشعل ثاني"
-                          className="w-full h-full object-cover rounded-full border-3 border-white/20 shadow-lg hover:scale-105 transition-transform duration-300"
-                        />
-                        <div className="absolute -top-1 -right-1 text-2xl">👑</div>
+              <DialogContent className="sm:max-w-[500px] border border-border/20 shadow-2xl bg-background/95 backdrop-blur-xl rounded-3xl animate-scale-in overflow-hidden p-0">
+                <div className="space-y-6 p-6">
+                  {/* البطاقة الأولى - الملف الشخصي */}
+                  <Card className="border border-border rounded-3xl shadow-soft hover:shadow-medium transition-smooth">
+                    <CardContent className="p-8 text-center">
+                      {/* صورة الملف الشخصي */}
+                      <div className="flex justify-center mb-6">
+                        <div className="relative">
+                          <img 
+                            src="https://mfchmiwxlkvkwtucizzl.supabase.co/storage/v1/object/public/avatars/33f23058-2dc9-4785-b96f-248a6ea24d13/1752183589032.jpeg"
+                            alt="مشعل ثاني"
+                            className="w-24 h-24 object-cover rounded-full border border-border/10 shadow-soft hover:scale-105 transition-transform duration-300"
+                          />
+                          <div className="absolute -top-1 -right-1 w-8 h-8 bg-background border-2 border-background rounded-full flex items-center justify-center text-lg shadow-sm">
+                            👑
+                          </div>
+                        </div>
                       </div>
-                      
-                      {/* Name */}
-                      <h3 className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+
+                      {/* الاسم */}
+                      <h1 className="text-2xl font-semibold text-foreground mb-3 tracking-tight">
                         مشعل ثاني
-                      </h3>
-                      
-                      {/* Bio */}
-                      <p className="text-muted-foreground leading-relaxed text-sm">
+                      </h1>
+
+                      {/* النبذة التعريفية */}
+                      <p className="text-base font-light text-muted-foreground leading-relaxed max-w-2xl mx-auto">
                         أساعد الشركات والأفراد على ابتكار حلول أعمال إبداعية
                       </p>
-                    </div>
+                    </CardContent>
                   </Card>
                   
-                  {/* Contact Card */}
-                  <Card className="border-0 shadow-soft hover:shadow-medium transition-smooth glass group p-6">
-                    <div className="space-y-4">
-                      <h4 className="font-semibold text-foreground text-center mb-4">التواصل</h4>
+                  {/* البطاقة الثانية - التواصل */}
+                  <Card className="border border-border rounded-3xl shadow-soft hover:shadow-medium transition-smooth">
+                    <CardContent className="p-8">
+                      <div className="bg-background/80 backdrop-blur-sm border border-border/30 rounded-2xl shadow-sm mb-6 overflow-hidden">
+                        <div className="p-4 bg-muted/20">
+                          <h2 className="text-xl font-semibold text-foreground tracking-tight text-center">
+                            التواصل
+                          </h2>
+                        </div>
+                      </div>
                       
                       <div className="space-y-3">
                         <Button 
                           variant="outline" 
-                          className="w-full justify-start gap-3 hover:bg-blue-500/10 hover:border-blue-500/50 transition-all"
+                          className="w-full justify-start gap-3 p-4 rounded-2xl bg-background/60 hover:bg-background/80 backdrop-blur-sm transition-all duration-200 border border-border/20 hover:border-border/40 shadow-sm hover:shadow-md"
                           onClick={() => window.open('mailto:iimmshl@gmail.com', '_blank')}
                         >
                           <span className="text-lg">📧</span>
@@ -430,7 +440,7 @@ const Index = () => {
                         
                         <Button 
                           variant="outline" 
-                          className="w-full justify-start gap-3 hover:bg-blue-500/10 hover:border-blue-500/50 transition-all"
+                          className="w-full justify-start gap-3 p-4 rounded-2xl bg-background/60 hover:bg-background/80 backdrop-blur-sm transition-all duration-200 border border-border/20 hover:border-border/40 shadow-sm hover:shadow-md"
                           onClick={() => window.open('https://x.com/immshl', '_blank')}
                         >
                           <span className="text-lg">🐦</span>
@@ -439,14 +449,14 @@ const Index = () => {
                         
                         <Button 
                           variant="outline" 
-                          className="w-full justify-start gap-3 hover:bg-purple-500/10 hover:border-purple-500/50 transition-all"
+                          className="w-full justify-start gap-3 p-4 rounded-2xl bg-background/60 hover:bg-background/80 backdrop-blur-sm transition-all duration-200 border border-border/20 hover:border-border/40 shadow-sm hover:shadow-md"
                           onClick={() => window.open('https://instagram.com/immshl', '_blank')}
                         >
                           <span className="text-lg">📸</span>
                           <span>إنستقرام</span>
                         </Button>
                       </div>
-                    </div>
+                    </CardContent>
                   </Card>
                 </div>
               </DialogContent>

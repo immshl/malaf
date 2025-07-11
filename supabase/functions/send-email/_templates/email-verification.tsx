@@ -28,7 +28,9 @@ export const EmailVerificationTemplate = ({
   user_email,
 }: EmailVerificationProps) => (
   <Html>
-    <Head />
+    <Head>
+      <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    </Head>
     <Preview>تأكيد حسابك في ملف - منصة الفريلانسرز</Preview>
     <Body style={main}>
       <Container style={container}>
@@ -97,25 +99,28 @@ export const EmailVerificationTemplate = ({
 export default EmailVerificationTemplate
 
 const main = {
-  backgroundColor: '#f8fafc',
-  fontFamily: 'Cairo, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
+  backgroundColor: '#fafafa',
+  fontFamily: 'Cairo, Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif',
   direction: 'rtl' as const,
-  padding: '40px 20px',
+  padding: '0',
+  margin: '0',
+  lineHeight: '1.6',
 }
 
 const container = {
   backgroundColor: '#ffffff',
   margin: '0 auto',
   maxWidth: '600px',
-  borderRadius: '16px',
-  boxShadow: '0 20px 40px rgba(0, 0, 0, 0.1)',
+  borderRadius: '0',
+  boxShadow: 'none',
   overflow: 'hidden',
 }
 
 const logoSection = {
-  background: 'linear-gradient(135deg, #7c3aed, #a855f7)',
-  padding: '40px 0',
+  background: '#ffffff',
+  padding: '48px 0 32px 0',
   textAlign: 'center' as const,
+  borderBottom: '1px solid #f0f0f0',
 }
 
 const logoContainer = {
@@ -123,69 +128,87 @@ const logoContainer = {
 }
 
 const logoText = {
-  color: '#ffffff',
-  fontSize: '36px',
-  fontWeight: 'bold',
+  color: '#000000',
+  fontSize: '32px',
+  fontWeight: '600',
   margin: '0',
   lineHeight: '1',
+  letterSpacing: '-0.02em',
 }
 
 const logoSubtext = {
-  color: '#e9d5ff',
-  fontSize: '16px',
-  margin: '8px 0 0 0',
-  letterSpacing: '2px',
+  color: '#666666',
+  fontSize: '14px',
+  margin: '4px 0 0 0',
+  letterSpacing: '1px',
+  fontWeight: '400',
 }
 
 const contentSection = {
-  padding: '48px 40px',
+  padding: '48px 48px 64px 48px',
+  backgroundColor: '#ffffff',
 }
 
 const h1 = {
-  color: '#1e293b',
-  fontSize: '32px',
-  fontWeight: 'bold',
-  margin: '0 0 24px 0',
+  color: '#1d1d1f',
+  fontSize: '28px',
+  fontWeight: '600',
+  margin: '0 0 16px 0',
   textAlign: 'center' as const,
+  lineHeight: '1.3',
+  letterSpacing: '-0.02em',
 }
 
 const welcomeText = {
-  color: '#475569',
-  fontSize: '18px',
-  lineHeight: '28px',
-  margin: '0 0 32px 0',
+  color: '#1d1d1f',
+  fontSize: '17px',
+  lineHeight: '1.5',
+  margin: '0 0 8px 0',
   textAlign: 'center' as const,
+  fontWeight: '400',
 }
 
 const instructionText = {
-  color: '#64748b',
-  fontSize: '16px',
-  lineHeight: '24px',
+  color: '#86868b',
+  fontSize: '15px',
+  lineHeight: '1.5',
   margin: '0 0 32px 0',
   textAlign: 'center' as const,
+  fontWeight: '400',
 }
 
 const buttonContainer = {
   textAlign: 'center' as const,
-  margin: '40px 0',
+  margin: '32px 0',
 }
 
 const verifyButton = {
-  backgroundColor: '#7c3aed',
+  backgroundColor: '#1d1d1f',
   color: '#ffffff',
-  fontSize: '18px',
-  fontWeight: 'bold',
+  fontSize: '17px',
+  fontWeight: '500',
   textDecoration: 'none',
   padding: '16px 32px',
-  borderRadius: '12px',
+  borderRadius: '8px',
   display: 'inline-block',
-  boxShadow: '0 4px 16px rgba(124, 58, 237, 0.3)',
-  transition: 'all 0.3s ease',
+  border: 'none',
+  cursor: 'pointer',
+  letterSpacing: '-0.01em',
+}
+
+const noteText = {
+  color: '#86868b',
+  fontSize: '13px',
+  lineHeight: '1.4',
+  margin: '8px 0',
+  textAlign: 'right' as const,
+  paddingRight: '16px',
+  fontWeight: '400',
 }
 
 const linkContainer = {
-  backgroundColor: '#f8fafc',
-  border: '1px solid #e2e8f0',
+  backgroundColor: '#f5f5f7',
+  border: '1px solid #e8e8ed',
   borderRadius: '8px',
   padding: '16px',
   margin: '24px 0',
@@ -193,41 +216,38 @@ const linkContainer = {
 }
 
 const linkText = {
-  color: '#64748b',
-  fontSize: '12px',
-  fontFamily: 'monospace',
+  color: '#86868b',
+  fontSize: '11px',
+  fontFamily: 'SF Mono, Monaco, Inconsolata, "Roboto Mono", Consolas, "Courier New", monospace',
   wordBreak: 'break-all' as const,
-  lineHeight: '1.5',
+  lineHeight: '1.4',
   margin: '0',
-}
-
-const noteText = {
-  color: '#64748b',
-  fontSize: '14px',
-  lineHeight: '20px',
-  margin: '8px 0',
-  textAlign: 'right' as const,
-  paddingRight: '16px',
+  fontWeight: '400',
 }
 
 const divider = {
   height: '1px',
-  backgroundColor: '#e2e8f0',
+  backgroundColor: '#f0f0f0',
   margin: '40px 0',
+  border: 'none',
 }
 
 const footerText = {
-  color: '#94a3b8',
-  fontSize: '14px',
-  lineHeight: '20px',
+  color: '#86868b',
+  fontSize: '13px',
+  lineHeight: '1.4',
   margin: '0 0 32px 0',
   textAlign: 'center' as const,
+  fontWeight: '400',
 }
 
 const brandFooter = {
   textAlign: 'center' as const,
-  borderTop: '1px solid #e2e8f0',
+  borderTop: '1px solid #f0f0f0',
   paddingTop: '32px',
+  backgroundColor: '#fbfbfd',
+  margin: '0 -48px -64px -48px',
+  padding: '32px 48px 48px 48px',
 }
 
 const brandText = {
@@ -235,14 +255,17 @@ const brandText = {
 }
 
 const brandLink = {
-  color: '#7c3aed',
-  fontSize: '16px',
+  color: '#1d1d1f',
+  fontSize: '15px',
   textDecoration: 'none',
-  fontWeight: 'bold',
+  fontWeight: '500',
+  letterSpacing: '-0.01em',
 }
 
 const taglineText = {
-  color: '#94a3b8',
-  fontSize: '14px',
+  color: '#86868b',
+  fontSize: '13px',
   margin: '0',
+  fontWeight: '400',
+  lineHeight: '1.4',
 }

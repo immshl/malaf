@@ -183,7 +183,7 @@ const Index = () => {
               {language === "ar" ? "لتمكين العمل الحر" : "Empowering Freelancers"}
             </p>
             
-            <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold mb-8 leading-[1.1] tracking-tight scroll-animate">
+            <h1 className="text-4xl md:text-7xl lg:text-8xl font-bold mb-8 leading-[1.1] tracking-tight scroll-animate">
               <span className="text-foreground">
                 {language === "ar" ? "ملف مهني خاص بك" : "Your Professional Profile"}
               </span>

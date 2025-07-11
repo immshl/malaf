@@ -309,9 +309,9 @@ const UserProfile = () => {
                 {profile.skills.map((skill, index) => (
                   <div 
                     key={index} 
-                    className="aspect-square flex items-center justify-center p-4 rounded-2xl bg-muted/10 hover:bg-muted/20 transition-all duration-200 border border-border/5 hover:border-border/20 cursor-default"
+                    className="aspect-square flex items-center justify-center p-4 rounded-2xl bg-background/60 hover:bg-background/80 backdrop-blur-sm transition-all duration-200 border border-border/20 hover:border-border/40 cursor-default shadow-sm hover:shadow-md"
                   >
-                    <span className="text-sm md:text-base font-light text-foreground text-center leading-tight">
+                    <span className="text-sm md:text-base font-medium text-foreground text-center leading-tight">
                       {skill}
                     </span>
                   </div>
@@ -322,7 +322,7 @@ const UserProfile = () => {
         )}
 
         {/* بطاقة حجز الاجتماع - بارزة ومخصصة */}
-        <Card className="border-2 border-primary/20 rounded-3xl shadow-strong hover:shadow-xl transition-smooth mb-8 bg-gradient-to-br from-primary/5 to-accent/5">
+        <Card className="border border-primary/30 rounded-3xl shadow-xl hover:shadow-2xl transition-smooth mb-8 bg-background/40 backdrop-blur-xl">
           <CardContent className="p-8 lg:p-10">
             <div className="text-center mb-8">
               <h2 className="text-2xl lg:text-3xl font-light text-foreground mb-4 tracking-tight">

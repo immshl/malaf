@@ -474,6 +474,57 @@ const Index = () => {
           </div>
         </div>
       </section>
+
+      {/* Footer */}
+      <footer className="py-16 bg-muted/10 border-t border-border/20">
+        <div className="container mx-auto px-6 text-center">
+          <div className="max-w-md mx-auto space-y-6">
+            {/* Logo */}
+            <div className="flex items-center justify-center space-x-2 space-x-reverse">
+              <div className="w-10 h-10">
+                {/* Logo for light mode (black) */}
+                <img 
+                  src="/lovable-uploads/be1d2269-8206-422b-a395-e4fb9e1a88cc.png" 
+                  alt="ملف" 
+                  className="w-full h-full object-contain dark:hidden"
+                />
+                {/* Logo for dark mode (white) */}
+                <img 
+                  src="/lovable-uploads/822b255a-0cfa-4520-b9a5-aa69e7ef91e6.png" 
+                  alt="ملف" 
+                  className="w-full h-full object-contain hidden dark:block"
+                />
+              </div>
+              <span className="font-bold text-2xl text-foreground">
+                {language === "ar" ? "ملف" : "malaf"}
+              </span>
+            </div>
+            
+            {/* عبارة */}
+            <div className="space-y-2">
+              <p className="text-lg font-medium text-foreground">
+                {language === "ar" ? "مَلَف — منصة الملفات المهنية" : "Malaf — Professional Profiles Platform"}
+              </p>
+              <p className="text-muted-foreground leading-relaxed">
+                {language === "ar" 
+                  ? "اصنع هويتك الرقمية واجذب العملاء المناسبين. عرض خدماتك بطريقة احترافية ومميزة." 
+                  : "Create your digital identity and attract the right clients. Showcase your services professionally and distinctively."
+                }
+              </p>
+            </div>
+            
+            {/* Copyright */}
+            <div className="pt-6 border-t border-border/20">
+              <p className="text-sm text-muted-foreground">
+                {language === "ar" 
+                  ? `© ${new Date().getFullYear()} ملف. جميع الحقوق محفوظة.`
+                  : `© ${new Date().getFullYear()} Malaf. All rights reserved.`
+                }
+              </p>
+            </div>
+          </div>
+        </div>
+      </footer>
       </div>
     </div>
   );

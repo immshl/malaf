@@ -385,10 +385,10 @@ const UserProfile = () => {
                 <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto border border-border/20 shadow-elegant bg-white rounded-3xl relative [&>button]:hidden fixed top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] z-50">
                   <div className="absolute inset-0 bg-gradient-to-br from-white to-gray-50/30 rounded-3xl"></div>
                   
-                  {/* زر الإغلاق المخصص */}
+                  {/* زر الإغلاق المحسن */}
                   <DialogClose asChild>
-                    <button className="absolute top-4 left-4 z-20 w-10 h-10 rounded-full glass-soft border border-border/40 hover:border-border/60 bg-background/30 hover:bg-background/50 backdrop-blur-sm flex items-center justify-center transition-all duration-200 hover:shadow-md group">
-                      <X className="w-5 h-5 text-muted-foreground group-hover:text-foreground transition-colors" />
+                    <button className="absolute top-4 left-4 z-20 w-10 h-10 rounded-full border-2 border-gray-200 hover:border-gray-300 bg-white hover:bg-gray-50 shadow-md hover:shadow-lg flex items-center justify-center transition-all duration-200 group">
+                      <X className="w-5 h-5 text-gray-600 group-hover:text-gray-800 transition-colors" />
                     </button>
                   </DialogClose>
 

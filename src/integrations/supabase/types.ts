@@ -81,6 +81,7 @@ export type Database = {
           created_at: string
           emoji: string | null
           experience_years: number | null
+          featured_clients: string[] | null
           full_name: string | null
           github_url: string | null
           id: string
@@ -104,6 +105,7 @@ export type Database = {
           created_at?: string
           emoji?: string | null
           experience_years?: number | null
+          featured_clients?: string[] | null
           full_name?: string | null
           github_url?: string | null
           id?: string
@@ -127,6 +129,7 @@ export type Database = {
           created_at?: string
           emoji?: string | null
           experience_years?: number | null
+          featured_clients?: string[] | null
           full_name?: string | null
           github_url?: string | null
           id?: string

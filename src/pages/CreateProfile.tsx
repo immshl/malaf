@@ -71,7 +71,7 @@ const CreateProfile = () => {
               profileImage: existingProfile.avatar_url || "",
               emoji: existingProfile.emoji || "",
               services: existingProfile.skills && existingProfile.skills.length > 0 ? existingProfile.skills : [""],
-              topClients: [""], // These fields weren't in the original schema
+              topClients: existingProfile.featured_clients && existingProfile.featured_clients.length > 0 ? existingProfile.featured_clients : [""],
               instagram: existingProfile.instagram_url ? existingProfile.instagram_url.replace('https://instagram.com/', '').replace('https://www.instagram.com/', '') : "",
               twitter: existingProfile.twitter_url ? existingProfile.twitter_url.replace('https://x.com/', '').replace('https://twitter.com/', '') : "",
               workEmail: existingProfile.contact_email || user.email || "",
@@ -167,6 +167,7 @@ const CreateProfile = () => {
           location: profileData.location || null,
           profession: profileData.profession || null,
           skills: services.length > 0 ? services : null,
+          featured_clients: topClients.length > 0 ? topClients : null,
           experience_years: profileData.experienceYears || null,
           linkedin_url: profileData.linkedinUrl || null,
           github_url: profileData.githubUrl || null,

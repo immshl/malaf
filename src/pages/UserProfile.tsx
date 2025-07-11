@@ -325,6 +325,39 @@ const UserProfile = () => {
           </Card>
         )}
 
+        {/* بطاقة أبرز العملاء */}
+        {profile.featured_clients && profile.featured_clients.length > 0 && (
+          <Card className="border border-border rounded-3xl shadow-soft hover:shadow-medium transition-smooth mb-8 animate-fade-in hover-scale" style={{ animationDelay: '0.15s' }}>
+            <CardContent className="p-10 lg:p-12">
+              <div className="bg-background/80 backdrop-blur-sm border border-border/30 rounded-2xl shadow-sm mb-8 overflow-hidden">
+                <div className="p-4 bg-muted/20">
+                  <h2 className="text-xl lg:text-2xl font-semibold text-foreground tracking-tight text-center">
+                    أبرز العملاء
+                  </h2>
+                </div>
+              </div>
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {profile.featured_clients.map((client, index) => (
+                  <div 
+                    key={index} 
+                    className="flex items-center justify-center p-6 rounded-2xl bg-background/60 hover:bg-background/80 backdrop-blur-sm transition-all duration-200 border border-border/20 hover:border-border/40 cursor-default shadow-sm hover:shadow-md hover-scale"
+                  >
+                    <div className="text-center">
+                      <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mb-3 mx-auto">
+                        <Star className="w-6 h-6 text-primary" />
+                      </div>
+                      <span className="text-sm md:text-base font-medium text-foreground leading-tight">
+                        {client}
+                      </span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
+        )}
+
         {/* بطاقة حجز الاجتماع - بارزة ومخصصة */}
         <Card className="border border-primary/30 rounded-3xl shadow-xl hover:shadow-2xl transition-smooth mb-8 bg-background/40 backdrop-blur-xl animate-fade-in hover-scale" style={{ animationDelay: '0.2s' }}>
           <CardContent className="p-8 lg:p-10">

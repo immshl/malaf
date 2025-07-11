@@ -77,48 +77,30 @@ const EmailVerification = () => {
     try {
       const redirectUrl = window.location.hostname.includes('malaf.me') 
         ? `${window.location.origin}/verify-email`
-        : 'https://malaf.me';
+        : 'https://malaf.me/verify-email';
 
-      // محاولة إعادة إرسال إيميل التحقق أولاً
-      const { error: resendError } = await supabase.auth.resend({
-        type: 'signup',
+      // نحاول signInWithOtp مباشرة لأنه يعمل كإعادة تسجيل
+      const { error } = await supabase.auth.signInWithOtp({
         email: user.email,
         options: {
           emailRedirectTo: redirectUrl
         }
       });
 
-      // إذا فشلت إعادة الإرسال، نحاول signInWithOtp كبديل
-      if (resendError) {
-        console.log('Resend failed, trying OTP:', resendError.message);
+      if (error) {
+        // إذا فشل OTP، نجرب signUp كعملية تسجيل جديدة
+        console.log('OTP failed, trying signUp:', error.message);
         
-        const { error: otpError } = await supabase.auth.signInWithOtp({
+        const { error: signUpError } = await supabase.auth.signUp({
           email: user.email,
+          password: 'temp-password-' + Date.now(), // كلمة مرور مؤقتة
           options: {
             emailRedirectTo: redirectUrl
           }
         });
 
-        if (otpError) {
-          // إذا فشلت كل المحاولات، نعرض رسالة للمستخدم لإعادة التسجيل
-          if (otpError.message.includes("User not found") || otpError.message.includes("Invalid email")) {
-            toast({
-              variant: "destructive",
-              title: "مطلوب إعادة التسجيل",
-              description: "يبدو أن حسابك غير مكتمل. يرجى العودة وإعادة التسجيل.",
-              action: (
-                <Button 
-                  variant="outline" 
-                  size="sm"
-                  onClick={() => navigate("/signup")}
-                >
-                  إعادة التسجيل
-                </Button>
-              )
-            });
-            return;
-          }
-          throw otpError;
+        if (signUpError && !signUpError.message.includes("User already registered")) {
+          throw signUpError;
         }
       }
 
@@ -129,11 +111,31 @@ const EmailVerification = () => {
       
     } catch (error: any) {
       console.error('Resend error:', error);
-      toast({
-        variant: "destructive",
-        title: "خطأ في الإرسال",
-        description: error.message || "حدث خطأ أثناء إرسال رابط التحقق"
-      });
+      
+      // إذا كانت المشكلة أن المستخدم مسجل بالفعل، نوجهه لإعادة التسجيل
+      if (error.message?.includes("User already registered") || 
+          error.message?.includes("user_repeated_signup")) {
+        toast({
+          variant: "destructive",
+          title: "مطلوب إعادة التسجيل",
+          description: "يبدو أن حسابك غير مكتمل. يرجى العودة وإعادة التسجيل بكلمة مرور جديدة.",
+          action: (
+            <Button 
+              variant="outline" 
+              size="sm"
+              onClick={() => navigate("/signup")}
+            >
+              إعادة التسجيل
+            </Button>
+          )
+        });
+      } else {
+        toast({
+          variant: "destructive",
+          title: "خطأ في الإرسال",
+          description: error.message || "حدث خطأ أثناء إرسال رابط التحقق"
+        });
+      }
     }
   };
 

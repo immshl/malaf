@@ -21,6 +21,28 @@ const UserProfile = () => {
   const [profile, setProfile] = useState<UserProfile | null>(null);
   const [imageLoaded, setImageLoaded] = useState(false);
 
+  // دالة لتحديد التحية حسب توقيت السعودية
+  const getGreeting = () => {
+    const now = new Date();
+    const saudiTime = new Date(now.toLocaleString("en-US", {timeZone: "Asia/Riyadh"}));
+    const hour = saudiTime.getHours();
+
+    if (language === "ar") {
+      // من 5 صباحاً إلى 12 ظهراً: صباح الخير
+      if (hour >= 5 && hour < 12) {
+        return "صباح الخير";
+      }
+      // باقي الأوقات: مساء الخير
+      return "مساء الخير";
+    } else {
+      // للغة الإنجليزية
+      if (hour >= 5 && hour < 12) {
+        return "Good Morning";
+      }
+      return "Good Evening";
+    }
+  };
+
   useEffect(() => {
     const fetchUserProfile = async () => {
       if (!user) return;
@@ -112,7 +134,7 @@ const UserProfile = () => {
         </div>
         <div className="flex flex-col items-center text-center">
           <span className="text-sm font-medium text-foreground">
-            {language === "ar" ? "مرحباً" : "Welcome"}
+            {getGreeting()}
           </span>
           <span className="text-sm text-muted-foreground">
             {displayName}

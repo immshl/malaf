@@ -386,13 +386,13 @@ const Index = () => {
                   {language === "ar" ? "تواصل معنا" : "Contact Us"}
                 </Button>
               </DialogTrigger>
-              <DialogContent className="max-w-[320px] sm:max-w-[380px] border border-border/20 shadow-2xl bg-background/95 backdrop-blur-xl rounded-3xl animate-scale-in overflow-hidden p-0 relative">
-                {/* زر الإغلاق الطافي */}
+              <DialogContent className="max-w-[90vw] sm:max-w-[400px] w-full mx-auto border border-border/20 shadow-2xl bg-background/95 backdrop-blur-xl rounded-3xl animate-scale-in p-0">
+                {/* زر الإغلاق */}
                 <DialogClose asChild>
                   <Button 
                     variant="ghost" 
                     size="icon"
-                    className="absolute top-3 right-3 z-50 w-8 h-8 rounded-full glass backdrop-blur-xl border border-border/30 hover:border-border/60 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-110"
+                    className="absolute top-4 right-4 z-50 w-8 h-8 rounded-full bg-background/80 backdrop-blur-sm border border-border/30 hover:border-border/60 shadow-md hover:shadow-lg transition-all"
                   >
                     <X className="w-4 h-4 text-foreground" />
                   </Button>

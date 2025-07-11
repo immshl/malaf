@@ -395,7 +395,7 @@ const UserProfile = () => {
                   <div className="relative z-10 pt-4">
                     <DialogHeader className="text-center pb-6">
                       <div className="glass-soft rounded-2xl shadow-soft mb-4 overflow-hidden border border-primary/20 bg-primary/5">
-                        <div className="p-4 bg-gradient-to-r from-primary/15 via-background/40 to-primary/15 backdrop-blur-sm">
+                        <div className="p-4 bg-gradient-to-r from-primary/20 to-primary/20 backdrop-blur-sm">
                           <DialogTitle className="text-xl lg:text-2xl font-semibold text-foreground tracking-tight">
                             حجز اجتماع جديد
                           </DialogTitle>

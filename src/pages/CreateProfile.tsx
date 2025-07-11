@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
@@ -9,7 +10,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { ArrowRight, Upload, User, Instagram, Twitter, Mail, Link as LinkIcon, Plus, X } from "lucide-react";
+import { ArrowRight, Upload, User, Instagram, Twitter, Mail, Link as LinkIcon, Plus, X, Trash2 } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
 import { useLanguage } from "@/hooks/useLanguage";
 import { supabase } from "@/integrations/supabase/client";
@@ -324,6 +325,62 @@ const CreateProfile = () => {
         ? prev.availableDays.filter(d => d !== day)
         : [...prev.availableDays, day]
     }));
+  };
+
+  const handleDeleteAccount = async () => {
+    if (!user) return;
+
+    try {
+      setIsLoading(true);
+
+      // Delete user profile first
+      const { error: profileError } = await supabase
+        .from('profiles')
+        .delete()
+        .eq('user_id', user.id);
+
+      if (profileError) {
+        console.error('Error deleting profile:', profileError);
+        toast({
+          variant: "destructive",
+          title: "خطأ في حذف الملف",
+          description: "حدث خطأ أثناء حذف ملفك الشخصي"
+        });
+        return;
+      }
+
+      // Delete user account from auth
+      const { error: authError } = await supabase.auth.admin.deleteUser(user.id);
+
+      if (authError) {
+        console.error('Error deleting user:', authError);
+        toast({
+          variant: "destructive", 
+          title: "خطأ في حذف الحساب",
+          description: "حدث خطأ أثناء حذف الحساب"
+        });
+        return;
+      }
+
+      toast({
+        title: "تم حذف الحساب",
+        description: "تم حذف حسابك وجميع بياناتك بنجاح"
+      });
+
+      // Sign out and redirect
+      await supabase.auth.signOut();
+      navigate('/');
+
+    } catch (error) {
+      console.error('Error deleting account:', error);
+      toast({
+        variant: "destructive",
+        title: "خطأ غير متوقع",
+        description: "حدث خطأ أثناء حذف الحساب"
+      });
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const days = [
@@ -827,6 +884,68 @@ const CreateProfile = () => {
                 </div>
               </CardContent>
             </Card>
+
+            {/* زر حذف الحساب - يظهر فقط في وضع التحرير */}
+            {isEditing && (
+              <Card className="border border-destructive/20 shadow-soft bg-destructive/5">
+                <CardContent className="p-6">
+                  <div className="space-y-4">
+                    <div>
+                      <h3 className="text-lg font-semibold text-destructive">منطقة الخطر</h3>
+                      <p className="text-sm text-muted-foreground mt-1">
+                        حذف الحساب عملية غير قابلة للتراجع وستفقد جميع بياناتك
+                      </p>
+                    </div>
+                    
+                    <AlertDialog>
+                      <AlertDialogTrigger asChild>
+                        <Button 
+                          variant="destructive" 
+                          className="gap-2"
+                          disabled={isLoading}
+                        >
+                          <Trash2 className="w-4 h-4" />
+                          حذف الحساب نهائياً
+                        </Button>
+                      </AlertDialogTrigger>
+                      <AlertDialogContent className="max-w-md">
+                        <AlertDialogHeader>
+                          <AlertDialogTitle className="text-destructive">
+                            هل أنت متأكد من حذف حسابك؟
+                          </AlertDialogTitle>
+                          <AlertDialogDescription className="text-right">
+                            هذا الإجراء غير قابل للتراجع. سيتم حذف:
+                            <br />• ملفك الشخصي وجميع بياناتك
+                            <br />• جميع الحجوزات والاجتماعات
+                            <br />• حسابك كاملاً من المنصة
+                          </AlertDialogDescription>
+                        </AlertDialogHeader>
+                        <AlertDialogFooter className="gap-2">
+                          <AlertDialogCancel>إلغاء</AlertDialogCancel>
+                          <AlertDialogAction 
+                            onClick={handleDeleteAccount}
+                            className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+                            disabled={isLoading}
+                          >
+                            {isLoading ? (
+                              <div className="flex items-center gap-2">
+                                <Loading variant="spinner" size="sm" />
+                                جاري الحذف...
+                              </div>
+                            ) : (
+                              <>
+                                <Trash2 className="w-4 h-4 ml-2" />
+                                نعم، احذف حسابي
+                              </>
+                            )}
+                          </AlertDialogAction>
+                        </AlertDialogFooter>
+                      </AlertDialogContent>
+                    </AlertDialog>
+                  </div>
+                </CardContent>
+              </Card>
+            )}
 
             {/* أزرار الإجراءات */}
             <div className="flex gap-4 pt-4">

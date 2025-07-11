@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { ArrowLeft, Users, Calendar, Link2, Star, Zap, Shield, Smartphone, Menu, X, Mail, Instagram } from "lucide-react";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogClose } from "@/components/ui/dialog";
 import { Badge } from "@/components/ui/badge";
 import { Link } from "react-router-dom";
 import { useLanguage } from "@/hooks/useLanguage";
@@ -386,7 +386,17 @@ const Index = () => {
                   {language === "ar" ? "تواصل معنا" : "Contact Us"}
                 </Button>
               </DialogTrigger>
-              <DialogContent className="max-w-[320px] sm:max-w-[380px] border border-border/20 shadow-2xl bg-background/95 backdrop-blur-xl rounded-3xl animate-scale-in overflow-hidden p-0">
+              <DialogContent className="max-w-[320px] sm:max-w-[380px] border border-border/20 shadow-2xl bg-background/95 backdrop-blur-xl rounded-3xl animate-scale-in overflow-hidden p-0 relative">
+                {/* زر الإغلاق الطافي */}
+                <DialogClose asChild>
+                  <Button 
+                    variant="ghost" 
+                    size="icon"
+                    className="absolute -top-4 -right-4 z-50 w-10 h-10 rounded-full glass backdrop-blur-xl border border-border/30 hover:border-border/60 shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:scale-110"
+                  >
+                    <X className="w-5 h-5 text-foreground" />
+                  </Button>
+                </DialogClose>
                 <div className="space-y-4 p-4">
                   {/* البطاقة الأولى - الملف الشخصي */}
                   <Card className="border border-border rounded-3xl shadow-soft hover:shadow-medium transition-smooth">

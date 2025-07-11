@@ -179,7 +179,7 @@ const Index = () => {
         <div className="absolute inset-0 bg-gradient-accent opacity-5"></div>
         <div className="container mx-auto px-6 relative z-10">
           <div className="max-w-4xl mx-auto text-center">
-            <p className="text-sm text-muted-foreground mb-12 font-medium tracking-wide uppercase scroll-animate px-3 py-1 rounded-full border border-muted-foreground/30 inline-block">
+            <p className="text-sm text-muted-foreground mb-12 font-medium tracking-wide uppercase scroll-animate px-3 py-1 rounded-full border border-muted-foreground/30 inline-block shadow-sm animate-pulse">
               {language === "ar" ? "لتمكين العمل الحر" : "Empowering Freelancers"} ✨
             </p>
             

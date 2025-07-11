@@ -21,7 +21,7 @@ const AuthButton = ({ isMobile = false }: { isMobile?: boolean }) => {
             <Button 
               variant="outline" 
               size="lg" 
-              className="w-full text-lg py-4 rounded-2xl border-2 border-green-500/30 text-green-600 hover:border-green-500 hover:bg-green-500 hover:text-white transition-all duration-300 transform hover:scale-[1.02] hover:shadow-lg backdrop-blur-sm flex items-center justify-center gap-3"
+              className="w-full text-lg py-4 modern-border hover:shadow-medium transition-smooth transform hover:scale-[1.02] flex items-center justify-center gap-3"
             >
               <User className="w-5 h-5" />
               {language === "ar" ? "ملفي الشخصي" : "My Profile"}
@@ -31,7 +31,7 @@ const AuthButton = ({ isMobile = false }: { isMobile?: boolean }) => {
             variant="outline" 
             size="lg" 
             onClick={() => signOut()}
-            className="w-full text-lg py-4 rounded-2xl border-2 border-red-500/30 text-red-600 hover:border-red-500 hover:bg-red-500 hover:text-white transition-all duration-300 transform hover:scale-[1.02] hover:shadow-lg backdrop-blur-sm flex items-center justify-center gap-3"
+            className="w-full text-lg py-4 modern-border text-destructive hover:bg-destructive hover:text-destructive-foreground transition-smooth transform hover:scale-[1.02] flex items-center justify-center gap-3"
           >
             <LogOut className="w-5 h-5" />
             {language === "ar" ? "تسجيل الخروج" : "Sign Out"}
@@ -70,7 +70,7 @@ const AuthButton = ({ isMobile = false }: { isMobile?: boolean }) => {
           <Button 
             variant="outline" 
             size="lg" 
-            className="w-full text-lg py-4 rounded-2xl border-2 border-primary/30 text-primary hover:border-primary hover:bg-primary hover:text-primary-foreground transition-all duration-300 transform hover:scale-[1.02] hover:shadow-lg backdrop-blur-sm"
+            className="w-full text-lg py-4 modern-border hover:bg-primary hover:text-primary-foreground transition-smooth transform hover:scale-[1.02]"
           >
             {language === "ar" ? "تسجيل الدخول" : "Sign In"}
           </Button>
@@ -78,7 +78,8 @@ const AuthButton = ({ isMobile = false }: { isMobile?: boolean }) => {
         <Link to="/signup" className="w-full">
           <Button 
             size="lg" 
-            className="w-full text-lg py-4 rounded-2xl bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white transition-all duration-300 transform hover:scale-[1.02] hover:shadow-xl shadow-lg"
+            variant="hero"
+            className="w-full text-lg py-4 transition-smooth transform hover:scale-[1.02]"
           >
             {language === "ar" ? "أنشئ ملفك المهني" : "Create Your Profile"}
           </Button>

@@ -1,10 +1,10 @@
-import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Eye, EyeOff, ArrowRight } from "lucide-react";
+import { Eye, EyeOff, ArrowRight, CheckCircle } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
 import { useLanguage } from "@/hooks/useLanguage";
 import { supabase } from "@/integrations/supabase/client";
@@ -13,6 +13,7 @@ import { Loading } from "@/components/ui/loading";
 
 const SignIn = () => {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
   const { signIn, user } = useAuth();
   const { t } = useLanguage();
   const [formData, setFormData] = useState({
@@ -21,6 +22,18 @@ const SignIn = () => {
   });
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [showResetNotice, setShowResetNotice] = useState(false);
+
+  // Check if user came from password reset
+  useEffect(() => {
+    if (searchParams.get('reset') === 'true') {
+      setShowResetNotice(true);
+      toast({
+        title: "تحقق من بريدك الإلكتروني",
+        description: "تم إرسال رابط إعادة تعيين كلمة المرور إلى بريدك الإلكتروني"
+      });
+    }
+  }, [searchParams]);
 
   // Redirect if already logged in
   if (user) {

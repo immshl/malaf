@@ -20,11 +20,10 @@ const Index = () => {
   const [emblaRef, emblaApi] = useEmblaCarousel(
     { 
       loop: true, 
-      align: 'center',
-      skipSnaps: false,
-      dragFree: true 
+      align: 'start',
+      containScroll: 'trimSnaps'
     },
-    [Autoplay({ delay: 5000, stopOnInteraction: false })] // زيادة السرعة إلى 5 ثوانٍ
+    [Autoplay({ delay: 5000, stopOnInteraction: false })]
   );
 
   // Track selected slide for dots
@@ -37,7 +36,9 @@ const Index = () => {
       setSelectedIndex(emblaApi.selectedScrollSnap());
     };
 
+    onSelect(); // Set initial index
     emblaApi.on('select', onSelect);
+    
     return () => {
       emblaApi.off('select', onSelect);
     };
@@ -382,18 +383,33 @@ const Index = () => {
 
           {/* Navigation Dots */}
           <div className="flex justify-center mt-8 gap-4">
-            {[0, 1, 2].map((index) => (
-              <button
-                key={index}
-                className={`w-4 h-4 rounded-full transition-all duration-500 ${
-                  index === selectedIndex % 3 
-                    ? 'bg-primary scale-125 shadow-lg ring-2 ring-primary/30' 
-                    : 'bg-gray-400 hover:bg-gray-500 hover:scale-110'
-                }`}
-                onClick={() => emblaApi?.scrollTo(index)}
-                aria-label={`انتقل إلى الخطوة ${index + 1}`}
-              />
-            ))}
+            <button
+              className={`w-4 h-4 rounded-full transition-all duration-500 ${
+                0 === selectedIndex 
+                  ? 'bg-blue-500 scale-125 shadow-lg ring-2 ring-blue-500/30' 
+                  : 'bg-gray-400 hover:bg-gray-500 hover:scale-110'
+              }`}
+              onClick={() => emblaApi?.scrollTo(0)}
+              aria-label="انتقل إلى الخطوة 1"
+            />
+            <button
+              className={`w-4 h-4 rounded-full transition-all duration-500 ${
+                1 === selectedIndex 
+                  ? 'bg-blue-500 scale-125 shadow-lg ring-2 ring-blue-500/30' 
+                  : 'bg-gray-400 hover:bg-gray-500 hover:scale-110'
+              }`}
+              onClick={() => emblaApi?.scrollTo(1)}
+              aria-label="انتقل إلى الخطوة 2"
+            />
+            <button
+              className={`w-4 h-4 rounded-full transition-all duration-500 ${
+                2 === selectedIndex 
+                  ? 'bg-blue-500 scale-125 shadow-lg ring-2 ring-blue-500/30' 
+                  : 'bg-gray-400 hover:bg-gray-500 hover:scale-110'
+              }`}
+              onClick={() => emblaApi?.scrollTo(2)}
+              aria-label="انتقل إلى الخطوة 3"
+            />
           </div>
         </div>
       </section>

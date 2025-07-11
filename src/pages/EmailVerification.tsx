@@ -73,10 +73,13 @@ const EmailVerification = () => {
     setIsVerifying(true);
 
     try {
-      const { error } = await supabase.auth.verifyOtp({
-        email: user?.email || '',
-        token: code,
-        type: 'email'
+      // Verify OTP using our custom function
+      const { data, error } = await supabase.functions.invoke('verify-otp', {
+        body: {
+          email: user?.email || '',
+          code: code,
+          type: 'signup'
+        }
       });
 
       if (error) {
@@ -93,6 +96,9 @@ const EmailVerification = () => {
         title: t('verificationSuccess'),
         description: t('verificationSuccessDesc')
       });
+      
+      // Refresh session to get updated user
+      await supabase.auth.refreshSession();
       
       // الانتقال إلى صفحة بناء الملف
       setTimeout(() => {
@@ -124,31 +130,16 @@ const EmailVerification = () => {
     setIsResending(true);
     
     try {
-      // First try using Supabase resend
-      const { error: supabaseError } = await supabase.auth.resend({
-        type: 'signup',
-        email: user.email,
-        options: {
-          emailRedirectTo: `${window.location.origin}/verify-email`
+      // Send new OTP using our custom function
+      const { error } = await supabase.functions.invoke('send-otp', {
+        body: {
+          email: user.email,
+          type: 'signup'
         }
       });
 
-      // If Supabase resend fails, try our custom edge function
-      if (supabaseError) {
-        console.log('Supabase resend failed, trying custom function:', supabaseError.message);
-        
-        const { error: functionError } = await supabase.functions.invoke('send-email', {
-          body: {
-            email: user.email,
-            token: Math.floor(100000 + Math.random() * 900000).toString(),
-            email_action_type: 'signup',
-            redirect_to: `${window.location.origin}/verify-email`
-          }
-        });
-
-        if (functionError) {
-          throw functionError;
-        }
+      if (error) {
+        throw error;
       }
 
       toast({

@@ -311,16 +311,9 @@ const UserProfile = () => {
                     className="p-6 rounded-2xl border border-border/10 hover:border-border/30 transition-smooth hover:shadow-soft bg-muted/5 hover:bg-muted/10"
                   >
                     <div className="text-center">
-                      <h3 className="text-lg font-medium text-foreground mb-3 tracking-tight">
+                      <h3 className="text-lg font-medium text-foreground tracking-tight">
                         {skill}
                       </h3>
-                      <Button 
-                        size="sm" 
-                        variant="outline"
-                        className="w-full rounded-full border-foreground/20 hover:bg-foreground hover:text-background transition-smooth"
-                      >
-                        اطلب الخدمة
-                      </Button>
                     </div>
                   </div>
                 ))}

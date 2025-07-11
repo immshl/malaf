@@ -24,23 +24,23 @@ const App = () => (
           <Toaster />
           <Sonner />
           <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<Index />} />
-            <Route path="/signup" element={<SignUp />} />
-            <Route path="/signin" element={<SignIn />} />
-            <Route path="/verify-email" element={<EmailVerification />} />
-            <Route path="/create-profile" element={<CreateProfile />} />
-            <Route path="/profile/:username" element={<UserProfile />} />
-            
-            {/* الرابط المختصر للفريلانسر - يجب أن يكون قبل catch-all مباشرة */}
-            <Route path="/:username" element={<UserProfile />} />
-            {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </BrowserRouter>
-        <FloatingControls />
-      </TooltipProvider>
-    </LanguageProvider>
+            <Routes>
+              <Route path="/" element={<Index />} />
+              <Route path="/signup" element={<SignUp />} />
+              <Route path="/signin" element={<SignIn />} />
+              <Route path="/verify-email" element={<EmailVerification />} />
+              <Route path="/create-profile" element={<CreateProfile />} />
+              <Route path="/profile/:username" element={<UserProfile />} />
+              
+              {/* الرابط المختصر للفريلانسر - يجب أن يكون قبل catch-all مباشرة */}
+              <Route path="/:username" element={<UserProfile />} />
+              {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+            <FloatingControls />
+          </BrowserRouter>
+        </TooltipProvider>
+      </LanguageProvider>
     </AuthProvider>
   </QueryClientProvider>
 );

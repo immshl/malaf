@@ -337,20 +337,15 @@ const UserProfile = () => {
                 </div>
               </div>
               
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {profile.featured_clients.map((client, index) => (
                   <div 
                     key={index} 
                     className="flex items-center justify-center p-6 rounded-2xl bg-background/60 hover:bg-background/80 backdrop-blur-sm transition-all duration-200 border border-border/20 hover:border-border/40 cursor-default shadow-sm hover:shadow-md hover-scale"
                   >
-                    <div className="text-center">
-                      <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mb-3 mx-auto">
-                        <Star className="w-6 h-6 text-primary" />
-                      </div>
-                      <span className="text-sm md:text-base font-medium text-foreground leading-tight">
-                        {client}
-                      </span>
-                    </div>
+                    <span className="text-base font-medium text-foreground text-center leading-relaxed">
+                      {client}
+                    </span>
                   </div>
                 ))}
               </div>

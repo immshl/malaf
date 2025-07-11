@@ -118,7 +118,7 @@ const UserDropdown = () => {
       </DropdownMenuTrigger>
       
       <DropdownMenuContent 
-        className="w-72 bg-background border border-border shadow-strong z-50 p-0" 
+        className="w-56 bg-background border border-border shadow-strong z-50" 
         align="end" 
         forceMount
         side="bottom"
@@ -129,46 +129,36 @@ const UserDropdown = () => {
           zIndex: 9999 
         }}
       >
-        {/* صورة المستخدم في المنتصف */}
-        <div className="flex flex-col items-center pt-6 pb-4">
-          <Avatar className="h-20 w-20 border-3 border-primary/30 mb-4">
-            <AvatarImage 
-              src={profile?.avatar_url || ''} 
-              alt={profile?.full_name || user.email || 'User'} 
-            />
-            <AvatarFallback className="bg-primary/10 text-primary font-bold text-xl">
-              {initials}
-            </AvatarFallback>
-          </Avatar>
-          
-          {/* مرحبا + اسم المستخدم */}
-          <div className="text-center mb-6">
-            <p className="text-base font-semibold text-foreground">
-              مرحبا {profile?.full_name || (language === "ar" ? "مستخدم" : "User")}
+        <DropdownMenuLabel className="font-normal">
+          <div className="flex flex-col space-y-1">
+            <p className="text-sm font-medium leading-none">
+              {profile?.full_name || (language === "ar" ? "مستخدم" : "User")}
+            </p>
+            <p className="text-xs leading-none text-muted-foreground">
+              {user.email}
             </p>
           </div>
-        </div>
+        </DropdownMenuLabel>
         
-        {/* الأزرار */}
-        <div className="px-4 pb-4 space-y-2">
-          {/* زر تحرير الملف */}
-          <button
-            onClick={handleEditProfile}
-            className="w-full flex items-center justify-center gap-3 px-4 py-3 bg-primary text-primary-foreground hover:bg-primary/90 rounded-xl transition-all duration-200 font-medium"
-          >
-            <Edit className="h-5 w-5" />
-            <span>{language === "ar" ? "تحرير الملف" : "Edit Profile"}</span>
-          </button>
-          
-          {/* زر تسجيل الخروج */}
-          <button
-            onClick={handleSignOut}
-            className="w-full flex items-center justify-center gap-3 px-4 py-3 bg-destructive text-destructive-foreground hover:bg-destructive/90 rounded-xl transition-all duration-200 font-medium"
-          >
-            <LogOut className="h-5 w-5" />
-            <span>{language === "ar" ? "تسجيل خروج" : "Sign out"}</span>
-          </button>
-        </div>
+        <DropdownMenuSeparator />
+        
+        <DropdownMenuItem 
+          onClick={handleEditProfile}
+          className="cursor-pointer focus:bg-muted hover:bg-muted transition-colors"
+        >
+          <Edit className="mr-2 h-4 w-4" />
+          <span>{language === "ar" ? "تحرير الملف" : "Edit Profile"}</span>
+        </DropdownMenuItem>
+        
+        <DropdownMenuSeparator />
+        
+        <DropdownMenuItem 
+          onClick={handleSignOut}
+          className="cursor-pointer text-destructive focus:text-destructive focus:bg-destructive/20 hover:bg-destructive/20 transition-colors"
+        >
+          <LogOut className="mr-2 h-4 w-4" />
+          <span>{language === "ar" ? "تسجيل خروج" : "Sign out"}</span>
+        </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   );

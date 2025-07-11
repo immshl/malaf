@@ -20,45 +20,59 @@ const ResetPassword = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [isValidToken, setIsValidToken] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
+  const [isCheckingToken, setIsCheckingToken] = useState(true);
 
   // Check if we have valid tokens in URL
   useEffect(() => {
     const handleAuthStateChange = async () => {
-      const { data: { session } } = await supabase.auth.getSession();
+      setIsCheckingToken(true);
       
-      if (session) {
-        setIsValidToken(true);
-        return;
-      }
-
-      // If no session, check URL for tokens
-      const accessToken = searchParams.get('access_token');
-      const refreshToken = searchParams.get('refresh_token');
-      const type = searchParams.get('type');
-      
-      if (accessToken && refreshToken && type === 'recovery') {
-        try {
-          const { error } = await supabase.auth.setSession({
-            access_token: accessToken,
-            refresh_token: refreshToken
-          });
-          
-          if (!error) {
-            setIsValidToken(true);
-            return;
+      try {
+        // First check URL for tokens
+        const accessToken = searchParams.get('access_token');
+        const refreshToken = searchParams.get('refresh_token');
+        const type = searchParams.get('type');
+        
+        if (accessToken && refreshToken && type === 'recovery') {
+          try {
+            const { error } = await supabase.auth.setSession({
+              access_token: accessToken,
+              refresh_token: refreshToken
+            });
+            
+            if (!error) {
+              setIsValidToken(true);
+              setIsCheckingToken(false);
+              return;
+            }
+          } catch (error) {
+            console.error('Session error:', error);
           }
-        } catch (error) {
-          console.error('Session error:', error);
         }
+        
+        // Check current session
+        const { data: { session } } = await supabase.auth.getSession();
+        
+        if (session) {
+          setIsValidToken(true);
+          setIsCheckingToken(false);
+          return;
+        }
+        
+        // No valid session or tokens
+        setIsCheckingToken(false);
+        toast({
+          variant: "destructive",
+          title: "رابط غير صالح",
+          description: "رابط إعادة تعيين كلمة المرور غير صالح أو منتهي الصلاحية"
+        });
+        navigate('/signin');
+        
+      } catch (error) {
+        console.error('Error checking auth state:', error);
+        setIsCheckingToken(false);
+        navigate('/signin');
       }
-      
-      // No valid tokens, redirect to sign in
-      toast({
-        variant: "destructive",
-        title: "رابط غير صالح",
-        description: "رابط إعادة تعيين كلمة المرور غير صالح أو منتهي الصلاحية"
-      });
-      navigate('/signin');
     };
 
     handleAuthStateChange();
@@ -125,10 +139,37 @@ const ResetPassword = () => {
     }
   };
 
+  if (isCheckingToken) {
+    return (
+      <div className="min-h-screen bg-muted/30 flex items-center justify-center p-4">
+        <div className="text-center">
+          <Loading variant="line" />
+          <p className="mt-4 text-muted-foreground">جاري التحقق من صحة الرابط...</p>
+        </div>
+      </div>
+    );
+  }
+
   if (!isValidToken) {
     return (
       <div className="min-h-screen bg-muted/30 flex items-center justify-center p-4">
-        <Loading variant="line" />
+        <div className="w-full max-w-md">
+          <Card className="shadow-strong border-0">
+            <CardHeader className="text-center space-y-4">
+              <CardTitle className="text-2xl font-bold text-destructive">
+                رابط غير صالح
+              </CardTitle>
+              <CardDescription className="text-muted-foreground">
+                رابط إعادة تعيين كلمة المرور غير صالح أو منتهي الصلاحية
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <Button onClick={() => navigate('/forgot-password')} className="w-full" variant="outline">
+                طلب رابط جديد
+              </Button>
+            </CardContent>
+          </Card>
+        </div>
       </div>
     );
   }

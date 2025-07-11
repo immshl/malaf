@@ -71,11 +71,13 @@ export const EmailVerificationTemplate = ({
           </Link>
           
           <Text style={alternativeText}>
-            أو انسخ الرابط أدناه والصقه في متصفحك:
+            إذا لم يعمل الزر أعلاه، يمكنك استخدام الرابط التالي:
           </Text>
           
           <Section style={linkSection}>
-            <Text style={linkText}>{verification_url}</Text>
+            <Link href={verification_url} style={linkText}>
+              افتح رابط التحقق
+            </Link>
           </Section>
         </Section>
 

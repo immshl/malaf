@@ -71,13 +71,6 @@ export type Database = {
             referencedRelation: "profiles"
             referencedColumns: ["id"]
           },
-          {
-            foreignKeyName: "bookings_profile_id_fkey"
-            columns: ["profile_id"]
-            isOneToOne: false
-            referencedRelation: "public_profiles"
-            referencedColumns: ["id"]
-          },
         ]
       }
       profiles: {
@@ -154,60 +147,7 @@ export type Database = {
       }
     }
     Views: {
-      public_profiles: {
-        Row: {
-          avatar_url: string | null
-          bio: string | null
-          created_at: string | null
-          experience_years: number | null
-          full_name: string | null
-          github_url: string | null
-          id: string | null
-          instagram_url: string | null
-          linkedin_url: string | null
-          location: string | null
-          profession: string | null
-          skills: string[] | null
-          twitter_url: string | null
-          username: string | null
-          website: string | null
-        }
-        Insert: {
-          avatar_url?: string | null
-          bio?: string | null
-          created_at?: string | null
-          experience_years?: number | null
-          full_name?: string | null
-          github_url?: string | null
-          id?: string | null
-          instagram_url?: string | null
-          linkedin_url?: string | null
-          location?: string | null
-          profession?: string | null
-          skills?: string[] | null
-          twitter_url?: string | null
-          username?: string | null
-          website?: string | null
-        }
-        Update: {
-          avatar_url?: string | null
-          bio?: string | null
-          created_at?: string | null
-          experience_years?: number | null
-          full_name?: string | null
-          github_url?: string | null
-          id?: string | null
-          instagram_url?: string | null
-          linkedin_url?: string | null
-          location?: string | null
-          profession?: string | null
-          skills?: string[] | null
-          twitter_url?: string | null
-          username?: string | null
-          website?: string | null
-        }
-        Relationships: []
-      }
+      [_ in never]: never
     }
     Functions: {
       [_ in never]: never

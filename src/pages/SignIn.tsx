@@ -6,12 +6,14 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Eye, EyeOff, ArrowRight } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
+import { useLanguage } from "@/hooks/useLanguage";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
 
 const SignIn = () => {
   const navigate = useNavigate();
   const { signIn, user } = useAuth();
+  const { t } = useLanguage();
   const [formData, setFormData] = useState({
     email: "",
     password: ""
@@ -121,9 +123,9 @@ const SignIn = () => {
 
         <Card className="shadow-strong border-0">
           <CardHeader className="text-center">
-            <CardTitle className="text-2xl font-bold text-foreground">تسجيل الدخول</CardTitle>
+            <CardTitle className="text-2xl font-bold text-foreground">{t('signIn')}</CardTitle>
             <CardDescription className="text-muted-foreground">
-              ادخل إلى حسابك لإدارة ملفك المهني
+              {t('signInDesc')}
             </CardDescription>
           </CardHeader>
           
@@ -132,7 +134,7 @@ const SignIn = () => {
               {/* البريد الإلكتروني */}
               <div className="space-y-2">
                 <Label htmlFor="email" className="text-foreground font-medium">
-                  البريد الإلكتروني
+                  {t('email')}
                 </Label>
                 <Input
                   id="email"
@@ -148,7 +150,7 @@ const SignIn = () => {
               {/* كلمة المرور */}
               <div className="space-y-2">
                 <Label htmlFor="password" className="text-foreground font-medium">
-                  كلمة المرور
+                  {t('password')}
                 </Label>
                 <div className="relative">
                   <Input
@@ -176,7 +178,7 @@ const SignIn = () => {
                   to="/forgot-password" 
                   className="text-sm text-primary hover:text-primary-hover transition-smooth"
                 >
-                  نسيت كلمة المرور؟
+                  {t('forgotPassword')}
                 </Link>
               </div>
 
@@ -188,18 +190,18 @@ const SignIn = () => {
                 size="lg"
                 disabled={isLoading}
               >
-                {isLoading ? "جاري تسجيل الدخول..." : "تسجيل الدخول"}
+                {isLoading ? `${t('loading')}...` : t('signIn')}
                 <ArrowRight className="mr-2 h-5 w-5" />
               </Button>
 
               {/* رابط إنشاء حساب */}
               <div className="text-center">
-                <span className="text-muted-foreground">لا تملك حساب؟ </span>
+                <span className="text-muted-foreground">{t('noAccount')} </span>
                 <Link 
                   to="/signup" 
                   className="text-primary hover:text-primary-hover font-medium transition-smooth"
                 >
-                  أنشئ حساب جديد
+                  {t('createNewAccount')}
                 </Link>
               </div>
             </form>

@@ -11,11 +11,13 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { ArrowRight, Upload, User, Instagram, Twitter, Mail, Link as LinkIcon, Plus, X } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
+import { useLanguage } from "@/hooks/useLanguage";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
 
 const CreateProfile = () => {
   const { user, loading } = useAuth();
+  const { t } = useLanguage();
   const navigate = useNavigate();
   const [profileData, setProfileData] = useState({
     fullName: "",
@@ -83,7 +85,7 @@ const CreateProfile = () => {
 
   if (loading) {
     return <div className="min-h-screen bg-muted/30 flex items-center justify-center">
-      <div className="animate-pulse text-muted-foreground">جاري التحميل...</div>
+      <div className="animate-pulse text-muted-foreground">{t('loading')}...</div>
     </div>;
   }
 
@@ -332,8 +334,8 @@ const CreateProfile = () => {
             </div>
             <span className="text-xl font-bold text-foreground">malaf</span>
           </Link>
-          <h1 className="text-3xl font-bold text-foreground mb-2">أنشئ ملفك المهني</h1>
-          <p className="text-muted-foreground">أضف معلوماتك لإنشاء ملف مهني مميز</p>
+          <h1 className="text-3xl font-bold text-foreground mb-2">{t('createProfileTitle')}</h1>
+          <p className="text-muted-foreground">{t('createProfileDesc')}</p>
         </div>
 
         <form onSubmit={handleSubmit}>
@@ -341,15 +343,15 @@ const CreateProfile = () => {
             {/* القسم الأول: المعلومات الأساسية */}
             <Card className="border shadow-soft">
               <CardHeader>
-                <CardTitle className="text-lg">المعلومات الأساسية</CardTitle>
+                <CardTitle className="text-lg">{t('basicInfo')}</CardTitle>
                 <CardDescription>
-                  البيانات الشخصية والأساسية لملفك
+                  {t('basicInfoDesc')}
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-6">
                  {/* الصورة الشخصية */}
                 <div className="space-y-4">
-                  <Label className="text-foreground font-medium">الصورة الشخصية</Label>
+                  <Label className="text-foreground font-medium">{t('profileImage')}</Label>
                   <div className="flex items-center space-x-4 space-x-reverse">
                     <div className="relative">
                       <Avatar className="w-20 h-20">
@@ -367,7 +369,7 @@ const CreateProfile = () => {
                     <div>
                       <Button type="button" variant="outline" className="relative overflow-hidden">
                         <Upload className="ml-2 h-4 w-4" />
-                        اختر صورة
+                        {t('chooseImage')}
                         <input
                           type="file"
                           accept="image/*"
@@ -376,7 +378,7 @@ const CreateProfile = () => {
                         />
                       </Button>
                       <p className="text-xs text-muted-foreground mt-1">
-                        صورة احترافية واضحة (اختيارية)
+                        {t('professionalImageNote')}
                       </p>
                     </div>
                   </div>

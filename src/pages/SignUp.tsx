@@ -6,11 +6,13 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Eye, EyeOff, ArrowRight } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
+import { useLanguage } from "@/hooks/useLanguage";
 import { toast } from "@/hooks/use-toast";
 
 const SignUp = () => {
   const navigate = useNavigate();
   const { signUp, user } = useAuth();
+  const { t } = useLanguage();
   const [formData, setFormData] = useState({
     username: "",
     fullName: "",
@@ -103,9 +105,9 @@ const SignUp = () => {
 
         <Card className="shadow-strong border-0">
           <CardHeader className="text-center">
-            <CardTitle className="text-2xl font-bold text-foreground">إنشاء حساب جديد</CardTitle>
+            <CardTitle className="text-2xl font-bold text-foreground">{t('signUp')}</CardTitle>
             <CardDescription className="text-muted-foreground">
-              أنشئ حسابك لتبدأ في بناء ملفك المهني
+              {t('signUpDesc')}
             </CardDescription>
           </CardHeader>
           
@@ -114,7 +116,7 @@ const SignUp = () => {
               {/* اسم المستخدم */}
               <div className="space-y-2">
                 <Label htmlFor="username" className="text-foreground font-medium">
-                  اسم المستخدم
+                  {t('username')}
                 </Label>
                 <Input
                   id="username"
@@ -130,7 +132,7 @@ const SignUp = () => {
               {/* الاسم الكامل */}
               <div className="space-y-2">
                 <Label htmlFor="fullName" className="text-foreground font-medium">
-                  الاسم الكامل
+                  {t('fullName')}
                 </Label>
                 <Input
                   id="fullName"
@@ -146,7 +148,7 @@ const SignUp = () => {
               {/* البريد الإلكتروني */}
               <div className="space-y-2">
                 <Label htmlFor="email" className="text-foreground font-medium">
-                  البريد الإلكتروني
+                  {t('email')}
                 </Label>
                 <Input
                   id="email"
@@ -162,7 +164,7 @@ const SignUp = () => {
               {/* كلمة المرور */}
               <div className="space-y-2">
                 <Label htmlFor="password" className="text-foreground font-medium">
-                  كلمة المرور
+                  {t('password')}
                 </Label>
                 <div className="relative">
                   <Input
@@ -187,7 +189,7 @@ const SignUp = () => {
               {/* تأكيد كلمة المرور */}
               <div className="space-y-2">
                 <Label htmlFor="confirmPassword" className="text-foreground font-medium">
-                  تأكيد كلمة المرور
+                  {t('confirmPassword')}
                 </Label>
                 <div className="relative">
                   <Input
@@ -217,18 +219,18 @@ const SignUp = () => {
                 size="lg"
                 disabled={isLoading}
               >
-                {isLoading ? "جاري إنشاء الحساب..." : "إنشاء حساب جديد"}
+                {isLoading ? `${t('loading')}...` : t('signUp')}
                 <ArrowRight className="mr-2 h-5 w-5" />
               </Button>
 
               {/* رابط تسجيل الدخول */}
               <div className="text-center">
-                <span className="text-muted-foreground">لديك حساب بالفعل؟ </span>
+                <span className="text-muted-foreground">{t('haveAccount')} </span>
                 <Link 
                   to="/signin" 
                   className="text-primary hover:text-primary-hover font-medium transition-smooth"
                 >
-                  سجل دخولك
+                  {t('signInToAccount')}
                 </Link>
               </div>
             </form>

@@ -5,6 +5,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { InputOTP, InputOTPGroup, InputOTPSlot } from "@/components/ui/input-otp";
 import { ArrowRight, Mail, RefreshCw, ArrowLeft, CheckCircle } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
+import { useLanguage } from "@/hooks/useLanguage";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
 
@@ -15,6 +16,7 @@ const EmailVerification = () => {
   const [isVerified, setIsVerified] = useState(false);
   const navigate = useNavigate();
   const { user } = useAuth();
+  const { t } = useLanguage();
   const [searchParams] = useSearchParams();
 
   // Check if user is already verified or coming from email link
@@ -34,8 +36,8 @@ const EmailVerification = () => {
           if (!error) {
             setIsVerified(true);
             toast({
-              title: "تم التحقق بنجاح!",
-              description: "تم تأكيد بريدك الإلكتروني بنجاح"
+              title: t('verificationSuccess'),
+              description: t('verificationSuccessDesc')
             });
             
             setTimeout(() => {
@@ -88,8 +90,8 @@ const EmailVerification = () => {
 
       setIsVerified(true);
       toast({
-        title: "تم التحقق بنجاح!",
-        description: "تم تأكيد بريدك الإلكتروني بنجاح"
+        title: t('verificationSuccess'),
+        description: t('verificationSuccessDesc')
       });
       
       // الانتقال إلى صفحة بناء الملف
@@ -150,7 +152,7 @@ const EmailVerification = () => {
       }
 
       toast({
-        title: "تم إرسال كود جديد",
+        title: t('resendCode'),
         description: "تم إرسال كود التحقق الجديد إلى بريدك الإلكتروني"
       });
       
@@ -174,9 +176,9 @@ const EmailVerification = () => {
             <CardContent className="p-8 text-center">
               <div className="mb-6">
                 <CheckCircle className="w-16 h-16 text-green-500 mx-auto mb-4" />
-                <h2 className="text-2xl font-bold text-green-600 mb-2">تم التحقق بنجاح!</h2>
+                <h2 className="text-2xl font-bold text-green-600 mb-2">{t('verificationSuccess')}</h2>
                 <p className="text-muted-foreground">
-                  تم تأكيد بريدك الإلكتروني. سيتم توجيهك لإنشاء ملفك المهني...
+                  {t('verificationSuccessDesc')}
                 </p>
               </div>
             </CardContent>
@@ -217,9 +219,9 @@ const EmailVerification = () => {
                 <Mail className="w-8 h-8 text-white" />
               </div>
             </div>
-            <CardTitle className="text-2xl font-bold text-foreground">تحقق من بريدك الإلكتروني</CardTitle>
+            <CardTitle className="text-2xl font-bold text-foreground">{t('emailVerificationTitle')}</CardTitle>
             <CardDescription className="text-muted-foreground text-base leading-relaxed">
-              أرسلنا لك كود التحقق على البريد الإلكتروني{' '}
+              {t('emailVerificationDesc')}{' '}
               <span className="font-medium text-purple-600">{user?.email}</span>
             </CardDescription>
           </CardHeader>
@@ -253,7 +255,7 @@ const EmailVerification = () => {
                   
                   <p className="text-sm text-muted-foreground flex items-center justify-center gap-2">
                     <Mail className="w-4 h-4" />
-                    أدخل الكود المكون من 6 أرقام
+                    {t('enterCode')}
                   </p>
                 </div>
 
@@ -268,11 +270,11 @@ const EmailVerification = () => {
                   {isVerifying ? (
                     <>
                       <RefreshCw className="ml-2 h-5 w-5 animate-spin" />
-                      جاري التحقق...
+                      {t('verifying')}...
                     </>
                   ) : (
                     <>
-                      تحقق من الكود
+                      {t('verifyCode')}
                       <ArrowRight className="mr-2 h-5 w-5" />
                     </>
                   )}
@@ -281,7 +283,7 @@ const EmailVerification = () => {
                 {/* إعادة الإرسال */}
                 <div className="text-center">
                   <p className="text-sm text-muted-foreground mb-3">
-                    لم تستلم الكود؟
+                    {t('didntReceiveCode')}
                   </p>
                   <Button
                     type="button"
@@ -293,12 +295,12 @@ const EmailVerification = () => {
                     {isResending ? (
                       <>
                         <RefreshCw className="ml-2 h-4 w-4 animate-spin" />
-                        جاري الإرسال...
+                        {t('sending')}...
                       </>
                     ) : (
                       <>
                         <RefreshCw className="ml-2 h-4 w-4" />
-                        إرسال كود جديد
+                        {t('resendCode')}
                       </>
                     )}
                   </Button>
@@ -311,7 +313,7 @@ const EmailVerification = () => {
                     className="inline-flex items-center text-sm text-muted-foreground hover:text-foreground transition-smooth"
                   >
                     <ArrowLeft className="ml-1 h-4 w-4" />
-                    العودة للتسجيل
+                    {t('backToSignup')}
                   </Link>
                 </div>
               </div>

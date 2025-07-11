@@ -3,6 +3,7 @@ import { Webhook } from 'https://esm.sh/standardwebhooks@1.0.0'
 import { Resend } from 'npm:resend@4.0.0'
 import { renderAsync } from 'npm:@react-email/components@0.0.22'
 import { EmailVerificationTemplate } from './_templates/email-verification.tsx'
+import { PasswordResetTemplate } from './_templates/password-reset.tsx'
 
 const resend = new Resend(Deno.env.get('RESEND_API_KEY') as string)
 const hookSecret = Deno.env.get('SEND_EMAIL_HOOK_SECRET') as string
@@ -77,28 +78,47 @@ Deno.serve(async (req) => {
       console.log('Processed as direct call');
     }
 
-    console.log('Generating email for:', user.email);
+    console.log('Generating email for:', user.email, 'Type:', email_data.email_action_type);
 
-    // إنشاء رابط التحقق الصحيح
-    const verification_url = email_data.token_hash 
-      ? `${Deno.env.get('SUPABASE_URL')}/auth/v1/verify?token=${email_data.token_hash}&type=${email_data.email_action_type}&redirect_to=${encodeURIComponent(email_data.redirect_to)}`
-      : email_data.redirect_to;
+    // إنشاء الرابط والتمبلت المناسب حسب نوع الإيميل
+    let html, subject;
+    
+    if (email_data.email_action_type === 'recovery') {
+      // إعادة تعيين كلمة المرور
+      const reset_url = email_data.token_hash 
+        ? `${Deno.env.get('SUPABASE_URL')}/auth/v1/verify?token=${email_data.token_hash}&type=recovery&redirect_to=${encodeURIComponent(email_data.redirect_to)}`
+        : email_data.redirect_to;
 
-    // Generate HTML from React Email template
-    const html = await renderAsync(
-      React.createElement(EmailVerificationTemplate, {
-        verification_url,
-        user_email: user.email,
-      })
-    )
+      html = await renderAsync(
+        React.createElement(PasswordResetTemplate, {
+          reset_url,
+          user_email: user.email,
+        })
+      );
+      subject = 'إعادة تعيين كلمة المرور - منصة ملف 🔐';
+      
+    } else {
+      // تأكيد البريد الإلكتروني
+      const verification_url = email_data.token_hash 
+        ? `${Deno.env.get('SUPABASE_URL')}/auth/v1/verify?token=${email_data.token_hash}&type=${email_data.email_action_type}&redirect_to=${encodeURIComponent(email_data.redirect_to)}`
+        : email_data.redirect_to;
 
-    console.log('Email template generated successfully');
+      html = await renderAsync(
+        React.createElement(EmailVerificationTemplate, {
+          verification_url,
+          user_email: user.email,
+        })
+      );
+      subject = 'تأكيد حسابك في منصة ملف 🚀';
+    }
+
+    console.log('Email template generated successfully for type:', email_data.email_action_type);
 
     // Send email using Resend
     const { error } = await resend.emails.send({
       from: 'منصة ملف <onboarding@resend.dev>',
       to: [user.email],
-      subject: 'تأكيد حسابك في منصة ملف 🚀',
+      subject,
       html,
     })
 

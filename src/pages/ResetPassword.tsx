@@ -23,17 +23,35 @@ const ResetPassword = () => {
 
   // Check if we have valid tokens in URL
   useEffect(() => {
-    const accessToken = searchParams.get('access_token');
-    const refreshToken = searchParams.get('refresh_token');
-    
-    if (accessToken && refreshToken) {
-      setIsValidToken(true);
-      // Set the session using the tokens from URL
-      supabase.auth.setSession({
-        access_token: accessToken,
-        refresh_token: refreshToken
-      });
-    } else {
+    const handleAuthStateChange = async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+      
+      if (session) {
+        setIsValidToken(true);
+        return;
+      }
+
+      // If no session, check URL for tokens
+      const accessToken = searchParams.get('access_token');
+      const refreshToken = searchParams.get('refresh_token');
+      const type = searchParams.get('type');
+      
+      if (accessToken && refreshToken && type === 'recovery') {
+        try {
+          const { error } = await supabase.auth.setSession({
+            access_token: accessToken,
+            refresh_token: refreshToken
+          });
+          
+          if (!error) {
+            setIsValidToken(true);
+            return;
+          }
+        } catch (error) {
+          console.error('Session error:', error);
+        }
+      }
+      
       // No valid tokens, redirect to sign in
       toast({
         variant: "destructive",
@@ -41,7 +59,9 @@ const ResetPassword = () => {
         description: "رابط إعادة تعيين كلمة المرور غير صالح أو منتهي الصلاحية"
       });
       navigate('/signin');
-    }
+    };
+
+    handleAuthStateChange();
   }, [searchParams, navigate, toast]);
 
   const handleSubmit = async (e: React.FormEvent) => {

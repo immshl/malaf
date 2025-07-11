@@ -92,19 +92,19 @@ const FloatingControls = () => {
             </Button>
           )}
 
-          {/* Theme Toggle - Always show */}
+          {/* Theme Toggle - Always show with attractive animation */}
           <Button
             variant="outline"
             size="icon"
             onClick={toggleTheme}
             disabled={isTransitioning}
-            className="bg-background/10 hover:bg-background/20 backdrop-blur-sm w-10 h-10 rounded-lg border border-border/20 shadow-sm hover:scale-105 transition-all duration-300"
+            className="bg-background/10 hover:bg-background/20 backdrop-blur-sm w-10 h-10 rounded-lg border border-border/20 shadow-sm hover:scale-105 transition-all duration-300 animate-pulse hover:animate-none relative overflow-hidden before:absolute before:inset-0 before:bg-gradient-to-r before:from-transparent before:via-primary/10 before:to-transparent before:translate-x-[-100%] before:animate-[shimmer_3s_ease-in-out_infinite] before:rounded-lg"
             title={theme === "light" ? "الوضع الداكن" : "الوضع الفاتح"}
           >
           {theme === "light" ? (
-            <Moon className="h-4 w-4" />
+            <Moon className="h-4 w-4 animate-[glow_2s_ease-in-out_infinite_alternate]" />
           ) : (
-            <Sun className="h-4 w-4" />
+            <Sun className="h-4 w-4 animate-[rotate_4s_linear_infinite] text-yellow-500" />
           )}
           </Button>
         </div>

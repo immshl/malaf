@@ -381,25 +381,27 @@ const UserProfile = () => {
                     احجز الآن
                   </Button>
                 </DialogTrigger>
-                <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto bg-background border border-border/20 shadow-xl backdrop-blur-xl">
-                  <DialogHeader className="text-center pb-6">
-                    <div className="bg-background/80 backdrop-blur-sm border border-border/30 rounded-2xl shadow-sm mb-4 overflow-hidden">
-                      <div className="p-4 bg-muted/20">
-                        <DialogTitle className="text-xl lg:text-2xl font-semibold text-foreground tracking-tight">
-                          حجز اجتماع جديد
-                        </DialogTitle>
+                <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto glass border-border/20 shadow-elegant backdrop-blur-xl bg-background/70">
+                  <div className="absolute inset-0 bg-gradient-to-br from-background/30 via-background/20 to-background/40 rounded-2xl"></div>
+                  <div className="relative z-10">
+                    <DialogHeader className="text-center pb-6">
+                      <div className="glass-soft rounded-2xl shadow-soft mb-4 overflow-hidden border border-border/10">
+                        <div className="p-4 bg-gradient-to-r from-primary/5 via-background/60 to-primary/5">
+                          <DialogTitle className="text-xl lg:text-2xl font-semibold text-foreground tracking-tight">
+                            حجز اجتماع جديد
+                          </DialogTitle>
+                        </div>
                       </div>
-                    </div>
-                    <DialogDescription className="text-base text-muted-foreground">
-                      اختر الموعد المناسب لك أو اقترح موعد مختلف لمناقشة مشروعك
-                    </DialogDescription>
-                  </DialogHeader>
+                      <DialogDescription className="text-base text-muted-foreground">
+                        اختر الموعد المناسب لك أو اقترح موعد مختلف لمناقشة مشروعك
+                      </DialogDescription>
+                    </DialogHeader>
                   <div className="space-y-8">
                     {!showAlternativeBooking ? (
                       <>
                         {/* الأوقات المتاحة */}
-                        <Card className="border border-primary/20 bg-primary/5">
-                          <CardContent className="p-6">
+                        <Card className="glass-soft border border-primary/30 bg-primary/5 backdrop-blur-sm">
+                          <CardContent className="p-6 relative">{/* Add "relative" to ensure backdrop-filter applies correctly */}
                             <div className="text-center mb-4">
                               <h4 className="text-lg font-semibold text-foreground mb-2">الأوقات المتاحة</h4>
                               <div className="inline-flex items-center gap-2 px-4 py-2 bg-background/80 rounded-full border border-border/30">
@@ -477,8 +479,8 @@ const UserProfile = () => {
                     ) : (
                       <>
                         {/* اقتراح موعد مختلف */}
-                        <Card className="border border-accent/30 bg-accent/10">
-                          <CardContent className="p-6">
+                        <Card className="glass-soft border border-accent/30 bg-accent/5 backdrop-blur-sm">
+                          <CardContent className="p-6 relative">
                             <div className="text-center mb-6">
                               <h4 className="text-lg font-semibold text-foreground mb-2">اقتراح موعد مختلف</h4>
                               <p className="text-sm text-muted-foreground bg-background/80 rounded-full px-4 py-2 inline-block">
@@ -555,8 +557,8 @@ const UserProfile = () => {
                     )}
 
                     {/* بيانات العميل */}
-                    <Card className="border border-border/30">
-                      <CardContent className="p-6">
+                    <Card className="glass-soft border border-border/30 backdrop-blur-sm">
+                      <CardContent className="p-6 relative">
                         <div className="bg-background/80 backdrop-blur-sm border border-border/30 rounded-2xl shadow-sm mb-6 overflow-hidden">
                           <div className="p-3 bg-muted/20">
                             <h4 className="text-lg font-semibold text-foreground text-center">بياناتك</h4>
@@ -627,6 +629,7 @@ const UserProfile = () => {
                         </div>
                       </CardContent>
                     </Card>
+                  </div>
                   </div>
                 </DialogContent>
               </Dialog>

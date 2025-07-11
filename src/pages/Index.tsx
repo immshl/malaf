@@ -5,8 +5,6 @@ import { ArrowLeft, Users, Calendar, Link2, Star, Zap, Shield, Smartphone, Menu,
 import { Link } from "react-router-dom";
 import { useLanguage } from "@/hooks/useLanguage";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
-import useEmblaCarousel from 'embla-carousel-react';
-import Autoplay from 'embla-carousel-autoplay';
 import AuthButton from "@/components/AuthButton";
 
 const Index = () => {
@@ -16,35 +14,34 @@ const Index = () => {
   // Initialize scroll animations
   useScrollAnimation();
 
-  // Carousel setup with autoplay
-  const [emblaRef, emblaApi] = useEmblaCarousel(
-    { 
-      loop: true,
-      skipSnaps: false,
-      dragFree: false
+  // Simple carousel state
+  const [currentStep, setCurrentStep] = useState(0);
+  const steps = [
+    {
+      number: 1,
+      title: language === "ar" ? "أنشئ ملفك" : "Create Your Profile",
+      description: language === "ar" ? "أدخل معلوماتك وخدماتك بخطوات بسيطة" : "Enter your information and services in simple steps"
     },
-    [Autoplay({ delay: 4000, stopOnInteraction: false })]
-  );
+    {
+      number: 2,
+      title: language === "ar" ? "شارك ملفك" : "Share Your Profile", 
+      description: language === "ar" ? "احصل على رابط شخصي لمشاركته مع العملاء" : "Get a personal link to share with clients"
+    },
+    {
+      number: 3,
+      title: language === "ar" ? "استقبل الطلبات" : "Receive Requests",
+      description: language === "ar" ? "اربط مع العملاء واستقبل طلبات المشاريع" : "Connect with clients and receive project requests"
+    }
+  ];
 
-  // Track selected slide for dots
-  const [selectedIndex, setSelectedIndex] = useState(0);
-
+  // Auto-advance steps
   useEffect(() => {
-    if (!emblaApi) return;
+    const interval = setInterval(() => {
+      setCurrentStep((prev) => (prev + 1) % steps.length);
+    }, 4000);
 
-    const onSelect = () => {
-      setSelectedIndex(emblaApi.selectedScrollSnap());
-    };
-
-    onSelect();
-    emblaApi.on('select', onSelect);
-    emblaApi.on('reInit', onSelect);
-    
-    return () => {
-      emblaApi.off('select', onSelect);
-      emblaApi.off('reInit', onSelect);
-    };
-  }, [emblaApi]);
+    return () => clearInterval(interval);
+  }, [steps.length]);
 
   const toggleMobileMenu = () => {
     console.log('Toggling mobile menu:', !isMobileMenuOpen);
@@ -327,91 +324,38 @@ const Index = () => {
             </p>
           </div>
           
-          {/* Carousel Container */}
-          <div className="overflow-hidden" ref={emblaRef}>
-            <div className="flex">
-              {/* Step 1 */}
-              <div className="flex-[0_0_100%] min-w-0 px-6">
-                <div className="glass rounded-3xl p-8 shadow-elegant hover:shadow-strong transition-smooth text-center border border-border/20 backdrop-blur-md">
-                  <div className="mb-8 flex justify-center">
-                    <div className="w-20 h-20 bg-foreground rounded-2xl flex items-center justify-center text-background text-3xl font-bold shadow-medium">
-                      1
-                    </div>
-                  </div>
-                  <h3 className="text-2xl font-bold mb-6 text-foreground tracking-tight">
-                    {language === "ar" ? "أنشئ ملفك" : "Create Your Profile"}
-                  </h3>
-                  <p className="text-muted-foreground leading-relaxed text-lg font-light">
-                    {language === "ar" ? "أدخل معلوماتك وخدماتك بخطوات بسيطة" : "Enter your information and services in simple steps"}
-                  </p>
+          {/* Simple Carousel */}
+          <div className="relative max-w-2xl mx-auto">
+            {/* Current Step Display */}
+            <div className="glass rounded-3xl p-8 shadow-elegant hover:shadow-strong transition-smooth text-center border border-border/20 backdrop-blur-md">
+              <div className="mb-8 flex justify-center">
+                <div className="w-20 h-20 bg-foreground rounded-2xl flex items-center justify-center text-background text-3xl font-bold shadow-medium">
+                  {steps[currentStep].number}
                 </div>
               </div>
-
-              {/* Step 2 */}
-              <div className="flex-[0_0_100%] min-w-0 px-6">
-                <div className="glass rounded-3xl p-8 shadow-elegant hover:shadow-strong transition-smooth text-center border border-border/20 backdrop-blur-md">
-                  <div className="mb-8 flex justify-center">
-                    <div className="w-20 h-20 bg-foreground rounded-2xl flex items-center justify-center text-background text-3xl font-bold shadow-medium">
-                      2
-                    </div>
-                  </div>
-                  <h3 className="text-2xl font-bold mb-6 text-foreground tracking-tight">
-                    {language === "ar" ? "شارك ملفك" : "Share Your Profile"}
-                  </h3>
-                  <p className="text-muted-foreground leading-relaxed text-lg font-light">
-                    {language === "ar" ? "احصل على رابط شخصي لمشاركته مع العملاء" : "Get a personal link to share with clients"}
-                  </p>
-                </div>
-              </div>
-
-              {/* Step 3 */}
-              <div className="flex-[0_0_100%] min-w-0 px-6">
-                <div className="glass rounded-3xl p-8 shadow-elegant hover:shadow-strong transition-smooth text-center border border-border/20 backdrop-blur-md">
-                  <div className="mb-8 flex justify-center">
-                    <div className="w-20 h-20 bg-foreground rounded-2xl flex items-center justify-center text-background text-3xl font-bold shadow-medium">
-                      3
-                    </div>
-                  </div>
-                  <h3 className="text-2xl font-bold mb-6 text-foreground tracking-tight">
-                    {language === "ar" ? "استقبل الطلبات" : "Receive Requests"}
-                  </h3>
-                  <p className="text-muted-foreground leading-relaxed text-lg font-light">
-                    {language === "ar" ? "اربط مع العملاء واستقبل طلبات المشاريع" : "Connect with clients and receive project requests"}
-                  </p>
-                </div>
-              </div>
+              <h3 className="text-2xl font-bold mb-6 text-foreground tracking-tight">
+                {steps[currentStep].title}
+              </h3>
+              <p className="text-muted-foreground leading-relaxed text-lg font-light">
+                {steps[currentStep].description}
+              </p>
             </div>
-          </div>
 
-          {/* Navigation Dots */}
-          <div className="flex justify-center mt-8 gap-4">
-            <button
-              className={`w-4 h-4 rounded-full transition-all duration-500 ${
-                0 === selectedIndex 
-                  ? 'bg-blue-500 scale-125 shadow-lg ring-2 ring-blue-500/30' 
-                  : 'bg-gray-400 hover:bg-gray-500 hover:scale-110'
-              }`}
-              onClick={() => emblaApi?.scrollTo(0)}
-              aria-label="انتقل إلى الخطوة 1"
-            />
-            <button
-              className={`w-4 h-4 rounded-full transition-all duration-500 ${
-                1 === selectedIndex 
-                  ? 'bg-blue-500 scale-125 shadow-lg ring-2 ring-blue-500/30' 
-                  : 'bg-gray-400 hover:bg-gray-500 hover:scale-110'
-              }`}
-              onClick={() => emblaApi?.scrollTo(1)}
-              aria-label="انتقل إلى الخطوة 2"
-            />
-            <button
-              className={`w-4 h-4 rounded-full transition-all duration-500 ${
-                2 === selectedIndex 
-                  ? 'bg-blue-500 scale-125 shadow-lg ring-2 ring-blue-500/30' 
-                  : 'bg-gray-400 hover:bg-gray-500 hover:scale-110'
-              }`}
-              onClick={() => emblaApi?.scrollTo(2)}
-              aria-label="انتقل إلى الخطوة 3"
-            />
+            {/* Navigation Dots */}
+            <div className="flex justify-center mt-8 gap-4">
+              {steps.map((_, index) => (
+                <button
+                  key={index}
+                  className={`w-4 h-4 rounded-full transition-all duration-500 ${
+                    index === currentStep 
+                      ? 'bg-blue-500 scale-125 shadow-lg ring-2 ring-blue-500/30' 
+                      : 'bg-gray-400 hover:bg-gray-500 hover:scale-110'
+                  }`}
+                  onClick={() => setCurrentStep(index)}
+                  aria-label={`انتقل إلى الخطوة ${index + 1}`}
+                />
+              ))}
+            </div>
           </div>
         </div>
       </section>

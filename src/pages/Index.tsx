@@ -8,6 +8,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useLanguage } from "@/hooks/useLanguage";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import AuthButton from "@/components/AuthButton";
+import UserProfile from "@/components/UserProfile";
 import { useAuth } from "@/hooks/useAuth";
 import { toast } from "@/hooks/use-toast";
 
@@ -154,7 +155,7 @@ const Index = () => {
                 {language === "ar" ? "كيف يعمل" : "How It Works"}
               </a>
               {user ? (
-                <AuthButton />
+                <UserProfile />
               ) : (
                 <AuthButton />
               )}
@@ -217,7 +218,7 @@ const Index = () => {
                   {/* Auth Section */}
                   <div className="pt-6 border-t border-border space-y-8">
                      {user ? (
-                      <AuthButton />
+                      <UserProfile />
                      ) : (
                        <AuthButton isMobile={true} />
                      )}

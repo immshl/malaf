@@ -331,80 +331,85 @@ const UserProfile = () => {
 
   return (
     <div className="min-h-screen bg-background">
-      <div className="container mx-auto px-4 max-w-4xl py-8">
+      <div className="container mx-auto px-4 max-w-7xl py-8">
         
-        {/* بطاقة المعلومات الرئيسية - صورة + اسم + نبذة + رابط */}
-        <Card className="border border-border rounded-3xl shadow-soft hover:shadow-medium transition-smooth mb-8 animate-fade-in hover-scale">
-          <CardContent className="p-8 lg:p-12 text-center">
-            {/* صورة الملف الشخصي */}
-            <div className="flex justify-center mb-6">
-              <div className="relative">
-                <Avatar className="w-24 h-24 lg:w-32 lg:h-32 border border-border/10 shadow-soft">
-                  <AvatarImage src={profile.avatar_url || undefined} />
-                  <AvatarFallback className="text-2xl lg:text-3xl font-light bg-gradient-primary text-white">
-                    <User className="w-10 h-10 lg:w-14 lg:h-14" />
-                  </AvatarFallback>
-                </Avatar>
-                {profile.emoji && (
-                  <div className="absolute -top-1 -right-1 w-8 h-8 lg:w-10 lg:h-10 bg-background border-2 border-background rounded-full flex items-center justify-center text-lg lg:text-xl shadow-sm">
-                    {profile.emoji}
+        {/* تخطيط الدسك توب - عمودين */}
+        <div className="lg:grid lg:grid-cols-12 lg:gap-8 space-y-8 lg:space-y-0">
+        
+        {/* العمود الأيسر - المحتوى الرئيسي */}
+        <div className="lg:col-span-8 space-y-8">
+          {/* بطاقة المعلومات الرئيسية */}
+          <Card className="border border-border rounded-3xl shadow-soft hover:shadow-medium transition-smooth animate-fade-in hover-scale">
+            <CardContent className="p-8 lg:p-12 text-center">
+              {/* صورة الملف الشخصي */}
+              <div className="flex justify-center mb-6">
+                <div className="relative">
+                  <Avatar className="w-24 h-24 lg:w-32 lg:h-32 border border-border/10 shadow-soft">
+                    <AvatarImage src={profile.avatar_url || undefined} />
+                    <AvatarFallback className="text-2xl lg:text-3xl font-light bg-gradient-primary text-white">
+                      <User className="w-10 h-10 lg:w-14 lg:h-14" />
+                    </AvatarFallback>
+                  </Avatar>
+                  {profile.emoji && (
+                    <div className="absolute -top-1 -right-1 w-8 h-8 lg:w-10 lg:h-10 bg-background border-2 border-background rounded-full flex items-center justify-center text-lg lg:text-xl shadow-sm">
+                      {profile.emoji}
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              {/* الاسم */}
+              <h1 className="text-xl md:text-2xl lg:text-3xl font-semibold text-foreground mb-3 tracking-tight">
+                {profile.full_name || profile.username}
+              </h1>
+
+              {/* رابط الملف الشخصي + زر النسخ */}
+              <div className="flex items-center justify-center gap-2 mb-6">
+                <span className="text-sm text-muted-foreground font-mono">
+                  malaf.me/{profile.username}
+                </span>
+                <Button variant="ghost" size="sm" onClick={copyLink} className="h-6 w-6 p-0">
+                  <Copy className="h-3 w-3" />
+                </Button>
+              </div>
+
+              {/* النبذة التعريفية */}
+              {profile.bio && (
+                <p className="text-base lg:text-lg font-light text-muted-foreground leading-relaxed max-w-2xl mx-auto mb-6">
+                  {profile.bio}
+                </p>
+              )}
+
+              {/* معلومات إضافية */}
+              <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
+                {profile.location && (
+                  <div className="flex items-center gap-2 text-muted-foreground">
+                    <MapPin className="w-4 h-4" />
+                    <span className="text-sm">{profile.location}</span>
+                  </div>
+                )}
+                {profile.profession && (
+                  <div className="text-sm text-muted-foreground">
+                    {profile.profession}
                   </div>
                 )}
               </div>
-            </div>
 
-            {/* الاسم */}
-            <h1 className="text-xl md:text-2xl lg:text-3xl font-semibold text-foreground mb-3 tracking-tight">
-              {profile.full_name || profile.username}
-            </h1>
-
-            {/* رابط الملف الشخصي + زر النسخ */}
-            <div className="flex items-center justify-center gap-2 mb-6">
-              <span className="text-sm text-muted-foreground font-mono">
-                malaf.me/{profile.username}
-              </span>
-              <Button variant="ghost" size="sm" onClick={copyLink} className="h-6 w-6 p-0">
-                <Copy className="h-3 w-3" />
-              </Button>
-            </div>
-
-            {/* النبذة التعريفية */}
-            {profile.bio && (
-              <p className="text-base lg:text-lg font-light text-muted-foreground leading-relaxed max-w-2xl mx-auto mb-6">
-                {profile.bio}
-              </p>
-            )}
-
-            {/* معلومات إضافية */}
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
-              {profile.location && (
-                <div className="flex items-center gap-2 text-muted-foreground">
-                  <MapPin className="w-4 h-4" />
-                  <span className="text-sm">{profile.location}</span>
+              {/* زر تحرير - يظهر فقط لصاحب الملف */}
+              {profile.user_id === useAuth().user?.id && (
+                <div className="mt-6">
+                  <Button variant="outline" onClick={() => navigate('/create-profile')}>
+                    <Edit className="ml-2 h-4 w-4" />
+                    تحرير الملف
+                  </Button>
                 </div>
               )}
-              {profile.profession && (
-                <div className="text-sm text-muted-foreground">
-                  {profile.profession}
-                </div>
-              )}
-            </div>
+            </CardContent>
+          </Card>
 
-            {/* زر تحرير - يظهر فقط لصاحب الملف */}
-            {profile.user_id === useAuth().user?.id && (
-              <div className="mt-6">
-                <Button variant="outline" onClick={() => navigate('/create-profile')}>
-                  <Edit className="ml-2 h-4 w-4" />
-                  تحرير الملف
-                </Button>
-              </div>
-            )}
-          </CardContent>
-        </Card>
-
-        {/* بطاقة الخدمات */}
-        {profile.skills && profile.skills.length > 0 && (
-          <Card className="border border-border rounded-3xl shadow-soft hover:shadow-medium transition-smooth mb-8 animate-fade-in hover-scale" style={{ animationDelay: '0.1s' }}>
+          {/* بطاقة الخدمات */}
+          {profile.skills && profile.skills.length > 0 && (
+            <Card className="border border-border rounded-3xl shadow-soft hover:shadow-medium transition-smooth animate-fade-in hover-scale" style={{ animationDelay: '0.1s' }}>
             <CardContent className="p-10 lg:p-12">
               <div className="backdrop-blur-lg bg-white/10 border border-white/20 rounded-2xl shadow-lg mb-8 overflow-hidden">
                 <div className="p-4 bg-white/5 border-b border-white/10">
@@ -427,12 +432,12 @@ const UserProfile = () => {
                 ))}
               </div>
             </CardContent>
-          </Card>
-        )}
+            </Card>
+          )}
 
-        {/* بطاقة الروابط المميزة */}
-        {profile.featured_links && Array.isArray(profile.featured_links) && profile.featured_links.length > 0 && (
-          <Card className="border border-border rounded-3xl shadow-soft hover:shadow-medium transition-smooth mb-8 animate-fade-in hover-scale" style={{ animationDelay: '0.13s' }}>
+          {/* بطاقة الروابط المميزة */}
+          {profile.featured_links && Array.isArray(profile.featured_links) && profile.featured_links.length > 0 && (
+            <Card className="border border-border rounded-3xl shadow-soft hover:shadow-medium transition-smooth animate-fade-in hover-scale" style={{ animationDelay: '0.13s' }}>
             <CardContent className="p-10 lg:p-12">
               <div className="backdrop-blur-lg bg-white/10 border border-white/20 rounded-2xl shadow-lg mb-8 overflow-hidden">
                 <div className="p-4 bg-white/5 border-b border-white/10">
@@ -466,12 +471,12 @@ const UserProfile = () => {
                 ))}
               </div>
             </CardContent>
-          </Card>
-        )}
+            </Card>
+          )}
 
-        {/* بطاقة أبرز العملاء */}
-        {profile.featured_clients && profile.featured_clients.length > 0 && (
-          <Card className="border border-border rounded-3xl shadow-soft hover:shadow-medium transition-smooth mb-8 animate-fade-in hover-scale" style={{ animationDelay: '0.15s' }}>
+          {/* بطاقة أبرز العملاء */}
+          {profile.featured_clients && profile.featured_clients.length > 0 && (
+            <Card className="border border-border rounded-3xl shadow-soft hover:shadow-medium transition-smooth animate-fade-in hover-scale" style={{ animationDelay: '0.15s' }}>
             <CardContent className="p-10 lg:p-12">
               <div className="backdrop-blur-lg bg-white/10 border border-white/20 rounded-2xl shadow-lg mb-8 overflow-hidden">
                 <div className="p-4 bg-white/5 border-b border-white/10">
@@ -494,11 +499,15 @@ const UserProfile = () => {
                 ))}
               </div>
             </CardContent>
-          </Card>
-        )}
+            </Card>
+          )}
+        </div>
 
-        {/* بطاقة حجز الاجتماع - بارزة ومخصصة */}
-        <Card className="border border-primary/30 rounded-3xl shadow-xl hover:shadow-2xl transition-smooth mb-8 bg-background/40 backdrop-blur-xl animate-fade-in hover-scale" style={{ animationDelay: '0.2s' }}>
+        {/* العمود الأيمن - الحجز ووسائل التواصل */}
+        <div className="lg:col-span-4 space-y-8">
+          {/* بطاقة حجز الاجتماع - مثبتة على الدسك توب */}
+          <div className="lg:sticky lg:top-8">
+            <Card className="border border-primary/30 rounded-3xl shadow-xl hover:shadow-2xl transition-smooth bg-background/40 backdrop-blur-xl animate-fade-in hover-scale" style={{ animationDelay: '0.2s' }}>
           <CardContent className="p-8 lg:p-10">
             <div className="text-center mb-8">
               <div className="bg-background/80 backdrop-blur-sm border border-border/30 rounded-2xl shadow-sm mb-6 overflow-hidden">
@@ -796,9 +805,9 @@ const UserProfile = () => {
           </CardContent>
         </Card>
 
-        {/* وسائل التواصل */}
-        {(profile.contact_email || profile.phone || profile.website || profile.instagram_url || profile.twitter_url || profile.linkedin_url || profile.github_url) && (
-          <Card className="border border-border rounded-3xl shadow-soft hover:shadow-medium transition-smooth mb-8 animate-fade-in hover-scale" style={{ animationDelay: '0.3s' }}>
+          {/* وسائل التواصل */}
+          {(profile.contact_email || profile.phone || profile.website || profile.instagram_url || profile.twitter_url || profile.linkedin_url || profile.github_url) && (
+            <Card className="border border-border rounded-3xl shadow-soft hover:shadow-medium transition-smooth animate-fade-in hover-scale" style={{ animationDelay: '0.3s' }}>
             <CardContent className="p-10 lg:p-12">
               <div className="backdrop-blur-lg bg-white/10 border border-white/20 rounded-2xl shadow-lg mb-8 overflow-hidden">
                 <div className="p-4 bg-white/5 border-b border-white/10">
@@ -808,7 +817,7 @@ const UserProfile = () => {
                 </div>
               </div>
               
-              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-2 xl:grid-cols-3 gap-4">
                 {profile.contact_email && (
                   <a 
                     href={`mailto:${profile.contact_email}`}
@@ -893,14 +902,15 @@ const UserProfile = () => {
                     </div>
                     <span className="text-xs text-foreground text-center font-medium">GitHub</span>
                   </a>
-                )}
-              </div>
+                 )}
+               </div>
             </CardContent>
           </Card>
-        )}
-
+          )}
+          </div>
+        </div>
+        </div>
       </div>
-
 
       {/* شعار المنصة في أسفل الصفحة */}
       <footer className="border-t border-border/10 bg-muted/30 py-8">

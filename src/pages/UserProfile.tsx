@@ -335,29 +335,32 @@ const UserProfile = () => {
 
             {/* المواعيد المتاحة */}
             <div className="bg-background/80 backdrop-blur-sm rounded-2xl p-6 mb-6">
-              <h3 className="text-lg font-medium text-foreground mb-4 text-center">
+              <h3 className="text-lg font-medium text-foreground mb-6 text-center">
                 المواعيد المتاحة
               </h3>
-              <div className="grid sm:grid-cols-3 gap-4">
-                {["الأحد", "الثلاثاء", "الخميس"].map((day, dayIndex) => (
-                  <div key={dayIndex} className="border border-border/10 rounded-xl p-4 bg-muted/5">
-                    <h4 className="text-sm font-medium text-foreground mb-3 text-center">
+              
+              {/* الأيام المتاحة */}
+              <div className="text-center mb-6">
+                <h4 className="text-sm font-medium text-muted-foreground mb-3">الأيام المتاحة</h4>
+                <div className="flex justify-center gap-3 flex-wrap">
+                  {["الأحد", "الثلاثاء", "الخميس"].map((day, index) => (
+                    <span 
+                      key={index}
+                      className="px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-medium border border-primary/20"
+                    >
                       {day}
-                    </h4>
-                    <div className="space-y-2">
-                      {["5:00 م", "7:00 م", "8:00 م"].map((time, timeIndex) => (
-                        <Button
-                          key={timeIndex}
-                          variant="outline"
-                          size="sm"
-                          className="w-full text-xs border-border/20 hover:bg-primary hover:text-primary-foreground transition-smooth"
-                        >
-                          {time}
-                        </Button>
-                      ))}
-                    </div>
-                  </div>
-                ))}
+                    </span>
+                  ))}
+                </div>
+              </div>
+
+              {/* الفترة الزمنية */}
+              <div className="text-center">
+                <h4 className="text-sm font-medium text-muted-foreground mb-3">الفترة المتاحة</h4>
+                <div className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-muted/20 border border-border/20">
+                  <Clock className="w-4 h-4 text-muted-foreground" />
+                  <span className="text-foreground font-medium">المساء (5:00 م - 9:00 م)</span>
+                </div>
               </div>
             </div>
 

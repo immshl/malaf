@@ -406,8 +406,8 @@ const UserProfile = () => {
         {profile.skills && profile.skills.length > 0 && (
           <Card className="border border-border rounded-3xl shadow-soft hover:shadow-medium transition-smooth mb-8 animate-fade-in hover-scale" style={{ animationDelay: '0.1s' }}>
             <CardContent className="p-10 lg:p-12">
-              <div className="bg-background/80 backdrop-blur-sm border border-border/30 rounded-2xl shadow-sm mb-8 overflow-hidden">
-                <div className="p-4 bg-muted/20">
+              <div className="bg-background/90 backdrop-blur-sm border-2 border-border/50 rounded-2xl shadow-md mb-8 overflow-hidden">
+                <div className="p-4 bg-muted/30 border-b border-border/30">
                   <h2 className="text-xl lg:text-2xl font-semibold text-foreground tracking-tight text-center">
                     {language === 'ar' ? 'الخدمات' : 'Services'}
                   </h2>
@@ -418,7 +418,7 @@ const UserProfile = () => {
                 {profile.skills.map((skill, index) => (
                   <div 
                     key={index} 
-                    className="aspect-square flex items-center justify-center p-4 rounded-2xl bg-background/60 hover:bg-background/80 backdrop-blur-sm transition-all duration-200 border border-border/20 hover:border-border/40 cursor-default shadow-sm hover:shadow-md hover-scale"
+                    className="aspect-square flex items-center justify-center p-4 rounded-2xl bg-background/70 hover:bg-background/90 backdrop-blur-sm transition-all duration-200 border-2 border-border/40 hover:border-border/70 cursor-default shadow-md hover:shadow-lg hover-scale"
                   >
                     <span className="text-sm md:text-base font-medium text-foreground text-center leading-tight">
                       {skill}
@@ -434,8 +434,8 @@ const UserProfile = () => {
         {profile.featured_links && Array.isArray(profile.featured_links) && profile.featured_links.length > 0 && (
           <Card className="border border-border rounded-3xl shadow-soft hover:shadow-medium transition-smooth mb-8 animate-fade-in hover-scale" style={{ animationDelay: '0.13s' }}>
             <CardContent className="p-10 lg:p-12">
-              <div className="bg-background/80 backdrop-blur-sm border border-border/30 rounded-2xl shadow-sm mb-8 overflow-hidden">
-                <div className="p-4 bg-muted/20">
+              <div className="bg-background/90 backdrop-blur-sm border-2 border-border/50 rounded-2xl shadow-md mb-8 overflow-hidden">
+                <div className="p-4 bg-muted/30 border-b border-border/30">
                   <h2 className="text-xl lg:text-2xl font-semibold text-foreground tracking-tight text-center">
                     {language === 'ar' ? 'الروابط المميزة' : 'Featured Links'}
                   </h2>
@@ -449,7 +449,7 @@ const UserProfile = () => {
                     href={link.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="group flex items-center gap-4 p-6 rounded-2xl bg-background/60 hover:bg-background/80 backdrop-blur-sm transition-all duration-200 border border-border/20 hover:border-border/40 shadow-sm hover:shadow-md hover-scale"
+                    className="group flex items-center gap-4 p-6 rounded-2xl bg-background/70 hover:bg-background/90 backdrop-blur-sm transition-all duration-200 border-2 border-border/40 hover:border-border/70 shadow-md hover:shadow-lg hover-scale"
                   >
                     <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center flex-shrink-0 group-hover:bg-primary/20 transition-colors">
                       <ExternalLink className="w-5 h-5 text-primary" />
@@ -473,8 +473,8 @@ const UserProfile = () => {
         {profile.featured_clients && profile.featured_clients.length > 0 && (
           <Card className="border border-border rounded-3xl shadow-soft hover:shadow-medium transition-smooth mb-8 animate-fade-in hover-scale" style={{ animationDelay: '0.15s' }}>
             <CardContent className="p-10 lg:p-12">
-              <div className="bg-background/80 backdrop-blur-sm border border-border/30 rounded-2xl shadow-sm mb-8 overflow-hidden">
-                <div className="p-4 bg-muted/20">
+              <div className="bg-background/90 backdrop-blur-sm border-2 border-border/50 rounded-2xl shadow-md mb-8 overflow-hidden">
+                <div className="p-4 bg-muted/30 border-b border-border/30">
                   <h2 className="text-xl lg:text-2xl font-semibold text-foreground tracking-tight text-center">
                     {language === 'ar' ? 'أبرز العملاء' : 'Featured Clients'}
                   </h2>
@@ -485,7 +485,7 @@ const UserProfile = () => {
                 {profile.featured_clients.map((client, index) => (
                   <div 
                     key={index} 
-                    className="flex items-center justify-center p-6 rounded-2xl bg-background/60 hover:bg-background/80 backdrop-blur-sm transition-all duration-200 border border-border/20 hover:border-border/40 cursor-default shadow-sm hover:shadow-md hover-scale"
+                    className="flex items-center justify-center p-6 rounded-2xl bg-background/70 hover:bg-background/90 backdrop-blur-sm transition-all duration-200 border-2 border-border/40 hover:border-border/70 cursor-default shadow-md hover:shadow-lg hover-scale"
                   >
                     <span className="text-base font-medium text-foreground text-center leading-relaxed">
                       {client}
@@ -800,8 +800,8 @@ const UserProfile = () => {
         {(profile.contact_email || profile.phone || profile.website || profile.instagram_url || profile.twitter_url || profile.linkedin_url || profile.github_url) && (
           <Card className="border border-border rounded-3xl shadow-soft hover:shadow-medium transition-smooth mb-8 animate-fade-in hover-scale" style={{ animationDelay: '0.3s' }}>
             <CardContent className="p-10 lg:p-12">
-              <div className="bg-background/80 backdrop-blur-sm border border-border/30 rounded-2xl shadow-sm mb-8 overflow-hidden">
-                <div className="p-4 bg-muted/20">
+              <div className="bg-background/90 backdrop-blur-sm border-2 border-border/50 rounded-2xl shadow-md mb-8 overflow-hidden">
+                <div className="p-4 bg-muted/30 border-b border-border/30">
                   <h2 className="text-xl lg:text-2xl font-semibold text-foreground tracking-tight text-center">
                     تواصل معي
                   </h2>
@@ -812,7 +812,7 @@ const UserProfile = () => {
                 {profile.contact_email && (
                   <a 
                     href={`mailto:${profile.contact_email}`}
-                    className="aspect-square flex flex-col items-center justify-center p-4 rounded-2xl bg-background/60 hover:bg-background/80 backdrop-blur-sm transition-all duration-200 border border-border/20 hover:border-border/40 group shadow-sm hover:shadow-md hover-scale"
+                    className="aspect-square flex flex-col items-center justify-center p-4 rounded-2xl bg-background/70 hover:bg-background/90 backdrop-blur-sm transition-all duration-200 border-2 border-border/40 hover:border-border/70 group shadow-md hover:shadow-lg hover-scale"
                   >
                     <div className="w-8 h-8 bg-primary/10 rounded-full flex items-center justify-center mb-2 group-hover:bg-primary/20 transition-smooth">
                       <Mail className="w-4 h-4 text-primary" />
@@ -826,65 +826,65 @@ const UserProfile = () => {
                     href={profile.website}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="aspect-square flex flex-col items-center justify-center p-4 rounded-2xl bg-background/60 hover:bg-background/80 backdrop-blur-sm transition-all duration-200 border border-border/20 hover:border-border/40 group shadow-sm hover:shadow-md"
-                  >
-                    <div className="w-8 h-8 bg-secondary/30 rounded-full flex items-center justify-center mb-2 group-hover:bg-secondary/50 transition-smooth">
-                      <Globe className="w-4 h-4 text-secondary-foreground" />
-                    </div>
-                    <span className="text-xs text-foreground text-center font-medium">الموقع</span>
-                  </a>
-                )}
+                     className="aspect-square flex flex-col items-center justify-center p-4 rounded-2xl bg-background/70 hover:bg-background/90 backdrop-blur-sm transition-all duration-200 border-2 border-border/40 hover:border-border/70 group shadow-md hover:shadow-lg"
+                   >
+                     <div className="w-8 h-8 bg-secondary/30 rounded-full flex items-center justify-center mb-2 group-hover:bg-secondary/50 transition-smooth">
+                       <Globe className="w-4 h-4 text-secondary-foreground" />
+                     </div>
+                     <span className="text-xs text-foreground text-center font-medium">الموقع</span>
+                   </a>
+                 )}
 
-                {profile.instagram_url && (
-                  <a 
-                    href={profile.instagram_url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="aspect-square flex flex-col items-center justify-center p-4 rounded-2xl bg-background/60 hover:bg-background/80 backdrop-blur-sm transition-all duration-200 border border-border/20 hover:border-border/40 group shadow-sm hover:shadow-md"
-                  >
-                    <div className="w-8 h-8 bg-accent/30 rounded-full flex items-center justify-center mb-2 group-hover:bg-accent/50 transition-smooth">
-                      <Instagram className="w-4 h-4 text-accent-foreground" />
-                    </div>
-                    <span className="text-xs text-foreground text-center font-medium">Instagram</span>
-                  </a>
-                )}
+                 {profile.instagram_url && (
+                   <a 
+                     href={profile.instagram_url}
+                     target="_blank"
+                     rel="noopener noreferrer"
+                     className="aspect-square flex flex-col items-center justify-center p-4 rounded-2xl bg-background/70 hover:bg-background/90 backdrop-blur-sm transition-all duration-200 border-2 border-border/40 hover:border-border/70 group shadow-md hover:shadow-lg"
+                   >
+                     <div className="w-8 h-8 bg-accent/30 rounded-full flex items-center justify-center mb-2 group-hover:bg-accent/50 transition-smooth">
+                       <Instagram className="w-4 h-4 text-accent-foreground" />
+                     </div>
+                     <span className="text-xs text-foreground text-center font-medium">Instagram</span>
+                   </a>
+                 )}
 
-                {profile.twitter_url && (
-                  <a 
-                    href={profile.twitter_url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="aspect-square flex flex-col items-center justify-center p-4 rounded-2xl bg-background/60 hover:bg-background/80 backdrop-blur-sm transition-all duration-200 border border-border/20 hover:border-border/40 group shadow-sm hover:shadow-md"
-                  >
-                    <div className="w-8 h-8 bg-muted/50 rounded-full flex items-center justify-center mb-2 group-hover:bg-muted/70 transition-smooth">
-                      <X className="w-4 h-4 text-muted-foreground" />
-                    </div>
-                    <span className="text-xs text-foreground text-center font-medium">X</span>
-                  </a>
-                )}
+                 {profile.twitter_url && (
+                   <a 
+                     href={profile.twitter_url}
+                     target="_blank"
+                     rel="noopener noreferrer"
+                     className="aspect-square flex flex-col items-center justify-center p-4 rounded-2xl bg-background/70 hover:bg-background/90 backdrop-blur-sm transition-all duration-200 border-2 border-border/40 hover:border-border/70 group shadow-md hover:shadow-lg"
+                   >
+                     <div className="w-8 h-8 bg-muted/50 rounded-full flex items-center justify-center mb-2 group-hover:bg-muted/70 transition-smooth">
+                       <X className="w-4 h-4 text-muted-foreground" />
+                     </div>
+                     <span className="text-xs text-foreground text-center font-medium">X</span>
+                   </a>
+                 )}
 
-                {profile.linkedin_url && (
-                  <a 
-                    href={profile.linkedin_url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="aspect-square flex flex-col items-center justify-center p-4 rounded-2xl bg-background/60 hover:bg-background/80 backdrop-blur-sm transition-all duration-200 border border-border/20 hover:border-border/40 group shadow-sm hover:shadow-md"
-                  >
-                    <div className="w-8 h-8 bg-primary/10 rounded-full flex items-center justify-center mb-2 group-hover:bg-primary/20 transition-smooth">
-                      <svg className="w-4 h-4 text-primary" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
-                      </svg>
-                    </div>
-                    <span className="text-xs text-foreground text-center font-medium">LinkedIn</span>
-                  </a>
-                )}
+                 {profile.linkedin_url && (
+                   <a 
+                     href={profile.linkedin_url}
+                     target="_blank"
+                     rel="noopener noreferrer"
+                     className="aspect-square flex flex-col items-center justify-center p-4 rounded-2xl bg-background/70 hover:bg-background/90 backdrop-blur-sm transition-all duration-200 border-2 border-border/40 hover:border-border/70 group shadow-md hover:shadow-lg"
+                   >
+                     <div className="w-8 h-8 bg-primary/10 rounded-full flex items-center justify-center mb-2 group-hover:bg-primary/20 transition-smooth">
+                       <svg className="w-4 h-4 text-primary" viewBox="0 0 24 24" fill="currentColor">
+                         <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                       </svg>
+                     </div>
+                     <span className="text-xs text-foreground text-center font-medium">LinkedIn</span>
+                   </a>
+                 )}
 
-                {profile.github_url && (
-                  <a 
-                    href={profile.github_url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="aspect-square flex flex-col items-center justify-center p-4 rounded-2xl bg-background/60 hover:bg-background/80 backdrop-blur-sm transition-all duration-200 border border-border/20 hover:border-border/40 group shadow-sm hover:shadow-md"
+                 {profile.github_url && (
+                   <a 
+                     href={profile.github_url}
+                     target="_blank"
+                     rel="noopener noreferrer"
+                     className="aspect-square flex flex-col items-center justify-center p-4 rounded-2xl bg-background/70 hover:bg-background/90 backdrop-blur-sm transition-all duration-200 border-2 border-border/40 hover:border-border/70 group shadow-md hover:shadow-lg"
                   >
                     <div className="w-8 h-8 bg-secondary/30 rounded-full flex items-center justify-center mb-2 group-hover:bg-secondary/50 transition-smooth">
                       <svg className="w-4 h-4 text-secondary-foreground" viewBox="0 0 24 24" fill="currentColor">

@@ -142,12 +142,12 @@ const UserProfile = () => {
         </div>
       </div>
       
-      <div className="flex flex-col gap-1.5 w-full max-w-xs">
+      <div className="flex flex-col gap-2 w-full max-w-xs pb-4">
         <Button 
           variant="outline" 
           size="sm"
           onClick={handleProfileView}
-          className="w-full transition-all duration-150 hover:scale-[1.02]"
+          className="w-full transition-all duration-150 hover:scale-[1.02] py-3"
         >
           {language === "ar" ? "الملف الشخصي" : "Profile"}
         </Button>
@@ -155,7 +155,7 @@ const UserProfile = () => {
           variant="destructive" 
           size="sm"
           onClick={handleSignOut}
-          className="w-full transition-all duration-150 hover:scale-[1.02]"
+          className="w-full transition-all duration-150 hover:scale-[1.02] py-3"
         >
           {language === "ar" ? "تسجيل الخروج" : "Sign Out"}
         </Button>

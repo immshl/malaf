@@ -792,7 +792,7 @@ const UserProfile = () => {
       {/* شعار المنصة في أسفل الصفحة */}
       <footer className="border-t border-border/10 bg-muted/30 py-8">
         <div className="container mx-auto px-4 text-center">
-          <div className="flex items-center justify-center gap-3 mb-2">
+          <div className="flex items-center justify-center gap-1 mb-2">
             <img 
               src="/lovable-uploads/be1d2269-8206-422b-a395-e4fb9e1a88cc.png" 
               alt="ملف" 

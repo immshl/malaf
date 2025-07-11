@@ -788,22 +788,6 @@ const UserProfile = () => {
 
       </div>
 
-      {/* زر تغيير الوضع فقط */}
-      <div className="fixed bottom-4 left-4 z-50">
-        <Button
-          variant="outline"
-          size="icon"
-          onClick={toggleTheme}
-          className="w-12 h-12 rounded-full border-2 border-border/20 bg-background/80 backdrop-blur-sm hover:bg-background shadow-lg hover:shadow-xl transition-all duration-200"
-          title={theme === "light" ? "الوضع الداكن" : "الوضع الفاتح"}
-        >
-          {theme === "light" ? (
-            <Moon className="h-5 w-5 text-foreground" />
-          ) : (
-            <Sun className="h-5 w-5 text-foreground" />
-          )}
-        </Button>
-      </div>
 
       {/* شعار المنصة في أسفل الصفحة */}
       <footer className="border-t border-border/10 bg-muted/30 py-8">

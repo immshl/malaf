@@ -194,7 +194,7 @@ All colors MUST be HSL.
     border: 1px solid var(--glass-border);
   }
 
-  /* Screen transition overlay for language/theme switches */
+  /* Screen transition overlay for language switches */
   .screen-transition {
     position: fixed;
     top: 0;
@@ -211,6 +211,68 @@ All colors MUST be HSL.
   .screen-transition.active {
     opacity: 0.8;
     pointer-events: all;
+  }
+
+  /* Magical theme transition overlay */
+  .theme-transition-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 9999;
+    pointer-events: none;
+    overflow: hidden;
+  }
+
+  .theme-transition-overlay.to-dark {
+    background: linear-gradient(180deg, 
+      #87CEEB 0%,     /* Sky blue */
+      #FFB347 20%,    /* Sunset orange */
+      #FF6347 40%,    /* Deep orange */
+      #4B0082 70%,    /* Indigo */
+      #000000 100%    /* Night black */
+    );
+    animation: sunset-transition 1.2s ease-in-out;
+  }
+
+  .theme-transition-overlay.to-light {
+    background: linear-gradient(180deg, 
+      #000000 0%,     /* Night black */
+      #1e3a8a 30%,    /* Deep blue */
+      #3b82f6 50%,    /* Blue */
+      #fbbf24 70%,    /* Golden */
+      #87CEEB 100%    /* Sky blue */
+    );
+    animation: sunrise-transition 1.2s ease-in-out;
+  }
+
+  .theme-transition-overlay.fade-out {
+    animation: theme-fade-out 0.8s ease-out forwards;
+  }
+
+  .celestial-body {
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    box-shadow: 0 0 30px currentColor;
+  }
+
+  .celestial-body.sun-setting {
+    background: radial-gradient(circle, #FFD700, #FF8C00);
+    top: 20%;
+    left: 20%;
+    animation: sun-set 1.2s ease-in-out;
+    color: #FFD700;
+  }
+
+  .celestial-body.moon-rising {
+    background: radial-gradient(circle, #F0F8FF, #C0C0C0);
+    top: 80%;
+    right: 20%;
+    animation: moon-rise 1.2s ease-in-out;
+    color: #F0F8FF;
   }
 
   /* Welcome Animation */
@@ -421,5 +483,75 @@ html, body {
   }
   100% {
     transform: rotate(360deg);
+}
+
+/* Magical Theme Transition Animations */
+@keyframes sunset-transition {
+  0% {
+    opacity: 0;
+    transform: translateY(-100%);
   }
+  50% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes sunrise-transition {
+  0% {
+    opacity: 0;
+    transform: translateY(100%);
+  }
+  50% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes sun-set {
+  0% {
+    top: 10%;
+    left: 80%;
+    transform: scale(1.2);
+    opacity: 1;
+  }
+  100% {
+    top: 90%;
+    left: 10%;
+    transform: scale(0.8);
+    opacity: 0.3;
+  }
+}
+
+@keyframes moon-rise {
+  0% {
+    top: 90%;
+    right: 80%;
+    transform: scale(0.8);
+    opacity: 0.3;
+  }
+  100% {
+    top: 10%;
+    right: 10%;
+    transform: scale(1.2);
+    opacity: 1;
+  }
+}
+
+@keyframes theme-fade-out {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
 }

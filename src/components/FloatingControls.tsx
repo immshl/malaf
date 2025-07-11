@@ -42,10 +42,17 @@ const FloatingControls = () => {
   const handleTransition = (callback: () => void) => {
     setIsTransitioning(true);
     
-    // Create transition overlay
+    // Create magical theme transition overlay
     const overlay = document.createElement("div");
-    overlay.className = "screen-transition active";
+    const isGoingDark = theme === "light";
+    
+    overlay.className = `theme-transition-overlay ${isGoingDark ? 'to-dark' : 'to-light'}`;
     document.body.appendChild(overlay);
+    
+    // Add sun/moon element
+    const celestialBody = document.createElement("div");
+    celestialBody.className = `celestial-body ${isGoingDark ? 'sun-setting' : 'moon-rising'}`;
+    overlay.appendChild(celestialBody);
     
     // Wait for transition animation
     setTimeout(() => {
@@ -53,13 +60,13 @@ const FloatingControls = () => {
       
       // Remove overlay after change
       setTimeout(() => {
-        overlay.classList.remove("active");
+        overlay.classList.add("fade-out");
         setTimeout(() => {
           document.body.removeChild(overlay);
           setIsTransitioning(false);
-        }, 300);
-      }, 100);
-    }, 300);
+        }, 800);
+      }, 200);
+    }, 1200);
   };
 
   const toggleTheme = () => {

@@ -230,12 +230,12 @@ const EmailVerification = () => {
                         className="w-full flex justify-center"
                         style={{ direction: 'ltr' }}
                       >
-                        <InputOTPGroup className="gap-4 flex justify-center" style={{ direction: 'ltr' }}>
+                        <InputOTPGroup className="gap-2 flex justify-center" style={{ direction: 'ltr' }}>
                           {[...Array(6)].map((_, index) => (
                             <InputOTPSlot 
                               key={index}
                               index={index} 
-                              className="w-14 h-14 text-xl font-bold border-2 rounded-2xl transition-all duration-200 bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-600 text-gray-900 dark:text-gray-100 hover:border-purple-400 dark:hover:border-purple-500 focus:border-purple-500 dark:focus:border-purple-400 focus:shadow-lg focus:shadow-purple-200 dark:focus:shadow-purple-800/50 focus:bg-purple-50 dark:focus:bg-purple-900/20" 
+                              className="w-11 h-11 text-lg font-bold border-2 rounded-xl transition-all duration-200 bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-600 text-gray-900 dark:text-gray-100 hover:border-purple-400 dark:hover:border-purple-500 focus:border-purple-500 dark:focus:border-purple-400 focus:shadow-lg focus:shadow-purple-200 dark:focus:shadow-purple-800/50 focus:bg-purple-50 dark:focus:bg-purple-900/20" 
                               style={{ direction: 'ltr' }}
                             />
                           ))}

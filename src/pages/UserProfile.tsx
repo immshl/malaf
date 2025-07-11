@@ -382,7 +382,7 @@ const UserProfile = () => {
                     احجز الآن
                   </Button>
                 </DialogTrigger>
-                <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto border border-border/20 shadow-elegant bg-white rounded-3xl relative [&>button]:hidden fixed top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] z-50">
+                <DialogContent className="max-w-2xl h-[60vh] overflow-y-auto border border-border/20 shadow-elegant bg-white rounded-t-3xl rounded-b-none fixed bottom-0 left-[50%] translate-x-[-50%] w-full z-50 [&>button]:hidden">{/* منبثق من الأسفل */}
                   <div className="absolute inset-0 bg-gradient-to-br from-white to-gray-50/30 rounded-3xl"></div>
                   
                   {/* زر الإغلاق الجديد */}

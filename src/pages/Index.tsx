@@ -386,7 +386,7 @@ const Index = () => {
                   {language === "ar" ? "تواصل معنا" : "Contact Us"}
                 </Button>
               </DialogTrigger>
-              <DialogContent className="sm:max-w-[500px] border border-border/20 shadow-2xl bg-background/95 backdrop-blur-xl rounded-3xl animate-scale-in overflow-hidden p-0">
+              <DialogContent className="sm:max-w-[400px] max-w-[350px] mx-6 border border-border/20 shadow-2xl bg-background/95 backdrop-blur-xl rounded-3xl animate-scale-in overflow-hidden p-0">
                 <div className="space-y-6 p-6">
                   {/* البطاقة الأولى - الملف الشخصي */}
                   <Card className="border border-border rounded-3xl shadow-soft hover:shadow-medium transition-smooth">

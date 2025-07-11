@@ -42,31 +42,37 @@ const FloatingControls = () => {
   const handleTransition = (callback: () => void) => {
     setIsTransitioning(true);
     
-    // Create magical theme transition overlay
-    const overlay = document.createElement("div");
+    // Create floating particles for theme transition
+    const container = document.createElement("div");
+    container.className = "floating-particles-container";
+    document.body.appendChild(container);
+    
     const isGoingDark = theme === "light";
     
-    overlay.className = `theme-transition-overlay ${isGoingDark ? 'to-dark' : 'to-light'}`;
-    document.body.appendChild(overlay);
+    // Create multiple floating elements
+    for (let i = 0; i < 12; i++) {
+      const particle = document.createElement("div");
+      particle.className = `floating-particle ${isGoingDark ? 'star-particle' : 'sun-particle'}`;
+      particle.style.left = Math.random() * 100 + '%';
+      particle.style.animationDelay = Math.random() * 2 + 's';
+      container.appendChild(particle);
+    }
     
-    // Add sun/moon element
-    const celestialBody = document.createElement("div");
-    celestialBody.className = `celestial-body ${isGoingDark ? 'sun-setting' : 'moon-rising'}`;
-    overlay.appendChild(celestialBody);
+    // Create color waves
+    const colorWave = document.createElement("div");
+    colorWave.className = `color-wave ${isGoingDark ? 'dark-wave' : 'light-wave'}`;
+    container.appendChild(colorWave);
     
-    // Wait for transition animation
+    // Execute theme change
     setTimeout(() => {
       callback();
-      
-      // Remove overlay after change
-      setTimeout(() => {
-        overlay.classList.add("fade-out");
-        setTimeout(() => {
-          document.body.removeChild(overlay);
-          setIsTransitioning(false);
-        }, 800);
-      }, 200);
-    }, 1200);
+    }, 800);
+    
+    // Clean up after animation
+    setTimeout(() => {
+      document.body.removeChild(container);
+      setIsTransitioning(false);
+    }, 2000);
   };
 
   const toggleTheme = () => {

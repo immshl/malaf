@@ -213,8 +213,8 @@ All colors MUST be HSL.
     pointer-events: all;
   }
 
-  /* Magical theme transition overlay */
-  .theme-transition-overlay {
+  /* Floating particles theme transition */
+  .floating-particles-container {
     position: fixed;
     top: 0;
     left: 0;
@@ -225,54 +225,58 @@ All colors MUST be HSL.
     overflow: hidden;
   }
 
-  .theme-transition-overlay.to-dark {
-    background: linear-gradient(180deg, 
-      #87CEEB 0%,     /* Sky blue */
-      #FFB347 20%,    /* Sunset orange */
-      #FF6347 40%,    /* Deep orange */
-      #4B0082 70%,    /* Indigo */
-      #000000 100%    /* Night black */
-    );
-    animation: sunset-transition 1.2s ease-in-out;
-  }
-
-  .theme-transition-overlay.to-light {
-    background: linear-gradient(180deg, 
-      #000000 0%,     /* Night black */
-      #1e3a8a 30%,    /* Deep blue */
-      #3b82f6 50%,    /* Blue */
-      #fbbf24 70%,    /* Golden */
-      #87CEEB 100%    /* Sky blue */
-    );
-    animation: sunrise-transition 1.2s ease-in-out;
-  }
-
-  .theme-transition-overlay.fade-out {
-    animation: theme-fade-out 0.8s ease-out forwards;
-  }
-
-  .celestial-body {
+  .floating-particle {
     position: absolute;
-    width: 60px;
-    height: 60px;
     border-radius: 50%;
-    box-shadow: 0 0 30px currentColor;
+    animation: float-up 2s ease-out forwards;
   }
 
-  .celestial-body.sun-setting {
+  .star-particle {
+    width: 8px;
+    height: 8px;
+    background: radial-gradient(circle, #ffffff, #c0c0c0);
+    box-shadow: 0 0 15px #ffffff, 0 0 25px #87ceeb;
+    animation: float-up 2s ease-out forwards, twinkle 0.5s infinite alternate;
+  }
+
+  .sun-particle {
+    width: 12px;
+    height: 12px;
     background: radial-gradient(circle, #FFD700, #FF8C00);
-    top: 20%;
-    left: 20%;
-    animation: sun-set 1.2s ease-in-out;
-    color: #FFD700;
+    box-shadow: 0 0 20px #FFD700, 0 0 30px #FF8C00;
+    animation: float-up 2s ease-out forwards, glow-pulse 0.8s infinite alternate;
   }
 
-  .celestial-body.moon-rising {
-    background: radial-gradient(circle, #F0F8FF, #C0C0C0);
-    top: 80%;
-    right: 20%;
-    animation: moon-rise 1.2s ease-in-out;
-    color: #F0F8FF;
+  .color-wave {
+    position: absolute;
+    bottom: -50px;
+    left: -20%;
+    width: 140%;
+    height: 100px;
+    border-radius: 50%;
+    animation: wave-sweep 1.5s ease-in-out forwards;
+  }
+
+  .dark-wave {
+    background: linear-gradient(90deg, 
+      transparent 0%,
+      #1a1a2e 20%,
+      #16213e 40%,
+      #0f3460 60%,
+      #533483 80%,
+      transparent 100%
+    );
+  }
+
+  .light-wave {
+    background: linear-gradient(90deg, 
+      transparent 0%,
+      #87ceeb 20%,
+      #ffd700 40%,
+      #ffb347 60%,
+      #87ceeb 80%,
+      transparent 100%
+    );
   }
 
   /* Welcome Animation */
@@ -485,72 +489,55 @@ html, body {
     transform: rotate(360deg);
 }
 
-/* Magical Theme Transition Animations */
-@keyframes sunset-transition {
+/* Floating Particles Animations */
+@keyframes float-up {
   0% {
+    transform: translateY(100vh) scale(0);
     opacity: 0;
-    transform: translateY(-100%);
+  }
+  20% {
+    opacity: 1;
+    transform: translateY(80vh) scale(1);
+  }
+  100% {
+    transform: translateY(-20vh) scale(0.5);
+    opacity: 0;
+  }
+}
+
+@keyframes twinkle {
+  0% {
+    opacity: 0.7;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1.3);
+  }
+}
+
+@keyframes glow-pulse {
+  0% {
+    opacity: 0.8;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1.2);
+  }
+}
+
+@keyframes wave-sweep {
+  0% {
+    transform: translateY(0) scaleX(0.5);
+    opacity: 0;
   }
   50% {
-    opacity: 1;
-    transform: translateY(0);
+    transform: translateY(-50px) scaleX(1);
+    opacity: 0.7;
   }
   100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes sunrise-transition {
-  0% {
-    opacity: 0;
-    transform: translateY(100%);
-  }
-  50% {
-    opacity: 1;
-    transform: translateY(0);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes sun-set {
-  0% {
-    top: 10%;
-    left: 80%;
-    transform: scale(1.2);
-    opacity: 1;
-  }
-  100% {
-    top: 90%;
-    left: 10%;
-    transform: scale(0.8);
-    opacity: 0.3;
-  }
-}
-
-@keyframes moon-rise {
-  0% {
-    top: 90%;
-    right: 80%;
-    transform: scale(0.8);
-    opacity: 0.3;
-  }
-  100% {
-    top: 10%;
-    right: 10%;
-    transform: scale(1.2);
-    opacity: 1;
-  }
-}
-
-@keyframes theme-fade-out {
-  0% {
-    opacity: 1;
-  }
-  100% {
+    transform: translateY(-100px) scaleX(1.2);
     opacity: 0;
   }
 }

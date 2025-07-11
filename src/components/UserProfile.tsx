@@ -132,7 +132,7 @@ const UserProfile = () => {
             </AvatarFallback>
           </Avatar>
         </div>
-        <div className="flex flex-col items-center text-center">
+        <div className="flex items-center gap-2 text-center">
           <span className="text-sm font-medium text-foreground">
             {getGreeting()}
           </span>

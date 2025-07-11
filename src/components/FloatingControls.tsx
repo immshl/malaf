@@ -17,11 +17,6 @@ const FloatingControls = () => {
   // Check if we're on a page that should hide floating controls
   const shouldHideControls = location.pathname === "/signup" || location.pathname === "/signin";
   
-  // Don't render anything on signup or signin pages
-  if (shouldHideControls) {
-    return null;
-  }
-
   // Check if we're on a freelancer profile page (not main app pages)
   const isFreelancerPage = location.pathname !== "/" && 
                           location.pathname !== "/verify-email" && 
@@ -121,6 +116,11 @@ const FloatingControls = () => {
       setLanguage(language === "ar" ? "en" : "ar");
     });
   };
+
+  // Don't render anything on signup or signin pages
+  if (shouldHideControls) {
+    return null;
+  }
 
   return (
     <div className="fixed bottom-6 right-6 z-50">

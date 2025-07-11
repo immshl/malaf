@@ -179,12 +179,9 @@ const Index = () => {
         <div className="absolute inset-0 bg-gradient-accent opacity-5"></div>
         <div className="container mx-auto px-6 relative z-10">
           <div className="max-w-4xl mx-auto text-center">
-            <div className="relative inline-block mb-12">
-              <div className="absolute inset-0 rounded-full border-2 border-transparent bg-gradient-to-r from-transparent via-primary/30 to-transparent bg-clip-border animate-[spin_2s_linear_infinite]"></div>
-              <p className="relative text-sm text-muted-foreground font-medium tracking-wide uppercase scroll-animate px-6 py-3">
-                {language === "ar" ? "لتمكين العمل الحر" : "Empowering Freelancers"} ✨
-              </p>
-            </div>
+            <p className="text-sm text-muted-foreground mb-12 font-medium tracking-wide uppercase scroll-animate px-6 py-3 rounded-full border border-muted-foreground/30">
+              {language === "ar" ? "لتمكين العمل الحر" : "Empowering Freelancers"} ✨
+            </p>
             
             <h1 className="text-4xl md:text-7xl lg:text-8xl font-bold mb-8 leading-[1.1] tracking-tight scroll-animate">
               <span className="text-foreground">

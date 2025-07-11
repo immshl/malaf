@@ -408,40 +408,56 @@ const UserProfile = () => {
                               </div>
                             </div>
                             
-                            <div className="grid md:grid-cols-2 gap-6">
+                            <div className="space-y-6">
                               {/* اختيار اليوم */}
-                              <div className="space-y-3">
-                                <Label className="text-base font-medium">اختر اليوم</Label>
-                                <Select value={selectedDay} onValueChange={setSelectedDay}>
-                                  <SelectTrigger className="h-12 bg-background/60 border border-border/40 rounded-xl">
-                                    <SelectValue placeholder="اختر يوم من الأيام المتاحة" />
-                                  </SelectTrigger>
-                                  <SelectContent className="bg-background border border-border shadow-xl backdrop-blur-xl">
-                                    {["sunday", "tuesday", "thursday"].map((day) => (
-                                      <SelectItem key={day} value={day} className="text-right">
+                              <div className="space-y-4">
+                                <Label className="text-base font-medium">اختر اليوم المناسب</Label>
+                                <div className="grid grid-cols-3 gap-3">
+                                  {["sunday", "tuesday", "thursday"].map((day) => (
+                                    <button
+                                      key={day}
+                                      type="button"
+                                      onClick={() => setSelectedDay(day)}
+                                      className={cn(
+                                        "p-4 rounded-xl border-2 transition-all duration-200 text-center hover:shadow-md",
+                                        selectedDay === day
+                                          ? "border-primary bg-primary/10 shadow-soft"
+                                          : "border-border/40 bg-background/60 hover:border-border/60"
+                                      )}
+                                    >
+                                      <div className="text-sm font-medium text-foreground">
                                         {dayLabels[day as keyof typeof dayLabels]}
-                                      </SelectItem>
-                                    ))}
-                                  </SelectContent>
-                                </Select>
+                                      </div>
+                                    </button>
+                                  ))}
+                                </div>
                               </div>
 
                               {/* اختيار الوقت */}
-                              <div className="space-y-3">
-                                <Label className="text-base font-medium">اختر الوقت</Label>
-                                <Select value={selectedTime} onValueChange={setSelectedTime}>
-                                  <SelectTrigger className="h-12 bg-background/60 border border-border/40 rounded-xl">
-                                    <SelectValue placeholder="اختر وقت محدد" />
-                                  </SelectTrigger>
-                                  <SelectContent className="bg-background border border-border shadow-xl backdrop-blur-xl">
+                              {selectedDay && (
+                                <div className="space-y-4 animate-fade-in">
+                                  <Label className="text-base font-medium">اختر الوقت المناسب</Label>
+                                  <div className="grid grid-cols-2 gap-3">
                                     {getCurrentTimeSlots().map((time) => (
-                                      <SelectItem key={time} value={time} className="text-right">
-                                        {time}
-                                      </SelectItem>
+                                      <button
+                                        key={time}
+                                        type="button"
+                                        onClick={() => setSelectedTime(time)}
+                                        className={cn(
+                                          "p-4 rounded-xl border-2 transition-all duration-200 text-center hover:shadow-md",
+                                          selectedTime === time
+                                            ? "border-primary bg-primary/10 shadow-soft"
+                                            : "border-border/40 bg-background/60 hover:border-border/60"
+                                        )}
+                                      >
+                                        <div className="text-sm font-medium text-foreground">
+                                          {time}
+                                        </div>
+                                      </button>
                                     ))}
-                                  </SelectContent>
-                                </Select>
-                              </div>
+                                  </div>
+                                </div>
+                              )}
                             </div>
 
                             {/* رابط اقتراح موعد مختلف */}
@@ -470,40 +486,56 @@ const UserProfile = () => {
                               </p>
                             </div>
                             
-                            <div className="grid md:grid-cols-2 gap-6">
+                            <div className="space-y-6">
                               {/* اختيار يوم مختلف */}
-                              <div className="space-y-3">
+                              <div className="space-y-4">
                                 <Label className="text-base font-medium">اليوم المقترح</Label>
-                                <Select value={alternativeDay} onValueChange={setAlternativeDay}>
-                                  <SelectTrigger className="h-12 bg-background/60 border border-border/40 rounded-xl">
-                                    <SelectValue placeholder="اختر يوم" />
-                                  </SelectTrigger>
-                                  <SelectContent className="bg-background border border-border shadow-xl backdrop-blur-xl">
-                                    {Object.entries(dayLabels).map(([value, label]) => (
-                                      <SelectItem key={value} value={value} className="text-right">
+                                <div className="grid grid-cols-2 gap-3">
+                                  {Object.entries(dayLabels).map(([value, label]) => (
+                                    <button
+                                      key={value}
+                                      type="button"
+                                      onClick={() => setAlternativeDay(value)}
+                                      className={cn(
+                                        "p-4 rounded-xl border-2 transition-all duration-200 text-center hover:shadow-md",
+                                        alternativeDay === value
+                                          ? "border-accent bg-accent/10 shadow-soft"
+                                          : "border-border/40 bg-background/60 hover:border-border/60"
+                                      )}
+                                    >
+                                      <div className="text-sm font-medium text-foreground">
                                         {label}
-                                      </SelectItem>
-                                    ))}
-                                  </SelectContent>
-                                </Select>
+                                      </div>
+                                    </button>
+                                  ))}
+                                </div>
                               </div>
 
                               {/* اختيار فترة مختلفة */}
-                              <div className="space-y-3">
-                                <Label className="text-base font-medium">الفترة المقترحة</Label>
-                                <Select value={alternativeTimeSlot} onValueChange={setAlternativeTimeSlot}>
-                                  <SelectTrigger className="h-12 bg-background/60 border border-border/40 rounded-xl">
-                                    <SelectValue placeholder="اختر فترة" />
-                                  </SelectTrigger>
-                                  <SelectContent className="bg-background border border-border shadow-xl backdrop-blur-xl">
+                              {alternativeDay && (
+                                <div className="space-y-4 animate-fade-in">
+                                  <Label className="text-base font-medium">الفترة المقترحة</Label>
+                                  <div className="space-y-3">
                                     {Object.entries(timeSlotLabels).map(([value, label]) => (
-                                      <SelectItem key={value} value={value} className="text-right">
-                                        {label}
-                                      </SelectItem>
+                                      <button
+                                        key={value}
+                                        type="button"
+                                        onClick={() => setAlternativeTimeSlot(value)}
+                                        className={cn(
+                                          "w-full p-4 rounded-xl border-2 transition-all duration-200 text-center hover:shadow-md",
+                                          alternativeTimeSlot === value
+                                            ? "border-accent bg-accent/10 shadow-soft"
+                                            : "border-border/40 bg-background/60 hover:border-border/60"
+                                        )}
+                                      >
+                                        <div className="text-sm font-medium text-foreground">
+                                          {label}
+                                        </div>
+                                      </button>
                                     ))}
-                                  </SelectContent>
-                                </Select>
-                              </div>
+                                  </div>
+                                </div>
+                              )}
                             </div>
 
                             {/* رابط العودة للحجز العادي */}

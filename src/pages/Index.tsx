@@ -211,7 +211,7 @@ const Index = () => {
                 asChild
               >
                 <Link to="/immshl">
-                  {language === "ar" ? "شاهد نموذج" : "View Example"}
+                  {language === "ar" ? "شاهد نموذج 👀" : "View Example 👀"}
                 </Link>
               </Button>
             </div>

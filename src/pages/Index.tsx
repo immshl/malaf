@@ -20,10 +20,9 @@ const Index = () => {
   const [emblaRef, emblaApi] = useEmblaCarousel(
     { 
       loop: true, 
-      align: 'start',
-      containScroll: 'trimSnaps'
+      align: 'start'
     },
-    [Autoplay({ delay: 5000, stopOnInteraction: false })]
+    [Autoplay({ delay: 4000, stopOnInteraction: false })]
   );
 
   // Track selected slide for dots
@@ -36,7 +35,7 @@ const Index = () => {
       setSelectedIndex(emblaApi.selectedScrollSnap());
     };
 
-    onSelect(); // Set initial index
+    onSelect();
     emblaApi.on('select', onSelect);
     
     return () => {
@@ -329,7 +328,7 @@ const Index = () => {
           <div className="overflow-hidden" ref={emblaRef}>
             <div className="flex">
               {/* Step 1 */}
-              <div className="flex-[0_0_100%] md:flex-[0_0_50%] lg:flex-[0_0_33.333%] min-w-0 px-6">
+              <div className="flex-[0_0_100%] min-w-0 px-6">
                 <div className="glass rounded-3xl p-8 shadow-elegant hover:shadow-strong transition-smooth text-center border border-border/20 backdrop-blur-md">
                   <div className="mb-8 flex justify-center">
                     <div className="w-20 h-20 bg-foreground rounded-2xl flex items-center justify-center text-background text-3xl font-bold shadow-medium">
@@ -346,7 +345,7 @@ const Index = () => {
               </div>
 
               {/* Step 2 */}
-              <div className="flex-[0_0_100%] md:flex-[0_0_50%] lg:flex-[0_0_33.333%] min-w-0 px-6">
+              <div className="flex-[0_0_100%] min-w-0 px-6">
                 <div className="glass rounded-3xl p-8 shadow-elegant hover:shadow-strong transition-smooth text-center border border-border/20 backdrop-blur-md">
                   <div className="mb-8 flex justify-center">
                     <div className="w-20 h-20 bg-foreground rounded-2xl flex items-center justify-center text-background text-3xl font-bold shadow-medium">
@@ -363,7 +362,7 @@ const Index = () => {
               </div>
 
               {/* Step 3 */}
-              <div className="flex-[0_0_100%] md:flex-[0_0_50%] lg:flex-[0_0_33.333%] min-w-0 px-6">
+              <div className="flex-[0_0_100%] min-w-0 px-6">
                 <div className="glass rounded-3xl p-8 shadow-elegant hover:shadow-strong transition-smooth text-center border border-border/20 backdrop-blur-md">
                   <div className="mb-8 flex justify-center">
                     <div className="w-20 h-20 bg-foreground rounded-2xl flex items-center justify-center text-background text-3xl font-bold shadow-medium">

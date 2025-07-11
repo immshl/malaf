@@ -17,15 +17,31 @@ const Index = () => {
   useScrollAnimation();
 
   // Carousel setup with autoplay
-  const [emblaRef] = useEmblaCarousel(
+  const [emblaRef, emblaApi] = useEmblaCarousel(
     { 
       loop: true, 
       align: 'center',
       skipSnaps: false,
       dragFree: true 
     },
-    [Autoplay({ delay: 3000, stopOnInteraction: false })]
+    [Autoplay({ delay: 5000, stopOnInteraction: false })] // زيادة السرعة إلى 5 ثوانٍ
   );
+
+  // Track selected slide for dots
+  const [selectedIndex, setSelectedIndex] = useState(0);
+
+  useEffect(() => {
+    if (!emblaApi) return;
+
+    const onSelect = () => {
+      setSelectedIndex(emblaApi.selectedScrollSnap());
+    };
+
+    emblaApi.on('select', onSelect);
+    return () => {
+      emblaApi.off('select', onSelect);
+    };
+  }, [emblaApi]);
 
   const toggleMobileMenu = () => {
     console.log('Toggling mobile menu:', !isMobileMenuOpen);
@@ -313,7 +329,7 @@ const Index = () => {
             <div className="flex">
               {/* Step 1 */}
               <div className="flex-[0_0_100%] md:flex-[0_0_50%] lg:flex-[0_0_33.333%] min-w-0 px-6">
-                <div className="text-center">
+                <div className="glass rounded-3xl p-8 shadow-elegant hover:shadow-strong transition-smooth text-center border border-border/20 backdrop-blur-md">
                   <div className="mb-8 flex justify-center">
                     <div className="w-20 h-20 bg-foreground rounded-2xl flex items-center justify-center text-background text-3xl font-bold shadow-medium">
                       1
@@ -330,7 +346,7 @@ const Index = () => {
 
               {/* Step 2 */}
               <div className="flex-[0_0_100%] md:flex-[0_0_50%] lg:flex-[0_0_33.333%] min-w-0 px-6">
-                <div className="text-center">
+                <div className="glass rounded-3xl p-8 shadow-elegant hover:shadow-strong transition-smooth text-center border border-border/20 backdrop-blur-md">
                   <div className="mb-8 flex justify-center">
                     <div className="w-20 h-20 bg-foreground rounded-2xl flex items-center justify-center text-background text-3xl font-bold shadow-medium">
                       2
@@ -347,7 +363,7 @@ const Index = () => {
 
               {/* Step 3 */}
               <div className="flex-[0_0_100%] md:flex-[0_0_50%] lg:flex-[0_0_33.333%] min-w-0 px-6">
-                <div className="text-center">
+                <div className="glass rounded-3xl p-8 shadow-elegant hover:shadow-strong transition-smooth text-center border border-border/20 backdrop-blur-md">
                   <div className="mb-8 flex justify-center">
                     <div className="w-20 h-20 bg-foreground rounded-2xl flex items-center justify-center text-background text-3xl font-bold shadow-medium">
                       3
@@ -362,6 +378,22 @@ const Index = () => {
                 </div>
               </div>
             </div>
+          </div>
+
+          {/* Navigation Dots */}
+          <div className="flex justify-center mt-8 gap-2">
+            {[0, 1, 2].map((index) => (
+              <button
+                key={index}
+                className={`w-3 h-3 rounded-full transition-all duration-300 ${
+                  index === selectedIndex % 3 
+                    ? 'bg-primary scale-125 shadow-md' 
+                    : 'bg-muted-foreground/30 hover:bg-muted-foreground/50'
+                }`}
+                onClick={() => emblaApi?.scrollTo(index)}
+                aria-label={`انتقل إلى الخطوة ${index + 1}`}
+              />
+            ))}
           </div>
         </div>
       </section>

@@ -32,6 +32,7 @@ const App = () => (
             <Route path="/verify-email" element={<EmailVerification />} />
             <Route path="/create-profile" element={<CreateProfile />} />
             <Route path="/profile/:username" element={<UserProfile />} />
+            <Route path="/:username" element={<UserProfile />} />
             <Route path="/example" element={<ExampleProfile />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />

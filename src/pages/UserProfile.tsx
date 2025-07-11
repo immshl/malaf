@@ -10,6 +10,7 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
+import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
 import type { Tables } from "@/integrations/supabase/types";
 import { 
@@ -254,10 +255,17 @@ const UserProfile = () => {
               </p>
             </div>
             <div className="flex flex-wrap gap-3">
-              <Button variant="outline" onClick={copyLink}>
-                <Copy className="ml-2 h-4 w-4" />
-                نسخ الرابط
-              </Button>
+                <Button variant="outline" onClick={copyLink}>
+                  <Copy className="ml-2 h-4 w-4" />
+                  نسخ الرابط
+                </Button>
+                {/* زر تحرير الملف - يظهر فقط لصاحب الملف */}
+                {profile.user_id === useAuth().user?.id && (
+                  <Button variant="ghost" onClick={() => navigate('/create-profile')}>
+                    <Edit className="ml-2 h-4 w-4" />
+                    تحرير الملف
+                  </Button>
+                )}
               <Dialog>
                 <DialogTrigger asChild>
                   <Button variant="default" className="bg-foreground text-background hover:bg-foreground/90">

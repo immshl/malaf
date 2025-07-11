@@ -381,8 +381,8 @@ const UserProfile = () => {
                     احجز الآن
                   </Button>
                 </DialogTrigger>
-                <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto glass border-border/20 shadow-elegant backdrop-blur-xl bg-background/70">
-                  <div className="absolute inset-0 bg-gradient-to-br from-background/30 via-background/20 to-background/40 rounded-2xl"></div>
+                <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto glass border-border/10 shadow-elegant backdrop-blur-md bg-background/40 rounded-3xl">
+                  <div className="absolute inset-0 bg-gradient-to-br from-background/20 via-background/10 to-background/25 rounded-3xl"></div>
                   <div className="relative z-10">
                     <DialogHeader className="text-center pb-6">
                       <div className="glass-soft rounded-2xl shadow-soft mb-4 overflow-hidden border border-border/10">

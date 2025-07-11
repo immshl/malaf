@@ -793,6 +793,7 @@ const UserProfile = () => {
       <footer className="border-t border-border/10 bg-muted/30 py-8">
         <div className="container mx-auto px-4 text-center">
           <div className="flex items-center justify-center gap-1 mb-2">
+            <span className="font-bold text-lg text-foreground">malaf</span>
             <img 
               src="/lovable-uploads/be1d2269-8206-422b-a395-e4fb9e1a88cc.png" 
               alt="ملف" 
@@ -803,7 +804,6 @@ const UserProfile = () => {
               alt="ملف" 
               className="w-6 h-6 hidden dark:block"
             />
-            <span className="font-bold text-lg text-foreground">malaf</span>
           </div>
           <p className="text-sm text-muted-foreground">
             منصة إنشاء الملفات المهنية للفريلانسر

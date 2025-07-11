@@ -590,17 +590,15 @@ const UserProfile = () => {
                           </div>
 
                           <div className="space-y-3">
-                            <Label htmlFor="contact" className="text-base font-medium">وسيلة التواصل المفضلة</Label>
-                            <Select value={bookingForm.preferredContact} onValueChange={(value) => setBookingForm(prev => ({ ...prev, preferredContact: value }))}>
-                              <SelectTrigger className="h-12 bg-background/60 border border-border/40 rounded-xl">
-                                <SelectValue placeholder="اختر وسيلة التواصل" />
-                              </SelectTrigger>
-                              <SelectContent className="bg-background border border-border shadow-xl backdrop-blur-xl">
-                                <SelectItem value="email" className="text-right">البريد الإلكتروني</SelectItem>
-                                <SelectItem value="phone" className="text-right">الهاتف</SelectItem>
-                                <SelectItem value="whatsapp" className="text-right">واتساب</SelectItem>
-                              </SelectContent>
-                            </Select>
+                            <Label htmlFor="phone" className="text-base font-medium">رقم الجوال</Label>
+                            <Input
+                              id="phone"
+                              type="tel"
+                              value={bookingForm.preferredContact}
+                              onChange={(e) => setBookingForm(prev => ({ ...prev, preferredContact: e.target.value }))}
+                              placeholder="05xxxxxxxx"
+                              className="h-12 text-right bg-background/60 border border-border/40 rounded-xl"
+                            />
                           </div>
 
                           <div className="space-y-3 md:col-span-2">

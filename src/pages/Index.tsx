@@ -180,9 +180,8 @@ const Index = () => {
         <div className="container mx-auto px-6 relative z-10">
           <div className="max-w-4xl mx-auto text-center">
             <div className="relative inline-block mb-12">
-              <div className="absolute inset-0 rounded-full bg-gradient-to-r from-primary via-accent to-primary bg-[length:400%_400%] animate-pulse opacity-75 blur-sm"></div>
-              <div className="absolute inset-0 rounded-full bg-gradient-to-r from-primary/50 via-transparent to-primary/50 bg-[length:200%_200%] animate-[spin_3s_linear_infinite]"></div>
-              <p className="relative text-sm text-muted-foreground font-medium tracking-wide uppercase scroll-animate px-6 py-3 rounded-full border border-primary/30 bg-background/80 backdrop-blur-sm">
+              <div className="absolute inset-0 rounded-full border-2 border-transparent bg-gradient-to-r from-transparent via-primary/30 to-transparent bg-clip-border animate-[spin_2s_linear_infinite]"></div>
+              <p className="relative text-sm text-muted-foreground font-medium tracking-wide uppercase scroll-animate px-6 py-3">
                 {language === "ar" ? "لتمكين العمل الحر" : "Empowering Freelancers"} ✨
               </p>
             </div>

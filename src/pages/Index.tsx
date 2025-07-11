@@ -71,7 +71,7 @@ const Index = () => {
       {/* Navigation */}
       <nav className="sticky top-0 glass border-b border-border/20 z-40">
         <div className="container mx-auto px-6">
-          <div className="flex items-center justify-between h-18">
+          <div className="flex items-center justify-between h-24 py-2">
             {/* Logo */}
             <div className="flex items-center space-x-2 space-x-reverse">
               <div className="w-8 h-8">

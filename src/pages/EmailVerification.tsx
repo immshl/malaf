@@ -221,7 +221,7 @@ const EmailVerification = () => {
             <form onSubmit={handleSubmit}>
               <div className="space-y-6">
                 <div className="text-center">
-                  <div className="bg-gradient-to-r from-purple-50 to-blue-50 dark:from-purple-900/20 dark:to-blue-900/20 p-6 rounded-2xl mb-4">
+                  <div className="bg-gradient-to-r from-purple-50 to-blue-50 dark:from-purple-900/20 dark:to-blue-900/20 p-4 rounded-xl mb-4">
                     <div className="flex justify-center w-full" style={{ direction: 'ltr' }}>
                       <InputOTP
                         maxLength={6}

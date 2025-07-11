@@ -91,17 +91,17 @@ const UserProfile = () => {
 
   return (
     <div className="flex flex-col items-center gap-4">
-      <div className="flex items-center gap-3">
-        <Avatar className="h-10 w-10 border-2 border-muted-foreground/20">
+      <div className="flex flex-col items-center gap-3">
+        <Avatar className="h-14 w-14 border-2 border-muted-foreground/20">
           <AvatarImage 
             src={profile?.avatar_url || ''} 
             alt={profile?.full_name || user.email || 'User'} 
           />
-          <AvatarFallback className="bg-primary/10 text-primary font-semibold">
+          <AvatarFallback className="bg-primary/10 text-primary font-semibold text-lg">
             {initials}
           </AvatarFallback>
         </Avatar>
-        <div className="flex flex-col">
+        <div className="flex flex-col items-center text-center">
           <span className="text-sm font-medium text-foreground">
             {language === "ar" ? "مرحباً" : "Welcome"}
           </span>

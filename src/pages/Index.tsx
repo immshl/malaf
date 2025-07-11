@@ -19,8 +19,9 @@ const Index = () => {
   // Carousel setup with autoplay
   const [emblaRef, emblaApi] = useEmblaCarousel(
     { 
-      loop: true, 
-      align: 'start'
+      loop: true,
+      skipSnaps: false,
+      dragFree: false
     },
     [Autoplay({ delay: 4000, stopOnInteraction: false })]
   );
@@ -37,9 +38,11 @@ const Index = () => {
 
     onSelect();
     emblaApi.on('select', onSelect);
+    emblaApi.on('reInit', onSelect);
     
     return () => {
       emblaApi.off('select', onSelect);
+      emblaApi.off('reInit', onSelect);
     };
   }, [emblaApi]);
 

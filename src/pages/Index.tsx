@@ -387,12 +387,12 @@ const Index = () => {
                 </Button>
               </DialogTrigger>
               <DialogContent className="max-w-[320px] sm:max-w-[380px] border border-border/20 shadow-2xl bg-background/95 backdrop-blur-xl rounded-3xl animate-scale-in overflow-hidden p-0">
-                <div className="space-y-6 p-6">
+                <div className="space-y-4 p-4">
                   {/* البطاقة الأولى - الملف الشخصي */}
                   <Card className="border border-border rounded-3xl shadow-soft hover:shadow-medium transition-smooth">
-                    <CardContent className="p-8 text-center">
+                    <CardContent className="p-6 text-center">
                       {/* صورة الملف الشخصي */}
-                      <div className="flex justify-center mb-6">
+                      <div className="flex justify-center mb-4">
                         <div className="relative">
                           <img 
                             src="https://mfchmiwxlkvkwtucizzl.supabase.co/storage/v1/object/public/avatars/33f23058-2dc9-4785-b96f-248a6ea24d13/1752183589032.jpeg"
@@ -406,7 +406,7 @@ const Index = () => {
                       </div>
 
                       {/* الاسم */}
-                      <h1 className="text-2xl font-semibold text-foreground mb-3 tracking-tight">
+                      <h1 className="text-xl font-semibold text-foreground mb-2 tracking-tight">
                         مشعل ثاني
                       </h1>
 
@@ -419,10 +419,10 @@ const Index = () => {
                   
                   {/* البطاقة الثانية - التواصل */}
                   <Card className="border border-border rounded-3xl shadow-soft hover:shadow-medium transition-smooth">
-                    <CardContent className="p-8">
-                      <div className="bg-background/80 backdrop-blur-sm border border-border/30 rounded-2xl shadow-sm mb-6 overflow-hidden">
-                        <div className="p-4 bg-muted/20">
-                          <h2 className="text-xl font-semibold text-foreground tracking-tight text-center">
+                    <CardContent className="p-6">
+                      <div className="bg-background/80 backdrop-blur-sm border border-border/30 rounded-2xl shadow-sm mb-4 overflow-hidden">
+                        <div className="p-3 bg-muted/20">
+                          <h2 className="text-lg font-semibold text-foreground tracking-tight text-center">
                             التواصل
                           </h2>
                         </div>

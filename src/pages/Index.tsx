@@ -69,7 +69,7 @@ const Index = () => {
       <div className="relative z-40">
 
       {/* Navigation */}
-      <nav className="sticky top-0 elegant-surface border-b border-border/30 z-40">
+      <nav className="sticky top-0 glass border-b border-border/20 z-40">
         <div className="container mx-auto px-6">
           <div className="flex items-center justify-between h-18">
             {/* Logo */}
@@ -137,7 +137,7 @@ const Index = () => {
             
             {/* Menu Content */}
             <div className="fixed top-18 left-0 right-0 z-50 animate-slide-down">
-              <div className="mx-6 mt-4 elegant-surface rounded-2xl shadow-elegant border overflow-hidden">
+              <div className="mx-6 mt-4 glass rounded-2xl shadow-elegant border border-border/20 overflow-hidden">
                 <div className="p-8 space-y-6">
                   {/* Navigation Links */}
                   <div className="space-y-2">
@@ -231,7 +231,7 @@ const Index = () => {
           </div>
           
           <div className="grid md:grid-cols-3 gap-10">
-            <Card className="border-0 shadow-soft hover:shadow-medium transition-smooth bg-card group hover-lift">
+            <Card className="border-0 shadow-soft hover:shadow-medium transition-smooth glass group hover-lift">
               <CardContent className="p-10 text-center">
                 <div className="mb-8 flex justify-center">
                   <div className="w-20 h-20 bg-muted/50 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-spring">
@@ -247,7 +247,7 @@ const Index = () => {
               </CardContent>
             </Card>
 
-            <Card className="border-0 shadow-soft hover:shadow-medium transition-smooth bg-card group hover-lift">
+            <Card className="border-0 shadow-soft hover:shadow-medium transition-smooth glass group hover-lift">
               <CardContent className="p-10 text-center">
                 <div className="mb-8 flex justify-center">
                   <div className="w-20 h-20 bg-muted/50 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-spring">
@@ -263,7 +263,7 @@ const Index = () => {
               </CardContent>
             </Card>
 
-            <Card className="border-0 shadow-soft hover:shadow-medium transition-smooth bg-card group hover-lift">
+            <Card className="border-0 shadow-soft hover:shadow-medium transition-smooth glass group hover-lift">
               <CardContent className="p-10 text-center">
                 <div className="mb-8 flex justify-center">
                   <div className="w-20 h-20 bg-muted/50 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-spring">

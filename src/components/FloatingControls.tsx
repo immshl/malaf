@@ -66,34 +66,38 @@ const FloatingControls = () => {
   };
 
   return (
-    <div className="fixed bottom-6 right-6 flex flex-col gap-3 z-50">
-      {/* Language Toggle */}
-      <Button
-        variant="outline"
-        size="icon"
-        onClick={toggleLanguage}
-        disabled={isTransitioning}
-        className="glass w-12 h-12 rounded-full border-0 shadow-lg hover:scale-110 transition-all duration-300"
-        title={language === "ar" ? "Switch to English" : "التبديل للعربية"}
-      >
-        <Globe className="h-5 w-5" />
-      </Button>
+    <div className="fixed bottom-6 right-6 z-50">
+      <div className="glass rounded-2xl p-3 shadow-elegant border border-border/20">
+        <div className="flex flex-col gap-3">
+          {/* Language Toggle */}
+          <Button
+            variant="outline"
+            size="icon"
+            onClick={toggleLanguage}
+            disabled={isTransitioning}
+            className="bg-background/20 hover:bg-background/40 backdrop-blur-sm w-12 h-12 rounded-full border border-border/30 shadow-md hover:scale-110 transition-all duration-300"
+            title={language === "ar" ? "Switch to English" : "التبديل للعربية"}
+          >
+            <Globe className="h-5 w-5" />
+          </Button>
 
-      {/* Theme Toggle */}
-      <Button
-        variant="outline"
-        size="icon"
-        onClick={toggleTheme}
-        disabled={isTransitioning}
-        className="glass w-12 h-12 rounded-full border-0 shadow-lg hover:scale-110 transition-all duration-300"
-        title={theme === "light" ? "الوضع الداكن" : "الوضع الفاتح"}
-      >
-        {theme === "light" ? (
-          <Moon className="h-5 w-5" />
-        ) : (
-          <Sun className="h-5 w-5" />
-        )}
-      </Button>
+          {/* Theme Toggle */}
+          <Button
+            variant="outline"
+            size="icon"
+            onClick={toggleTheme}
+            disabled={isTransitioning}
+            className="bg-background/20 hover:bg-background/40 backdrop-blur-sm w-12 h-12 rounded-full border border-border/30 shadow-md hover:scale-110 transition-all duration-300"
+            title={theme === "light" ? "الوضع الداكن" : "الوضع الفاتح"}
+          >
+            {theme === "light" ? (
+              <Moon className="h-5 w-5" />
+            ) : (
+              <Sun className="h-5 w-5" />
+            )}
+          </Button>
+        </div>
+      </div>
     </div>
   );
 };

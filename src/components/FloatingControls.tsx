@@ -1,10 +1,9 @@
 import { useState, useEffect } from "react";
-import { createRoot } from "react-dom/client";
 import { Button } from "@/components/ui/button";
 import { Globe, Moon, Sun } from "lucide-react";
 import { useLanguage, type Language } from "@/hooks/useLanguage";
 import { useLocation } from "react-router-dom";
-import { motion, AnimatePresence } from "framer-motion";
+import { useSpring, animated } from "react-spring";
 
 type Theme = "light" | "dark";
 
@@ -43,31 +42,10 @@ const FloatingControls = () => {
 
   const handleTransition = (callback: () => void) => {
     setIsTransitioning(true);
-    
-    // Create magical theme transition with Framer Motion
-    const container = document.createElement("div");
-    container.id = "theme-transition";
-    document.body.appendChild(container);
-    
-    const isGoingDark = theme === "light";
-    
-    // Create the magic animation component
-    const root = createRoot(container);
-    root.render(
-      <AnimatePresence>
-        <ThemeTransition 
-          isGoingDark={isGoingDark} 
-          onComplete={() => {
-            callback();
-            setTimeout(() => {
-              root.unmount();
-              document.body.removeChild(container);
-              setIsTransitioning(false);
-            }, 500);
-          }}
-        />
-      </AnimatePresence>
-    );
+    callback();
+    setTimeout(() => {
+      setIsTransitioning(false);
+    }, 300);
   };
 
   const toggleTheme = () => {
@@ -100,104 +78,59 @@ const FloatingControls = () => {
             </Button>
           )}
 
-          {/* Theme Toggle - Always show with attractive animation */}
-          <Button
-            variant="outline"
-            size="icon"
+          {/* Theme Toggle - Beautiful React Spring Animation */}
+          <ThemeToggleButton 
+            theme={theme}
             onClick={toggleTheme}
             disabled={isTransitioning}
-            className="bg-background/10 hover:bg-background/20 backdrop-blur-sm w-10 h-10 rounded-lg border border-border/20 shadow-sm hover:scale-105 transition-all duration-300 relative overflow-hidden before:absolute before:inset-0 before:bg-gradient-to-r before:from-transparent before:via-primary/5 before:to-transparent before:translate-x-[-100%] before:animate-[shimmer_4s_ease-in-out_infinite] before:rounded-lg"
-            title={theme === "light" ? "الوضع الداكن" : "الوضع الفاتح"}
-          >
-          {theme === "light" ? (
-            <Moon className="h-4 w-4 animate-[glow_4s_ease-in-out_infinite_alternate]" />
-          ) : (
-            <Sun className="h-4 w-4 animate-[rotate_12s_ease-in-out_infinite] text-yellow-500" />
-          )}
-          </Button>
+          />
         </div>
       </div>
     </div>
   );
 };
 
-// Magical theme transition component
-const ThemeTransition = ({ isGoingDark, onComplete }: { isGoingDark: boolean; onComplete: () => void }) => {
-  useEffect(() => {
-    const timer = setTimeout(onComplete, 1500);
-    return () => clearTimeout(timer);
-  }, [onComplete]);
-
+// Beautiful React Spring Theme Toggle
+const ThemeToggleButton = ({ theme, onClick, disabled }: { 
+  theme: "light" | "dark"; 
+  onClick: () => void; 
+  disabled: boolean;
+}) => {
+  const [isHovered, setIsHovered] = useState(false);
+  
+  // Spring animation for rotation
+  const springProps = useSpring({
+    transform: theme === "dark" ? "rotate(180deg)" : "rotate(0deg)",
+    config: { tension: 120, friction: 14 }
+  });
+  
+  // Spring animation for scale on hover
+  const hoverSpring = useSpring({
+    transform: isHovered ? "scale(1.1)" : "scale(1)",
+    config: { tension: 300, friction: 10 }
+  });
+  
   return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      className="fixed inset-0 z-[9999] pointer-events-none overflow-hidden"
-    >
-      {/* Magical particles */}
-      {Array.from({ length: 20 }).map((_, i) => (
-        <motion.div
-          key={i}
-          initial={{ 
-            y: "100vh", 
-            x: Math.random() * window.innerWidth,
-            scale: 0,
-            rotate: 0
-          }}
-          animate={{ 
-            y: "-20vh", 
-            scale: [0, 1, 0],
-            rotate: 360,
-            opacity: [0, 1, 0]
-          }}
-          transition={{
-            duration: 2,
-            delay: Math.random() * 0.5,
-            ease: "easeOut"
-          }}
-          className={`absolute w-2 h-2 rounded-full ${
-            isGoingDark 
-              ? 'bg-white shadow-[0_0_10px_#ffffff]' 
-              : 'bg-yellow-400 shadow-[0_0_15px_#ffd700]'
-          }`}
-        />
-      ))}
-
-      {/* Central magical element */}
-      <motion.div
-        initial={{ scale: 0, rotate: 0 }}
-        animate={{ scale: [0, 1.5, 0], rotate: 180 }}
-        transition={{ duration: 1.5, ease: "easeInOut" }}
-        className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
+    <animated.div style={hoverSpring}>
+      <Button
+        variant="outline"
+        size="icon"
+        onClick={onClick}
+        disabled={disabled}
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
+        className="bg-background/10 hover:bg-background/20 backdrop-blur-sm w-10 h-10 rounded-lg border border-border/20 shadow-sm transition-all duration-300"
+        title={theme === "light" ? "الوضع الداكن" : "الوضع الفاتح"}
       >
-        {isGoingDark ? (
-          <motion.div
-            animate={{ rotate: [0, 360] }}
-            transition={{ duration: 1.5, ease: "linear" }}
-            className="w-16 h-16 rounded-full bg-gradient-to-br from-blue-400 to-purple-600 shadow-[0_0_30px_#3b82f6]"
-          />
-        ) : (
-          <motion.div
-            animate={{ rotate: [0, 360] }}
-            transition={{ duration: 1.5, ease: "linear" }}
-            className="w-16 h-16 rounded-full bg-gradient-to-br from-yellow-400 to-orange-500 shadow-[0_0_30px_#ffd700]"
-          />
-        )}
-      </motion.div>
-
-      {/* Color wave */}
-      <motion.div
-        initial={{ scaleX: 0, opacity: 0 }}
-        animate={{ scaleX: 1, opacity: [0, 0.7, 0] }}
-        transition={{ duration: 1.2, ease: "easeInOut" }}
-        className={`absolute bottom-0 left-0 w-full h-32 ${
-          isGoingDark
-            ? 'bg-gradient-to-t from-slate-900 via-blue-900 to-transparent'
-            : 'bg-gradient-to-t from-yellow-200 via-orange-300 to-transparent'
-        }`}
-      />
-    </motion.div>
+        <animated.div style={springProps}>
+          {theme === "light" ? (
+            <Moon className="h-4 w-4" />
+          ) : (
+            <Sun className="h-4 w-4 text-yellow-500" />
+          )}
+        </animated.div>
+      </Button>
+    </animated.div>
   );
 };
 

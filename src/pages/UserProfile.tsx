@@ -38,6 +38,7 @@ type Profile = Tables<'profiles'>;
 const UserProfile = () => {
   const { username } = useParams<{ username: string }>();
   const navigate = useNavigate();
+  const { language, t } = useLanguage();
   const [profile, setProfile] = useState<Profile | null>(null);
   const [loading, setLoading] = useState(true);
   const [selectedDay, setSelectedDay] = useState("");
@@ -55,25 +56,25 @@ const UserProfile = () => {
 
   // Day labels
   const dayLabels = {
-    sunday: "الأحد",
-    monday: "الاثنين", 
-    tuesday: "الثلاثاء",
-    wednesday: "الأربعاء",
-    thursday: "الخميس",
-    friday: "الجمعة",
-    saturday: "السبت"
+    sunday: language === 'ar' ? "الأحد" : "Sunday",
+    monday: language === 'ar' ? "الاثنين" : "Monday", 
+    tuesday: language === 'ar' ? "الثلاثاء" : "Tuesday",
+    wednesday: language === 'ar' ? "الأربعاء" : "Wednesday",
+    thursday: language === 'ar' ? "الخميس" : "Thursday",
+    friday: language === 'ar' ? "الجمعة" : "Friday",
+    saturday: language === 'ar' ? "السبت" : "Saturday"
   };
 
   // Time slot labels
   const timeSlotLabels = {
-    morning: "الصباح (8:00 ص - 12:00 م)",
-    afternoon: "بعد الظهر (12:00 م - 5:00 م)", 
-    evening: "المساء (5:00 م - 9:00 م)"
+    morning: language === 'ar' ? "الصباح (8:00 ص - 12:00 م)" : "Morning (8:00 AM - 12:00 PM)",
+    afternoon: language === 'ar' ? "بعد الظهر (12:00 م - 5:00 م)" : "Afternoon (12:00 PM - 5:00 PM)", 
+    evening: language === 'ar' ? "المساء (5:00 م - 9:00 م)" : "Evening (5:00 PM - 9:00 PM)"
   };
 
   // Get current time slots based on selected day
   const getCurrentTimeSlots = () => {
-    return ["5:00 م", "6:00 م", "7:00 م", "8:00 م"];
+    return language === 'ar' ? ["5:00 م", "6:00 م", "7:00 م", "8:00 م"] : ["5:00 PM", "6:00 PM", "7:00 PM", "8:00 PM"];
   };
 
   // Load profile data
@@ -208,7 +209,9 @@ const UserProfile = () => {
   if (loading) {
     return (
       <div className="min-h-screen bg-background flex items-center justify-center">
-        <div className="animate-pulse text-muted-foreground">جارٍ التحميل...</div>
+        <div className="animate-pulse text-muted-foreground">
+          {language === 'ar' ? 'جارٍ التحميل...' : 'Loading...'}
+        </div>
       </div>
     );
   }
@@ -217,10 +220,14 @@ const UserProfile = () => {
     return (
       <div className="min-h-screen bg-background flex items-center justify-center">
         <div className="text-center">
-          <h1 className="text-2xl font-bold text-foreground mb-4">الملف الشخصي غير موجود</h1>
-          <p className="text-muted-foreground mb-6">عذراً، لم نتمكن من العثور على هذا الملف الشخصي</p>
+          <h1 className="text-2xl font-bold text-foreground mb-4">
+            {language === 'ar' ? 'الملف الشخصي غير موجود' : 'Profile Not Found'}
+          </h1>
+          <p className="text-muted-foreground mb-6">
+            {language === 'ar' ? 'عذراً، لم نتمكن من العثور على هذا الملف الشخصي' : 'Sorry, we could not find this profile'}
+          </p>
           <Button onClick={() => navigate('/')} variant="outline">
-            العودة للرئيسية
+            {language === 'ar' ? 'العودة للرئيسية' : 'Back to Home'}
           </Button>
         </div>
       </div>
@@ -307,7 +314,7 @@ const UserProfile = () => {
               <div className="bg-background/80 backdrop-blur-sm border border-border/30 rounded-2xl shadow-sm mb-8 overflow-hidden">
                 <div className="p-4 bg-muted/20">
                   <h2 className="text-xl lg:text-2xl font-semibold text-foreground tracking-tight text-center">
-                    الخدمات
+                    {language === 'ar' ? 'الخدمات' : 'Services'}
                   </h2>
                 </div>
               </div>
@@ -335,7 +342,7 @@ const UserProfile = () => {
               <div className="bg-background/80 backdrop-blur-sm border border-border/30 rounded-2xl shadow-sm mb-8 overflow-hidden">
                 <div className="p-4 bg-muted/20">
                   <h2 className="text-xl lg:text-2xl font-semibold text-foreground tracking-tight text-center">
-                    أبرز العملاء
+                    {language === 'ar' ? 'أبرز العملاء' : 'Featured Clients'}
                   </h2>
                 </div>
               </div>
@@ -363,12 +370,12 @@ const UserProfile = () => {
               <div className="bg-background/80 backdrop-blur-sm border border-border/30 rounded-2xl shadow-sm mb-6 overflow-hidden">
                 <div className="p-4 bg-muted/20">
                   <h2 className="text-xl lg:text-2xl font-semibold text-foreground tracking-tight">
-                    احجز اجتماع
+                    {language === 'ar' ? 'احجز اجتماع' : 'Book a Meeting'}
                   </h2>
                 </div>
               </div>
               <p className="text-lg text-muted-foreground">
-                اختر الوقت المناسب لك ودعنا نناقش مشروعك
+                {language === 'ar' ? 'اختر الوقت المناسب لك ودعنا نناقش مشروعك' : 'Choose the suitable time for you and let us discuss your project'}
               </p>
             </div>
 

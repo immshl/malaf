@@ -190,10 +190,7 @@ const Index = () => {
             </h1>
             
             <p className="text-xl md:text-2xl text-muted-foreground mb-12 max-w-4xl mx-auto leading-relaxed font-light scroll-animate">
-              {language === "ar" 
-                ? "اصنع هويتك الرقمية واجذب العملاء المناسبين. عرض خدماتك، تلقي طلبات المشاريع، وإدارة عملك بسهولة — كل ذلك برابط واحد مميز"
-                : "Create your digital identity and attract the right clients. Showcase your services, receive project requests, and manage your work easily — all with one distinctive link"
-              }
+              {language === "ar" ? "اصنع هويتك الرقمية واجذب العملاء المناسبين. عرض خدماتك، تلقي طلبات المشاريع، وإدارة عملك بسهولة — كل ذلك برابط واحد مميز" : "Create your digital identity and attract the right clients. Showcase your services, receive project requests, and manage your work easily — all with one distinctive link"}
             </p>
             
             <div className="flex flex-col sm:flex-row gap-6 justify-center scroll-animate">

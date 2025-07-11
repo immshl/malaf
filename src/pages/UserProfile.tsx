@@ -229,7 +229,7 @@ const UserProfile = () => {
       <div className="container mx-auto px-4 max-w-4xl py-8">
         
         {/* بطاقة المعلومات الرئيسية - صورة + اسم + نبذة + رابط */}
-        <Card className="border border-border/30 rounded-3xl shadow-soft hover:shadow-medium transition-smooth mb-8">
+        <Card className="border border-border/50 rounded-3xl shadow-soft hover:shadow-medium transition-smooth mb-8">
           <CardContent className="p-8 lg:p-12 text-center">
             {/* صورة الملف الشخصي */}
             <div className="flex justify-center mb-6">
@@ -299,7 +299,7 @@ const UserProfile = () => {
 
         {/* بطاقة الخدمات */}
         {profile.skills && profile.skills.length > 0 && (
-          <Card className="border border-border/30 rounded-3xl shadow-soft hover:shadow-medium transition-smooth mb-8">
+          <Card className="border border-border/50 rounded-3xl shadow-soft hover:shadow-medium transition-smooth mb-8">
             <CardContent className="p-10 lg:p-12">
               <h2 className="text-2xl lg:text-3xl font-light text-foreground mb-10 tracking-tight text-center">
                 الخدمات
@@ -539,7 +539,7 @@ const UserProfile = () => {
 
         {/* وسائل التواصل */}
         {(profile.contact_email || profile.phone || profile.website || profile.instagram_url || profile.twitter_url || profile.linkedin_url || profile.github_url) && (
-          <Card className="border border-border/30 rounded-3xl shadow-soft hover:shadow-medium transition-smooth mb-8">
+          <Card className="border border-border/50 rounded-3xl shadow-soft hover:shadow-medium transition-smooth mb-8">
             <CardContent className="p-10 lg:p-12">
               <h2 className="text-2xl lg:text-3xl font-light text-foreground mb-10 tracking-tight text-center">
                 تواصل معي

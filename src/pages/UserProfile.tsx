@@ -114,7 +114,7 @@ const UserProfile = () => {
         const { data: profileData, error } = await supabase
           .from('profiles')
           .select('*')
-          .eq('username', username)
+          .ilike('username', username) // Use ilike for case-insensitive search
           .eq('is_public', true)
           .maybeSingle();
 

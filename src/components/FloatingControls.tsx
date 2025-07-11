@@ -8,6 +8,8 @@ type Theme = "light" | "dark";
 const FloatingControls = () => {
   const [theme, setTheme] = useState<Theme>("light");
   const [isTransitioning, setIsTransitioning] = useState(false);
+  const [isScrolling, setIsScrolling] = useState(false);
+  const [scrollTimeout, setScrollTimeout] = useState<NodeJS.Timeout | null>(null);
   const { language, setLanguage } = useLanguage();
 
   useEffect(() => {
@@ -28,6 +30,34 @@ const FloatingControls = () => {
     }
     console.log("Theme changed to:", theme);
   }, [theme]);
+
+  // Handle scroll events to hide/show controls
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolling(true);
+      
+      // Clear existing timeout
+      if (scrollTimeout) {
+        clearTimeout(scrollTimeout);
+      }
+      
+      // Set new timeout to show controls after scrolling stops
+      const newTimeout = setTimeout(() => {
+        setIsScrolling(false);
+      }, 1000); // Show controls 1 second after scrolling stops
+      
+      setScrollTimeout(newTimeout);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      if (scrollTimeout) {
+        clearTimeout(scrollTimeout);
+      }
+    };
+  }, [scrollTimeout]);
 
 
   const handleTransition = (callback: () => void) => {
@@ -66,7 +96,9 @@ const FloatingControls = () => {
   };
 
   return (
-    <div className="fixed bottom-6 right-6 z-50">
+    <div className={`fixed bottom-6 right-6 z-50 transition-transform duration-500 ease-in-out ${
+      isScrolling ? 'transform translate-x-16' : 'transform translate-x-0'
+    }`}>
       <div className="bg-background/10 backdrop-blur-md rounded-xl p-2 shadow-md border border-border/10">
         <div className="flex flex-col gap-2">
           {/* Language Toggle */}

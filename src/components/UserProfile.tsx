@@ -113,12 +113,12 @@ const UserProfile = () => {
   return (
     <div className="flex flex-col items-center gap-3 animate-fade-in">
       <div className="flex flex-col items-center gap-2">
-        <div className="relative h-14 w-14">
+        <div className="relative h-16 w-16">
           {/* Skeleton أثناء التحميل */}
           {!imageLoaded && (
             <div className="absolute inset-0 bg-muted/50 rounded-full animate-pulse border-2 border-muted-foreground/20" />
           )}
-          <Avatar className={`h-14 w-14 border-2 border-muted-foreground/20 transition-all duration-200 ${!imageLoaded ? 'opacity-0' : 'opacity-100'}`}>
+          <Avatar className={`h-16 w-16 border-2 border-muted-foreground/20 transition-all duration-200 ${!imageLoaded ? 'opacity-0' : 'opacity-100'}`}>
             <AvatarImage 
               src={profile?.avatar_url || ''} 
               alt={profile?.full_name || user.email || 'User'}
@@ -127,16 +127,16 @@ const UserProfile = () => {
               onError={() => setImageLoaded(true)}
               className="object-cover"
             />
-            <AvatarFallback className="bg-primary/10 text-primary font-semibold text-lg">
+            <AvatarFallback className="bg-primary/10 text-primary font-semibold text-xl">
               {initials}
             </AvatarFallback>
           </Avatar>
         </div>
         <div className="flex items-center gap-2 text-center">
-          <span className="text-sm font-medium text-foreground">
+          <span className="text-base font-medium text-foreground">
             {getGreeting()}
           </span>
-          <span className="text-sm text-muted-foreground">
+          <span className="text-base text-muted-foreground">
             {displayName}
           </span>
         </div>

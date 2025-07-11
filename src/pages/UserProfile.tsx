@@ -249,7 +249,7 @@ const UserProfile = () => {
             </div>
 
             {/* الاسم */}
-            <h1 className="text-2xl md:text-3xl lg:text-4xl font-light text-foreground mb-3 tracking-tight">
+            <h1 className="text-xl md:text-2xl lg:text-3xl font-semibold text-foreground mb-3 tracking-tight">
               {profile.full_name || profile.username}
             </h1>
 
@@ -265,7 +265,7 @@ const UserProfile = () => {
 
             {/* النبذة التعريفية */}
             {profile.bio && (
-              <p className="text-lg font-light text-muted-foreground leading-relaxed max-w-2xl mx-auto mb-6">
+              <p className="text-base lg:text-lg font-light text-muted-foreground leading-relaxed max-w-2xl mx-auto mb-6">
                 {profile.bio}
               </p>
             )}
@@ -303,7 +303,7 @@ const UserProfile = () => {
             <CardContent className="p-10 lg:p-12">
               <div className="bg-background/80 backdrop-blur-sm border border-border/30 rounded-2xl shadow-sm mb-8 overflow-hidden">
                 <div className="p-4 bg-muted/20">
-                  <h2 className="text-2xl lg:text-3xl font-bold text-foreground tracking-tight text-center">
+                  <h2 className="text-xl lg:text-2xl font-semibold text-foreground tracking-tight text-center">
                     الخدمات
                   </h2>
                 </div>
@@ -331,7 +331,7 @@ const UserProfile = () => {
             <div className="text-center mb-8">
               <div className="bg-background/80 backdrop-blur-sm border border-border/30 rounded-2xl shadow-sm mb-6 overflow-hidden">
                 <div className="p-4 bg-muted/20">
-                  <h2 className="text-2xl lg:text-3xl font-bold text-foreground tracking-tight">
+                  <h2 className="text-xl lg:text-2xl font-semibold text-foreground tracking-tight">
                     احجز اجتماع
                   </h2>
                 </div>

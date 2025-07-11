@@ -213,7 +213,7 @@ const Index = () => {
                 className="text-lg px-10 py-4 font-medium"
                 asChild
               >
-                <Link to="/example">
+                <Link to="/immshl">
                   {language === "ar" ? "شاهد نموذج" : "View Example"}
                 </Link>
               </Button>

@@ -12,7 +12,6 @@ import SignIn from "./pages/SignIn";
 import EmailVerification from "./pages/EmailVerification";
 import CreateProfile from "./pages/CreateProfile";
 import UserProfile from "./pages/UserProfile";
-import MishalProfile from "./pages/MishalProfile";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -32,7 +31,7 @@ const App = () => (
             <Route path="/verify-email" element={<EmailVerification />} />
             <Route path="/create-profile" element={<CreateProfile />} />
             <Route path="/profile/:username" element={<UserProfile />} />
-            <Route path="/example" element={<MishalProfile />} />
+            
             {/* الرابط المختصر للفريلانسر - يجب أن يكون قبل catch-all مباشرة */}
             <Route path="/:username" element={<UserProfile />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}

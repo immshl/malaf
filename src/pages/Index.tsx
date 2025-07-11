@@ -4,11 +4,15 @@ import { Card, CardContent } from "@/components/ui/card";
 import { ArrowLeft, Users, Calendar, Link2, Star, Zap, Shield, Smartphone, Menu, X } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useLanguage } from "@/hooks/useLanguage";
+import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import AuthButton from "@/components/AuthButton";
 
 const Index = () => {
   const { language, t } = useLanguage();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  
+  // Initialize scroll animations
+  useScrollAnimation();
 
   const toggleMobileMenu = () => {
     console.log('Toggling mobile menu:', !isMobileMenuOpen);
@@ -175,24 +179,24 @@ const Index = () => {
         <div className="absolute inset-0 bg-gradient-accent opacity-5"></div>
         <div className="container mx-auto px-6 relative z-10">
           <div className="max-w-4xl mx-auto text-center">
-            <p className="text-sm text-muted-foreground mb-6 font-medium tracking-wide uppercase">
+            <p className="text-sm text-muted-foreground mb-6 font-medium tracking-wide uppercase scroll-animate">
               {language === "ar" ? "لتمكين العمل الحر" : "Empowering Freelancers"}
             </p>
             
-            <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold mb-8 leading-[1.1] tracking-tight">
+            <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold mb-8 leading-[1.1] tracking-tight scroll-animate">
               <span className="text-foreground">
                 {language === "ar" ? "ملف مهني خاص بك" : "Your Professional Profile"}
               </span>
             </h1>
             
-            <p className="text-xl md:text-2xl text-muted-foreground mb-12 max-w-4xl mx-auto leading-relaxed font-light">
+            <p className="text-xl md:text-2xl text-muted-foreground mb-12 max-w-4xl mx-auto leading-relaxed font-light scroll-animate">
               {language === "ar" 
                 ? "اصنع هويتك الرقمية واجذب العملاء المناسبين. عرض خدماتك، تلقي طلبات المشاريع، وإدارة عملك بسهولة — كل ذلك برابط واحد مميز"
                 : "Create your digital identity and attract the right clients. Showcase your services, receive project requests, and manage your work easily — all with one distinctive link"
               }
             </p>
             
-            <div className="flex flex-col sm:flex-row gap-6 justify-center">
+            <div className="flex flex-col sm:flex-row gap-6 justify-center scroll-animate">
               <Button 
                 size="lg" 
                 variant="hero"
@@ -221,7 +225,7 @@ const Index = () => {
       {/* Features Section */}
       <section id="features" className="py-32 bg-muted/20">
         <div className="container mx-auto px-6">
-          <div className="text-center mb-20">
+          <div className="text-center mb-20 scroll-animate">
             <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-6 tracking-tight">
               {language === "ar" ? "كل ما تحتاجه لبناء حضور رقمي فعال" : "Everything You Need for Effective Digital Presence"}
             </h2>
@@ -231,7 +235,7 @@ const Index = () => {
           </div>
           
           <div className="grid md:grid-cols-3 gap-10">
-            <Card className="border-0 shadow-soft hover:shadow-medium transition-smooth glass group hover-lift">
+            <Card className="border-0 shadow-soft hover:shadow-medium transition-smooth glass group hover-lift scroll-animate-left">
               <CardContent className="p-10 text-center">
                 <div className="mb-8 flex justify-center">
                   <div className="w-20 h-20 bg-muted/50 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-spring">
@@ -247,7 +251,7 @@ const Index = () => {
               </CardContent>
             </Card>
 
-            <Card className="border-0 shadow-soft hover:shadow-medium transition-smooth glass group hover-lift">
+            <Card className="border-0 shadow-soft hover:shadow-medium transition-smooth glass group hover-lift scroll-animate-scale">
               <CardContent className="p-10 text-center">
                 <div className="mb-8 flex justify-center">
                   <div className="w-20 h-20 bg-muted/50 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-spring">
@@ -263,7 +267,7 @@ const Index = () => {
               </CardContent>
             </Card>
 
-            <Card className="border-0 shadow-soft hover:shadow-medium transition-smooth glass group hover-lift">
+            <Card className="border-0 shadow-soft hover:shadow-medium transition-smooth glass group hover-lift scroll-animate-right">
               <CardContent className="p-10 text-center">
                 <div className="mb-8 flex justify-center">
                   <div className="w-20 h-20 bg-muted/50 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-spring">
@@ -285,7 +289,7 @@ const Index = () => {
       {/* How It Works Section */}
       <section id="how-it-works" className="py-32">
         <div className="container mx-auto px-6">
-          <div className="text-center mb-20">
+          <div className="text-center mb-20 scroll-animate">
             <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-6 tracking-tight">
               {language === "ar" ? "كيف يعمل ملف؟" : "How Does Malaf Work?"}
             </h2>
@@ -295,7 +299,7 @@ const Index = () => {
           </div>
           
           <div className="grid md:grid-cols-3 gap-12 max-w-5xl mx-auto">
-            <div className="text-center">
+            <div className="text-center scroll-animate-left">
               <div className="mb-8 flex justify-center">
                 <div className="w-20 h-20 bg-foreground rounded-2xl flex items-center justify-center text-background text-3xl font-bold shadow-medium">
                   1
@@ -309,7 +313,7 @@ const Index = () => {
               </p>
             </div>
 
-            <div className="text-center">
+            <div className="text-center scroll-animate-scale">
               <div className="mb-8 flex justify-center">
                 <div className="w-20 h-20 bg-foreground rounded-2xl flex items-center justify-center text-background text-3xl font-bold shadow-medium">
                   2
@@ -323,7 +327,7 @@ const Index = () => {
               </p>
             </div>
 
-            <div className="text-center">
+            <div className="text-center scroll-animate-right">
               <div className="mb-8 flex justify-center">
                 <div className="w-20 h-20 bg-foreground rounded-2xl flex items-center justify-center text-background text-3xl font-bold shadow-medium">
                   3
@@ -342,7 +346,7 @@ const Index = () => {
 
       {/* CTA Section */}
       <section className="py-32 relative overflow-hidden bg-muted/20">
-        <div className="container mx-auto px-6 text-center relative z-10">
+        <div className="container mx-auto px-6 text-center relative z-10 scroll-animate">
           <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-8 tracking-tight">
             {language === "ar" ? "ابدأ ملفك المميز" : "Start Your Distinguished Profile"}
           </h2>

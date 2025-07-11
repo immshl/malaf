@@ -46,3 +46,6 @@ content_path = "./supabase/templates/confirmation.html"
 
 [functions.send-email]
 verify_jwt = false
+
+[functions.send-booking-notification]
+verify_jwt = false

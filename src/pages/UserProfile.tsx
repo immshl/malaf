@@ -206,6 +206,29 @@ const UserProfile = () => {
         return;
       }
 
+      // Send booking notification email to freelancer
+      try {
+        await supabase.functions.invoke('send-booking-notification', {
+          body: {
+            freelancerEmail: profile.contact_email || profile.user_id, // fallback if no contact email
+            freelancerName: profile.full_name || profile.username || 'الفريلانسر',
+            clientName: bookingForm.name,
+            clientEmail: bookingForm.email,
+            clientPhone: bookingForm.phone,
+            requestedDay: showAlternativeBooking ? null : selectedDay,
+            requestedTime: showAlternativeBooking ? null : selectedTime,
+            suggestedDay: showAlternativeBooking ? alternativeDay : null,
+            suggestedTimeSlot: showAlternativeBooking ? alternativeTimeSlot : null,
+            notes: bookingForm.notes,
+            isAlternativeRequest: showAlternativeBooking,
+          },
+        });
+        console.log('Booking notification email sent successfully');
+      } catch (emailError) {
+        console.error('Failed to send booking notification email:', emailError);
+        // Don't block the booking if email fails
+      }
+
       toast({
         title: "تم إرسال طلب الحجز بنجاح!",
         description: showAlternativeBooking 

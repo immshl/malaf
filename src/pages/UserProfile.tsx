@@ -521,7 +521,9 @@ const UserProfile = () => {
                               <h4 className="text-lg font-semibold text-foreground mb-2">الأوقات المتاحة</h4>
                               <div className="inline-flex items-center gap-2 px-4 py-2 bg-background/80 rounded-full border border-border/30">
                                 <Clock className="w-4 h-4 text-primary" />
-                                <span className="text-sm text-muted-foreground">المساء (5:00 م - 9:00 م)</span>
+                                <span className="text-sm text-muted-foreground">
+                                  {profile?.time_slot ? timeSlotLabels[profile.time_slot as keyof typeof timeSlotLabels] : "المساء (5:00 م - 9:00 م)"}
+                                </span>
                               </div>
                             </div>
                             
@@ -530,7 +532,10 @@ const UserProfile = () => {
                               <div className="space-y-4">
                                 <Label className="text-base font-medium">اختر اليوم المناسب</Label>
                                 <div className="grid grid-cols-3 gap-3">
-                                  {["sunday", "tuesday", "thursday"].map((day) => (
+                                  {(profile?.available_days && profile.available_days.length > 0 
+                                    ? profile.available_days 
+                                    : ["sunday", "tuesday", "thursday"]
+                                  ).map((day) => (
                                     <button
                                       key={day}
                                       type="button"

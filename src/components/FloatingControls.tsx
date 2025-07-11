@@ -117,10 +117,7 @@ const FloatingControls = () => {
   };
 
   return (
-    <animated.div 
-      style={slideAnimation}
-      className="fixed bottom-6 right-6 z-50"
-    >
+    <div className="fixed bottom-6 right-6 z-50">
       <div className="bg-background/10 backdrop-blur-md rounded-xl p-2 shadow-md border border-border/10 transition-opacity duration-300 hover:bg-background/20">
         <div className="flex flex-col gap-2">
           {/* Language Toggle - Hide on freelancer profile pages */}
@@ -145,7 +142,7 @@ const FloatingControls = () => {
           />
         </div>
       </div>
-    </animated.div>
+    </div>
   );
 };
 

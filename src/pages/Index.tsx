@@ -179,8 +179,8 @@ const Index = () => {
         <div className="absolute inset-0 bg-gradient-accent opacity-5"></div>
         <div className="container mx-auto px-6 relative z-10">
           <div className="max-w-4xl mx-auto text-center">
-            <p className="text-sm text-muted-foreground mb-4 font-medium tracking-wide uppercase scroll-animate">
-              ✨ {language === "ar" ? "لتمكين العمل الحر" : "Empowering Freelancers"} ✨
+            <p className="text-sm text-muted-foreground mb-8 font-medium tracking-wide uppercase scroll-animate">
+              {language === "ar" ? "لتمكين العمل الحر" : "Empowering Freelancers"} ✨
             </p>
             
             <h1 className="text-4xl md:text-7xl lg:text-8xl font-bold mb-8 leading-[1.1] tracking-tight scroll-animate">

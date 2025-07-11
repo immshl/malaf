@@ -11,8 +11,10 @@ import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
 import { useAuth } from "@/hooks/useAuth";
+import { useLanguage } from "@/hooks/useLanguage";
 import { supabase } from "@/integrations/supabase/client";
 import type { Tables } from "@/integrations/supabase/types";
+import FloatingControls from "@/components/FloatingControls";
 import { 
   Copy, 
   Edit, 
@@ -754,6 +756,9 @@ const UserProfile = () => {
         )}
 
       </div>
+
+      {/* أزرار التحكم العائمة */}
+      <FloatingControls />
 
       {/* شعار المنصة في أسفل الصفحة */}
       <footer className="border-t border-border/10 bg-muted/30 py-8">

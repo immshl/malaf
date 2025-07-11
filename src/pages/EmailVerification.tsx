@@ -192,11 +192,18 @@ const EmailVerification = () => {
         {/* شعار الموقع */}
         <div className="text-center mb-8">
           <Link to="/" className="inline-flex items-center space-x-2 space-x-reverse group">
-            <div className="w-12 h-12 flex items-center justify-center transform group-hover:scale-110 transition-transform duration-300">
+            <div className="w-10 h-10 flex items-center justify-center transform group-hover:scale-110 transition-transform duration-300">
+              {/* Logo for light mode (black) */}
               <img 
-                src="/lovable-uploads/053ffcb6-5dac-4834-a5ef-585d29be4be9.png" 
+                src="/lovable-uploads/822b255a-0cfa-4520-b9a5-aa69e7ef91e6.png" 
                 alt="ملف" 
-                className="w-full h-full object-contain"
+                className="w-full h-full object-contain dark:hidden"
+              />
+              {/* Logo for dark mode (white) */}
+              <img 
+                src="/lovable-uploads/be1d2269-8206-422b-a395-e4fb9e1a88cc.png" 
+                alt="ملف" 
+                className="w-full h-full object-contain hidden dark:block"
               />
             </div>
             <span className="text-2xl font-bold text-foreground group-hover:text-purple-600 transition-colors duration-300">malaf</span>

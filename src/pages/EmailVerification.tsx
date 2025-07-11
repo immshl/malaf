@@ -13,8 +13,66 @@ const EmailVerification = () => {
   const [isChecking, setIsChecking] = useState(true);
   const navigate = useNavigate();
   const { user } = useAuth();
-  const { t } = useLanguage();
+  const { language } = useLanguage();
   const [searchParams] = useSearchParams();
+
+  // دالة الترجمة
+  const t = (key: string, fallback: string) => {
+    const translations: Record<string, Record<string, string>> = {
+      ar: {
+        verificationSuccess: "تم التحقق بنجاح! 🎉",
+        emailConfirmed: "تم تأكيد بريدك الإلكتروني بنجاح",
+        redirectingToProfile: "جارٍ التوجيه إلى إنشاء الملف الشخصي...",
+        verificationError: "خطأ في التحقق",
+        invalidOrExpiredLink: "رابط التحقق غير صالح أو منتهي الصلاحية",
+        checkYourEmail: "تحقق من بريدك الإلكتروني 📧",
+        sentVerificationTo: "لقد أرسلنا رابط التحقق إلى",
+        clickEmailLink: "اضغط على الرابط في البريد",
+        checkInboxInstructions: "تفقد صندوق الوارد الخاص بك واضغط على رابط التحقق لتأكيد حسابك وإكمال التسجيل",
+        linkValidFor24h: "الرابط صالح لمدة 24 ساعة",
+        didntReceiveEmail: "لم تستلم الإيميل؟",
+        resendLink: "إرسال الرابط مجدداً",
+        backToSignup: "العودة للتسجيل",
+        checkSpamFolder: "💡 لم تجد الإيميل؟ تأكد من مجلد البريد المزعج (Spam)",
+        error: "خطأ",
+        emailNotFound: "لم يتم العثور على البريد الإلكتروني",
+        emailSentAgain: "تم إرسال الرابط مجدداً 📧",
+        checkEmailAndSpam: "تفقد بريدك الإلكتروني للرابط الجديد. تحقق من مجلد الرسائل المزعجة أيضاً.",
+        signupRequired: "مطلوب إعادة التسجيل",
+        incompleteAccount: "يبدو أن حسابك غير مكتمل. يرجى العودة وإعادة التسجيل بكلمة مرور جديدة.",
+        resignup: "إعادة التسجيل",
+        sendError: "خطأ في الإرسال",
+        verificationSendError: "حدث خطأ أثناء إرسال رابط التحقق"
+      },
+      en: {
+        verificationSuccess: "Verification successful! 🎉",
+        emailConfirmed: "Your email has been successfully confirmed",
+        redirectingToProfile: "Redirecting to profile creation...",
+        verificationError: "Verification error",
+        invalidOrExpiredLink: "Verification link is invalid or expired",
+        checkYourEmail: "Check your email 📧",
+        sentVerificationTo: "We sent a verification link to",
+        clickEmailLink: "Click the link in the email",
+        checkInboxInstructions: "Check your inbox and click the verification link to confirm your account and complete registration",
+        linkValidFor24h: "Link is valid for 24 hours",
+        didntReceiveEmail: "Didn't receive the email?",
+        resendLink: "Resend link",
+        backToSignup: "Back to signup",
+        checkSpamFolder: "💡 Didn't find the email? Check your spam folder",
+        error: "Error",
+        emailNotFound: "Email address not found",
+        emailSentAgain: "Link sent again 📧",
+        checkEmailAndSpam: "Check your email for the new link. Also check your spam folder.",
+        signupRequired: "Signup required",
+        incompleteAccount: "Your account seems incomplete. Please go back and signup again with a new password.",
+        resignup: "Signup again",
+        sendError: "Send error",
+        verificationSendError: "An error occurred while sending the verification link"
+      }
+    };
+    
+    return translations[language]?.[key] || fallback;
+  };
 
   // Check if user is already verified or coming from email link
   useEffect(() => {
@@ -33,8 +91,8 @@ const EmailVerification = () => {
           if (!error) {
             setIsVerified(true);
             toast({
-              title: "تم التحقق بنجاح! 🎉",
-              description: "تم تأكيد بريدك الإلكتروني بنجاح"
+              title: t('verificationSuccess', 'تم التحقق بنجاح! 🎉'),
+              description: t('emailConfirmed', 'تم تأكيد بريدك الإلكتروني بنجاح')
             });
             
             setTimeout(() => {
@@ -44,8 +102,8 @@ const EmailVerification = () => {
             console.error('Email verification error:', error);
             toast({
               variant: "destructive",
-              title: "خطأ في التحقق",
-              description: "رابط التحقق غير صالح أو منتهي الصلاحية"
+              title: t('verificationError', 'خطأ في التحقق'),
+              description: t('invalidOrExpiredLink', 'رابط التحقق غير صالح أو منتهي الصلاحية')
             });
           }
         } catch (error) {
@@ -68,8 +126,8 @@ const EmailVerification = () => {
     if (!user?.email) {
       toast({
         variant: "destructive",
-        title: "خطأ",
-        description: "لم يتم العثور على البريد الإلكتروني"
+        title: t('error', 'خطأ'),
+        description: t('emailNotFound', 'لم يتم العثور على البريد الإلكتروني')
       });
       return;
     }
@@ -105,8 +163,8 @@ const EmailVerification = () => {
       }
 
       toast({
-        title: "تم إرسال الرابط مجدداً 📧",
-        description: "تفقد بريدك الإلكتروني للرابط الجديد. تحقق من مجلد الرسائل المزعجة أيضاً."
+        title: t('emailSentAgain', 'تم إرسال الرابط مجدداً 📧'),
+        description: t('checkEmailAndSpam', 'تفقد بريدك الإلكتروني للرابط الجديد. تحقق من مجلد الرسائل المزعجة أيضاً.')
       });
       
     } catch (error: any) {
@@ -117,23 +175,23 @@ const EmailVerification = () => {
           error.message?.includes("user_repeated_signup")) {
         toast({
           variant: "destructive",
-          title: "مطلوب إعادة التسجيل",
-          description: "يبدو أن حسابك غير مكتمل. يرجى العودة وإعادة التسجيل بكلمة مرور جديدة.",
+          title: t('signupRequired', 'مطلوب إعادة التسجيل'),
+          description: t('incompleteAccount', 'يبدو أن حسابك غير مكتمل. يرجى العودة وإعادة التسجيل بكلمة مرور جديدة.'),
           action: (
             <Button 
               variant="outline" 
               size="sm"
               onClick={() => navigate("/signup")}
             >
-              إعادة التسجيل
+              {t('resignup', 'إعادة التسجيل')}
             </Button>
           )
         });
       } else {
         toast({
           variant: "destructive",
-          title: "خطأ في الإرسال",
-          description: error.message || "حدث خطأ أثناء إرسال رابط التحقق"
+          title: t('sendError', 'خطأ في الإرسال'),
+          description: error.message || t('verificationSendError', 'حدث خطأ أثناء إرسال رابط التحقق')
         });
       }
     }
@@ -143,7 +201,7 @@ const EmailVerification = () => {
     return (
       <div className="min-h-screen bg-gradient-to-br from-purple-50 via-blue-50 to-indigo-50 dark:from-gray-900 dark:via-purple-900/20 dark:to-indigo-900/20 flex items-center justify-center p-4">
         <div className="w-full max-w-md">
-          <Card className="shadow-strong border-0 bg-white/80 backdrop-blur-sm">
+          <Card className="shadow-strong border-0 bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm">
             <CardContent className="p-8 text-center">
               <div className="mb-6">
                 <div className="relative mb-6">
@@ -154,13 +212,15 @@ const EmailVerification = () => {
                     <Sparkles className="w-4 h-4 text-white" />
                   </div>
                 </div>
-                <h2 className="text-2xl font-bold text-green-600 mb-2">تم التحقق بنجاح! 🎉</h2>
+                <h2 className="text-2xl font-bold text-green-600 dark:text-green-400 mb-2">
+                  {t('verificationSuccess', 'تم التحقق بنجاح! 🎉')}
+                </h2>
                 <p className="text-muted-foreground mb-4">
-                  تم تأكيد بريدك الإلكتروني بنجاح
+                  {t('emailConfirmed', 'تم تأكيد بريدك الإلكتروني بنجاح')}
                 </p>
-                <div className="text-sm text-purple-600 flex items-center justify-center gap-2">
+                <div className="text-sm text-purple-600 dark:text-purple-400 flex items-center justify-center gap-2">
                   <Clock className="w-4 h-4" />
-                  جارٍ التوجيه إلى إنشاء الملف الشخصي...
+                  {t('redirectingToProfile', 'جارٍ التوجيه إلى إنشاء الملف الشخصي...')}
                 </div>
               </div>
             </CardContent>
@@ -194,7 +254,7 @@ const EmailVerification = () => {
           </Link>
         </div>
 
-        <Card className="shadow-strong border-0 bg-white/80 backdrop-blur-sm">
+        <Card className="shadow-strong border-0 bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm">
           <CardHeader className="text-center pb-6">
             <div className="mb-6 flex justify-center">
               <div className="relative">
@@ -206,10 +266,12 @@ const EmailVerification = () => {
                 </div>
               </div>
             </div>
-            <CardTitle className="text-2xl font-bold text-foreground mb-2">تحقق من بريدك الإلكتروني 📧</CardTitle>
+            <CardTitle className="text-2xl font-bold text-foreground mb-2">
+              {t('checkYourEmail', 'تحقق من بريدك الإلكتروني 📧')}
+            </CardTitle>
             <CardDescription className="text-muted-foreground text-base leading-relaxed">
-              لقد أرسلنا رابط التحقق إلى{' '}
-              <span className="font-medium text-purple-600">{user?.email}</span>
+              {t('sentVerificationTo', 'لقد أرسلنا رابط التحقق إلى')}{' '}
+              <span className="font-medium text-purple-600 dark:text-purple-400">{user?.email}</span>
             </CardDescription>
           </CardHeader>
           
@@ -221,14 +283,16 @@ const EmailVerification = () => {
                   <div className="text-purple-600 dark:text-purple-400">
                     <Sparkles className="w-8 h-8 mx-auto mb-3" />
                   </div>
-                  <h3 className="font-semibold text-foreground">اضغط على الرابط في البريد</h3>
+                  <h3 className="font-semibold text-foreground">
+                    {t('clickEmailLink', 'اضغط على الرابط في البريد')}
+                  </h3>
                   <p className="text-sm text-muted-foreground leading-relaxed">
-                    تفقد صندوق الوارد الخاص بك واضغط على رابط التحقق لتأكيد حسابك وإكمال التسجيل
+                    {t('checkInboxInstructions', 'تفقد صندوق الوارد الخاص بك واضغط على رابط التحقق لتأكيد حسابك وإكمال التسجيل')}
                   </p>
                   
                   <div className="flex items-center justify-center gap-2 text-xs text-purple-600 dark:text-purple-400 mt-4">
                     <Clock className="w-3 h-3" />
-                    الرابط صالح لمدة 24 ساعة
+                    {t('linkValidFor24h', 'الرابط صالح لمدة 24 ساعة')}
                   </div>
                 </div>
               </div>
@@ -236,23 +300,23 @@ const EmailVerification = () => {
               {/* نصائح */}
               <div className="bg-gradient-to-r from-amber-50 to-yellow-50 dark:from-amber-900/20 dark:to-yellow-900/20 p-4 rounded-lg border border-amber-200 dark:border-amber-800/30">
                 <p className="text-sm text-amber-800 dark:text-amber-200 text-center">
-                  💡 لم تجد الإيميل؟ تأكد من مجلد البريد المزعج (Spam)
+                  {t('checkSpamFolder', '💡 لم تجد الإيميل؟ تأكد من مجلد البريد المزعج (Spam)')}
                 </p>
               </div>
 
               {/* إعادة الإرسال */}
               <div className="text-center space-y-3">
                 <p className="text-sm text-muted-foreground">
-                  لم تستلم الإيميل؟
+                  {t('didntReceiveEmail', 'لم تستلم الإيميل؟')}
                 </p>
                 <Button
                   type="button"
                   variant="outline"
                   onClick={handleResendEmail}
-                  className="min-w-[140px] hover:bg-purple-50 hover:border-purple-300 dark:hover:bg-purple-900/20"
+                  className="min-w-[140px] hover:bg-purple-50 hover:border-purple-300 dark:hover:bg-purple-900/20 dark:hover:border-purple-600"
                 >
                   <RefreshCw className="ml-2 h-4 w-4" />
-                  إرسال الرابط مجدداً
+                  {t('resendLink', 'إرسال الرابط مجدداً')}
                 </Button>
               </div>
 
@@ -262,7 +326,7 @@ const EmailVerification = () => {
                   to="/signup" 
                   className="inline-flex items-center text-sm text-muted-foreground hover:text-foreground transition-colors"
                 >
-                  ← العودة للتسجيل
+                  {language === 'ar' ? '← ' : '→ '}{t('backToSignup', 'العودة للتسجيل')}
                 </Link>
               </div>
             </div>

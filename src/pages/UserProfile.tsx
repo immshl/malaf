@@ -304,18 +304,16 @@ const UserProfile = () => {
               <h2 className="text-2xl lg:text-3xl font-light text-foreground mb-8 tracking-tight text-center">
                 الخدمات
               </h2>
-              <div className="grid md:grid-cols-2 gap-6">
+              
+              <div className="flex flex-wrap justify-center gap-4">
                 {profile.skills.map((skill, index) => (
-                  <div 
+                  <Badge 
                     key={index} 
-                    className="p-6 rounded-2xl border border-border/10 hover:border-border/30 transition-smooth hover:shadow-soft bg-muted/5 hover:bg-muted/10"
+                    variant="secondary" 
+                    className="px-6 py-3 text-base font-medium bg-gradient-to-r from-primary/10 to-accent/10 text-foreground border border-primary/20 rounded-full hover:from-primary/20 hover:to-accent/20 hover:border-primary/30 transition-all duration-300 cursor-default shadow-sm hover:shadow-md"
                   >
-                    <div className="text-center">
-                      <h3 className="text-lg font-medium text-foreground tracking-tight">
-                        {skill}
-                      </h3>
-                    </div>
-                  </div>
+                    {skill}
+                  </Badge>
                 ))}
               </div>
             </CardContent>

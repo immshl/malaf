@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Dialog, DialogClose, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
@@ -43,7 +43,6 @@ const UserProfile = () => {
   const [showAlternativeBooking, setShowAlternativeBooking] = useState(false);
   const [alternativeDay, setAlternativeDay] = useState("");
   const [alternativeTimeSlot, setAlternativeTimeSlot] = useState("");
-  const [isBookingDialogOpen, setIsBookingDialogOpen] = useState(false);
   const [bookingForm, setBookingForm] = useState({
     name: "",
     email: "",
@@ -373,7 +372,7 @@ const UserProfile = () => {
 
             {/* زر الحجز الرئيسي */}
             <div className="text-center">
-              <Dialog open={isBookingDialogOpen} onOpenChange={setIsBookingDialogOpen}>
+              <Dialog>
                 <DialogTrigger asChild>
                   <Button 
                     size="lg" 
@@ -383,18 +382,15 @@ const UserProfile = () => {
                     احجز الآن
                   </Button>
                 </DialogTrigger>
-                <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto glass border-border/20 shadow-elegant backdrop-blur-md bg-background/30 rounded-3xl relative">
+                <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto glass border-border/20 shadow-elegant backdrop-blur-md bg-background/30 rounded-3xl relative [&>button]:hidden">
                   <div className="absolute inset-0 bg-gradient-to-br from-background/25 via-background/15 to-background/30 rounded-3xl"></div>
                   
-                  {/* زر الإغلاق المحسن */}
-                  <div className="absolute top-4 left-4 z-20">
-                    <button 
-                      onClick={() => setIsBookingDialogOpen(false)}
-                      className="w-10 h-10 rounded-full glass-soft border border-border/40 hover:border-border/60 bg-background/30 hover:bg-background/50 backdrop-blur-sm flex items-center justify-center transition-all duration-200 hover:shadow-md group"
-                    >
+                  {/* زر الإغلاق المخصص */}
+                  <DialogClose asChild>
+                    <button className="absolute top-4 left-4 z-20 w-10 h-10 rounded-full glass-soft border border-border/40 hover:border-border/60 bg-background/30 hover:bg-background/50 backdrop-blur-sm flex items-center justify-center transition-all duration-200 hover:shadow-md group">
                       <X className="w-5 h-5 text-muted-foreground group-hover:text-foreground transition-colors" />
                     </button>
-                  </div>
+                  </DialogClose>
 
                   <div className="relative z-10 pt-4">
                     <DialogHeader className="text-center pb-6">

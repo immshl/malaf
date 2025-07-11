@@ -230,13 +230,13 @@ const UserProfile = () => {
           <div className="flex items-center gap-2">
             {/* Logo for light mode (black) */}
             <img 
-              src="/lovable-uploads/822b255a-0cfa-4520-b9a5-aa69e7ef91e6.png" 
+              src="/lovable-uploads/be1d2269-8206-422b-a395-e4fb9e1a88cc.png" 
               alt="ملف" 
               className="w-5 h-5 dark:hidden"
             />
             {/* Logo for dark mode (white) */}
             <img 
-              src="/lovable-uploads/be1d2269-8206-422b-a395-e4fb9e1a88cc.png" 
+              src="/lovable-uploads/822b255a-0cfa-4520-b9a5-aa69e7ef91e6.png" 
               alt="ملف" 
               className="w-5 h-5 hidden dark:block"
             />

@@ -195,13 +195,13 @@ const EmailVerification = () => {
             <div className="w-10 h-10 flex items-center justify-center transform group-hover:scale-110 transition-transform duration-300">
               {/* Logo for light mode (black) */}
               <img 
-                src="/lovable-uploads/822b255a-0cfa-4520-b9a5-aa69e7ef91e6.png" 
+                src="/lovable-uploads/be1d2269-8206-422b-a395-e4fb9e1a88cc.png" 
                 alt="ملف" 
                 className="w-full h-full object-contain dark:hidden"
               />
               {/* Logo for dark mode (white) */}
               <img 
-                src="/lovable-uploads/be1d2269-8206-422b-a395-e4fb9e1a88cc.png" 
+                src="/lovable-uploads/822b255a-0cfa-4520-b9a5-aa69e7ef91e6.png" 
                 alt="ملف" 
                 className="w-full h-full object-contain hidden dark:block"
               />

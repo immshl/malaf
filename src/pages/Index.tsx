@@ -386,87 +386,68 @@ const Index = () => {
                   {language === "ar" ? "تواصل معنا" : "Contact Us"}
                 </Button>
               </DialogTrigger>
-              <DialogContent className="sm:max-w-[600px] glass backdrop-blur-xl border border-white/20 shadow-2xl animate-scale-in overflow-hidden">
-                <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent"></div>
-                <div className="relative z-10 p-8">
-                  <DialogHeader className="text-center mb-8">
-                    <div className="relative">
+              <DialogContent className="sm:max-w-[500px] glass backdrop-blur-xl border border-white/20 shadow-2xl animate-scale-in overflow-hidden p-6">
+                <div className="space-y-6">
+                  {/* Profile Card */}
+                  <Card className="border-0 shadow-soft hover:shadow-medium transition-smooth glass group p-6">
+                    <div className="text-center space-y-4">
                       {/* Profile Image */}
-                      <div className="w-32 h-32 mx-auto mb-6 relative">
+                      <div className="w-24 h-24 mx-auto relative">
                         <img 
                           src="https://mfchmiwxlkvkwtucizzl.supabase.co/storage/v1/object/public/avatars/33f23058-2dc9-4785-b96f-248a6ea24d13/1752183589032.jpeg"
                           alt="مشعل ثاني"
-                          className="w-full h-full object-cover rounded-full border-4 border-white/20 shadow-2xl hover:scale-105 transition-transform duration-300"
+                          className="w-full h-full object-cover rounded-full border-3 border-white/20 shadow-lg hover:scale-105 transition-transform duration-300"
                         />
-                        <div className="absolute -top-2 -right-2 text-3xl animate-pulse">👑</div>
+                        <div className="absolute -top-1 -right-1 text-2xl">👑</div>
                       </div>
                       
-                      <DialogTitle className="text-3xl font-bold mb-2 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+                      {/* Name */}
+                      <h3 className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
                         مشعل ثاني
-                      </DialogTitle>
-                      <p className="text-lg text-muted-foreground font-medium">
-                        @immshl
+                      </h3>
+                      
+                      {/* Bio */}
+                      <p className="text-muted-foreground leading-relaxed text-sm">
+                        أساعد الشركات والأفراد على ابتكار حلول أعمال إبداعية
                       </p>
                     </div>
-                  </DialogHeader>
+                  </Card>
                   
-                  <div className="space-y-8">
-                    {/* Bio */}
-                    <div className="text-center">
-                      <p className="text-lg leading-relaxed text-foreground font-light">
-                        أعرف أفكر — أساعد الشركات والأفراد على ابتكار حلول أعمال إبداعية وسويت هذي المنصة عشان الكل يستفيد منها.
-                      </p>
-                    </div>
-                    
-                    {/* Skills */}
-                    <div>
-                      <h4 className="font-semibold text-foreground mb-4 text-center">المهارات</h4>
-                      <div className="flex flex-wrap gap-2 justify-center">
-                        <Badge variant="secondary" className="hover:scale-105 transition-transform">التخطيط الإستراتيجي</Badge>
-                        <Badge variant="secondary" className="hover:scale-105 transition-transform">الأفكار الإبداعية</Badge>
-                        <Badge variant="secondary" className="hover:scale-105 transition-transform">استشارات حلول الأعمال</Badge>
-                        <Badge variant="secondary" className="hover:scale-105 transition-transform">صناعة المحتوى</Badge>
-                      </div>
-                    </div>
-                    
-                    {/* Featured Clients */}
-                    <div>
-                      <h4 className="font-semibold text-foreground mb-4 text-center">عملاء مميزون</h4>
-                      <div className="space-y-2">
-                        <Badge variant="outline" className="block text-center hover:bg-muted/50 transition-colors">🏛️ وزارة الإتصالات وتقنية المعلومات</Badge>
-                        <Badge variant="outline" className="block text-center hover:bg-muted/50 transition-colors">🏦 البنك العربي - anb</Badge>
-                        <Badge variant="outline" className="block text-center hover:bg-muted/50 transition-colors">🎯 هدف</Badge>
-                        <Badge variant="outline" className="block text-center hover:bg-muted/50 transition-colors">⚡ جاهز</Badge>
-                      </div>
-                    </div>
-                    
-                    {/* Contact Info */}
-                    <div className="space-y-4 pt-6 border-t border-white/10">
-                      <div className="flex gap-4">
+                  {/* Contact Card */}
+                  <Card className="border-0 shadow-soft hover:shadow-medium transition-smooth glass group p-6">
+                    <div className="space-y-4">
+                      <h4 className="font-semibold text-foreground text-center mb-4">التواصل</h4>
+                      
+                      <div className="space-y-3">
                         <Button 
                           variant="outline" 
-                          className="flex-1 hover:bg-blue-500/10 hover:border-blue-500/50 transition-all"
+                          className="w-full justify-start gap-3 hover:bg-blue-500/10 hover:border-blue-500/50 transition-all"
                           onClick={() => window.open('mailto:iimmshl@gmail.com', '_blank')}
                         >
-                          📧 البريد الإلكتروني
+                          <span className="text-lg">📧</span>
+                          <span>البريد الإلكتروني</span>
                         </Button>
+                        
                         <Button 
                           variant="outline" 
-                          className="flex-1 hover:bg-blue-500/10 hover:border-blue-500/50 transition-all"
+                          className="w-full justify-start gap-3 hover:bg-blue-500/10 hover:border-blue-500/50 transition-all"
                           onClick={() => window.open('https://x.com/immshl', '_blank')}
                         >
-                          🐦 تويتر
+                          <span className="text-lg">🐦</span>
+                          <span>تويتر</span>
+                        </Button>
+                        
+                        <Button 
+                          variant="outline" 
+                          className="w-full justify-start gap-3 hover:bg-purple-500/10 hover:border-purple-500/50 transition-all"
+                          onClick={() => window.open('https://instagram.com/immshl', '_blank')}
+                        >
+                          <span className="text-lg">📸</span>
+                          <span>إنستقرام</span>
                         </Button>
                       </div>
-                      <Button 
-                        variant="outline" 
-                        className="w-full hover:bg-purple-500/10 hover:border-purple-500/50 transition-all"
-                        onClick={() => window.open('https://instagram.com/immshl', '_blank')}
-                      >
-                        📸 إنستقرام
-                      </Button>
                     </div>
-                  </div>
+                  </Card>
                 </div>
               </DialogContent>
             </Dialog>

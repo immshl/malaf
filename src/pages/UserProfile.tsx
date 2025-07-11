@@ -305,15 +305,15 @@ const UserProfile = () => {
                 الخدمات
               </h2>
               
-              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                 {profile.skills.map((skill, index) => (
                   <div 
                     key={index} 
-                    className="group p-6 rounded-2xl bg-muted/20 hover:bg-muted/30 transition-all duration-300 border border-transparent hover:border-border/20"
+                    className="aspect-square flex items-center justify-center p-4 rounded-2xl bg-muted/10 hover:bg-muted/20 transition-all duration-200 border border-border/5 hover:border-border/20 cursor-default"
                   >
-                    <h3 className="text-lg font-light text-foreground text-center tracking-tight leading-relaxed">
+                    <span className="text-sm md:text-base font-light text-foreground text-center leading-tight">
                       {skill}
-                    </h3>
+                    </span>
                   </div>
                 ))}
               </div>

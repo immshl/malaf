@@ -1,7 +1,7 @@
 import React from 'npm:react@18.3.1'
 import { Webhook } from 'https://esm.sh/standardwebhooks@1.0.0'
 import { Resend } from 'npm:resend@4.0.0'
-import { renderAsync } from 'npm:@react-email/components@0.0.22'
+import { render } from 'npm:@react-email/render@0.0.12'
 import { EmailVerificationTemplate } from './_templates/email-verification.tsx'
 import { PasswordResetTemplate } from './_templates/password-reset.tsx'
 
@@ -89,7 +89,7 @@ Deno.serve(async (req) => {
         ? `${Deno.env.get('SUPABASE_URL')}/auth/v1/verify?token=${email_data.token_hash}&type=recovery&redirect_to=${encodeURIComponent(email_data.redirect_to)}`
         : email_data.redirect_to;
 
-      html = await renderAsync(
+      html = render(
         React.createElement(PasswordResetTemplate, {
           reset_url,
           user_email: user.email,
@@ -103,7 +103,7 @@ Deno.serve(async (req) => {
         ? `${Deno.env.get('SUPABASE_URL')}/auth/v1/verify?token=${email_data.token_hash}&type=${email_data.email_action_type}&redirect_to=${encodeURIComponent(email_data.redirect_to)}`
         : email_data.redirect_to;
 
-      html = await renderAsync(
+      html = render(
         React.createElement(EmailVerificationTemplate, {
           verification_url,
           user_email: user.email,

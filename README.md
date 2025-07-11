@@ -1,73 +1,89 @@
-# Welcome to your Lovable project
+# منصة ملف - الملفات المهنية للفريلانسرز
 
-## Project info
+## نظرة عامة
+منصة ملف هي الحل الأمثل للفريلانسرز والمحترفين المستقلين لإنشاء ملفاتهم المهنية بطريقة احترافية وجذابة.
 
-**URL**: https://lovable.dev/projects/5db6d598-99de-437b-a03d-617c9f33bbce
+## المميزات الرئيسية
+- ✨ واجهة مميزة وتصميم حديث
+- 📅 نظام حجز ذكي للمواعيد
+- 🔗 عنوان رقمي مخصص
+- 📱 متوافق مع جميع الأجهزة
+- 🚀 سهولة في الاستخدام
 
-## How can I edit this code?
+## التقنيات المستخدمة
+- **Frontend**: React + TypeScript + Vite
+- **Styling**: Tailwind CSS + Shadcn UI
+- **Backend**: Supabase
+- **Authentication**: Supabase Auth
+- **Email**: Resend + React Email
+- **Database**: PostgreSQL (Supabase)
 
-There are several ways of editing your application.
+## البدء السريع
 
-**Use Lovable**
+### متطلبات النظام
+- Node.js 18+
+- npm أو yarn أو bun
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/5db6d598-99de-437b-a03d-617c9f33bbce) and start prompting.
-
-Changes made via Lovable will be committed automatically to this repo.
-
-**Use your preferred IDE**
-
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
-
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
-
-```sh
-# Step 1: Clone the repository using the project's Git URL.
+### التثبيت
+```bash
+# استنساخ المشروع
 git clone <YOUR_GIT_URL>
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+# الانتقال إلى مجلد المشروع
+cd malaf-platform
 
-# Step 3: Install the necessary dependencies.
-npm i
+# تثبيت التبعيات
+npm install
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
+# تشغيل المشروع محلياً
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+### متغيرات البيئة
+إنشاء ملف `.env.local` وإضافة:
+```
+VITE_SUPABASE_URL=your_supabase_url
+VITE_SUPABASE_ANON_KEY=your_supabase_anon_key
+```
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+## هيكل المشروع
+```
+src/
+├── components/       # المكونات القابلة لإعادة الاستخدام
+├── pages/           # صفحات التطبيق
+├── hooks/           # React Hooks مخصصة
+├── lib/             # أدوات مساعدة
+├── integrations/    # تكامل مع الخدمات الخارجية
+└── assets/          # الملفات الثابتة
 
-**Use GitHub Codespaces**
+supabase/
+├── functions/       # Edge Functions
+├── migrations/      # قاعدة البيانات
+└── config.toml     # إعدادات Supabase
+```
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+## النشر
+المنصة جاهزة للنشر على أي خدمة استضافة تدعم تطبيقات React:
+- Vercel
+- Netlify
+- Cloudflare Pages
 
-## What technologies are used for this project?
+## المساهمة
+نرحب بمساهماتكم لتطوير المنصة:
 
-This project is built with:
+1. Fork المشروع
+2. إنشاء branch جديد (`git checkout -b feature/amazing-feature`)
+3. Commit التغييرات (`git commit -m 'Add amazing feature'`)
+4. Push إلى Branch (`git push origin feature/amazing-feature`)
+5. فتح Pull Request
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+## الدعم
+للحصول على الدعم أو الإبلاغ عن مشاكل:
+- البريد الإلكتروني: support@malaf.me
+- تويتر: [@malaf_me](https://twitter.com/malaf_me)
 
-## How can I deploy this project?
+## الترخيص
+هذا المشروع مرخص تحت رخصة MIT.
 
-Simply open [Lovable](https://lovable.dev/projects/5db6d598-99de-437b-a03d-617c9f33bbce) and click on Share -> Publish.
-
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+---
+**ملف** - منصة احترافية للفريلانسرز 🚀

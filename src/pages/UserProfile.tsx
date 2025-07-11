@@ -14,7 +14,6 @@ import { useAuth } from "@/hooks/useAuth";
 import { useLanguage } from "@/hooks/useLanguage";
 import { supabase } from "@/integrations/supabase/client";
 import type { Tables } from "@/integrations/supabase/types";
-import FloatingControls from "@/components/FloatingControls";
 import { 
   Copy, 
   Edit, 
@@ -29,7 +28,9 @@ import {
   Star,
   CheckCircle,
   Globe,
-  X
+  X,
+  Sun,
+  Moon
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -41,6 +42,7 @@ const UserProfile = () => {
   const { language, t } = useLanguage();
   const [profile, setProfile] = useState<Profile | null>(null);
   const [loading, setLoading] = useState(true);
+  const [theme, setTheme] = useState<"light" | "dark">("light");
   const [selectedDay, setSelectedDay] = useState("");
   const [selectedTime, setSelectedTime] = useState("");
   const [showAlternativeBooking, setShowAlternativeBooking] = useState(false);
@@ -53,6 +55,28 @@ const UserProfile = () => {
     notes: ""
   });
   const { toast } = useToast();
+
+  // Initialize theme
+  useEffect(() => {
+    const savedTheme = localStorage.getItem('theme') as "light" | "dark";
+    if (savedTheme) {
+      setTheme(savedTheme);
+    }
+  }, []);
+
+  // Apply theme changes
+  useEffect(() => {
+    localStorage.setItem('theme', theme);
+    if (theme === "dark") {
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+    }
+  }, [theme]);
+
+  const toggleTheme = () => {
+    setTheme(prev => prev === "light" ? "dark" : "light");
+  };
 
   // Day labels
   const dayLabels = {
@@ -764,8 +788,22 @@ const UserProfile = () => {
 
       </div>
 
-      {/* أزرار التحكم العائمة */}
-      <FloatingControls />
+      {/* زر تغيير الوضع فقط */}
+      <div className="fixed bottom-4 left-4 z-50">
+        <Button
+          variant="outline"
+          size="icon"
+          onClick={toggleTheme}
+          className="w-12 h-12 rounded-full border-2 border-border/20 bg-background/80 backdrop-blur-sm hover:bg-background shadow-lg hover:shadow-xl transition-all duration-200"
+          title={theme === "light" ? "الوضع الداكن" : "الوضع الفاتح"}
+        >
+          {theme === "light" ? (
+            <Moon className="h-5 w-5 text-foreground" />
+          ) : (
+            <Sun className="h-5 w-5 text-foreground" />
+          )}
+        </Button>
+      </div>
 
       {/* شعار المنصة في أسفل الصفحة */}
       <footer className="border-t border-border/10 bg-muted/30 py-8">

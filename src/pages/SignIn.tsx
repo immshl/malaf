@@ -40,14 +40,10 @@ const SignIn = () => {
       
       // If input doesn't contain @, assume it's a username and look up the email
       if (!input.includes('@')) {
-        // First, get the user_id from profiles table using username
-        const { data: profile, error: profileError } = await supabase
-          .from('profiles')
-          .select('user_id')
-          .eq('username', input)
-          .maybeSingle();
+        const { data: userEmail, error: emailError } = await supabase
+          .rpc('get_user_email_by_username', { username_input: input });
           
-        if (profileError || !profile) {
+        if (emailError || !userEmail) {
           toast({
             variant: "destructive",
             title: "فشل تسجيل الدخول",
@@ -57,15 +53,7 @@ const SignIn = () => {
           return;
         }
         
-        // Since we can't access auth.users directly from frontend, we'll need to use RPC
-        // For now, let's create a simpler approach by requiring email for login
-        toast({
-          variant: "destructive",
-          title: "استخدم البريد الإلكتروني",
-          description: "يرجى استخدام البريد الإلكتروني بدلاً من اسم المستخدم لتسجيل الدخول",
-        });
-        setIsLoading(false);
-        return;
+        email = userEmail;
       }
 
       const { error } = await signIn(email, formData.password);

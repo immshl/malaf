@@ -105,6 +105,7 @@ export type Database = {
       }
       profiles: {
         Row: {
+          available_days: string[] | null
           avatar_url: string | null
           bio: string | null
           contact_email: string | null
@@ -122,6 +123,7 @@ export type Database = {
           phone: string | null
           profession: string | null
           skills: string[] | null
+          time_slot: string | null
           twitter_url: string | null
           updated_at: string
           user_id: string
@@ -129,6 +131,7 @@ export type Database = {
           website: string | null
         }
         Insert: {
+          available_days?: string[] | null
           avatar_url?: string | null
           bio?: string | null
           contact_email?: string | null
@@ -146,6 +149,7 @@ export type Database = {
           phone?: string | null
           profession?: string | null
           skills?: string[] | null
+          time_slot?: string | null
           twitter_url?: string | null
           updated_at?: string
           user_id: string
@@ -153,6 +157,7 @@ export type Database = {
           website?: string | null
         }
         Update: {
+          available_days?: string[] | null
           avatar_url?: string | null
           bio?: string | null
           contact_email?: string | null
@@ -170,6 +175,7 @@ export type Database = {
           phone?: string | null
           profession?: string | null
           skills?: string[] | null
+          time_slot?: string | null
           twitter_url?: string | null
           updated_at?: string
           user_id?: string

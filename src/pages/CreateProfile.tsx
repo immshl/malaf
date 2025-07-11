@@ -78,8 +78,8 @@ const CreateProfile = () => {
               twitter: existingProfile.twitter_url ? existingProfile.twitter_url.replace('https://x.com/', '').replace('https://twitter.com/', '') : "",
               workEmail: existingProfile.contact_email || user.email || "",
               externalLink: existingProfile.website || "",
-              availableDays: ["sunday", "tuesday", "thursday"], // Default available days
-              timeSlot: "evening", // Default time slot
+              availableDays: existingProfile.available_days && existingProfile.available_days.length > 0 ? existingProfile.available_days : [],
+              timeSlot: existingProfile.time_slot || "",
               phone: existingProfile.phone || "",
               location: existingProfile.location || "",
               profession: existingProfile.profession || "",
@@ -180,7 +180,9 @@ const CreateProfile = () => {
           twitter_url: processUsername(profileData.twitter, "twitter"),
           website: profileData.externalLink || null,
           avatar_url: profileData.profileImage || null,
-          emoji: profileData.emoji || null
+          emoji: profileData.emoji || null,
+          available_days: profileData.availableDays.length > 0 ? profileData.availableDays : null,
+          time_slot: profileData.timeSlot || null
         }, {
           onConflict: 'user_id'
         });

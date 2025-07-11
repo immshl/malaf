@@ -73,7 +73,7 @@ const Index = () => {
         <div className="container mx-auto px-6">
           <div className="flex items-center justify-between h-18">
             {/* Logo */}
-            <div className="flex items-center space-x-2 space-x-reverse">
+            <div className="flex items-center space-x-3 space-x-reverse">
               <div className="w-8 h-8">
                 {/* Logo for light mode (black) */}
                 <img 
@@ -88,7 +88,10 @@ const Index = () => {
                   className="w-full h-full object-contain hidden dark:block"
                 />
               </div>
-              <span className="font-bold text-xl text-foreground">Malaf</span>
+              <div className="flex flex-col">
+                <span className="font-bold text-lg text-foreground leading-tight">ملف</span>
+                <span className="font-medium text-sm text-foreground/80 leading-tight">malaf</span>
+              </div>
             </div>
 
             {/* Navigation Links */}

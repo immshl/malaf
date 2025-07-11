@@ -4,13 +4,17 @@ import { Card, CardContent } from "@/components/ui/card";
 import { ArrowLeft, Users, Calendar, Link2, Star, Zap, Shield, Smartphone, Menu, X, Mail, Instagram } from "lucide-react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogClose } from "@/components/ui/dialog";
 import { Badge } from "@/components/ui/badge";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useLanguage } from "@/hooks/useLanguage";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import AuthButton from "@/components/AuthButton";
+import { useAuth } from "@/hooks/useAuth";
+import { toast } from "@/hooks/use-toast";
 
 const Index = () => {
   const { language, t } = useLanguage();
+  const { user } = useAuth();
+  const navigate = useNavigate();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   
   // Initialize scroll animations
@@ -86,6 +90,23 @@ const Index = () => {
       document.head.removeChild(style);
     };
   }, []);
+
+  // Handle profile creation button click
+  const handleCreateProfile = () => {
+    if (user) {
+      // User is already logged in, show a friendly message
+      toast({
+        title: "أهلاً بك مجدداً! 👋",
+        description: "يبدو أنك مسجل دخول بالفعل. يمكنك إنشاء ملفك الشخصي الآن.",
+        duration: 4000,
+      });
+      // Navigate to create profile page
+      navigate("/create-profile");
+    } else {
+      // User is not logged in, navigate to signup
+      navigate("/signup");
+    }
+  };
 
   return (
     <div className="min-h-screen bg-background relative">
@@ -224,11 +245,9 @@ const Index = () => {
                 size="lg" 
                 variant="hero"
                 className="text-lg px-10 py-4 font-semibold"
-                asChild
+                onClick={handleCreateProfile}
               >
-                <Link to="/signup">
-                  {language === "ar" ? "اصنع ملفك المهني 🚀" : "Create Your Profile 🚀"}
-                </Link>
+                {language === "ar" ? "اصنع ملفك المهني 🚀" : "Create Your Profile 🚀"}
               </Button>
               <Button 
                 size="lg" 
@@ -370,9 +389,9 @@ const Index = () => {
             <Button 
               size="lg" 
               className="text-lg px-12 py-4 font-semibold border-2 border-blue-500 text-blue-500 hover:bg-blue-500 hover:text-white bg-transparent shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
-              asChild
+              onClick={handleCreateProfile}
             >
-              <Link to="/signup">{language === "ar" ? "أنشئ ملفك الآن" : "Create Your Profile Now"}</Link>
+              {language === "ar" ? "أنشئ ملفك الآن" : "Create Your Profile Now"}
             </Button>
             <Dialog>
               <DialogTrigger asChild>

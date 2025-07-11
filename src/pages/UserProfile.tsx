@@ -415,7 +415,7 @@ const UserProfile = () => {
                     احجز الآن
                   </Button>
                 </DialogTrigger>
-                <DialogContent className="max-w-[90vw] sm:max-w-[500px] w-full mx-auto border border-border/20 shadow-2xl bg-background/95 backdrop-blur-xl rounded-3xl animate-scale-in p-0">
+                <DialogContent className="max-w-[90vw] sm:max-w-[500px] max-h-[80vh] w-full mx-auto border border-border/20 shadow-2xl bg-background/95 backdrop-blur-xl rounded-3xl animate-scale-in p-0 overflow-y-auto">
                   {/* زر الإغلاق */}
                   <DialogClose asChild>
                     <Button 

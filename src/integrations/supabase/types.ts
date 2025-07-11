@@ -14,6 +14,72 @@ export type Database = {
   }
   public: {
     Tables: {
+      bookings: {
+        Row: {
+          client_email: string
+          client_name: string
+          created_at: string
+          id: string
+          is_alternative_request: boolean | null
+          notes: string | null
+          preferred_contact: string | null
+          profile_id: string
+          requested_day: string | null
+          requested_time: string | null
+          status: string | null
+          suggested_day: string | null
+          suggested_time_slot: string | null
+          updated_at: string
+        }
+        Insert: {
+          client_email: string
+          client_name: string
+          created_at?: string
+          id?: string
+          is_alternative_request?: boolean | null
+          notes?: string | null
+          preferred_contact?: string | null
+          profile_id: string
+          requested_day?: string | null
+          requested_time?: string | null
+          status?: string | null
+          suggested_day?: string | null
+          suggested_time_slot?: string | null
+          updated_at?: string
+        }
+        Update: {
+          client_email?: string
+          client_name?: string
+          created_at?: string
+          id?: string
+          is_alternative_request?: boolean | null
+          notes?: string | null
+          preferred_contact?: string | null
+          profile_id?: string
+          requested_day?: string | null
+          requested_time?: string | null
+          status?: string | null
+          suggested_day?: string | null
+          suggested_time_slot?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "bookings_profile_id_fkey"
+            columns: ["profile_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "bookings_profile_id_fkey"
+            columns: ["profile_id"]
+            isOneToOne: false
+            referencedRelation: "public_profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       profiles: {
         Row: {
           avatar_url: string | null

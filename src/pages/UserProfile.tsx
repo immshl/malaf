@@ -93,42 +93,65 @@ const UserProfile = () => {
     });
   };
 
-  const handleBooking = () => {
-    if (showAlternativeBooking) {
-      // طلب موعد مختلف
-      console.log("طلب موعد مختلف:", {
-        profileId: profile?.id,
-        suggestedDay: alternativeDay,
-        suggestedTimeSlot: alternativeTimeSlot,
-        ...bookingForm
-      });
+  const handleBooking = async () => {
+    if (!profile?.id) return;
+
+    try {
+      const bookingData = {
+        profile_id: profile.id,
+        client_name: bookingForm.name,
+        client_email: bookingForm.email,
+        preferred_contact: bookingForm.preferredContact || null,
+        notes: bookingForm.notes || null,
+        is_alternative_request: showAlternativeBooking,
+        requested_day: showAlternativeBooking ? null : selectedDay,
+        requested_time: showAlternativeBooking ? null : selectedTime,
+        suggested_day: showAlternativeBooking ? alternativeDay : null,
+        suggested_time_slot: showAlternativeBooking ? alternativeTimeSlot : null,
+      };
+
+      const { error } = await supabase
+        .from('bookings')
+        .insert(bookingData);
+
+      if (error) {
+        console.error('Booking error:', error);
+        toast({
+          variant: "destructive",
+          title: "خطأ في الحجز",
+          description: "حدث خطأ أثناء إرسال طلب الحجز"
+        });
+        return;
+      }
+
+      if (showAlternativeBooking) {
+        toast({
+          title: "تم إرسال اقتراح الموعد",
+          description: "سيتم مراجعة طلبك والرد عليك قريباً",
+        });
+      } else {
+        toast({
+          title: "تم إرسال طلب الحجز",
+          description: "سيتم التواصل معك قريباً لتأكيد الموعد",
+        });
+      }
       
-      toast({
-        title: "تم إرسال اقتراح الموعد",
-        description: "سيتم مراجعة طلبك والرد عليك قريباً",
-      });
-    } else {
-      // حجز عادي
-      console.log("حجز اجتماع:", {
-        profileId: profile?.id,
-        day: selectedDay,
-        time: selectedTime,
-        ...bookingForm
-      });
+      // إعادة تعيين النموذج
+      setSelectedDay("");
+      setSelectedTime("");
+      setShowAlternativeBooking(false);
+      setAlternativeDay("");
+      setAlternativeTimeSlot("");
+      setBookingForm({ name: "", email: "", preferredContact: "", notes: "" });
       
+    } catch (error) {
+      console.error('Unexpected booking error:', error);
       toast({
-        title: "تم إرسال طلب الحجز",
-        description: "سيتم التواصل معك قريباً لتأكيد الموعد",
+        variant: "destructive",
+        title: "خطأ غير متوقع",
+        description: "حدث خطأ أثناء معالجة طلب الحجز"
       });
     }
-    
-    // إعادة تعيين النموذج
-    setSelectedDay("");
-    setSelectedTime("");
-    setShowAlternativeBooking(false);
-    setAlternativeDay("");
-    setAlternativeTimeSlot("");
-    setBookingForm({ name: "", email: "", preferredContact: "", notes: "" });
   };
 
   const dayLabels = {

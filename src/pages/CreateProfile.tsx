@@ -41,6 +41,34 @@ const CreateProfile = () => {
     }
   }, [user, loading, navigate]);
 
+  // Check if user already has a profile
+  useEffect(() => {
+    const checkExistingProfile = async () => {
+      if (user) {
+        try {
+          const { data: existingProfile } = await supabase
+            .from('profiles')
+            .select('username')
+            .eq('user_id', user.id)
+            .single();
+
+          if (existingProfile?.username) {
+            // User already has a profile, redirect to it
+            navigate(`/profile/${existingProfile.username}`);
+            return;
+          }
+        } catch (error) {
+          // Profile doesn't exist, continue with creation
+          console.log('No existing profile found, proceeding with creation');
+        }
+      }
+    };
+
+    if (user && !loading) {
+      checkExistingProfile();
+    }
+  }, [user, loading, navigate]);
+
   // Load user data from auth
   useEffect(() => {
     if (user) {

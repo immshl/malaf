@@ -50,6 +50,11 @@ export const BookingNotificationTemplate = ({
       <Container style={container}>
         {/* Header */}
         <Section style={header}>
+          <img 
+            src="https://mfchmiwxlkvkwtucizzl.supabase.co/storage/v1/object/public/avatars/malaf-email-logo.png"
+            alt="ملف - منصة الفريلانسرز"
+            style={logoImage}
+          />
           <Text style={logo}>ملف</Text>
           <Text style={tagline}>منصة الفريلانسرز</Text>
         </Section>
@@ -285,6 +290,14 @@ const footer = {
   borderRadius: '0 0 12px 12px',
   padding: '24px',
   textAlign: 'center' as const,
+}
+
+const logoImage = {
+  width: '64px',
+  height: '64px',
+  margin: '0 auto 16px auto',
+  borderRadius: '12px',
+  boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
 }
 
 const footerText = {

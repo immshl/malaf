@@ -45,7 +45,7 @@ const UserProfile = () => {
   const [bookingForm, setBookingForm] = useState({
     name: "",
     email: "",
-    preferredContact: "",
+    phone: "",
     notes: ""
   });
   const { toast } = useToast();
@@ -153,7 +153,7 @@ const UserProfile = () => {
         profile_id: profile.id,
         client_name: bookingForm.name,
         client_email: bookingForm.email,
-        preferred_contact: bookingForm.preferredContact || null,
+        preferred_contact: bookingForm.phone || null,
         notes: bookingForm.notes || null,
         is_alternative_request: showAlternativeBooking,
         requested_day: showAlternativeBooking ? null : selectedDay,
@@ -185,7 +185,7 @@ const UserProfile = () => {
       });
 
       // Reset form
-      setBookingForm({ name: "", email: "", preferredContact: "", notes: "" });
+      setBookingForm({ name: "", email: "", phone: "", notes: "" });
       setSelectedDay("");
       setSelectedTime("");
       setAlternativeDay("");
@@ -594,8 +594,8 @@ const UserProfile = () => {
                             <Input
                               id="phone"
                               type="tel"
-                              value={bookingForm.preferredContact}
-                              onChange={(e) => setBookingForm(prev => ({ ...prev, preferredContact: e.target.value }))}
+                              value={bookingForm.phone || ""}
+                              onChange={(e) => setBookingForm(prev => ({ ...prev, phone: e.target.value }))}
                               placeholder="05xxxxxxxx"
                               className="h-12 text-right bg-background/60 border border-border/40 rounded-xl"
                             />

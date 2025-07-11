@@ -14,10 +14,16 @@ const FloatingControls = () => {
   const { language, setLanguage } = useLanguage();
   const location = useLocation();
 
+  // Check if we're on a page that should hide floating controls
+  const shouldHideControls = location.pathname === "/signup" || location.pathname === "/signin";
+  
+  // Don't render anything on signup or signin pages
+  if (shouldHideControls) {
+    return null;
+  }
+
   // Check if we're on a freelancer profile page (not main app pages)
   const isFreelancerPage = location.pathname !== "/" && 
-                          location.pathname !== "/signup" && 
-                          location.pathname !== "/signin" && 
                           location.pathname !== "/verify-email" && 
                           location.pathname !== "/create-profile" &&
                           !location.pathname.startsWith("/profile/");

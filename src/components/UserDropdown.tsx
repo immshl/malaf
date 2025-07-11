@@ -118,7 +118,7 @@ const UserDropdown = () => {
       </DropdownMenuTrigger>
       
       <DropdownMenuContent 
-        className="w-56 bg-background border border-border shadow-strong z-50" 
+        className="w-64 bg-background border border-border shadow-strong z-50" 
         align="end" 
         forceMount
         side="bottom"
@@ -129,31 +129,32 @@ const UserDropdown = () => {
           zIndex: 9999 
         }}
       >
-        <DropdownMenuLabel className="font-normal">
-          <div className="flex flex-col space-y-1">
-            <p className="text-sm font-medium leading-none">
-              {profile?.full_name || language === "ar" ? "مستخدم" : "User"}
-            </p>
-            <p className="text-xs leading-none text-muted-foreground">
-              {user.email}
+        {/* صورة المستخدم في المنتصف */}
+        <div className="flex flex-col items-center p-6">
+          <Avatar className="h-16 w-16 border-2 border-primary/20 mb-4">
+            <AvatarImage 
+              src={profile?.avatar_url || ''} 
+              alt={profile?.full_name || user.email || 'User'} 
+            />
+            <AvatarFallback className="bg-primary/10 text-primary font-semibold text-lg">
+              {initials}
+            </AvatarFallback>
+          </Avatar>
+          
+          {/* مرحبا + اسم المستخدم */}
+          <div className="text-center mb-4">
+            <p className="text-sm font-medium text-foreground">
+              مرحبا {profile?.full_name || (language === "ar" ? "مستخدم" : "User")}
             </p>
           </div>
-        </DropdownMenuLabel>
+        </div>
         
         <DropdownMenuSeparator />
         
-        <DropdownMenuItem 
-          onClick={handleProfileView}
-          className="cursor-pointer focus:bg-muted hover:bg-muted transition-colors"
-        >
-          <User className="mr-2 h-4 w-4" />
-          <span>{language === "ar" ? "الملف الشخصي" : "View Profile"}</span>
-          <ExternalLink className="mr-auto h-3 w-3" />
-        </DropdownMenuItem>
-        
+        {/* تحرير الملف */}
         <DropdownMenuItem 
           onClick={handleEditProfile}
-          className="cursor-pointer focus:bg-muted hover:bg-muted transition-colors"
+          className="cursor-pointer focus:bg-muted hover:bg-muted transition-colors m-2 rounded-lg"
         >
           <Edit className="mr-2 h-4 w-4" />
           <span>{language === "ar" ? "تحرير الملف" : "Edit Profile"}</span>
@@ -161,9 +162,10 @@ const UserDropdown = () => {
         
         <DropdownMenuSeparator />
         
+        {/* تسجيل خروج */}
         <DropdownMenuItem 
           onClick={handleSignOut}
-          className="cursor-pointer text-destructive focus:text-destructive focus:bg-destructive/20 hover:bg-destructive/20 transition-colors"
+          className="cursor-pointer text-destructive focus:text-destructive focus:bg-destructive/20 hover:bg-destructive/20 transition-colors m-2 rounded-lg"
         >
           <LogOut className="mr-2 h-4 w-4" />
           <span>{language === "ar" ? "تسجيل خروج" : "Sign out"}</span>

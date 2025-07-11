@@ -392,9 +392,9 @@ const Index = () => {
                   <Button 
                     variant="ghost" 
                     size="icon"
-                    className="absolute -top-4 -right-4 z-50 w-10 h-10 rounded-full glass backdrop-blur-xl border border-border/30 hover:border-border/60 shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:scale-110"
+                    className="absolute top-3 right-3 z-50 w-8 h-8 rounded-full glass backdrop-blur-xl border border-border/30 hover:border-border/60 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-110"
                   >
-                    <X className="w-5 h-5 text-foreground" />
+                    <X className="w-4 h-4 text-foreground" />
                   </Button>
                 </DialogClose>
                 <div className="space-y-4 p-4">

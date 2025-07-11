@@ -34,6 +34,14 @@ const ExampleProfile = () => {
     { name: "استشارة تقنية", price: "200 ريال/ساعة", duration: "ساعة واحدة" },
   ];
 
+  const availableTimes = [
+    { day: "السبت", times: ["9:00 ص", "11:00 ص", "2:00 م", "4:00 م"] },
+    { day: "الأحد", times: ["10:00 ص", "12:00 م", "3:00 م"] },
+    { day: "الاثنين", times: ["9:00 ص", "1:00 م", "5:00 م"] },
+    { day: "الثلاثاء", times: ["11:00 ص", "2:00 م", "4:00 م"] },
+    { day: "الأربعاء", times: ["9:00 ص", "12:00 م", "3:00 م"] },
+  ];
+
   return (
     <div className="min-h-screen bg-background">
       {/* Apple-style Navigation */}
@@ -63,7 +71,7 @@ const ExampleProfile = () => {
       </nav>
 
       {/* Hero Section - Apple Style */}
-      <section className="pt-16 pb-24 lg:pt-24 lg:pb-32">
+      <section className="pt-16 pb-16 lg:pt-24 lg:pb-20">
         <div className="max-w-5xl mx-auto px-6 lg:px-8 text-center">
           {/* Profile Avatar */}
           <div className="flex justify-center mb-10">
@@ -81,7 +89,7 @@ const ExampleProfile = () => {
           </p>
 
           {/* Location & Rating */}
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-6 lg:gap-12 mb-16">
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-6 lg:gap-12 mb-8">
             <div className="flex items-center gap-3 text-muted-foreground">
               <MapPin className="w-5 h-5" />
               <span className="text-base font-medium">الرياض، السعودية</span>
@@ -93,15 +101,8 @@ const ExampleProfile = () => {
             </div>
           </div>
 
-          {/* CTA Buttons */}
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-5 mb-20">
-            <Button 
-              size="lg" 
-              className="bg-foreground text-background hover:bg-foreground/90 px-10 py-4 rounded-full font-medium transition-smooth text-base shadow-soft hover:shadow-medium"
-            >
-              <Calendar className="w-5 h-5 ml-2" />
-              احجز موعد مجاني
-            </Button>
+          {/* Copy Link Button */}
+          <div className="flex justify-center mb-16">
             <Button 
               variant="outline" 
               size="lg" 
@@ -112,10 +113,17 @@ const ExampleProfile = () => {
               {copied ? "تم النسخ!" : "نسخ الرابط"}
             </Button>
           </div>
+        </div>
+      </section>
 
-          {/* Bio */}
-          <div className="max-w-3xl mx-auto">
-            <p className="text-lg lg:text-xl font-light text-muted-foreground leading-relaxed">
+      {/* Bio Card */}
+      <section className="py-16">
+        <div className="max-w-4xl mx-auto px-6 lg:px-8">
+          <div className="bg-background border border-border/10 rounded-3xl p-10 lg:p-12 shadow-soft hover:shadow-medium transition-smooth">
+            <h3 className="text-2xl lg:text-3xl font-light text-foreground mb-8 tracking-tight text-center">
+              نبذة تعريفية
+            </h3>
+            <p className="text-lg lg:text-xl font-light text-muted-foreground leading-relaxed text-center">
               مطور ويب محترف مع أكثر من 5 سنوات من الخبرة في تطوير المواقع والتطبيقات. 
               أتخصص في React، Node.js، وتصميم تجارب المستخدم الحديثة.
             </p>
@@ -123,36 +131,14 @@ const ExampleProfile = () => {
         </div>
       </section>
 
-      {/* Skills - Minimal Apple Style */}
-      <section className="py-24 bg-muted/10">
-        <div className="max-w-5xl mx-auto px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h3 className="text-2xl lg:text-3xl font-light text-foreground mb-8 tracking-tight">
-              المهارات التقنية
-            </h3>
-          </div>
-          <div className="flex flex-wrap justify-center gap-4 lg:gap-6">
-            {["React", "Node.js", "TypeScript", "UI/UX", "Mobile Apps"].map((skill) => (
-              <Badge 
-                key={skill} 
-                variant="secondary" 
-                className="px-8 py-3 text-base font-medium bg-background/50 text-foreground border border-border/20 rounded-full hover:bg-background/80 transition-smooth shadow-soft"
-              >
-                {skill}
-              </Badge>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* Services Grid - Apple Product Style */}
-      <section className="py-32 lg:py-40">
+      <section className="py-24 lg:py-32">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="text-center mb-24">
-            <h2 className="text-4xl md:text-5xl lg:text-6xl font-light text-foreground mb-6 tracking-tight leading-tight">
+          <div className="text-center mb-20">
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-light text-foreground mb-6 tracking-tight leading-tight">
               خدماتي
             </h2>
-            <p className="text-xl lg:text-2xl font-light text-muted-foreground max-w-2xl mx-auto leading-relaxed">
+            <p className="text-lg lg:text-xl font-light text-muted-foreground max-w-2xl mx-auto leading-relaxed">
               حلول تقنية متقدمة ومصممة خصيصاً لاحتياجاتك
             </p>
           </div>
@@ -161,29 +147,99 @@ const ExampleProfile = () => {
             {services.map((service, index) => (
               <div 
                 key={index} 
-                className="group text-center p-10 lg:p-12 rounded-3xl bg-background border border-border/10 hover:border-border/30 transition-smooth hover:shadow-soft hover:-translate-y-1"
+                className="group text-center p-8 lg:p-10 rounded-3xl bg-background border border-border/10 hover:border-border/30 transition-smooth hover:shadow-soft hover:-translate-y-1"
               >
-                <div className="mb-10">
-                  <h3 className="text-2xl lg:text-3xl font-medium text-foreground mb-6 tracking-tight leading-tight">
+                <div className="mb-8">
+                  <h3 className="text-xl lg:text-2xl font-medium text-foreground mb-4 tracking-tight">
                     {service.name}
                   </h3>
-                  <p className="text-3xl lg:text-4xl font-light text-foreground mb-4">
+                  <p className="text-2xl lg:text-3xl font-light text-foreground mb-3">
                     {service.price}
                   </p>
-                  <div className="flex items-center justify-center gap-3 text-muted-foreground">
-                    <Clock className="w-5 h-5" />
-                    <span className="text-base font-medium">{service.duration}</span>
+                  <div className="flex items-center justify-center gap-2 text-muted-foreground">
+                    <Clock className="w-4 h-4" />
+                    <span className="text-sm font-medium">{service.duration}</span>
                   </div>
                 </div>
                 <Button 
                   size="lg" 
                   variant="outline"
-                  className="w-full py-4 rounded-full border-foreground/20 hover:bg-foreground hover:text-background transition-smooth text-base font-medium"
+                  className="w-full py-3 rounded-full border-foreground/20 hover:bg-foreground hover:text-background transition-smooth text-sm font-medium"
                 >
                   اطلب الخدمة
                 </Button>
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Skills Card */}
+      <section className="py-20 bg-muted/5">
+        <div className="max-w-5xl mx-auto px-6 lg:px-8">
+          <div className="bg-background border border-border/10 rounded-3xl p-10 lg:p-12 shadow-soft hover:shadow-medium transition-smooth">
+            <h3 className="text-2xl lg:text-3xl font-light text-foreground mb-10 tracking-tight text-center">
+              المهارات التقنية
+            </h3>
+            <div className="flex flex-wrap justify-center gap-4 lg:gap-6">
+              {["React", "Node.js", "TypeScript", "UI/UX", "Mobile Apps"].map((skill) => (
+                <Badge 
+                  key={skill} 
+                  variant="secondary" 
+                  className="px-6 py-2 text-sm font-medium bg-muted/30 text-foreground border border-border/20 rounded-full hover:bg-muted/50 transition-smooth"
+                >
+                  {skill}
+                </Badge>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Booking Card */}
+      <section className="py-20">
+        <div className="max-w-4xl mx-auto px-6 lg:px-8">
+          <div className="bg-background border border-border/10 rounded-3xl p-10 lg:p-12 shadow-soft hover:shadow-medium transition-smooth">
+            <div className="text-center mb-12">
+              <h3 className="text-2xl lg:text-3xl font-light text-foreground mb-4 tracking-tight">
+                احجز موعد مجاني
+              </h3>
+              <p className="text-lg text-muted-foreground">
+                اختر الوقت المناسب لك ودعنا نناقش مشروعك
+              </p>
+            </div>
+
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-10">
+              {availableTimes.map((daySchedule, dayIndex) => (
+                <div key={dayIndex} className="border border-border/10 rounded-2xl p-6 hover:border-border/30 transition-smooth">
+                  <h4 className="text-lg font-medium text-foreground mb-4 text-center">
+                    {daySchedule.day}
+                  </h4>
+                  <div className="space-y-2">
+                    {daySchedule.times.map((time, timeIndex) => (
+                      <Button
+                        key={timeIndex}
+                        variant="outline"
+                        size="sm"
+                        className="w-full py-2 text-sm border-border/20 hover:bg-muted/30 transition-smooth"
+                      >
+                        {time}
+                      </Button>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <div className="text-center">
+              <Button 
+                size="lg" 
+                className="bg-foreground text-background hover:bg-foreground/90 px-12 py-4 rounded-full font-medium transition-smooth text-base shadow-soft hover:shadow-medium"
+              >
+                <Calendar className="w-5 h-5 ml-2" />
+                تأكيد الموعد
+              </Button>
+            </div>
           </div>
         </div>
       </section>

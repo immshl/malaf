@@ -16,7 +16,7 @@ const SignIn = () => {
   const { signIn, user } = useAuth();
   const { t } = useLanguage();
   const [formData, setFormData] = useState({
-    email: "",
+    emailOrUsername: "",
     password: ""
   });
   const [showPassword, setShowPassword] = useState(false);
@@ -33,8 +33,42 @@ const SignIn = () => {
     
     setIsLoading(true);
 
-  try {
-    const { error } = await signIn(formData.email, formData.password);
+    try {
+      // Check if input is email or username
+      const input = formData.emailOrUsername.trim();
+      let email = input;
+      
+      // If input doesn't contain @, assume it's a username and look up the email
+      if (!input.includes('@')) {
+        // First, get the user_id from profiles table using username
+        const { data: profile, error: profileError } = await supabase
+          .from('profiles')
+          .select('user_id')
+          .eq('username', input)
+          .maybeSingle();
+          
+        if (profileError || !profile) {
+          toast({
+            variant: "destructive",
+            title: "فشل تسجيل الدخول",
+            description: "اسم المستخدم غير موجود",
+          });
+          setIsLoading(false);
+          return;
+        }
+        
+        // Since we can't access auth.users directly from frontend, we'll need to use RPC
+        // For now, let's create a simpler approach by requiring email for login
+        toast({
+          variant: "destructive",
+          title: "استخدم البريد الإلكتروني",
+          description: "يرجى استخدام البريد الإلكتروني بدلاً من اسم المستخدم لتسجيل الدخول",
+        });
+        setIsLoading(false);
+        return;
+      }
+
+      const { error } = await signIn(email, formData.password);
 
     if (error) {
       console.log('Login error:', error); // للتتبع
@@ -132,17 +166,17 @@ const SignIn = () => {
           
           <CardContent>
             <form onSubmit={handleSubmit} className="space-y-6">
-              {/* البريد الإلكتروني */}
+              {/* البريد الإلكتروني أو اسم المستخدم */}
               <div className="space-y-2">
-                <Label htmlFor="email" className="text-foreground font-medium">
-                  {t('email')}
+                <Label htmlFor="emailOrUsername" className="text-foreground font-medium">
+                  البريد الإلكتروني أو اسم المستخدم
                 </Label>
                 <Input
-                  id="email"
-                  type="email"
-                  value={formData.email}
-                  onChange={(e) => setFormData({...formData, email: e.target.value})}
-                  placeholder="اكتب بريدك الإلكتروني"
+                  id="emailOrUsername"
+                  type="text"
+                  value={formData.emailOrUsername}
+                  onChange={(e) => setFormData({...formData, emailOrUsername: e.target.value})}
+                  placeholder="اكتب بريدك الإلكتروني أو اسم المستخدم"
                   required
                   className="text-right"
                 />

@@ -412,7 +412,7 @@ const Index = () => {
 
                       {/* النبذة التعريفية */}
                       <p className="text-base font-light text-muted-foreground leading-relaxed max-w-2xl mx-auto">
-                        أساعد الشركات والأفراد على ابتكار حلول أعمال إبداعية
+                        أعرف أفكر — أساعد الشركات والأفراد على ابتكار حلول أعمال إبداعية وسويت هذي المنصة عشان الكل يستفيد منها.
                       </p>
                     </CardContent>
                   </Card>

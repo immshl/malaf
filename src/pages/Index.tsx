@@ -89,8 +89,8 @@ const Index = () => {
                 />
               </div>
               <div className="flex flex-col">
-                <span className="font-bold text-lg text-foreground leading-tight">ملف</span>
-                <span className="font-medium text-sm text-foreground/80 leading-tight">malaf</span>
+                <span className="font-bold text-sm text-foreground leading-tight">ملف</span>
+                <span className="font-medium text-xs text-foreground/80 leading-tight">malaf</span>
               </div>
             </div>
 

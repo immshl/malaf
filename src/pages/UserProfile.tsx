@@ -381,191 +381,222 @@ const UserProfile = () => {
                     احجز الآن
                   </Button>
                 </DialogTrigger>
-                <DialogContent className="max-w-lg max-h-[90vh] overflow-y-auto">
-                  <DialogHeader>
-                    <DialogTitle>حجز اجتماع</DialogTitle>
-                    <DialogDescription>
-                      اختر الموعد المناسب لك أو اقترح موعد مختلف
+                <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto bg-background border border-border/20 shadow-xl backdrop-blur-xl">
+                  <DialogHeader className="text-center pb-6">
+                    <div className="bg-background/80 backdrop-blur-sm border border-border/30 rounded-2xl shadow-sm mb-4 overflow-hidden">
+                      <div className="p-4 bg-muted/20">
+                        <DialogTitle className="text-xl lg:text-2xl font-semibold text-foreground tracking-tight">
+                          حجز اجتماع جديد
+                        </DialogTitle>
+                      </div>
+                    </div>
+                    <DialogDescription className="text-base text-muted-foreground">
+                      اختر الموعد المناسب لك أو اقترح موعد مختلف لمناقشة مشروعك
                     </DialogDescription>
                   </DialogHeader>
-                  <div className="space-y-6">
+                  <div className="space-y-8">
                     {!showAlternativeBooking ? (
                       <>
-                        {/* الحجز العادي */}
-                        <div className="bg-muted/50 p-4 rounded-lg">
-                          <h4 className="font-medium mb-2">الأوقات المتاحة</h4>
-                          <div className="text-sm text-muted-foreground mb-3">
-                            <p>الفترة: المساء (5:00 م - 9:00 م)</p>
-                          </div>
-                        </div>
+                        {/* الأوقات المتاحة */}
+                        <Card className="border border-primary/20 bg-primary/5">
+                          <CardContent className="p-6">
+                            <div className="text-center mb-4">
+                              <h4 className="text-lg font-semibold text-foreground mb-2">الأوقات المتاحة</h4>
+                              <div className="inline-flex items-center gap-2 px-4 py-2 bg-background/80 rounded-full border border-border/30">
+                                <Clock className="w-4 h-4 text-primary" />
+                                <span className="text-sm text-muted-foreground">المساء (5:00 م - 9:00 م)</span>
+                              </div>
+                            </div>
+                            
+                            <div className="grid md:grid-cols-2 gap-6">
+                              {/* اختيار اليوم */}
+                              <div className="space-y-3">
+                                <Label className="text-base font-medium">اختر اليوم</Label>
+                                <Select value={selectedDay} onValueChange={setSelectedDay}>
+                                  <SelectTrigger className="h-12 bg-background/60 border border-border/40 rounded-xl">
+                                    <SelectValue placeholder="اختر يوم من الأيام المتاحة" />
+                                  </SelectTrigger>
+                                  <SelectContent className="bg-background border border-border shadow-xl backdrop-blur-xl">
+                                    {["sunday", "tuesday", "thursday"].map((day) => (
+                                      <SelectItem key={day} value={day} className="text-right">
+                                        {dayLabels[day as keyof typeof dayLabels]}
+                                      </SelectItem>
+                                    ))}
+                                  </SelectContent>
+                                </Select>
+                              </div>
 
-                        {/* اختيار اليوم */}
-                        <div className="space-y-2">
-                          <Label>اختر اليوم</Label>
-                          <Select value={selectedDay} onValueChange={setSelectedDay}>
-                            <SelectTrigger>
-                              <SelectValue placeholder="اختر يوم من الأيام المتاحة" />
-                            </SelectTrigger>
-                            <SelectContent className="bg-white">
-                              {["sunday", "tuesday", "thursday"].map((day) => (
-                                <SelectItem key={day} value={day}>
-                                  {dayLabels[day as keyof typeof dayLabels]}
-                                </SelectItem>
-                              ))}
-                            </SelectContent>
-                          </Select>
-                        </div>
+                              {/* اختيار الوقت */}
+                              <div className="space-y-3">
+                                <Label className="text-base font-medium">اختر الوقت</Label>
+                                <Select value={selectedTime} onValueChange={setSelectedTime}>
+                                  <SelectTrigger className="h-12 bg-background/60 border border-border/40 rounded-xl">
+                                    <SelectValue placeholder="اختر وقت محدد" />
+                                  </SelectTrigger>
+                                  <SelectContent className="bg-background border border-border shadow-xl backdrop-blur-xl">
+                                    {getCurrentTimeSlots().map((time) => (
+                                      <SelectItem key={time} value={time} className="text-right">
+                                        {time}
+                                      </SelectItem>
+                                    ))}
+                                  </SelectContent>
+                                </Select>
+                              </div>
+                            </div>
 
-                        {/* اختيار الوقت */}
-                        <div className="space-y-2">
-                          <Label>اختر الوقت</Label>
-                          <Select value={selectedTime} onValueChange={setSelectedTime}>
-                            <SelectTrigger>
-                              <SelectValue placeholder="اختر وقت محدد" />
-                            </SelectTrigger>
-                            <SelectContent className="bg-white">
-                              {getCurrentTimeSlots().map((time) => (
-                                <SelectItem key={time} value={time}>
-                                  {time}
-                                </SelectItem>
-                              ))}
-                            </SelectContent>
-                          </Select>
-                        </div>
-
-                        {/* رابط اقتراح موعد مختلف */}
-                        <div className="text-center">
-                          <Button
-                            type="button"
-                            variant="link"
-                            onClick={() => setShowAlternativeBooking(true)}
-                            className="text-primary"
-                          >
-                            أو اقترح موعد مختلف
-                          </Button>
-                        </div>
+                            {/* رابط اقتراح موعد مختلف */}
+                            <div className="text-center mt-6">
+                              <Button
+                                type="button"
+                                variant="ghost"
+                                onClick={() => setShowAlternativeBooking(true)}
+                                className="text-primary hover:bg-primary/10 rounded-full px-6"
+                              >
+                                أو اقترح موعد مختلف
+                              </Button>
+                            </div>
+                          </CardContent>
+                        </Card>
                       </>
                     ) : (
                       <>
                         {/* اقتراح موعد مختلف */}
-                        <div className="bg-blue-50 border border-blue-200 p-4 rounded-lg">
-                          <h4 className="font-medium text-blue-900 mb-2">اقتراح موعد مختلف</h4>
-                          <p className="text-sm text-blue-700">
-                            اقترح يوم وفترة مناسبة لك، وسيتم مراجعة طلبك والرد عليك
-                          </p>
-                        </div>
+                        <Card className="border border-accent/30 bg-accent/10">
+                          <CardContent className="p-6">
+                            <div className="text-center mb-6">
+                              <h4 className="text-lg font-semibold text-foreground mb-2">اقتراح موعد مختلف</h4>
+                              <p className="text-sm text-muted-foreground bg-background/80 rounded-full px-4 py-2 inline-block">
+                                اقترح يوم وفترة مناسبة لك، وسيتم مراجعة طلبك والرد عليك
+                              </p>
+                            </div>
+                            
+                            <div className="grid md:grid-cols-2 gap-6">
+                              {/* اختيار يوم مختلف */}
+                              <div className="space-y-3">
+                                <Label className="text-base font-medium">اليوم المقترح</Label>
+                                <Select value={alternativeDay} onValueChange={setAlternativeDay}>
+                                  <SelectTrigger className="h-12 bg-background/60 border border-border/40 rounded-xl">
+                                    <SelectValue placeholder="اختر يوم" />
+                                  </SelectTrigger>
+                                  <SelectContent className="bg-background border border-border shadow-xl backdrop-blur-xl">
+                                    {Object.entries(dayLabels).map(([value, label]) => (
+                                      <SelectItem key={value} value={value} className="text-right">
+                                        {label}
+                                      </SelectItem>
+                                    ))}
+                                  </SelectContent>
+                                </Select>
+                              </div>
 
-                        {/* اختيار يوم مختلف */}
-                        <div className="space-y-2">
-                          <Label>اليوم المقترح</Label>
-                          <Select value={alternativeDay} onValueChange={setAlternativeDay}>
-                            <SelectTrigger>
-                              <SelectValue placeholder="اختر يوم" />
-                            </SelectTrigger>
-                            <SelectContent className="bg-white">
-                              {Object.entries(dayLabels).map(([value, label]) => (
-                                <SelectItem key={value} value={value}>
-                                  {label}
-                                </SelectItem>
-                              ))}
-                            </SelectContent>
-                          </Select>
-                        </div>
+                              {/* اختيار فترة مختلفة */}
+                              <div className="space-y-3">
+                                <Label className="text-base font-medium">الفترة المقترحة</Label>
+                                <Select value={alternativeTimeSlot} onValueChange={setAlternativeTimeSlot}>
+                                  <SelectTrigger className="h-12 bg-background/60 border border-border/40 rounded-xl">
+                                    <SelectValue placeholder="اختر فترة" />
+                                  </SelectTrigger>
+                                  <SelectContent className="bg-background border border-border shadow-xl backdrop-blur-xl">
+                                    {Object.entries(timeSlotLabels).map(([value, label]) => (
+                                      <SelectItem key={value} value={value} className="text-right">
+                                        {label}
+                                      </SelectItem>
+                                    ))}
+                                  </SelectContent>
+                                </Select>
+                              </div>
+                            </div>
 
-                        {/* اختيار فترة مختلفة */}
-                        <div className="space-y-2">
-                          <Label>الفترة المقترحة</Label>
-                          <Select value={alternativeTimeSlot} onValueChange={setAlternativeTimeSlot}>
-                            <SelectTrigger>
-                              <SelectValue placeholder="اختر فترة" />
-                            </SelectTrigger>
-                            <SelectContent className="bg-white">
-                              {Object.entries(timeSlotLabels).map(([value, label]) => (
-                                <SelectItem key={value} value={value}>
-                                  {label}
-                                </SelectItem>
-                              ))}
-                            </SelectContent>
-                          </Select>
-                        </div>
-
-                        {/* رابط العودة للحجز العادي */}
-                        <div className="text-center">
-                          <Button
-                            type="button"
-                            variant="link"
-                            onClick={() => setShowAlternativeBooking(false)}
-                            className="text-muted-foreground"
-                          >
-                            العودة للأوقات المتاحة
-                          </Button>
-                        </div>
+                            {/* رابط العودة للحجز العادي */}
+                            <div className="text-center mt-6">
+                              <Button
+                                type="button"
+                                variant="ghost"
+                                onClick={() => setShowAlternativeBooking(false)}
+                                className="text-muted-foreground hover:bg-muted/20 rounded-full px-6"
+                              >
+                                العودة للأوقات المتاحة
+                              </Button>
+                            </div>
+                          </CardContent>
+                        </Card>
                       </>
                     )}
 
                     {/* بيانات العميل */}
-                    <div className="border-t pt-4 space-y-4">
-                      <h4 className="font-medium">بياناتك</h4>
-                      
-                      <div className="space-y-2">
-                        <Label htmlFor="name">الاسم *</Label>
-                        <Input
-                          id="name"
-                          value={bookingForm.name}
-                          onChange={(e) => setBookingForm(prev => ({ ...prev, name: e.target.value }))}
-                          placeholder="اسمك الكامل"
-                          className="text-right"
-                          required
-                        />
-                      </div>
-                      
-                      <div className="space-y-2">
-                        <Label htmlFor="email">البريد الإلكتروني *</Label>
-                        <Input
-                          id="email"
-                          type="email"
-                          value={bookingForm.email}
-                          onChange={(e) => setBookingForm(prev => ({ ...prev, email: e.target.value }))}
-                          placeholder="example@email.com"
-                          className="text-left"
-                          required
-                        />
-                      </div>
-                      
-                      <div className="space-y-2">
-                        <Label htmlFor="contact">وسيلة التواصل المفضلة (اختياري)</Label>
-                        <Input
-                          id="contact"
-                          value={bookingForm.preferredContact}
-                          onChange={(e) => setBookingForm(prev => ({ ...prev, preferredContact: e.target.value }))}
-                          placeholder="واتساب، تيليجرام، إلخ"
-                          className="text-right"
-                        />
-                      </div>
+                    <Card className="border border-border/30">
+                      <CardContent className="p-6">
+                        <div className="bg-background/80 backdrop-blur-sm border border-border/30 rounded-2xl shadow-sm mb-6 overflow-hidden">
+                          <div className="p-3 bg-muted/20">
+                            <h4 className="text-lg font-semibold text-foreground text-center">بياناتك</h4>
+                          </div>
+                        </div>
+                        
+                        <div className="grid md:grid-cols-2 gap-6">
+                          <div className="space-y-3">
+                            <Label htmlFor="name" className="text-base font-medium">الاسم *</Label>
+                            <Input
+                              id="name"
+                              value={bookingForm.name}
+                              onChange={(e) => setBookingForm(prev => ({ ...prev, name: e.target.value }))}
+                              placeholder="اسمك الكامل"
+                              className="h-12 text-right bg-background/60 border border-border/40 rounded-xl"
+                              required
+                            />
+                          </div>
 
-                      <div className="space-y-2">
-                        <Label htmlFor="notes">ملاحظات إضافية (اختياري)</Label>
-                        <Textarea
-                          id="notes"
-                          value={bookingForm.notes}
-                          onChange={(e) => setBookingForm(prev => ({ ...prev, notes: e.target.value }))}
-                          placeholder="اكتب تفاصيل حول المشروع أو ما تريد مناقشته..."
-                          rows={3}
-                          className="text-right resize-none"
-                        />
-                      </div>
+                          <div className="space-y-3">
+                            <Label htmlFor="email" className="text-base font-medium">البريد الإلكتروني *</Label>
+                            <Input
+                              id="email"
+                              type="email"
+                              value={bookingForm.email}
+                              onChange={(e) => setBookingForm(prev => ({ ...prev, email: e.target.value }))}
+                              placeholder="email@example.com"
+                              className="h-12 text-right bg-background/60 border border-border/40 rounded-xl"
+                              required
+                            />
+                          </div>
 
-                      <Button 
-                        onClick={handleBooking} 
-                        className="w-full" 
-                        disabled={!bookingForm.name || !bookingForm.email || (!selectedDay && !alternativeDay)}
-                      >
-                        {!showAlternativeBooking 
-                          ? `تأكيد الحجز ${selectedDay && selectedTime ? `- ${dayLabels[selectedDay as keyof typeof dayLabels]} ${selectedTime}` : ''}` 
-                          : `إرسال طلب الحجز ${alternativeDay && alternativeTimeSlot ? `- ${dayLabels[alternativeDay as keyof typeof dayLabels]} (${timeSlotLabels[alternativeTimeSlot as keyof typeof timeSlotLabels]})` : ''}`
-                        }
-                      </Button>
-                    </div>
+                          <div className="space-y-3">
+                            <Label htmlFor="contact" className="text-base font-medium">وسيلة التواصل المفضلة</Label>
+                            <Select value={bookingForm.preferredContact} onValueChange={(value) => setBookingForm(prev => ({ ...prev, preferredContact: value }))}>
+                              <SelectTrigger className="h-12 bg-background/60 border border-border/40 rounded-xl">
+                                <SelectValue placeholder="اختر وسيلة التواصل" />
+                              </SelectTrigger>
+                              <SelectContent className="bg-background border border-border shadow-xl backdrop-blur-xl">
+                                <SelectItem value="email" className="text-right">البريد الإلكتروني</SelectItem>
+                                <SelectItem value="phone" className="text-right">الهاتف</SelectItem>
+                                <SelectItem value="whatsapp" className="text-right">واتساب</SelectItem>
+                              </SelectContent>
+                            </Select>
+                          </div>
+
+                          <div className="space-y-3 md:col-span-2">
+                            <Label htmlFor="notes" className="text-base font-medium">ملاحظات إضافية</Label>
+                            <Textarea
+                              id="notes"
+                              value={bookingForm.notes}
+                              onChange={(e) => setBookingForm(prev => ({ ...prev, notes: e.target.value }))}
+                              placeholder="اكتب تفاصيل المشروع أو أي ملاحظات خاصة..."
+                              className="min-h-[100px] text-right bg-background/60 border border-border/40 rounded-xl resize-none"
+                            />
+                          </div>
+                        </div>
+
+                        {/* زر الإرسال */}
+                        <div className="text-center mt-8">
+                          <Button 
+                            onClick={handleBooking}
+                            disabled={!bookingForm.name || !bookingForm.email || (!selectedDay && !alternativeDay)}
+                            size="lg"
+                            className="bg-primary hover:bg-primary/90 text-primary-foreground px-8 py-3 rounded-full font-medium transition-smooth shadow-soft hover:shadow-medium min-w-[200px]"
+                          >
+                            <CheckCircle className="w-5 h-5 ml-2" />
+                            {showAlternativeBooking ? "إرسال الاقتراح" : "تأكيد الحجز"}
+                          </Button>
+                        </div>
+                      </CardContent>
+                    </Card>
                   </div>
                 </DialogContent>
               </Dialog>

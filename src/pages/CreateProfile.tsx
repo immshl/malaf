@@ -40,7 +40,8 @@ const CreateProfile = () => {
     profession: "",
     experienceYears: null as number | null,
     linkedinUrl: "",
-    githubUrl: ""
+    githubUrl: "",
+    featuredLinks: [] as Array<{title: string, url: string}>
   });
   const [isLoading, setIsLoading] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
@@ -85,7 +86,8 @@ const CreateProfile = () => {
               profession: existingProfile.profession || "",
               experienceYears: existingProfile.experience_years || null,
               linkedinUrl: existingProfile.linkedin_url || "",
-              githubUrl: existingProfile.github_url || ""
+              githubUrl: existingProfile.github_url || "",
+              featuredLinks: existingProfile.featured_links ? JSON.parse(JSON.stringify(existingProfile.featured_links)) : []
             });
           } else {
             // No existing profile, load user data from auth
@@ -182,7 +184,8 @@ const CreateProfile = () => {
           avatar_url: profileData.profileImage || null,
           emoji: profileData.emoji || null,
           available_days: profileData.availableDays.length > 0 ? profileData.availableDays : null,
-          time_slot: profileData.timeSlot || null
+          time_slot: profileData.timeSlot || null,
+          featured_links: profileData.featuredLinks.length > 0 ? profileData.featuredLinks : null
         }, {
           onConflict: 'user_id'
         });
@@ -317,6 +320,29 @@ const CreateProfile = () => {
     setProfileData(prev => ({
       ...prev,
       topClients: prev.topClients.map((client, i) => i === index ? value : client)
+    }));
+  };
+
+  const addFeaturedLink = () => {
+    setProfileData(prev => ({
+      ...prev,
+      featuredLinks: [...prev.featuredLinks, { title: "", url: "" }]
+    }));
+  };
+
+  const removeFeaturedLink = (index: number) => {
+    setProfileData(prev => ({
+      ...prev,
+      featuredLinks: prev.featuredLinks.filter((_, i) => i !== index)
+    }));
+  };
+
+  const updateFeaturedLink = (index: number, field: 'title' | 'url', value: string) => {
+    setProfileData(prev => ({
+      ...prev,
+      featuredLinks: prev.featuredLinks.map((link, i) => 
+        i === index ? { ...link, [field]: value } : link
+      )
     }));
   };
 
@@ -816,7 +842,63 @@ const CreateProfile = () => {
               </CardContent>
             </Card>
 
-            {/* القسم الخامس: إعدادات الحجز */}
+            {/* القسم الخامس: الروابط المميزة */}
+            <Card className="border shadow-soft">
+              <CardHeader>
+                <CardTitle className="text-lg">الروابط المميزة (اختياري)</CardTitle>
+                <CardDescription>
+                  أضف روابط مشاريعك وأعمالك المميزة
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                {profileData.featuredLinks.map((link, index) => (
+                  <div key={index} className="space-y-2">
+                    <div className="flex gap-2">
+                      <Input
+                        value={link.title}
+                        onChange={(e) => updateFeaturedLink(index, 'title', e.target.value)}
+                        placeholder="عنوان الرابط (مثل: مشروع تطبيق الجوال)"
+                        className="text-right flex-1"
+                      />
+                      {profileData.featuredLinks.length > 1 && (
+                        <Button
+                          type="button"
+                          variant="outline"
+                          size="icon"
+                          onClick={() => removeFeaturedLink(index)}
+                          className="flex-shrink-0"
+                        >
+                          <X className="h-4 w-4" />
+                        </Button>
+                      )}
+                    </div>
+                    <Input
+                      value={link.url}
+                      onChange={(e) => updateFeaturedLink(index, 'url', e.target.value)}
+                      placeholder="https://example.com"
+                      className="text-left"
+                    />
+                  </div>
+                ))}
+                {profileData.featuredLinks.length === 0 && (
+                  <div className="text-center py-8 text-muted-foreground">
+                    <LinkIcon className="w-12 h-12 mx-auto mb-3 opacity-30" />
+                    <p className="text-sm">لم تقم بإضافة أي روابط مميزة بعد</p>
+                  </div>
+                )}
+                <Button
+                  type="button"
+                  variant="outline"
+                  onClick={addFeaturedLink}
+                  className="w-full"
+                >
+                  <Plus className="ml-2 h-4 w-4" />
+                  إضافة رابط مميز
+                </Button>
+              </CardContent>
+            </Card>
+
+            {/* القسم السادس: إعدادات الحجز */}
             <Card className="border shadow-soft">
               <CardHeader>
                 <CardTitle className="text-lg">إعدادات الحجز</CardTitle>

@@ -113,6 +113,7 @@ export type Database = {
           emoji: string | null
           experience_years: number | null
           featured_clients: string[] | null
+          featured_links: Json | null
           full_name: string | null
           github_url: string | null
           id: string
@@ -139,6 +140,7 @@ export type Database = {
           emoji?: string | null
           experience_years?: number | null
           featured_clients?: string[] | null
+          featured_links?: Json | null
           full_name?: string | null
           github_url?: string | null
           id?: string
@@ -165,6 +167,7 @@ export type Database = {
           emoji?: string | null
           experience_years?: number | null
           featured_clients?: string[] | null
+          featured_links?: Json | null
           full_name?: string | null
           github_url?: string | null
           id?: string

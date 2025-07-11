@@ -430,6 +430,45 @@ const UserProfile = () => {
           </Card>
         )}
 
+        {/* بطاقة الروابط المميزة */}
+        {profile.featured_links && Array.isArray(profile.featured_links) && profile.featured_links.length > 0 && (
+          <Card className="border border-border rounded-3xl shadow-soft hover:shadow-medium transition-smooth mb-8 animate-fade-in hover-scale" style={{ animationDelay: '0.13s' }}>
+            <CardContent className="p-10 lg:p-12">
+              <div className="bg-background/80 backdrop-blur-sm border border-border/30 rounded-2xl shadow-sm mb-8 overflow-hidden">
+                <div className="p-4 bg-muted/20">
+                  <h2 className="text-xl lg:text-2xl font-semibold text-foreground tracking-tight text-center">
+                    {language === 'ar' ? 'الروابط المميزة' : 'Featured Links'}
+                  </h2>
+                </div>
+              </div>
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {profile.featured_links.map((link: any, index: number) => (
+                  <a
+                    key={index}
+                    href={link.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group flex items-center gap-4 p-6 rounded-2xl bg-background/60 hover:bg-background/80 backdrop-blur-sm transition-all duration-200 border border-border/20 hover:border-border/40 shadow-sm hover:shadow-md hover-scale"
+                  >
+                    <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center flex-shrink-0 group-hover:bg-primary/20 transition-colors">
+                      <ExternalLink className="w-5 h-5 text-primary" />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <h3 className="font-medium text-foreground group-hover:text-primary transition-colors truncate">
+                        {link.title}
+                      </h3>
+                      <p className="text-sm text-muted-foreground truncate">
+                        {link.url}
+                      </p>
+                    </div>
+                  </a>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
+        )}
+
         {/* بطاقة أبرز العملاء */}
         {profile.featured_clients && profile.featured_clients.length > 0 && (
           <Card className="border border-border rounded-3xl shadow-soft hover:shadow-medium transition-smooth mb-8 animate-fade-in hover-scale" style={{ animationDelay: '0.15s' }}>

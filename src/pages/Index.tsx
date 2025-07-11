@@ -11,12 +11,14 @@ import AuthButton from "@/components/AuthButton";
 import UserProfile from "@/components/UserProfile";
 import { useAuth } from "@/hooks/useAuth";
 import { toast } from "@/hooks/use-toast";
+import { supabase } from "@/integrations/supabase/client";
 
 const Index = () => {
   const { language, t } = useLanguage();
   const { user } = useAuth();
   const navigate = useNavigate();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [hasProfile, setHasProfile] = useState<boolean | null>(null);
   
   // Initialize scroll animations
   useScrollAnimation();
@@ -76,6 +78,37 @@ const Index = () => {
       document.removeEventListener('click', handleOutsideClick);
     };
   }, [isMobileMenuOpen]);
+
+  // Check if user has a profile
+  useEffect(() => {
+    const checkUserProfile = async () => {
+      if (user && user.email_confirmed_at) {
+        try {
+          const { data: profile } = await supabase
+            .from('profiles')
+            .select('id')
+            .eq('user_id', user.id)
+            .single();
+          
+          if (!profile) {
+            // User is verified but doesn't have a profile
+            toast({
+              title: "أكمل إنشاء ملفك الشخصي",
+              description: "أهلاً بك! لنكمل إنشاء ملفك المهني ونجعلك جاهزاً للعملاء.",
+              duration: 4000,
+            });
+            navigate('/create-profile');
+          } else {
+            setHasProfile(true);
+          }
+        } catch (error) {
+          console.error('Error checking profile:', error);
+        }
+      }
+    };
+
+    checkUserProfile();
+  }, [user, navigate]);
 
   // Add smooth scrolling for anchor links
   useEffect(() => {

@@ -813,7 +813,7 @@ const UserProfile = () => {
                     className="aspect-square flex flex-col items-center justify-center p-4 rounded-2xl bg-background/60 hover:bg-background/80 backdrop-blur-sm transition-all duration-200 border border-border/20 hover:border-border/40 group shadow-sm hover:shadow-md"
                   >
                     <div className="w-8 h-8 bg-muted/50 rounded-full flex items-center justify-center mb-2 group-hover:bg-muted/70 transition-smooth">
-                      <Twitter className="w-4 h-4 text-muted-foreground" />
+                      <X className="w-4 h-4 text-muted-foreground" />
                     </div>
                     <span className="text-xs text-foreground text-center font-medium">X</span>
                   </a>

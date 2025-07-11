@@ -5,6 +5,8 @@ import { ArrowLeft, Users, Calendar, Link2, Star, Zap, Shield, Smartphone, Menu,
 import { Link } from "react-router-dom";
 import { useLanguage } from "@/hooks/useLanguage";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
+import useEmblaCarousel from 'embla-carousel-react';
+import Autoplay from 'embla-carousel-autoplay';
 import AuthButton from "@/components/AuthButton";
 
 const Index = () => {
@@ -13,6 +15,17 @@ const Index = () => {
   
   // Initialize scroll animations
   useScrollAnimation();
+
+  // Carousel setup with autoplay
+  const [emblaRef] = useEmblaCarousel(
+    { 
+      loop: true, 
+      align: 'center',
+      skipSnaps: false,
+      dragFree: true 
+    },
+    [Autoplay({ delay: 3000, stopOnInteraction: false })]
+  );
 
   const toggleMobileMenu = () => {
     console.log('Toggling mobile menu:', !isMobileMenuOpen);
@@ -295,47 +308,59 @@ const Index = () => {
             </p>
           </div>
           
-          <div className="grid md:grid-cols-3 gap-12 max-w-5xl mx-auto">
-            <div className="text-center scroll-animate-left">
-              <div className="mb-8 flex justify-center">
-                <div className="w-20 h-20 bg-foreground rounded-2xl flex items-center justify-center text-background text-3xl font-bold shadow-medium">
-                  1
+          {/* Carousel Container */}
+          <div className="overflow-hidden" ref={emblaRef}>
+            <div className="flex">
+              {/* Step 1 */}
+              <div className="flex-[0_0_100%] md:flex-[0_0_50%] lg:flex-[0_0_33.333%] min-w-0 px-6">
+                <div className="text-center">
+                  <div className="mb-8 flex justify-center">
+                    <div className="w-20 h-20 bg-foreground rounded-2xl flex items-center justify-center text-background text-3xl font-bold shadow-medium">
+                      1
+                    </div>
+                  </div>
+                  <h3 className="text-2xl font-bold mb-6 text-foreground tracking-tight">
+                    {language === "ar" ? "أنشئ ملفك" : "Create Your Profile"}
+                  </h3>
+                  <p className="text-muted-foreground leading-relaxed text-lg font-light">
+                    {language === "ar" ? "أدخل معلوماتك وخدماتك بخطوات بسيطة" : "Enter your information and services in simple steps"}
+                  </p>
                 </div>
               </div>
-              <h3 className="text-2xl font-bold mb-6 text-foreground tracking-tight">
-                {language === "ar" ? "أنشئ ملفك" : "Create Your Profile"}
-              </h3>
-              <p className="text-muted-foreground leading-relaxed text-lg font-light">
-                {language === "ar" ? "أدخل معلوماتك وخدماتك بخطوات بسيطة" : "Enter your information and services in simple steps"}
-              </p>
-            </div>
 
-            <div className="text-center scroll-animate-scale">
-              <div className="mb-8 flex justify-center">
-                <div className="w-20 h-20 bg-foreground rounded-2xl flex items-center justify-center text-background text-3xl font-bold shadow-medium">
-                  2
+              {/* Step 2 */}
+              <div className="flex-[0_0_100%] md:flex-[0_0_50%] lg:flex-[0_0_33.333%] min-w-0 px-6">
+                <div className="text-center">
+                  <div className="mb-8 flex justify-center">
+                    <div className="w-20 h-20 bg-foreground rounded-2xl flex items-center justify-center text-background text-3xl font-bold shadow-medium">
+                      2
+                    </div>
+                  </div>
+                  <h3 className="text-2xl font-bold mb-6 text-foreground tracking-tight">
+                    {language === "ar" ? "شارك ملفك" : "Share Your Profile"}
+                  </h3>
+                  <p className="text-muted-foreground leading-relaxed text-lg font-light">
+                    {language === "ar" ? "احصل على رابط شخصي لمشاركته مع العملاء" : "Get a personal link to share with clients"}
+                  </p>
                 </div>
               </div>
-              <h3 className="text-2xl font-bold mb-6 text-foreground tracking-tight">
-                {language === "ar" ? "شارك ملفك" : "Share Your Profile"}
-              </h3>
-              <p className="text-muted-foreground leading-relaxed text-lg font-light">
-                {language === "ar" ? "احصل على رابط شخصي لمشاركته مع العملاء" : "Get a personal link to share with clients"}
-              </p>
-            </div>
 
-            <div className="text-center scroll-animate-right">
-              <div className="mb-8 flex justify-center">
-                <div className="w-20 h-20 bg-foreground rounded-2xl flex items-center justify-center text-background text-3xl font-bold shadow-medium">
-                  3
+              {/* Step 3 */}
+              <div className="flex-[0_0_100%] md:flex-[0_0_50%] lg:flex-[0_0_33.333%] min-w-0 px-6">
+                <div className="text-center">
+                  <div className="mb-8 flex justify-center">
+                    <div className="w-20 h-20 bg-foreground rounded-2xl flex items-center justify-center text-background text-3xl font-bold shadow-medium">
+                      3
+                    </div>
+                  </div>
+                  <h3 className="text-2xl font-bold mb-6 text-foreground tracking-tight">
+                    {language === "ar" ? "استقبل الطلبات" : "Receive Requests"}
+                  </h3>
+                  <p className="text-muted-foreground leading-relaxed text-lg font-light">
+                    {language === "ar" ? "اربط مع العملاء واستقبل طلبات المشاريع" : "Connect with clients and receive project requests"}
+                  </p>
                 </div>
               </div>
-              <h3 className="text-2xl font-bold mb-6 text-foreground tracking-tight">
-                {language === "ar" ? "استقبل الطلبات" : "Receive Requests"}
-              </h3>
-              <p className="text-muted-foreground leading-relaxed text-lg font-light">
-                {language === "ar" ? "اربط مع العملاء واستقبل طلبات المشاريع" : "Connect with clients and receive project requests"}
-              </p>
             </div>
           </div>
         </div>

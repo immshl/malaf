@@ -415,24 +415,24 @@ const UserProfile = () => {
                     احجز الآن
                   </Button>
                 </DialogTrigger>
-                <DialogContent className="max-w-2xl h-[60vh] overflow-y-auto border border-border/20 shadow-elegant bg-white rounded-t-3xl rounded-b-none fixed bottom-0 left-[50%] translate-x-[-50%] w-full z-50 [&>button]:hidden">{/* منبثق من الأسفل */}
-                  <div className="absolute inset-0 bg-gradient-to-br from-white to-gray-50/30 rounded-3xl"></div>
+                <DialogContent className="max-w-2xl h-[60vh] overflow-y-auto border border-border/20 shadow-elegant bg-background rounded-t-3xl rounded-b-none fixed bottom-0 left-[50%] translate-x-[-50%] w-full z-50 [&>button]:hidden">{/* منبثق من الأسفل */}
+                  <div className="absolute inset-0 bg-gradient-to-br from-background to-muted/30 rounded-t-3xl"></div>
                   
                   {/* زر الإغلاق الجديد */}
                   <DialogClose asChild>
                     <Button 
                       variant="ghost" 
                       size="icon"
-                      className="absolute top-4 right-4 z-20 w-10 h-10 rounded-full bg-white border-2 border-gray-300 hover:border-gray-400 hover:bg-gray-50 shadow-md hover:shadow-lg"
+                      className="absolute top-4 right-4 z-20 w-10 h-10 rounded-full bg-background border-2 border-border hover:border-border/60 hover:bg-muted/50 shadow-md hover:shadow-lg"
                     >
-                      <X className="w-5 h-5 text-gray-700" />
+                      <X className="w-5 h-5 text-foreground" />
                     </Button>
                   </DialogClose>
 
                   <div className="relative z-10 pt-4">
                     <DialogHeader className="text-center pb-6">
                       <div className="glass-soft rounded-2xl shadow-soft mb-4 overflow-hidden border border-primary/20 bg-primary/5">
-                        <div className="p-4 bg-gray-100">
+                        <div className="p-4 bg-muted/20">
                           <DialogTitle className="text-xl lg:text-2xl font-semibold text-foreground tracking-tight">
                             حجز اجتماع جديد
                           </DialogTitle>

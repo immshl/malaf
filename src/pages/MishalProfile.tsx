@@ -15,31 +15,32 @@ import {
   Linkedin,
   Copy,
   Check,
-  ArrowLeft
+  User
 } from "lucide-react";
 import { Link } from "react-router-dom";
 
-const ExampleProfile = () => {
+const MishalProfile = () => {
   const [copied, setCopied] = useState(false);
 
   const handleCopyLink = () => {
-    navigator.clipboard.writeText("https://malaf.me/ahmad-salem");
+    navigator.clipboard.writeText("https://malaf.me/mishalth");
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
 
   const services = [
-    { name: "تصميم المواقع", price: "من 500 ريال", duration: "5-7 أيام" },
-    { name: "تطوير التطبيقات", price: "من 1500 ريال", duration: "2-3 أسابيع" },
-    { name: "استشارة تقنية", price: "200 ريال/ساعة", duration: "ساعة واحدة" },
+    { name: "استشارة ماليّة", price: "من 300 ريال", duration: "ساعة واحدة" },
+    { name: "إدارة الاستثمارات", price: "من 2000 ريال", duration: "شهريّاً" },
+    { name: "تخطيط التقاعد", price: "من 1500 ريال", duration: "3 جلسات" },
+    { name: "تحليل الميزانيّة", price: "من 500 ريال", duration: "2-3 أيام" },
   ];
 
   const availableTimes = [
-    { day: "السبت", times: ["9:00 ص", "11:00 ص", "2:00 م", "4:00 م"] },
-    { day: "الأحد", times: ["10:00 ص", "12:00 م", "3:00 م"] },
-    { day: "الاثنين", times: ["9:00 ص", "1:00 م", "5:00 م"] },
-    { day: "الثلاثاء", times: ["11:00 ص", "2:00 م", "4:00 م"] },
-    { day: "الأربعاء", times: ["9:00 ص", "12:00 م", "3:00 م"] },
+    { day: "الأحد", times: ["10:00 ص", "2:00 م", "4:00 م"] },
+    { day: "الاثنين", times: ["9:00 ص", "11:00 ص", "3:00 م", "5:00 م"] },
+    { day: "الثلاثاء", times: ["10:00 ص", "12:00 م", "4:00 م"] },
+    { day: "الأربعاء", times: ["9:00 ص", "1:00 م", "3:00 م"] },
+    { day: "الخميس", times: ["11:00 ص", "2:00 م", "5:00 م"] },
   ];
 
   return (
@@ -51,9 +52,14 @@ const ExampleProfile = () => {
             <Link to="/" className="flex items-center space-x-3 space-x-reverse hover:opacity-80 transition-smooth">
               <div className="w-7 h-7">
                 <img 
-                  src="/lovable-uploads/053ffcb6-5dac-4834-a5ef-585d29be4be9.png" 
+                  src="/lovable-uploads/be1d2269-8206-422b-a395-e4fb9e1a88cc.png" 
                   alt="ملف" 
-                  className="w-full h-full object-contain"
+                  className="w-full h-full object-contain dark:hidden"
+                />
+                <img 
+                  src="/lovable-uploads/822b255a-0cfa-4520-b9a5-aa69e7ef91e6.png" 
+                  alt="ملف" 
+                  className="w-full h-full object-contain hidden dark:block"
                 />
               </div>
               <span className="text-lg font-semibold text-foreground tracking-tight">malaf</span>
@@ -76,29 +82,36 @@ const ExampleProfile = () => {
           <div className="bg-background border border-border/10 rounded-3xl p-10 lg:p-12 shadow-soft hover:shadow-medium transition-smooth text-center">
             {/* Profile Avatar */}
             <div className="flex justify-center mb-8">
-              <Avatar className="w-28 h-28 lg:w-36 lg:h-36 border border-border/10 shadow-soft">
-                <AvatarFallback className="text-2xl lg:text-4xl font-light bg-muted/50 text-foreground">أس</AvatarFallback>
-              </Avatar>
+              <div className="relative">
+                <Avatar className="w-28 h-28 lg:w-36 lg:h-36 border border-border/10 shadow-soft">
+                  <AvatarFallback className="text-2xl lg:text-4xl font-light bg-gradient-primary text-white">
+                    <User className="w-12 h-12 lg:w-16 lg:h-16" />
+                  </AvatarFallback>
+                </Avatar>
+                <div className="absolute -top-1 -right-1 w-10 h-10 lg:w-12 lg:h-12 bg-background border-2 border-background rounded-full flex items-center justify-center text-2xl lg:text-3xl shadow-sm">
+                  💰
+                </div>
+              </div>
             </div>
 
             {/* Name & Title */}
             <h1 className="text-3xl md:text-4xl lg:text-5xl font-light text-foreground mb-4 tracking-tight">
-              أحمد سالم
+              مشعل ثاني
             </h1>
             <p className="text-lg md:text-xl lg:text-2xl font-light text-muted-foreground mb-8">
-              مطور ويب ومصمم واجهات
+              مستشار مالي ومخطط استثمارات
             </p>
 
             {/* Location & Rating */}
             <div className="flex flex-col sm:flex-row items-center justify-center gap-6 mb-8">
               <div className="flex items-center gap-3 text-muted-foreground">
                 <MapPin className="w-5 h-5" />
-                <span className="text-base font-medium">الرياض، السعودية</span>
+                <span className="text-base font-medium">الدمام، السعودية</span>
               </div>
               <div className="flex items-center gap-3">
                 <Star className="w-5 h-5 fill-yellow-400 text-yellow-400" />
-                <span className="text-base font-semibold text-foreground">4.9</span>
-                <span className="text-base text-muted-foreground">(47 تقييم)</span>
+                <span className="text-base font-semibold text-foreground">4.8</span>
+                <span className="text-base text-muted-foreground">(32 تقييم)</span>
               </div>
             </div>
 
@@ -124,8 +137,8 @@ const ExampleProfile = () => {
               نبذة تعريفية
             </h3>
             <p className="text-lg font-light text-muted-foreground leading-relaxed text-center max-w-2xl mx-auto">
-              مطور ويب محترف مع أكثر من 5 سنوات من الخبرة في تطوير المواقع والتطبيقات. 
-              أتخصص في React، Node.js، وتصميم تجارب المستخدم الحديثة.
+              مستشار مالي معتمد مع أكثر من 7 سنوات من الخبرة في التخطيط المالي وإدارة الاستثمارات. 
+              أساعد الأفراد والشركات الناشئة في بناء استراتيجيات مالية مدروسة وتحقيق الاستقلال المالي.
             </p>
           </div>
         </div>
@@ -136,10 +149,10 @@ const ExampleProfile = () => {
         <div className="max-w-4xl mx-auto px-6 lg:px-8">
           <div className="bg-background border border-border/10 rounded-3xl p-10 lg:p-12 shadow-soft hover:shadow-medium transition-smooth">
             <h3 className="text-2xl lg:text-3xl font-light text-foreground mb-10 tracking-tight text-center">
-              المهارات التقنية
+              المجالات التخصصية
             </h3>
             <div className="flex flex-wrap justify-center gap-4">
-              {["React", "Node.js", "TypeScript", "UI/UX", "Mobile Apps"].map((skill) => (
+              {["التخطيط المالي", "إدارة الاستثمارات", "تخطيط التقاعد", "التأمين", "الضرائب", "ريادة الأعمال"].map((skill) => (
                 <Badge 
                   key={skill} 
                   variant="secondary" 
@@ -162,11 +175,11 @@ const ExampleProfile = () => {
                 خدماتي
               </h2>
               <p className="text-lg font-light text-muted-foreground max-w-2xl mx-auto">
-                حلول تقنية متقدمة ومصممة خصيصاً لاحتياجاتك
+                استشارات مالية متخصصة لتحقيق أهدافك المالية
               </p>
             </div>
 
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid md:grid-cols-2 lg:grid-cols-2 gap-6">
               {services.map((service, index) => (
                 <div 
                   key={index} 
@@ -204,10 +217,10 @@ const ExampleProfile = () => {
           <div className="bg-background border border-border/10 rounded-3xl p-10 lg:p-12 shadow-soft hover:shadow-medium transition-smooth">
             <div className="text-center mb-10">
               <h3 className="text-2xl lg:text-3xl font-light text-foreground mb-4 tracking-tight">
-                احجز موعد مجاني
+                احجز استشارة مجانية
               </h3>
               <p className="text-lg text-muted-foreground">
-                اختر الوقت المناسب لك ودعنا نناقش مشروعك
+                اختر الوقت المناسب لك ودعنا نناقش وضعك المالي
               </p>
             </div>
 
@@ -255,39 +268,39 @@ const ExampleProfile = () => {
                 تواصل معي
               </h2>
               <p className="text-lg font-light text-muted-foreground">
-                دعنا نناقش مشروعك القادم
+                ابدأ رحلتك نحو الاستقلال المالي
               </p>
             </div>
 
             <div className="grid md:grid-cols-3 gap-6">
               <a 
-                href="mailto:ahmad@example.com" 
+                href="mailto:mishal@financialplanning.sa" 
                 className="flex flex-col items-center p-6 rounded-2xl border border-border/10 hover:border-border/30 transition-smooth hover:shadow-soft group bg-muted/5 hover:bg-muted/10"
               >
                 <div className="w-12 h-12 bg-muted/30 rounded-full flex items-center justify-center mb-4 group-hover:bg-muted/50 transition-smooth">
                   <Mail className="w-5 h-5 text-foreground" />
                 </div>
-                <span className="text-sm font-medium text-foreground text-center">ahmad@example.com</span>
+                <span className="text-sm font-medium text-foreground text-center">mishal@financialplanning.sa</span>
               </a>
               
               <a 
-                href="tel:+966500000000" 
+                href="tel:+966555123456" 
                 className="flex flex-col items-center p-6 rounded-2xl border border-border/10 hover:border-border/30 transition-smooth hover:shadow-soft group bg-muted/5 hover:bg-muted/10"
               >
                 <div className="w-12 h-12 bg-muted/30 rounded-full flex items-center justify-center mb-4 group-hover:bg-muted/50 transition-smooth">
                   <Phone className="w-5 h-5 text-foreground" />
                 </div>
-                <span className="text-sm font-medium text-foreground text-center">+966 50 000 0000</span>
+                <span className="text-sm font-medium text-foreground text-center">+966 55 512 3456</span>
               </a>
               
               <a 
-                href="https://ahmad-portfolio.com" 
+                href="https://mishalfinance.com" 
                 className="flex flex-col items-center p-6 rounded-2xl border border-border/10 hover:border-border/30 transition-smooth hover:shadow-soft group bg-muted/5 hover:bg-muted/10"
               >
                 <div className="w-12 h-12 bg-muted/30 rounded-full flex items-center justify-center mb-4 group-hover:bg-muted/50 transition-smooth">
                   <Globe className="w-5 h-5 text-foreground" />
                 </div>
-                <span className="text-sm font-medium text-foreground text-center">ahmad-portfolio.com</span>
+                <span className="text-sm font-medium text-foreground text-center">mishalfinance.com</span>
               </a>
             </div>
           </div>
@@ -303,19 +316,19 @@ const ExampleProfile = () => {
             </h3>
             <div className="flex justify-center gap-6">
               <a 
-                href="#" 
+                href="https://instagram.com/mishalfinance" 
                 className="w-14 h-14 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center hover:scale-105 transition-smooth shadow-soft hover:shadow-medium"
               >
                 <Instagram className="w-6 h-6 text-white" />
               </a>
               <a 
-                href="#" 
+                href="https://x.com/mishalfinance" 
                 className="w-14 h-14 bg-blue-500 rounded-full flex items-center justify-center hover:scale-105 transition-smooth shadow-soft hover:shadow-medium"
               >
                 <Twitter className="w-6 h-6 text-white" />
               </a>
               <a 
-                href="#" 
+                href="https://linkedin.com/in/mishalthani" 
                 className="w-14 h-14 bg-blue-600 rounded-full flex items-center justify-center hover:scale-105 transition-smooth shadow-soft hover:shadow-medium"
               >
                 <Linkedin className="w-6 h-6 text-white" />
@@ -333,11 +346,11 @@ const ExampleProfile = () => {
               <div className="inline-flex items-center gap-4 px-6 py-3 rounded-full bg-green-50 dark:bg-green-950/30 border border-green-200 dark:border-green-800/30 shadow-soft mb-4">
                 <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
                 <span className="text-sm font-medium text-green-700 dark:text-green-400">
-                  متاح الآن للمشاريع الجديدة
+                  متاح الآن للاستشارات الجديدة
                 </span>
               </div>
               <p className="text-sm text-muted-foreground font-light">
-                السبت - الخميس، 9:00 ص - 6:00 م (GMT+3)
+                الأحد - الخميس، 9:00 ص - 6:00 م (GMT+3)
               </p>
             </div>
           </div>
@@ -348,4 +361,4 @@ const ExampleProfile = () => {
   );
 };
 
-export default ExampleProfile;
+export default MishalProfile;

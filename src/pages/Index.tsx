@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { ArrowLeft, Users, Calendar, Link2, Star, Zap, Shield, Smartphone, Menu, X } from "lucide-react";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Link } from "react-router-dom";
 import { useLanguage } from "@/hooks/useLanguage";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
@@ -52,9 +53,6 @@ const Index = () => {
     setIsMobileMenuOpen(false);
   };
 
-  const handleContactUs = () => {
-    window.open('mailto:info@malaf.me?subject=استفسار عن منصة ملف', '_blank');
-  };
 
   // Close mobile menu when clicking outside
   useEffect(() => {
@@ -377,14 +375,62 @@ const Index = () => {
             >
               <Link to="/signup">{language === "ar" ? "أنشئ ملفك الآن" : "Create Your Profile Now"}</Link>
             </Button>
-            <Button 
-              size="lg" 
-              variant="outline" 
-              className="text-lg px-12 py-4 font-medium"
-              onClick={handleContactUs}
-            >
-              {language === "ar" ? "تواصل معنا" : "Contact Us"}
-            </Button>
+            <Dialog>
+              <DialogTrigger asChild>
+                <Button 
+                  size="lg" 
+                  variant="outline" 
+                  className="text-lg px-12 py-4 font-medium"
+                >
+                  {language === "ar" ? "تواصل معنا" : "Contact Us"}
+                </Button>
+              </DialogTrigger>
+              <DialogContent className="sm:max-w-[500px] glass backdrop-blur-md border border-border/20">
+                <DialogHeader>
+                  <DialogTitle className="text-2xl font-bold text-center mb-4">
+                    {language === "ar" ? "مشعل ثاني" : "Meshaal Thani"}
+                  </DialogTitle>
+                </DialogHeader>
+                <div className="text-center space-y-6">
+                  {/* Profile Image */}
+                  <div className="w-24 h-24 mx-auto rounded-full bg-gradient-to-r from-blue-500 to-purple-500 flex items-center justify-center text-white text-3xl font-bold shadow-lg">
+                    م
+                  </div>
+                  
+                  {/* Info */}
+                  <div className="space-y-4">
+                    <div>
+                      <h3 className="font-semibold text-lg text-foreground">
+                        {language === "ar" ? "مؤسس منصة ملف" : "Founder of Malaf Platform"}
+                      </h3>
+                      <p className="text-muted-foreground">
+                        {language === "ar" ? "خبير في تطوير المنصات الرقمية" : "Expert in Digital Platform Development"}
+                      </p>
+                    </div>
+                    
+                    <div className="text-center text-muted-foreground leading-relaxed">
+                      <p>
+                        {language === "ar" 
+                          ? "مختص في بناء الحلول التقنية التي تمكن المستقلين من عرض أعمالهم وجذب العملاء بطريقة احترافية ومميزة."
+                          : "Specialized in building technical solutions that enable freelancers to showcase their work and attract clients professionally and distinctively."
+                        }
+                      </p>
+                    </div>
+                    
+                    {/* Contact Info */}
+                    <div className="pt-4 border-t border-border/20">
+                      <Button 
+                        variant="outline" 
+                        className="w-full hover:bg-muted/50"
+                        onClick={() => window.open('mailto:info@malaf.me?subject=استفسار عن منصة ملف', '_blank')}
+                      >
+                        {language === "ar" ? "راسلني عبر البريد الإلكتروني" : "Email Me"}
+                      </Button>
+                    </div>
+                  </div>
+                </div>
+              </DialogContent>
+            </Dialog>
           </div>
         </div>
       </section>

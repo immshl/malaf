@@ -26,7 +26,8 @@ import {
   User,
   Star,
   CheckCircle,
-  Globe
+  Globe,
+  X
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -42,6 +43,7 @@ const UserProfile = () => {
   const [showAlternativeBooking, setShowAlternativeBooking] = useState(false);
   const [alternativeDay, setAlternativeDay] = useState("");
   const [alternativeTimeSlot, setAlternativeTimeSlot] = useState("");
+  const [isBookingDialogOpen, setIsBookingDialogOpen] = useState(false);
   const [bookingForm, setBookingForm] = useState({
     name: "",
     email: "",
@@ -371,7 +373,7 @@ const UserProfile = () => {
 
             {/* زر الحجز الرئيسي */}
             <div className="text-center">
-              <Dialog>
+              <Dialog open={isBookingDialogOpen} onOpenChange={setIsBookingDialogOpen}>
                 <DialogTrigger asChild>
                   <Button 
                     size="lg" 
@@ -381,12 +383,23 @@ const UserProfile = () => {
                     احجز الآن
                   </Button>
                 </DialogTrigger>
-                <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto glass border-border/10 shadow-elegant backdrop-blur-md bg-background/40 rounded-3xl">
-                  <div className="absolute inset-0 bg-gradient-to-br from-background/20 via-background/10 to-background/25 rounded-3xl"></div>
-                  <div className="relative z-10">
+                <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto glass border-border/20 shadow-elegant backdrop-blur-md bg-background/30 rounded-3xl relative">
+                  <div className="absolute inset-0 bg-gradient-to-br from-background/25 via-background/15 to-background/30 rounded-3xl"></div>
+                  
+                  {/* زر الإغلاق المحسن */}
+                  <div className="absolute top-4 left-4 z-20">
+                    <button 
+                      onClick={() => setIsBookingDialogOpen(false)}
+                      className="w-10 h-10 rounded-full glass-soft border border-border/40 hover:border-border/60 bg-background/30 hover:bg-background/50 backdrop-blur-sm flex items-center justify-center transition-all duration-200 hover:shadow-md group"
+                    >
+                      <X className="w-5 h-5 text-muted-foreground group-hover:text-foreground transition-colors" />
+                    </button>
+                  </div>
+
+                  <div className="relative z-10 pt-4">
                     <DialogHeader className="text-center pb-6">
-                      <div className="glass-soft rounded-2xl shadow-soft mb-4 overflow-hidden border border-border/10">
-                        <div className="p-4 bg-gradient-to-r from-primary/5 via-background/60 to-primary/5">
+                      <div className="glass-soft rounded-2xl shadow-soft mb-4 overflow-hidden border border-primary/20 bg-primary/5">
+                        <div className="p-4 bg-gradient-to-r from-primary/15 via-background/40 to-primary/15 backdrop-blur-sm">
                           <DialogTitle className="text-xl lg:text-2xl font-semibold text-foreground tracking-tight">
                             حجز اجتماع جديد
                           </DialogTitle>

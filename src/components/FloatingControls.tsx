@@ -10,6 +10,7 @@ type Theme = "light" | "dark";
 const FloatingControls = () => {
   const [theme, setTheme] = useState<Theme>("light");
   const [isTransitioning, setIsTransitioning] = useState(false);
+  const [isHidden, setIsHidden] = useState(false);
   const { language, setLanguage } = useLanguage();
   const location = useLocation();
 
@@ -39,6 +40,51 @@ const FloatingControls = () => {
     }
     console.log("Theme changed to:", theme);
   }, [theme]);
+
+  // Auto-hide controls when interacting with forms
+  useEffect(() => {
+    const handleInteraction = (event: Event) => {
+      const target = event.target as HTMLElement;
+      
+      // Check if clicked on input, button, or any interactive element
+      if (target.matches('input, button, textarea, select, [contenteditable], a')) {
+        setIsHidden(true);
+        
+        // Show again after 3 seconds of no interaction
+        setTimeout(() => {
+          setIsHidden(false);
+        }, 3000);
+      }
+    };
+
+    const handleFocus = () => {
+      setIsHidden(true);
+    };
+
+    const handleBlur = () => {
+      setTimeout(() => {
+        setIsHidden(false);
+      }, 2000);
+    };
+
+    // Add event listeners
+    document.addEventListener('click', handleInteraction);
+    document.addEventListener('focusin', handleFocus);
+    document.addEventListener('focusout', handleBlur);
+
+    return () => {
+      document.removeEventListener('click', handleInteraction);
+      document.removeEventListener('focusin', handleFocus);
+      document.removeEventListener('focusout', handleBlur);
+    };
+  }, []);
+
+  // Spring animation for sliding
+  const slideAnimation = useSpring({
+    transform: isHidden ? 'translateX(100px)' : 'translateX(0px)',
+    opacity: isHidden ? 0.3 : 1,
+    config: { tension: 200, friction: 25 }
+  });
 
   const handleTransition = (callback: () => void) => {
     setIsTransitioning(true);
@@ -72,7 +118,10 @@ const FloatingControls = () => {
   };
 
   return (
-    <div className="fixed bottom-6 right-6 z-50">
+    <animated.div 
+      style={slideAnimation}
+      className="fixed bottom-6 right-6 z-50"
+    >
       <div className="bg-background/10 backdrop-blur-md rounded-xl p-2 shadow-md border border-border/10 transition-opacity duration-300 hover:bg-background/20">
         <div className="flex flex-col gap-2">
           {/* Language Toggle - Hide on freelancer profile pages */}
@@ -97,7 +146,7 @@ const FloatingControls = () => {
           />
         </div>
       </div>
-    </div>
+    </animated.div>
   );
 };
 

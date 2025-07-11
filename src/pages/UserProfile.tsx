@@ -300,20 +300,21 @@ const UserProfile = () => {
         {/* بطاقة الخدمات */}
         {profile.skills && profile.skills.length > 0 && (
           <Card className="border border-border/10 rounded-3xl shadow-soft hover:shadow-medium transition-smooth mb-8">
-            <CardContent className="p-8 lg:p-10">
-              <h2 className="text-2xl lg:text-3xl font-light text-foreground mb-8 tracking-tight text-center">
+            <CardContent className="p-10 lg:p-12">
+              <h2 className="text-2xl lg:text-3xl font-light text-foreground mb-10 tracking-tight text-center">
                 الخدمات
               </h2>
               
-              <div className="flex flex-wrap justify-center gap-4">
+              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
                 {profile.skills.map((skill, index) => (
-                  <Badge 
+                  <div 
                     key={index} 
-                    variant="secondary" 
-                    className="px-6 py-3 text-base font-medium bg-gradient-to-r from-primary/10 to-accent/10 text-foreground border border-primary/20 rounded-full hover:from-primary/20 hover:to-accent/20 hover:border-primary/30 transition-all duration-300 cursor-default shadow-sm hover:shadow-md"
+                    className="group p-6 rounded-2xl bg-muted/20 hover:bg-muted/30 transition-all duration-300 border border-transparent hover:border-border/20"
                   >
-                    {skill}
-                  </Badge>
+                    <h3 className="text-lg font-light text-foreground text-center tracking-tight leading-relaxed">
+                      {skill}
+                    </h3>
+                  </div>
                 ))}
               </div>
             </CardContent>

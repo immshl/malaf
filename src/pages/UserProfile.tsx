@@ -415,33 +415,31 @@ const UserProfile = () => {
                     احجز الآن
                   </Button>
                 </DialogTrigger>
-                <DialogContent className="max-w-2xl h-[60vh] overflow-y-auto border border-border/20 shadow-elegant bg-background rounded-t-3xl rounded-b-none fixed bottom-0 left-[50%] translate-x-[-50%] w-full z-50 [&>button]:hidden">{/* منبثق من الأسفل */}
-                  <div className="absolute inset-0 bg-gradient-to-br from-background to-muted/30 rounded-t-3xl"></div>
-                  
-                  {/* زر الإغلاق الجديد */}
+                <DialogContent className="max-w-[90vw] sm:max-w-[500px] w-full mx-auto border border-border/20 shadow-2xl bg-background/95 backdrop-blur-xl rounded-3xl animate-scale-in p-0">
+                  {/* زر الإغلاق */}
                   <DialogClose asChild>
                     <Button 
                       variant="ghost" 
                       size="icon"
-                      className="absolute top-4 right-4 z-20 w-10 h-10 rounded-full bg-background border-2 border-border hover:border-border/60 hover:bg-muted/50 shadow-md hover:shadow-lg"
+                      className="absolute top-4 right-4 z-50 w-8 h-8 rounded-full bg-background/80 backdrop-blur-sm border border-border/30 hover:border-border/60 shadow-md hover:shadow-lg transition-all"
                     >
-                      <X className="w-5 h-5 text-foreground" />
+                      <X className="w-4 h-4 text-foreground" />
                     </Button>
                   </DialogClose>
 
-                  <div className="relative z-10 pt-4">
-                    <DialogHeader className="text-center pb-6">
-                      <div className="glass-soft rounded-2xl shadow-soft mb-4 overflow-hidden border border-primary/20 bg-primary/5">
-                        <div className="p-4 bg-muted/20">
-                          <DialogTitle className="text-xl lg:text-2xl font-semibold text-foreground tracking-tight">
-                            حجز اجتماع جديد
-                          </DialogTitle>
-                        </div>
+                <div className="space-y-6 p-6">
+                  <DialogHeader className="text-center pb-4">
+                    <div className="glass-soft rounded-2xl shadow-soft mb-4 overflow-hidden border border-primary/20 bg-primary/5">
+                      <div className="p-4 bg-muted/20">
+                        <DialogTitle className="text-xl lg:text-2xl font-semibold text-foreground tracking-tight">
+                          حجز اجتماع جديد
+                        </DialogTitle>
                       </div>
-                      <DialogDescription className="text-base text-muted-foreground">
-                        اختر الموعد المناسب لك أو اقترح موعد مختلف لمناقشة مشروعك
-                      </DialogDescription>
-                    </DialogHeader>
+                    </div>
+                    <DialogDescription className="text-base text-muted-foreground">
+                      اختر الموعد المناسب لك أو اقترح موعد مختلف لمناقشة مشروعك
+                    </DialogDescription>
+                  </DialogHeader>
                   <div className="space-y-8">
                     {!showAlternativeBooking ? (
                       <>
@@ -676,7 +674,7 @@ const UserProfile = () => {
                       </CardContent>
                     </Card>
                   </div>
-                  </div>
+                </div>
                 </DialogContent>
               </Dialog>
             </div>

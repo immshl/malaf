@@ -29,7 +29,7 @@ export const EmailVerificationTemplate = ({
 }: EmailVerificationProps) => (
   <Html>
     <Head />
-    <Preview>كود التحقق من ملف - منصة الفريلانسرز</Preview>
+    <Preview>تأكيد حسابك في ملف - منصة الفريلانسرز</Preview>
     <Body style={main}>
       <Container style={container}>
         <div style={logoSection}>
@@ -40,31 +40,42 @@ export const EmailVerificationTemplate = ({
         </div>
         
         <div style={contentSection}>
-          <Heading style={h1}>كود التحقق</Heading>
+          <Heading style={h1}>أهلاً بك في ملف! 🎉</Heading>
           
           <Text style={welcomeText}>
-            مرحباً بك في منصة ملف! 👋
+            مرحباً بك في منصة الفريلانسرز المحترفة
           </Text>
 
           <Text style={instructionText}>
-            استخدم الكود التالي للتحقق من بريدك الإلكتروني:
+            اضغط على الزر أدناه لتأكيد حسابك وبدء رحلتك معنا:
           </Text>
           
-          <div style={codeContainer}>
-            <Text style={code}>{token.slice(0, 6)}</Text>
+          <div style={buttonContainer}>
+            <Link 
+              href={`${supabase_url}/auth/v1/verify?token=${token_hash}&type=${email_action_type}&redirect_to=${redirect_to}`}
+              style={verifyButton}
+            >
+              تأكيد الحساب ✨
+            </Link>
           </div>
 
           <Text style={noteText}>
-            • هذا الكود صالح لمدة 15 دقيقة فقط
+            • هذا الرابط صالح لمدة 24 ساعة
           </Text>
           <Text style={noteText}>
-            • لا تشارك هذا الكود مع أي شخص آخر
+            • إذا لم يعمل الزر، يمكنك نسخ الرابط أدناه ولصقه في المتصفح
           </Text>
+          
+          <div style={linkContainer}>
+            <Text style={linkText}>
+              {`${supabase_url}/auth/v1/verify?token=${token_hash}&type=${email_action_type}&redirect_to=${redirect_to}`}
+            </Text>
+          </div>
 
           <div style={divider}></div>
 
           <Text style={footerText}>
-            إذا لم تطلب هذا الكود، يمكنك تجاهل هذه الرسالة بأمان.
+            إذا لم تقم بإنشاء حساب في ملف، يمكنك تجاهل هذه الرسالة بأمان.
           </Text>
 
           <div style={brandFooter}>
@@ -154,23 +165,40 @@ const instructionText = {
   textAlign: 'center' as const,
 }
 
-const codeContainer = {
+const buttonContainer = {
   textAlign: 'center' as const,
-  margin: '32px 0',
-  padding: '32px 0',
-  backgroundColor: '#f8fafc',
-  borderRadius: '16px',
-  border: '2px dashed #cbd5e1',
+  margin: '40px 0',
 }
 
-const code = {
-  color: '#7c3aed',
-  fontSize: '48px',
+const verifyButton = {
+  backgroundColor: '#7c3aed',
+  color: '#ffffff',
+  fontSize: '18px',
   fontWeight: 'bold',
-  letterSpacing: '8px',
+  textDecoration: 'none',
+  padding: '16px 32px',
+  borderRadius: '12px',
+  display: 'inline-block',
+  boxShadow: '0 4px 16px rgba(124, 58, 237, 0.3)',
+  transition: 'all 0.3s ease',
+}
+
+const linkContainer = {
+  backgroundColor: '#f8fafc',
+  border: '1px solid #e2e8f0',
+  borderRadius: '8px',
+  padding: '16px',
+  margin: '24px 0',
+  textAlign: 'center' as const,
+}
+
+const linkText = {
+  color: '#64748b',
+  fontSize: '12px',
   fontFamily: 'monospace',
+  wordBreak: 'break-all' as const,
+  lineHeight: '1.5',
   margin: '0',
-  display: 'block',
 }
 
 const noteText = {

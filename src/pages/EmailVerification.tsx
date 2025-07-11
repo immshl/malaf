@@ -2,18 +2,15 @@ import { useState, useEffect } from "react";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { InputOTP, InputOTPGroup, InputOTPSlot } from "@/components/ui/input-otp";
-import { ArrowRight, Mail, RefreshCw, ArrowLeft, CheckCircle } from "lucide-react";
+import { Mail, RefreshCw, CheckCircle, Clock, Sparkles } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
 import { useLanguage } from "@/hooks/useLanguage";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
 
 const EmailVerification = () => {
-  const [code, setCode] = useState("");
-  const [isResending, setIsResending] = useState(false);
-  const [isVerifying, setIsVerifying] = useState(false);
   const [isVerified, setIsVerified] = useState(false);
+  const [isChecking, setIsChecking] = useState(true);
   const navigate = useNavigate();
   const { user } = useAuth();
   const { t } = useLanguage();
@@ -36,13 +33,20 @@ const EmailVerification = () => {
           if (!error) {
             setIsVerified(true);
             toast({
-              title: t('verificationSuccess'),
-              description: t('verificationSuccessDesc')
+              title: "تم التحقق بنجاح! 🎉",
+              description: "تم تأكيد بريدك الإلكتروني بنجاح"
             });
             
             setTimeout(() => {
               navigate("/create-profile");
-            }, 2000);
+            }, 3000);
+          } else {
+            console.error('Email verification error:', error);
+            toast({
+              variant: "destructive",
+              title: "خطأ في التحقق",
+              description: "رابط التحقق غير صالح أو منتهي الصلاحية"
+            });
           }
         } catch (error) {
           console.error('Email verification error:', error);
@@ -53,71 +57,14 @@ const EmailVerification = () => {
       if (user?.email_confirmed_at) {
         navigate("/create-profile");
       }
+      
+      setIsChecking(false);
     };
 
     checkEmailVerification();
   }, [searchParams, user, navigate]);
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    
-    if (code.length !== 6) {
-      toast({
-        variant: "destructive",
-        title: "كود غير مكتمل",
-        description: "يرجى إدخال كود التحقق المكون من 6 أرقام"
-      });
-      return;
-    }
-    
-    setIsVerifying(true);
-
-    try {
-      // Verify OTP using our custom function
-      const { data, error } = await supabase.functions.invoke('verify-otp', {
-        body: {
-          email: user?.email || '',
-          code: code,
-          type: 'signup'
-        }
-      });
-
-      if (error) {
-        toast({
-          variant: "destructive",
-          title: "كود خاطئ",
-          description: "كود التحقق غير صحيح أو منتهي الصلاحية"
-        });
-        return;
-      }
-
-      setIsVerified(true);
-      toast({
-        title: t('verificationSuccess'),
-        description: t('verificationSuccessDesc')
-      });
-      
-      // Refresh session to get updated user
-      await supabase.auth.refreshSession();
-      
-      // الانتقال إلى صفحة بناء الملف
-      setTimeout(() => {
-        navigate("/create-profile");
-      }, 2000);
-      
-    } catch (error) {
-      console.error('Verification error:', error);
-      toast({
-        variant: "destructive",
-        title: "خطأ في التحقق",
-        description: "حدث خطأ أثناء التحقق من الكود"
-      });
-    } finally {
-      setIsVerifying(false);
-    }
-  };
-
-  const handleResendCode = async () => {
+  const handleResendEmail = async () => {
     if (!user?.email) {
       toast({
         variant: "destructive",
@@ -127,14 +74,12 @@ const EmailVerification = () => {
       return;
     }
 
-    setIsResending(true);
-    
     try {
-      // Send new OTP using our custom function
-      const { error } = await supabase.functions.invoke('send-otp', {
-        body: {
-          email: user.email,
-          type: 'signup'
+      const { error } = await supabase.auth.resend({
+        type: 'signup',
+        email: user.email,
+        options: {
+          emailRedirectTo: `${window.location.origin}/verify-email`
         }
       });
 
@@ -143,8 +88,8 @@ const EmailVerification = () => {
       }
 
       toast({
-        title: t('resendCode'),
-        description: "تم إرسال كود التحقق الجديد إلى بريدك الإلكتروني"
+        title: "تم إرسال الرابط مجدداً 📧",
+        description: "تفقد بريدك الإلكتروني للرابط الجديد"
       });
       
     } catch (error) {
@@ -152,10 +97,8 @@ const EmailVerification = () => {
       toast({
         variant: "destructive",
         title: "خطأ في الإرسال",
-        description: "حدث خطأ أثناء إرسال كود التحقق"
+        description: "حدث خطأ أثناء إرسال رابط التحقق"
       });
-    } finally {
-      setIsResending(false);
     }
   };
 
@@ -166,11 +109,22 @@ const EmailVerification = () => {
           <Card className="shadow-strong border-0 bg-white/80 backdrop-blur-sm">
             <CardContent className="p-8 text-center">
               <div className="mb-6">
-                <CheckCircle className="w-16 h-16 text-green-500 mx-auto mb-4" />
-                <h2 className="text-2xl font-bold text-green-600 mb-2">{t('verificationSuccess')}</h2>
-                <p className="text-muted-foreground">
-                  {t('verificationSuccessDesc')}
+                <div className="relative mb-6">
+                  <div className="w-20 h-20 bg-gradient-to-r from-green-500 to-emerald-500 rounded-full flex items-center justify-center mx-auto mb-4 animate-pulse">
+                    <CheckCircle className="w-10 h-10 text-white" />
+                  </div>
+                  <div className="absolute -top-2 -right-2 w-8 h-8 bg-gradient-to-r from-yellow-400 to-orange-400 rounded-full flex items-center justify-center">
+                    <Sparkles className="w-4 h-4 text-white" />
+                  </div>
+                </div>
+                <h2 className="text-2xl font-bold text-green-600 mb-2">تم التحقق بنجاح! 🎉</h2>
+                <p className="text-muted-foreground mb-4">
+                  تم تأكيد بريدك الإلكتروني بنجاح
                 </p>
+                <div className="text-sm text-purple-600 flex items-center justify-center gap-2">
+                  <Clock className="w-4 h-4" />
+                  جارٍ التوجيه إلى إنشاء الملف الشخصي...
+                </div>
               </div>
             </CardContent>
           </Card>
@@ -204,111 +158,77 @@ const EmailVerification = () => {
         </div>
 
         <Card className="shadow-strong border-0 bg-white/80 backdrop-blur-sm">
-          <CardHeader className="text-center pb-4">
-            <div className="mb-4 flex justify-center">
-              <div className="w-16 h-16 bg-gradient-to-r from-purple-500 to-blue-500 rounded-2xl flex items-center justify-center animate-pulse">
-                <Mail className="w-8 h-8 text-white" />
+          <CardHeader className="text-center pb-6">
+            <div className="mb-6 flex justify-center">
+              <div className="relative">
+                <div className="w-20 h-20 bg-gradient-to-r from-purple-500 to-blue-500 rounded-3xl flex items-center justify-center shadow-lg">
+                  <Mail className="w-10 h-10 text-white" />
+                </div>
+                <div className="absolute -top-2 -right-2 w-8 h-8 bg-gradient-to-r from-green-400 to-emerald-500 rounded-full flex items-center justify-center animate-bounce">
+                  <CheckCircle className="w-4 h-4 text-white" />
+                </div>
               </div>
             </div>
-            <CardTitle className="text-2xl font-bold text-foreground">{t('emailVerificationTitle')}</CardTitle>
+            <CardTitle className="text-2xl font-bold text-foreground mb-2">تحقق من بريدك الإلكتروني 📧</CardTitle>
             <CardDescription className="text-muted-foreground text-base leading-relaxed">
-              {t('emailVerificationDesc')}{' '}
+              لقد أرسلنا رابط التحقق إلى{' '}
               <span className="font-medium text-purple-600">{user?.email}</span>
             </CardDescription>
           </CardHeader>
           
           <CardContent className="pb-8">
-            <form onSubmit={handleSubmit}>
-              <div className="space-y-6">
-                <div className="text-center">
-                  <div className="bg-gradient-to-r from-purple-50 to-blue-50 dark:from-purple-900/20 dark:to-blue-900/20 p-4 rounded-xl mb-4">
-                    <div className="flex justify-center w-full" style={{ direction: 'ltr' }}>
-                      <InputOTP
-                        maxLength={6}
-                        value={code}
-                        onChange={(value) => setCode(value)}
-                        className="w-full flex justify-center"
-                        style={{ direction: 'ltr' }}
-                      >
-                        <InputOTPGroup className="gap-1 flex justify-center" style={{ direction: 'ltr' }}>
-                          {[...Array(6)].map((_, index) => (
-                            <InputOTPSlot 
-                              key={index}
-                              index={index} 
-                              className="w-10 h-10 text-base font-bold border-2 rounded-lg transition-all duration-300 bg-gradient-to-br from-white to-gray-50 dark:from-gray-800 dark:to-gray-900 border-gray-200 dark:border-gray-700 text-gray-900 dark:text-gray-100 hover:border-purple-300 dark:hover:border-purple-600 focus:border-purple-500 dark:focus:border-purple-400 focus:shadow-xl focus:shadow-purple-100 dark:focus:shadow-purple-900/30 focus:bg-gradient-to-br focus:from-purple-50 focus:to-white dark:focus:from-purple-900/20 dark:focus:to-gray-800 hover:scale-105" 
-                              style={{ direction: 'ltr' }}
-                            />
-                          ))}
-                        </InputOTPGroup>
-                      </InputOTP>
-                    </div>
+            <div className="space-y-6">
+              {/* رسالة التعليمات */}
+              <div className="bg-gradient-to-r from-purple-50 to-blue-50 dark:from-purple-900/20 dark:to-blue-900/20 p-6 rounded-xl border border-purple-100 dark:border-purple-800/30">
+                <div className="text-center space-y-4">
+                  <div className="text-purple-600 dark:text-purple-400">
+                    <Sparkles className="w-8 h-8 mx-auto mb-3" />
                   </div>
+                  <h3 className="font-semibold text-foreground">اضغط على الرابط في البريد</h3>
+                  <p className="text-sm text-muted-foreground leading-relaxed">
+                    تفقد صندوق الوارد الخاص بك واضغط على رابط التحقق لتأكيد حسابك وإكمال التسجيل
+                  </p>
                   
-                  <p className="text-sm text-muted-foreground flex items-center justify-center gap-2">
-                    <Mail className="w-4 h-4" />
-                    {t('enterCode')}
-                  </p>
-                </div>
-
-                {/* زر التحقق */}
-                <Button 
-                  type="submit" 
-                  className="w-full" 
-                  variant="hero"
-                  size="lg"
-                  disabled={isVerifying || code.length !== 6}
-                >
-                  {isVerifying ? (
-                    <>
-                      <RefreshCw className="ml-2 h-5 w-5 animate-spin" />
-                      {t('verifying')}...
-                    </>
-                  ) : (
-                    <>
-                      {t('verifyCode')}
-                      <ArrowRight className="mr-2 h-5 w-5" />
-                    </>
-                  )}
-                </Button>
-
-                {/* إعادة الإرسال */}
-                <div className="text-center">
-                  <p className="text-sm text-muted-foreground mb-3">
-                    {t('didntReceiveCode')}
-                  </p>
-                  <Button
-                    type="button"
-                    variant="outline"
-                    onClick={handleResendCode}
-                    disabled={isResending}
-                    className="min-w-[120px]"
-                  >
-                    {isResending ? (
-                      <>
-                        <RefreshCw className="ml-2 h-4 w-4 animate-spin" />
-                        {t('sending')}...
-                      </>
-                    ) : (
-                      <>
-                        <RefreshCw className="ml-2 h-4 w-4" />
-                        {t('resendCode')}
-                      </>
-                    )}
-                  </Button>
-                </div>
-
-                {/* رابط العودة */}
-                <div className="text-center pt-4 border-t border-border/20">
-                  <Link 
-                    to="/signup" 
-                    className="inline-flex items-center text-sm text-muted-foreground hover:text-foreground transition-smooth"
-                  >
-                    <ArrowLeft className="ml-1 h-4 w-4" />
-                    {t('backToSignup')}
-                  </Link>
+                  <div className="flex items-center justify-center gap-2 text-xs text-purple-600 dark:text-purple-400 mt-4">
+                    <Clock className="w-3 h-3" />
+                    الرابط صالح لمدة 24 ساعة
+                  </div>
                 </div>
               </div>
-            </form>
+
+              {/* نصائح */}
+              <div className="bg-gradient-to-r from-amber-50 to-yellow-50 dark:from-amber-900/20 dark:to-yellow-900/20 p-4 rounded-lg border border-amber-200 dark:border-amber-800/30">
+                <p className="text-sm text-amber-800 dark:text-amber-200 text-center">
+                  💡 لم تجد الإيميل؟ تأكد من مجلد البريد المزعج (Spam)
+                </p>
+              </div>
+
+              {/* إعادة الإرسال */}
+              <div className="text-center space-y-3">
+                <p className="text-sm text-muted-foreground">
+                  لم تستلم الإيميل؟
+                </p>
+                <Button
+                  type="button"
+                  variant="outline"
+                  onClick={handleResendEmail}
+                  className="min-w-[140px] hover:bg-purple-50 hover:border-purple-300 dark:hover:bg-purple-900/20"
+                >
+                  <RefreshCw className="ml-2 h-4 w-4" />
+                  إرسال الرابط مجدداً
+                </Button>
+              </div>
+
+              {/* رابط العودة */}
+              <div className="text-center pt-4 border-t border-border/20">
+                <Link 
+                  to="/signup" 
+                  className="inline-flex items-center text-sm text-muted-foreground hover:text-foreground transition-colors"
+                >
+                  ← العودة للتسجيل
+                </Link>
+              </div>
+            </div>
           </CardContent>
         </Card>
       </div>

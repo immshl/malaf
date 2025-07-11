@@ -47,34 +47,17 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   }, []);
 
   const signUp = async (email: string, password: string, userData?: any) => {
-    // Create user with email confirmation disabled
+    // Create user with email confirmation enabled and redirect to verification page
     const { data, error } = await supabase.auth.signUp({
       email,
       password,
       options: {
         data: userData,
-        emailRedirectTo: undefined // Disable email confirmation
+        emailRedirectTo: `${window.location.origin}/verify-email`
       }
     });
 
-    if (error) {
-      return { error };
-    }
-
-    // Send OTP code via our custom function
-    const { error: otpError } = await supabase.functions.invoke('send-otp', {
-      body: {
-        email,
-        type: 'signup'
-      }
-    });
-
-    if (otpError) {
-      console.error('Failed to send OTP:', otpError);
-      return { error: { message: 'فشل في إرسال كود التحقق' } };
-    }
-
-    return { error: null };
+    return { error };
   };
 
   const signIn = async (email: string, password: string) => {

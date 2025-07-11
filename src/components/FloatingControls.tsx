@@ -104,7 +104,7 @@ const FloatingControls = () => {
           {theme === "light" ? (
             <Moon className="h-4 w-4 animate-[glow_2s_ease-in-out_infinite_alternate]" />
           ) : (
-            <Sun className="h-4 w-4 animate-[rotate_8s_ease-in-out_infinite] text-yellow-500" />
+            <Sun className="h-4 w-4 animate-[rotate_12s_ease-in-out_infinite] text-yellow-500" />
           )}
           </Button>
         </div>

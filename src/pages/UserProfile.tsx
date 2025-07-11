@@ -229,7 +229,7 @@ const UserProfile = () => {
       <div className="container mx-auto px-4 max-w-4xl py-8">
         
         {/* بطاقة المعلومات الرئيسية - صورة + اسم + نبذة + رابط */}
-        <Card className="border border-border rounded-3xl shadow-soft hover:shadow-medium transition-smooth mb-8">
+        <Card className="border border-border rounded-3xl shadow-soft hover:shadow-medium transition-smooth mb-8 animate-fade-in hover-scale">
           <CardContent className="p-8 lg:p-12 text-center">
             {/* صورة الملف الشخصي */}
             <div className="flex justify-center mb-6">
@@ -299,7 +299,7 @@ const UserProfile = () => {
 
         {/* بطاقة الخدمات */}
         {profile.skills && profile.skills.length > 0 && (
-          <Card className="border border-border rounded-3xl shadow-soft hover:shadow-medium transition-smooth mb-8">
+          <Card className="border border-border rounded-3xl shadow-soft hover:shadow-medium transition-smooth mb-8 animate-fade-in hover-scale" style={{ animationDelay: '0.1s' }}>
             <CardContent className="p-10 lg:p-12">
               <h2 className="text-2xl lg:text-3xl font-light text-foreground mb-10 tracking-tight text-center">
                 الخدمات
@@ -309,7 +309,7 @@ const UserProfile = () => {
                 {profile.skills.map((skill, index) => (
                   <div 
                     key={index} 
-                    className="aspect-square flex items-center justify-center p-4 rounded-2xl bg-background/60 hover:bg-background/80 backdrop-blur-sm transition-all duration-200 border border-border/20 hover:border-border/40 cursor-default shadow-sm hover:shadow-md"
+                    className="aspect-square flex items-center justify-center p-4 rounded-2xl bg-background/60 hover:bg-background/80 backdrop-blur-sm transition-all duration-200 border border-border/20 hover:border-border/40 cursor-default shadow-sm hover:shadow-md hover-scale"
                   >
                     <span className="text-sm md:text-base font-medium text-foreground text-center leading-tight">
                       {skill}
@@ -322,7 +322,7 @@ const UserProfile = () => {
         )}
 
         {/* بطاقة حجز الاجتماع - بارزة ومخصصة */}
-        <Card className="border border-primary/30 rounded-3xl shadow-xl hover:shadow-2xl transition-smooth mb-8 bg-background/40 backdrop-blur-xl">
+        <Card className="border border-primary/30 rounded-3xl shadow-xl hover:shadow-2xl transition-smooth mb-8 bg-background/40 backdrop-blur-xl animate-fade-in hover-scale" style={{ animationDelay: '0.2s' }}>
           <CardContent className="p-8 lg:p-10">
             <div className="text-center mb-8">
               <h2 className="text-2xl lg:text-3xl font-light text-foreground mb-4 tracking-tight">
@@ -539,7 +539,7 @@ const UserProfile = () => {
 
         {/* وسائل التواصل */}
         {(profile.contact_email || profile.phone || profile.website || profile.instagram_url || profile.twitter_url || profile.linkedin_url || profile.github_url) && (
-          <Card className="border border-border rounded-3xl shadow-soft hover:shadow-medium transition-smooth mb-8">
+          <Card className="border border-border rounded-3xl shadow-soft hover:shadow-medium transition-smooth mb-8 animate-fade-in hover-scale" style={{ animationDelay: '0.3s' }}>
             <CardContent className="p-10 lg:p-12">
               <h2 className="text-2xl lg:text-3xl font-light text-foreground mb-10 tracking-tight text-center">
                 تواصل معي
@@ -549,7 +549,7 @@ const UserProfile = () => {
                 {profile.contact_email && (
                   <a 
                     href={`mailto:${profile.contact_email}`}
-                    className="aspect-square flex flex-col items-center justify-center p-4 rounded-2xl bg-background/60 hover:bg-background/80 backdrop-blur-sm transition-all duration-200 border border-border/20 hover:border-border/40 group shadow-sm hover:shadow-md"
+                    className="aspect-square flex flex-col items-center justify-center p-4 rounded-2xl bg-background/60 hover:bg-background/80 backdrop-blur-sm transition-all duration-200 border border-border/20 hover:border-border/40 group shadow-sm hover:shadow-md hover-scale"
                   >
                     <div className="w-8 h-8 bg-blue-500/10 rounded-full flex items-center justify-center mb-2 group-hover:bg-blue-500/20 transition-smooth">
                       <Mail className="w-4 h-4 text-blue-600" />

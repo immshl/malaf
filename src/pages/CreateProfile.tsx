@@ -32,7 +32,13 @@ const CreateProfile = () => {
     workEmail: "",
     externalLink: "",
     availableDays: [] as string[],
-    timeSlot: ""
+    timeSlot: "",
+    phone: "",
+    location: "",
+    profession: "",
+    experienceYears: null as number | null,
+    linkedinUrl: "",
+    githubUrl: ""
   });
   const [isLoading, setIsLoading] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
@@ -64,14 +70,20 @@ const CreateProfile = () => {
               bio: existingProfile.bio || "",
               profileImage: existingProfile.avatar_url || "",
               emoji: existingProfile.emoji || "",
-              services: [""], // These fields weren't in the original schema
+              services: existingProfile.skills && existingProfile.skills.length > 0 ? existingProfile.skills : [""],
               topClients: [""], // These fields weren't in the original schema
               instagram: existingProfile.instagram_url ? existingProfile.instagram_url.replace('https://instagram.com/', '').replace('https://www.instagram.com/', '') : "",
               twitter: existingProfile.twitter_url ? existingProfile.twitter_url.replace('https://x.com/', '').replace('https://twitter.com/', '') : "",
               workEmail: existingProfile.contact_email || user.email || "",
               externalLink: existingProfile.website || "",
               availableDays: ["sunday", "tuesday", "thursday"], // Default available days
-              timeSlot: "evening" // Default time slot
+              timeSlot: "evening", // Default time slot
+              phone: existingProfile.phone || "",
+              location: existingProfile.location || "",
+              profession: existingProfile.profession || "",
+              experienceYears: existingProfile.experience_years || null,
+              linkedinUrl: existingProfile.linkedin_url || "",
+              githubUrl: existingProfile.github_url || ""
             });
           } else {
             // No existing profile, load user data from auth
@@ -151,6 +163,13 @@ const CreateProfile = () => {
           full_name: profileData.fullName,
           bio: profileData.bio,
           contact_email: profileData.workEmail,
+          phone: profileData.phone || null,
+          location: profileData.location || null,
+          profession: profileData.profession || null,
+          skills: services.length > 0 ? services : null,
+          experience_years: profileData.experienceYears || null,
+          linkedin_url: profileData.linkedinUrl || null,
+          github_url: profileData.githubUrl || null,
           instagram_url: processUsername(profileData.instagram, "instagram"),
           twitter_url: processUsername(profileData.twitter, "twitter"),
           website: profileData.externalLink || null,

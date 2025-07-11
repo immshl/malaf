@@ -38,7 +38,6 @@ const FloatingControls = () => {
     } else {
       document.documentElement.classList.remove("dark");
     }
-    console.log("Theme changed to:", theme);
   }, [theme]);
 
   // Auto-hide controls when interacting with forms

@@ -46,7 +46,6 @@ const Index = () => {
   }, [steps.length]);
 
   const toggleMobileMenu = () => {
-    console.log('Toggling mobile menu:', !isMobileMenuOpen);
     setIsMobileMenuOpen(!isMobileMenuOpen);
   };
 
@@ -144,7 +143,6 @@ const Index = () => {
                 e.preventDefault();
                 e.stopPropagation();
                 const newState = !isMobileMenuOpen;
-                console.log("Button clicked! Changing from", isMobileMenuOpen, "to", newState);
                 setIsMobileMenuOpen(newState);
               }}
               aria-label="فتح القائمة"

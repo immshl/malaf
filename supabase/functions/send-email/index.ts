@@ -57,13 +57,20 @@ Deno.serve(async (req) => {
     } catch (webhookError) {
       console.log('Webhook parsing failed, trying direct format:', webhookError.message);
       
-      // Try direct call format
+    // Try direct call format
       const data = JSON.parse(payload);
       user = { email: data.email };
+      
+      // تحديد رابط إعادة التوجيه إلى malaf.me
+      let redirect_url = 'https://malaf.me';
+      if (data.redirect_to && data.redirect_to.includes('malaf.me')) {
+        redirect_url = data.redirect_to;
+      }
+      
       email_data = {
         token: data.token || '123456',
         token_hash: data.token_hash || '',
-        redirect_to: data.redirect_to || `${req.headers.get('origin')}/verify-email`,
+        redirect_to: redirect_url,
         email_action_type: data.email_action_type || 'signup',
         site_url: Deno.env.get('SUPABASE_URL') || ''
       };
@@ -72,14 +79,15 @@ Deno.serve(async (req) => {
 
     console.log('Generating email for:', user.email);
 
+    // إنشاء رابط التحقق الصحيح
+    const verification_url = email_data.token_hash 
+      ? `${Deno.env.get('SUPABASE_URL')}/auth/v1/verify?token=${email_data.token_hash}&type=${email_data.email_action_type}&redirect_to=${encodeURIComponent(email_data.redirect_to)}`
+      : email_data.redirect_to;
+
     // Generate HTML from React Email template
     const html = await renderAsync(
       React.createElement(EmailVerificationTemplate, {
-        supabase_url: Deno.env.get('SUPABASE_URL') ?? '',
-        token: email_data.token,
-        token_hash: email_data.token_hash,
-        redirect_to: email_data.redirect_to,
-        email_action_type: email_data.email_action_type,
+        verification_url,
         user_email: user.email,
       })
     )
@@ -88,9 +96,9 @@ Deno.serve(async (req) => {
 
     // Send email using Resend
     const { error } = await resend.emails.send({
-      from: 'ملف - Malaf <onboarding@resend.dev>',
+      from: 'منصة ملف <onboarding@resend.dev>',
       to: [user.email],
-      subject: 'كود التحقق من ملف - منصة الفريلانسرز',
+      subject: 'تأكيد حسابك في منصة ملف 🚀',
       html,
     })
 

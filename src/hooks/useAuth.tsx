@@ -47,13 +47,17 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   }, []);
 
   const signUp = async (email: string, password: string, userData?: any) => {
-    // Create user with email confirmation enabled and redirect to verification page
+    // Create user with email confirmation enabled and redirect to malaf.me
+    const redirectUrl = window.location.hostname.includes('malaf.me') 
+      ? `${window.location.origin}/`
+      : 'https://malaf.me';
+      
     const { data, error } = await supabase.auth.signUp({
       email,
       password,
       options: {
         data: userData,
-        emailRedirectTo: `${window.location.origin}/verify-email`
+        emailRedirectTo: redirectUrl
       }
     });
 

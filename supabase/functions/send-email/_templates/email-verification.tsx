@@ -7,90 +7,77 @@ import {
   Link,
   Preview,
   Text,
+  Img,
+  Section,
+  Hr,
 } from 'npm:@react-email/components@0.0.22'
 import * as React from 'npm:react@18.3.1'
 
 interface EmailVerificationProps {
-  supabase_url: string
-  email_action_type: string
-  redirect_to: string
-  token_hash: string
-  token: string
+  verification_url: string
   user_email: string
 }
 
 export const EmailVerificationTemplate = ({
-  token,
-  supabase_url,
-  email_action_type,
-  redirect_to,
-  token_hash,
+  verification_url,
   user_email,
 }: EmailVerificationProps) => (
   <Html>
-    <Head>
-      <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
-    </Head>
-    <Preview>تأكيد حسابك في ملف - منصة الفريلانسرز</Preview>
+    <Head />
+    <Preview>تأكيد حسابك في منصة ملف</Preview>
     <Body style={main}>
       <Container style={container}>
-        <div style={logoSection}>
-          <div style={logoContainer}>
-            <Text style={logoText}>ملف</Text>
-            <Text style={logoSubtext}>malaf</Text>
-          </div>
-        </div>
+        {/* Header with logo */}
+        <Section style={header}>
+          <Img
+            src="https://5db6d598-99de-437b-a03d-617c9f33bbce.lovableproject.com/lovable-uploads/be1d2269-8206-422b-a395-e4fb9e1a88cc.png"
+            alt="ملف"
+            width="40"
+            height="40"
+            style={logo}
+          />
+          <Text style={brandName}>ملف</Text>
+        </Section>
+
+        <Hr style={divider} />
+
+        {/* Main content */}
+        <Heading style={h1}>أهلاً بك في منصة ملف! 👋</Heading>
         
-        <div style={contentSection}>
-          <Heading style={h1}>أهلاً بك في ملف! 🎉</Heading>
-          
-          <Text style={welcomeText}>
-            مرحباً بك في منصة الفريلانسرز المحترفة
-          </Text>
+        <Text style={text}>
+          شكراً لك على التسجيل في منصة ملف - المنصة الاحترافية للفريلانسرز والمحترفين المستقلين.
+        </Text>
 
-          <Text style={instructionText}>
-            اضغط على الزر أدناه لتأكيد حسابك وبدء رحلتك معنا:
-          </Text>
-          
-          <div style={buttonContainer}>
-            <Link 
-              href={`${supabase_url}/auth/v1/verify?token=${token_hash}&type=${email_action_type}&redirect_to=${redirect_to}`}
-              style={verifyButton}
-            >
-              تأكيد الحساب ✨
-            </Link>
-          </div>
+        <Text style={text}>
+          لإكمال إنشاء حسابك وبدء استخدام المنصة، يرجى تأكيد عنوان بريدك الإلكتروني بالنقر على الزر أدناه:
+        </Text>
 
-          <Text style={noteText}>
-            • هذا الرابط صالح لمدة 24 ساعة
-          </Text>
-          <Text style={noteText}>
-            • إذا لم يعمل الزر، يمكنك نسخ الرابط أدناه ولصقه في المتصفح
-          </Text>
-          
-          <div style={linkContainer}>
-            <Text style={linkText}>
-              {`${supabase_url}/auth/v1/verify?token=${token_hash}&type=${email_action_type}&redirect_to=${redirect_to}`}
-            </Text>
-          </div>
+        {/* CTA Button */}
+        <Section style={buttonContainer}>
+          <Link href={verification_url} style={button}>
+            تأكيد البريد الإلكتروني ✅
+          </Link>
+        </Section>
 
-          <div style={divider}></div>
+        <Text style={text}>
+          أو يمكنك نسخ الرابط التالي ولصقه في متصفحك:
+        </Text>
+        <Text style={linkText}>{verification_url}</Text>
 
-          <Text style={footerText}>
-            إذا لم تقم بإنشاء حساب في ملف، يمكنك تجاهل هذه الرسالة بأمان.
-          </Text>
+        <Hr style={divider} />
 
-          <div style={brandFooter}>
-            <Text style={brandText}>
-              <Link href="https://malaf.me" target="_blank" style={brandLink}>
-                ملف - منصة الفريلانسرز المحترفة
-              </Link>
-            </Text>
-            <Text style={taglineText}>
-              ابني ملفك المهني واعرض مهاراتك للعالم
-            </Text>
-          </div>
-        </div>
+        {/* Footer */}
+        <Text style={footer}>
+          هذا الرابط صالح لمدة 24 ساعة فقط. إذا لم تقم بإنشاء حساب في منصة ملف، يمكنك تجاهل هذا البريد الإلكتروني.
+        </Text>
+
+        <Text style={footerBrand}>
+          <Link href="https://malaf.me" style={brandLink}>
+            منصة ملف
+          </Link>
+          {' • '}
+          المنصة الاحترافية للفريلانسرز
+        </Text>
       </Container>
     </Body>
   </Html>
@@ -98,83 +85,57 @@ export const EmailVerificationTemplate = ({
 
 export default EmailVerificationTemplate
 
+// Styles
 const main = {
-  backgroundColor: '#fafafa',
-  fontFamily: 'Cairo, Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif',
-  direction: 'rtl' as const,
-  padding: '0',
-  margin: '0',
-  lineHeight: '1.6',
+  backgroundColor: '#f8fafc',
+  fontFamily: 'Cairo, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
 }
 
 const container = {
   backgroundColor: '#ffffff',
-  margin: '0 auto',
-  maxWidth: '600px',
-  borderRadius: '0',
-  boxShadow: 'none',
-  overflow: 'hidden',
+  border: '1px solid #e2e8f0',
+  borderRadius: '12px',
+  margin: '40px auto',
+  padding: '40px',
+  maxWidth: '560px',
 }
 
-const logoSection = {
-  background: '#ffffff',
-  padding: '48px 0 32px 0',
-  textAlign: 'center' as const,
-  borderBottom: '1px solid #f0f0f0',
+const header = {
+  display: 'flex',
+  alignItems: 'center',
+  marginBottom: '32px',
 }
 
-const logoContainer = {
-  display: 'inline-block',
+const logo = {
+  marginLeft: '12px',
 }
 
-const logoText = {
-  color: '#000000',
-  fontSize: '32px',
-  fontWeight: '600',
+const brandName = {
+  fontSize: '24px',
+  fontWeight: 'bold',
+  color: '#1e293b',
   margin: '0',
-  lineHeight: '1',
-  letterSpacing: '-0.02em',
 }
 
-const logoSubtext = {
-  color: '#666666',
-  fontSize: '14px',
-  margin: '4px 0 0 0',
-  letterSpacing: '1px',
-  fontWeight: '400',
-}
-
-const contentSection = {
-  padding: '48px 48px 64px 48px',
-  backgroundColor: '#ffffff',
+const divider = {
+  borderColor: '#e2e8f0',
+  margin: '24px 0',
 }
 
 const h1 = {
-  color: '#1d1d1f',
+  color: '#1e293b',
   fontSize: '28px',
-  fontWeight: '600',
-  margin: '0 0 16px 0',
+  fontWeight: 'bold',
   textAlign: 'center' as const,
-  lineHeight: '1.3',
-  letterSpacing: '-0.02em',
+  margin: '32px 0',
 }
 
-const welcomeText = {
-  color: '#1d1d1f',
-  fontSize: '17px',
-  lineHeight: '1.5',
-  margin: '0 0 8px 0',
-  textAlign: 'center' as const,
-  fontWeight: '400',
-}
-
-const instructionText = {
-  color: '#86868b',
-  fontSize: '15px',
-  lineHeight: '1.5',
-  margin: '0 0 32px 0',
-  textAlign: 'center' as const,
-  fontWeight: '400',
+const text = {
+  color: '#475569',
+  fontSize: '16px',
+  lineHeight: '24px',
+  margin: '16px 0',
+  textAlign: 'right' as const,
 }
 
 const buttonContainer = {
@@ -182,90 +143,45 @@ const buttonContainer = {
   margin: '32px 0',
 }
 
-const verifyButton = {
-  backgroundColor: '#1d1d1f',
+const button = {
+  backgroundColor: '#3b82f6',
+  borderRadius: '8px',
   color: '#ffffff',
-  fontSize: '17px',
-  fontWeight: '500',
+  fontSize: '16px',
+  fontWeight: 'bold',
   textDecoration: 'none',
-  padding: '16px 32px',
-  borderRadius: '8px',
-  display: 'inline-block',
-  border: 'none',
-  cursor: 'pointer',
-  letterSpacing: '-0.01em',
-}
-
-const noteText = {
-  color: '#86868b',
-  fontSize: '13px',
-  lineHeight: '1.4',
-  margin: '8px 0',
-  textAlign: 'right' as const,
-  paddingRight: '16px',
-  fontWeight: '400',
-}
-
-const linkContainer = {
-  backgroundColor: '#f5f5f7',
-  border: '1px solid #e8e8ed',
-  borderRadius: '8px',
-  padding: '16px',
-  margin: '24px 0',
   textAlign: 'center' as const,
+  display: 'inline-block',
+  padding: '14px 32px',
+  boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
 }
 
 const linkText = {
-  color: '#86868b',
-  fontSize: '11px',
-  fontFamily: 'SF Mono, Monaco, Inconsolata, "Roboto Mono", Consolas, "Courier New", monospace',
+  color: '#3b82f6',
+  fontSize: '14px',
+  textDecoration: 'underline',
   wordBreak: 'break-all' as const,
-  lineHeight: '1.4',
+  textAlign: 'center' as const,
+  margin: '16px 0',
+}
+
+const footer = {
+  color: '#64748b',
+  fontSize: '14px',
+  lineHeight: '20px',
+  textAlign: 'center' as const,
+  margin: '32px 0 16px 0',
+}
+
+const footerBrand = {
+  color: '#64748b',
+  fontSize: '14px',
+  textAlign: 'center' as const,
   margin: '0',
-  fontWeight: '400',
-}
-
-const divider = {
-  height: '1px',
-  backgroundColor: '#f0f0f0',
-  margin: '40px 0',
-  border: 'none',
-}
-
-const footerText = {
-  color: '#86868b',
-  fontSize: '13px',
-  lineHeight: '1.4',
-  margin: '0 0 32px 0',
-  textAlign: 'center' as const,
-  fontWeight: '400',
-}
-
-const brandFooter = {
-  textAlign: 'center' as const,
-  borderTop: '1px solid #f0f0f0',
-  paddingTop: '32px',
-  backgroundColor: '#fbfbfd',
-  margin: '0 -48px -64px -48px',
-  padding: '32px 48px 48px 48px',
-}
-
-const brandText = {
-  margin: '0 0 8px 0',
 }
 
 const brandLink = {
-  color: '#1d1d1f',
-  fontSize: '15px',
+  color: '#3b82f6',
   textDecoration: 'none',
-  fontWeight: '500',
-  letterSpacing: '-0.01em',
-}
-
-const taglineText = {
-  color: '#86868b',
-  fontSize: '13px',
-  margin: '0',
-  fontWeight: '400',
-  lineHeight: '1.4',
+  fontWeight: 'bold',
 }

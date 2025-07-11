@@ -67,18 +67,18 @@ const FloatingControls = () => {
 
   return (
     <div className="fixed bottom-6 right-6 z-50">
-      <div className="glass rounded-2xl p-3 shadow-elegant border border-border/20">
-        <div className="flex flex-col gap-3">
+      <div className="bg-background/10 backdrop-blur-md rounded-xl p-2 shadow-md border border-border/10">
+        <div className="flex flex-col gap-2">
           {/* Language Toggle */}
           <Button
             variant="outline"
             size="icon"
             onClick={toggleLanguage}
             disabled={isTransitioning}
-            className="bg-background/20 hover:bg-background/40 backdrop-blur-sm w-12 h-12 rounded-full border border-border/30 shadow-md hover:scale-110 transition-all duration-300"
+            className="bg-background/10 hover:bg-background/20 backdrop-blur-sm w-10 h-10 rounded-lg border border-border/20 shadow-sm hover:scale-105 transition-all duration-300"
             title={language === "ar" ? "Switch to English" : "التبديل للعربية"}
           >
-            <Globe className="h-5 w-5" />
+            <Globe className="h-4 w-4" />
           </Button>
 
           {/* Theme Toggle */}
@@ -87,14 +87,14 @@ const FloatingControls = () => {
             size="icon"
             onClick={toggleTheme}
             disabled={isTransitioning}
-            className="bg-background/20 hover:bg-background/40 backdrop-blur-sm w-12 h-12 rounded-full border border-border/30 shadow-md hover:scale-110 transition-all duration-300"
+            className="bg-background/10 hover:bg-background/20 backdrop-blur-sm w-10 h-10 rounded-lg border border-border/20 shadow-sm hover:scale-105 transition-all duration-300"
             title={theme === "light" ? "الوضع الداكن" : "الوضع الفاتح"}
           >
-            {theme === "light" ? (
-              <Moon className="h-5 w-5" />
-            ) : (
-              <Sun className="h-5 w-5" />
-            )}
+          {theme === "light" ? (
+            <Moon className="h-4 w-4" />
+          ) : (
+            <Sun className="h-4 w-4" />
+          )}
           </Button>
         </div>
       </div>

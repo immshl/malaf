@@ -136,6 +136,56 @@ const UserProfile = () => {
     fetchProfile();
   }, [username, navigate]);
 
+  // Update SEO meta tags when profile loads
+  useEffect(() => {
+    if (profile) {
+      // Update page title
+      document.title = `${profile.full_name || profile.username || 'فريلانسر'} - ملف`;
+      
+      // Update meta description
+      const metaDescription = document.querySelector('meta[name="description"]');
+      if (metaDescription) {
+        metaDescription.setAttribute('content', 
+          `${profile.bio || `ملف ${profile.full_name || profile.username || 'فريلانسر'} المهني`} - احجز اجتماع على منصة ملف`
+        );
+      }
+
+      // Update Open Graph tags
+      const updateMetaTag = (property: string, content: string) => {
+        let meta = document.querySelector(`meta[property="${property}"]`);
+        if (!meta) {
+          meta = document.createElement('meta');
+          meta.setAttribute('property', property);
+          document.head.appendChild(meta);
+        }
+        meta.setAttribute('content', content);
+      };
+
+      const updateNameTag = (name: string, content: string) => {
+        let meta = document.querySelector(`meta[name="${name}"]`);
+        if (!meta) {
+          meta = document.createElement('meta');
+          meta.setAttribute('name', name);
+          document.head.appendChild(meta);
+        }
+        meta.setAttribute('content', content);
+      };
+
+      // Open Graph tags
+      updateMetaTag('og:title', `${profile.full_name || profile.username || 'فريلانسر'} - ملف`);
+      updateMetaTag('og:description', profile.bio || `ملف ${profile.full_name || profile.username || 'فريلانسر'} المهني - احجز اجتماع`);
+      updateMetaTag('og:image', profile.avatar_url || '/malaf-logo.png');
+      updateMetaTag('og:url', window.location.href);
+      updateMetaTag('og:type', 'profile');
+
+      // Twitter Card tags
+      updateNameTag('twitter:title', `${profile.full_name || profile.username || 'فريلانسر'} - ملف`);
+      updateNameTag('twitter:description', profile.bio || `ملف ${profile.full_name || profile.username || 'فريلانسر'} المهني - احجز اجتماع`);
+      updateNameTag('twitter:image', profile.avatar_url || '/malaf-logo.png');
+      updateNameTag('twitter:card', 'summary_large_image');
+    }
+  }, [profile]);
+
   const copyLink = () => {
     const profileUrl = `${window.location.origin}/${username}`;
     navigator.clipboard.writeText(profileUrl);

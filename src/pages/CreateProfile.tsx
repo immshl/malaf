@@ -35,6 +35,7 @@ const CreateProfile = () => {
     timeSlot: ""
   });
   const [isLoading, setIsLoading] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
 
   // Redirect if not logged in
   useEffect(() => {
@@ -43,45 +44,61 @@ const CreateProfile = () => {
     }
   }, [user, loading, navigate]);
 
-  // Check if user already has a profile
+  // Load existing profile data for editing
   useEffect(() => {
-    const checkExistingProfile = async () => {
+    const loadProfileData = async () => {
       if (user) {
         try {
           const { data: existingProfile } = await supabase
             .from('profiles')
-            .select('username')
+            .select('*')
             .eq('user_id', user.id)
             .single();
 
-          if (existingProfile?.username) {
-            // User already has a profile, redirect to it
-            navigate(`/profile/${existingProfile.username}`);
-            return;
+          if (existingProfile) {
+            // User has existing profile, load it for editing
+            setIsEditing(true);
+            setProfileData({
+              fullName: existingProfile.full_name || "",
+              username: existingProfile.username || "",
+              bio: existingProfile.bio || "",
+              profileImage: existingProfile.avatar_url || "",
+              emoji: existingProfile.emoji || "",
+              services: [""], // These fields weren't in the original schema
+              topClients: [""], // These fields weren't in the original schema
+              instagram: existingProfile.instagram_url ? existingProfile.instagram_url.replace('https://instagram.com/', '').replace('https://www.instagram.com/', '') : "",
+              twitter: existingProfile.twitter_url ? existingProfile.twitter_url.replace('https://x.com/', '').replace('https://twitter.com/', '') : "",
+              workEmail: existingProfile.contact_email || user.email || "",
+              externalLink: existingProfile.website || "",
+              availableDays: ["sunday", "tuesday", "thursday"], // Default available days
+              timeSlot: "evening" // Default time slot
+            });
+          } else {
+            // No existing profile, load user data from auth
+            setProfileData(prev => ({
+              ...prev,
+              fullName: user.user_metadata?.full_name || "",
+              username: user.user_metadata?.username || "",
+              workEmail: user.email || ""
+            }));
           }
         } catch (error) {
-          // Profile doesn't exist, continue with creation
           console.log('No existing profile found, proceeding with creation');
+          // Load user data from auth for new profile
+          setProfileData(prev => ({
+            ...prev,
+            fullName: user.user_metadata?.full_name || "",
+            username: user.user_metadata?.username || "",
+            workEmail: user.email || ""
+          }));
         }
       }
     };
 
     if (user && !loading) {
-      checkExistingProfile();
+      loadProfileData();
     }
-  }, [user, loading, navigate]);
-
-  // Load user data from auth
-  useEffect(() => {
-    if (user) {
-      setProfileData(prev => ({
-        ...prev,
-        fullName: user.user_metadata?.full_name || "",
-        username: user.user_metadata?.username || "",
-        workEmail: user.email || ""
-      }));
-    }
-  }, [user]);
+  }, [user, loading]);
 
   if (loading) {
     return <div className="min-h-screen bg-muted/30 flex items-center justify-center">
@@ -171,8 +188,8 @@ const CreateProfile = () => {
       }
 
       toast({
-        title: "تم إنشاء ملفك بنجاح!",
-        description: "يمكنك الآن مشاركة ملفك مع العملاء"
+        title: isEditing ? "تم تحديث ملفك بنجاح!" : "تم إنشاء ملفك بنجاح!",
+        description: isEditing ? "تم حفظ التغييرات على ملفك الشخصي" : "يمكنك الآن مشاركة ملفك مع العملاء"
       });
       
       // الانتقال إلى صفحة الملف الشخصي باستخدام اسم المستخدم المحفوظ
@@ -334,8 +351,12 @@ const CreateProfile = () => {
             </div>
             <span className="text-xl font-bold text-foreground">malaf</span>
           </Link>
-          <h1 className="text-3xl font-bold text-foreground mb-2">{t('createProfileTitle')}</h1>
-          <p className="text-muted-foreground">{t('createProfileDesc')}</p>
+          <h1 className="text-3xl font-bold text-foreground mb-2">
+            {isEditing ? "تحرير الملف الشخصي" : t('createProfileTitle')}
+          </h1>
+          <p className="text-muted-foreground">
+            {isEditing ? "قم بتحديث معلوماتك الشخصية" : t('createProfileDesc')}
+          </p>
         </div>
 
         <form onSubmit={handleSubmit}>
@@ -792,7 +813,10 @@ const CreateProfile = () => {
                 size="lg"
                 disabled={isLoading}
               >
-                {isLoading ? "جاري إنشاء الملف..." : "إنشاء الملف"}
+                {isLoading ? 
+                  (isEditing ? "جاري حفظ التغييرات..." : "جاري إنشاء الملف...") : 
+                  (isEditing ? "حفظ التغييرات" : "إنشاء الملف")
+                }
                 <ArrowRight className="mr-2 h-5 w-5" />
               </Button>
               <Button 

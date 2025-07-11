@@ -42,7 +42,9 @@ const EmailVerification = () => {
         incompleteAccount: "يبدو أن حسابك غير مكتمل. يرجى العودة وإعادة التسجيل بكلمة مرور جديدة.",
         resignup: "إعادة التسجيل",
         sendError: "خطأ في الإرسال",
-        verificationSendError: "حدث خطأ أثناء إرسال رابط التحقق"
+        verificationSendError: "حدث خطأ أثناء إرسال رابط التحقق",
+        rateLimitError: "تم تجاوز الحد المسموح",
+        waitBeforeResend: "يرجى الانتظار دقيقة واحدة قبل إعادة المحاولة. هذا للحماية من الإرسال المتكرر."
       },
       en: {
         verificationSuccess: "Verification successful! 🎉",
@@ -67,7 +69,9 @@ const EmailVerification = () => {
         incompleteAccount: "Your account seems incomplete. Please go back and signup again with a new password.",
         resignup: "Signup again",
         sendError: "Send error",
-        verificationSendError: "An error occurred while sending the verification link"
+        verificationSendError: "An error occurred while sending the verification link",
+        rateLimitError: "Rate limit exceeded",
+        waitBeforeResend: "Please wait one minute before trying again. This is to protect from excessive sending."
       }
     };
     
@@ -146,6 +150,17 @@ const EmailVerification = () => {
       });
 
       if (error) {
+        // إذا كان الخطأ متعلق بـ rate limiting
+        if (error.message.includes("rate") || error.message.includes("too many") || 
+            error.message.includes("wait") || error.message.includes("لديك طلبات كثيرة")) {
+          toast({
+            variant: "destructive",
+            title: t('rateLimitError', 'تم تجاوز الحد المسموح'),
+            description: t('waitBeforeResend', 'يرجى الانتظار دقيقة واحدة قبل إعادة المحاولة. هذا للحماية من الإرسال المتكرر.'),
+          });
+          return;
+        }
+        
         // إذا فشل OTP، نجرب signUp كعملية تسجيل جديدة
         console.log('OTP failed, trying signUp:', error.message);
         
@@ -169,6 +184,17 @@ const EmailVerification = () => {
       
     } catch (error: any) {
       console.error('Resend error:', error);
+      
+      // معالجة أخطاء Rate Limiting
+      if (error.message?.includes("rate") || error.message?.includes("too many") || 
+          error.message?.includes("wait") || error.message?.includes("لديك طلبات كثيرة")) {
+        toast({
+          variant: "destructive",
+          title: t('rateLimitError', 'تم تجاوز الحد المسموح'),
+          description: t('waitBeforeResend', 'يرجى الانتظار دقيقة واحدة قبل إعادة المحاولة. هذا للحماية من الإرسال المتكرر.'),
+        });
+        return;
+      }
       
       // إذا كانت المشكلة أن المستخدم مسجل بالفعل، نوجهه لإعادة التسجيل
       if (error.message?.includes("User already registered") || 

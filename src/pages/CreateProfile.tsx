@@ -14,6 +14,7 @@ import { useAuth } from "@/hooks/useAuth";
 import { useLanguage } from "@/hooks/useLanguage";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
+import { LoadingPage, Loading } from "@/components/ui/loading";
 
 const CreateProfile = () => {
   const { user, loading } = useAuth();
@@ -113,9 +114,12 @@ const CreateProfile = () => {
   }, [user, loading]);
 
   if (loading) {
-    return <div className="min-h-screen bg-muted/30 flex items-center justify-center">
-      <div className="animate-pulse text-muted-foreground">{t('loading')}...</div>
-    </div>;
+    return (
+      <LoadingPage 
+        text={t('loading')}
+        variant="line"
+      />
+    );
   }
 
   if (!user) {
@@ -833,10 +837,14 @@ const CreateProfile = () => {
                 size="lg"
                 disabled={isLoading}
               >
-                {isLoading ? 
-                  (isEditing ? "جاري حفظ التغييرات..." : "جاري إنشاء الملف...") : 
-                  (isEditing ? "حفظ التغييرات" : "إنشاء الملف")
-                }
+                {isLoading ? (
+                  <div className="flex items-center gap-2">
+                    <Loading variant="spinner" size="sm" />
+                    {isEditing ? "جاري حفظ التغييرات..." : "جاري إنشاء الملف..."}
+                  </div>
+                ) : (
+                  isEditing ? "حفظ التغييرات" : "إنشاء الملف الشخصي"
+                )}
                 <ArrowRight className="mr-2 h-5 w-5" />
               </Button>
               <Button 

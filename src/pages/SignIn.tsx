@@ -9,6 +9,7 @@ import { useAuth } from "@/hooks/useAuth";
 import { useLanguage } from "@/hooks/useLanguage";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
+import { Loading } from "@/components/ui/loading";
 
 const SignIn = () => {
   const navigate = useNavigate();
@@ -190,8 +191,17 @@ const SignIn = () => {
                 size="lg"
                 disabled={isLoading}
               >
-                {isLoading ? `${t('loading')}...` : t('signIn')}
-                <ArrowRight className="mr-2 h-5 w-5" />
+                {isLoading ? (
+                  <div className="flex items-center gap-2">
+                    <Loading variant="spinner" size="sm" />
+                    {t('loading')}...
+                  </div>
+                ) : (
+                  <>
+                    {t('signIn')}
+                    <ArrowRight className="mr-2 h-5 w-5" />
+                  </>
+                )}
               </Button>
 
               {/* رابط إنشاء حساب */}

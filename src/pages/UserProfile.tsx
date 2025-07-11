@@ -14,6 +14,7 @@ import { useAuth } from "@/hooks/useAuth";
 import { useLanguage } from "@/hooks/useLanguage";
 import { supabase } from "@/integrations/supabase/client";
 import type { Tables } from "@/integrations/supabase/types";
+import { LoadingPage } from "@/components/ui/loading";
 import { 
   Copy, 
   Edit, 
@@ -232,11 +233,10 @@ const UserProfile = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-background flex items-center justify-center">
-        <div className="animate-pulse text-muted-foreground">
-          {language === 'ar' ? 'جارٍ التحميل...' : 'Loading...'}
-        </div>
-      </div>
+      <LoadingPage 
+        text={language === 'ar' ? 'جارٍ تحميل الملف الشخصي...' : 'Loading profile...'}
+        variant="line"
+      />
     );
   }
 

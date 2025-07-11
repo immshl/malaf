@@ -8,6 +8,7 @@ import { Eye, EyeOff, ArrowRight, Check, X } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
 import { useLanguage } from "@/hooks/useLanguage";
 import { toast } from "@/hooks/use-toast";
+import { Loading } from "@/components/ui/loading";
 
 const SignUp = () => {
   const navigate = useNavigate();
@@ -356,8 +357,17 @@ const SignUp = () => {
                 size="lg"
                 disabled={isLoading}
               >
-                {isLoading ? `${t('loading')}...` : t('signUp')}
-                <ArrowRight className="mr-2 h-5 w-5" />
+                {isLoading ? (
+                  <div className="flex items-center gap-2">
+                    <Loading variant="spinner" size="sm" />
+                    {t('loading')}...
+                  </div>
+                ) : (
+                  <>
+                    {t('signUp')}
+                    <ArrowRight className="mr-2 h-5 w-5" />
+                  </>
+                )}
               </Button>
 
               {/* رابط تسجيل الدخول */}

@@ -201,7 +201,7 @@ const Index = () => {
                 asChild
               >
                 <Link to="/signup">
-                  {language === "ar" ? "اصنع ملفك المهني" : "Create Your Profile"}
+                  {language === "ar" ? "اصنع ملفك المهني 🚀" : "Create Your Profile 🚀"}
                 </Link>
               </Button>
               <Button 

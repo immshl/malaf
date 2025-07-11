@@ -8,6 +8,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useLanguage } from "@/hooks/useLanguage";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import AuthButton from "@/components/AuthButton";
+import UserDropdown from "@/components/UserDropdown";
 import { useAuth } from "@/hooks/useAuth";
 import { toast } from "@/hooks/use-toast";
 
@@ -146,14 +147,18 @@ const Index = () => {
             </div>
 
             {/* Navigation Links */}
-            <div className="hidden md:flex items-center space-x-10 space-x-reverse">
+            <div className="hidden md:flex items-center space-x-4 space-x-reverse">
               <a href="#features" className="text-muted-foreground hover:text-foreground transition-smooth font-medium text-sm tracking-wide">
                 {language === "ar" ? "المميزات" : "Features"}
               </a>
               <a href="#how-it-works" className="text-muted-foreground hover:text-foreground transition-smooth font-medium text-sm tracking-wide">
                 {language === "ar" ? "كيف يعمل" : "How It Works"}
               </a>
-              <AuthButton />
+              {user ? (
+                <UserDropdown />
+              ) : (
+                <AuthButton />
+              )}
             </div>
 
             {/* Mobile Menu Button */}
@@ -212,7 +217,13 @@ const Index = () => {
                   
                   {/* Auth Section */}
                   <div className="pt-6 border-t border-border space-y-8">
-                    <AuthButton isMobile={true} />
+                    {user ? (
+                      <div className="flex flex-col space-y-4">
+                        <UserDropdown />
+                      </div>
+                    ) : (
+                      <AuthButton isMobile={true} />
+                    )}
                   </div>
                 </div>
               </div>

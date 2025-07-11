@@ -503,7 +503,7 @@ const Index = () => {
             {/* عبارة */}
             <div className="space-y-2">
               <p className="text-lg font-medium text-foreground">
-                {language === "ar" ? "مَلَف — منصة الملفات المهنية" : "Malaf — Professional Profiles Platform"}
+                {language === "ar" ? "منصة الملفات المهنية" : "Professional Profiles Platform"}
               </p>
               <p className="text-muted-foreground leading-relaxed">
                 {language === "ar" 

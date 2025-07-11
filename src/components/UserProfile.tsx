@@ -19,6 +19,7 @@ const UserProfile = () => {
   const { language } = useLanguage();
   const navigate = useNavigate();
   const [profile, setProfile] = useState<UserProfile | null>(null);
+  const [imageLoaded, setImageLoaded] = useState(false);
 
   useEffect(() => {
     const fetchUserProfile = async () => {
@@ -29,9 +30,9 @@ const UserProfile = () => {
           .from('profiles')
           .select('id, username, full_name, avatar_url')
           .eq('user_id', user.id)
-          .single();
+          .maybeSingle();
 
-        if (error && error.code !== 'PGRST116') {
+        if (error) {
           console.error('Error fetching profile:', error);
           return;
         }
@@ -42,10 +43,11 @@ const UserProfile = () => {
       }
     };
 
-    if (user) {
+    // تنفيذ الطلب مرة واحدة فقط عند تحميل المكون
+    if (user && !profile) {
       fetchUserProfile();
     }
-  }, [user]);
+  }, [user, profile]);
 
   if (!user) {
     return null;
@@ -89,16 +91,25 @@ const UserProfile = () => {
   return (
     <div className="flex flex-col items-center gap-3 animate-fade-in">
       <div className="flex flex-col items-center gap-2">
-        <Avatar className="h-14 w-14 border-2 border-muted-foreground/20 transition-all duration-200">
-          <AvatarImage 
-            src={profile?.avatar_url || ''} 
-            alt={profile?.full_name || user.email || 'User'}
-            loading="eager"
-          />
-          <AvatarFallback className="bg-primary/10 text-primary font-semibold text-lg">
-            {initials}
-          </AvatarFallback>
-        </Avatar>
+        <div className="relative h-14 w-14">
+          {/* Skeleton أثناء التحميل */}
+          {!imageLoaded && (
+            <div className="absolute inset-0 bg-muted/50 rounded-full animate-pulse border-2 border-muted-foreground/20" />
+          )}
+          <Avatar className={`h-14 w-14 border-2 border-muted-foreground/20 transition-all duration-200 ${!imageLoaded ? 'opacity-0' : 'opacity-100'}`}>
+            <AvatarImage 
+              src={profile?.avatar_url || ''} 
+              alt={profile?.full_name || user.email || 'User'}
+              loading="eager"
+              onLoad={() => setImageLoaded(true)}
+              onError={() => setImageLoaded(true)}
+              className="object-cover"
+            />
+            <AvatarFallback className="bg-primary/10 text-primary font-semibold text-lg">
+              {initials}
+            </AvatarFallback>
+          </Avatar>
+        </div>
         <div className="flex flex-col items-center text-center">
           <span className="text-sm font-medium text-foreground">
             {language === "ar" ? "مرحباً" : "Welcome"}

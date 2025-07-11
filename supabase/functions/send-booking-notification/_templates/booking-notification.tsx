@@ -51,7 +51,7 @@ export const BookingNotificationTemplate = ({
         {/* Header */}
         <Section style={header}>
           <img 
-            src="https://mfchmiwxlkvkwtucizzl.supabase.co/storage/v1/object/public/avatars/malaf-email-logo.png"
+            src="https://malaf-platform.lovable.app/malaf-logo.png"
             alt="ملف - منصة الفريلانسرز"
             style={logoImage}
           />

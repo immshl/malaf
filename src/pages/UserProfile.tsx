@@ -87,7 +87,7 @@ const UserProfile = () => {
           .select('*')
           .eq('username', username)
           .eq('is_public', true)
-          .single();
+          .maybeSingle();
 
         if (error || !profileData) {
           console.error('Profile not found:', error);

@@ -19,7 +19,6 @@ const UserProfile = () => {
   const { language } = useLanguage();
   const navigate = useNavigate();
   const [profile, setProfile] = useState<UserProfile | null>(null);
-  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchUserProfile = async () => {
@@ -40,8 +39,6 @@ const UserProfile = () => {
         setProfile(data);
       } catch (error) {
         console.error('Error:', error);
-      } finally {
-        setLoading(false);
       }
     };
 
@@ -50,7 +47,7 @@ const UserProfile = () => {
     }
   }, [user]);
 
-  if (!user || loading) {
+  if (!user) {
     return null;
   }
 
@@ -90,12 +87,13 @@ const UserProfile = () => {
   const displayName = profile?.full_name || (language === "ar" ? "مستخدم" : "User");
 
   return (
-    <div className="flex flex-col items-center gap-4">
-      <div className="flex flex-col items-center gap-3">
-        <Avatar className="h-14 w-14 border-2 border-muted-foreground/20">
+    <div className="flex flex-col items-center gap-3 animate-fade-in">
+      <div className="flex flex-col items-center gap-2">
+        <Avatar className="h-14 w-14 border-2 border-muted-foreground/20 transition-all duration-200">
           <AvatarImage 
             src={profile?.avatar_url || ''} 
-            alt={profile?.full_name || user.email || 'User'} 
+            alt={profile?.full_name || user.email || 'User'}
+            loading="eager"
           />
           <AvatarFallback className="bg-primary/10 text-primary font-semibold text-lg">
             {initials}
@@ -111,12 +109,12 @@ const UserProfile = () => {
         </div>
       </div>
       
-      <div className="flex flex-col gap-2 w-full max-w-xs">
+      <div className="flex flex-col gap-1.5 w-full max-w-xs">
         <Button 
           variant="outline" 
           size="sm"
           onClick={handleProfileView}
-          className="w-full"
+          className="w-full transition-all duration-150 hover:scale-[1.02]"
         >
           {language === "ar" ? "الملف الشخصي" : "Profile"}
         </Button>
@@ -124,7 +122,7 @@ const UserProfile = () => {
           variant="destructive" 
           size="sm"
           onClick={handleSignOut}
-          className="w-full"
+          className="w-full transition-all duration-150 hover:scale-[1.02]"
         >
           {language === "ar" ? "تسجيل الخروج" : "Sign Out"}
         </Button>

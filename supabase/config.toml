@@ -37,8 +37,9 @@ enable_email_autoconfirm = false
 enable_manual_linking = false
 
 # تمكين Auth Hooks
-[auth.hooks]
-send_email = "https://mfchmiwxlkvkwtucizzl.supabase.co/functions/v1/send-email"
+[auth.hook.send_email]
+enabled = true
+uri = "https://mfchmiwxlkvkwtucizzl.supabase.co/functions/v1/send-email"
 
 # تكوين Edge Function للإيميلات
 [auth.email]

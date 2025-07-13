@@ -174,14 +174,14 @@ const UserProfile = () => {
       // Open Graph tags
       updateMetaTag('og:title', `${profile.full_name || profile.username || 'فريلانسر'} - ملف`);
       updateMetaTag('og:description', profile.bio || `ملف ${profile.full_name || profile.username || 'فريلانسر'} المهني - احجز اجتماع`);
-      updateMetaTag('og:image', profile.avatar_url || '/malaf-logo.png');
+      updateMetaTag('og:image', profile.avatar_url || '/public/malaf-logo.png');
       updateMetaTag('og:url', window.location.href);
       updateMetaTag('og:type', 'profile');
 
       // Twitter Card tags
       updateNameTag('twitter:title', `${profile.full_name || profile.username || 'فريلانسر'} - ملف`);
       updateNameTag('twitter:description', profile.bio || `ملف ${profile.full_name || profile.username || 'فريلانسر'} المهني - احجز اجتماع`);
-      updateNameTag('twitter:image', profile.avatar_url || '/malaf-logo.png');
+      updateNameTag('twitter:image', profile.avatar_url || '/public/malaf-logo.png');
       updateNameTag('twitter:card', 'summary_large_image');
     }
   }, [profile]);

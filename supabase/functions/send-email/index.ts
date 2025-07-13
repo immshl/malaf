@@ -116,7 +116,7 @@ Deno.serve(async (req) => {
 
     // Send email using Resend
     const { error } = await resend.emails.send({
-      from: 'منصة ملف <no-reply@malaf.me>',
+      from: 'منصة ملف <hello@malaf.me>',
       to: [user.email],
       subject,
       html,

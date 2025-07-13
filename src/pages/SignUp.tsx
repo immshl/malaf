@@ -85,11 +85,20 @@ const SignUp = () => {
       });
 
       if (error) {
-        toast({
-          variant: "destructive",
-          title: "خطأ في إنشاء الحساب",
-          description: error.message,
-        });
+        // معالجة خاصة للمستخدم المسجل مسبقاً
+        if (error.message && error.message.includes('already') || error.message.includes('exists')) {
+          toast({
+            variant: "destructive",
+            title: "البريد الإلكتروني مستخدم مسبقاً",
+            description: "هذا البريد الإلكتروني مسجل مسبقاً. يمكنك تسجيل الدخول أو استخدام بريد آخر.",
+          });
+        } else {
+          toast({
+            variant: "destructive",
+            title: "خطأ في إنشاء الحساب",
+            description: error.message,
+          });
+        }
         return;
       }
       

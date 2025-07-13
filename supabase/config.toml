@@ -28,8 +28,8 @@ port = 54327
 [auth]
 enabled = true
 port = 9999
-site_url = "https://5db6d598-99de-437b-a03d-617c9f33bbce.lovableproject.com"
-additional_redirect_urls = ["https://5db6d598-99de-437b-a03d-617c9f33bbce.lovableproject.com"]
+site_url = "https://malaf.me"
+additional_redirect_urls = ["https://malaf.me", "https://5db6d598-99de-437b-a03d-617c9f33bbce.lovableproject.com"]
 jwt_expiry = 3600
 enable_signup = true
 enable_email_confirmations = true

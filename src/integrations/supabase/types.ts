@@ -78,6 +78,7 @@ export type Database = {
           created_at: string
           deadline: string
           description: string
+          emoji: string | null
           id: string
           is_active: boolean
           opportunity_type: string
@@ -89,6 +90,7 @@ export type Database = {
           created_at?: string
           deadline: string
           description: string
+          emoji?: string | null
           id?: string
           is_active?: boolean
           opportunity_type?: string
@@ -100,6 +102,7 @@ export type Database = {
           created_at?: string
           deadline?: string
           description?: string
+          emoji?: string | null
           id?: string
           is_active?: boolean
           opportunity_type?: string

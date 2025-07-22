@@ -21,6 +21,7 @@ interface Opportunity {
   is_active: boolean;
   opportunity_type: string;
   status: string;
+  emoji?: string;
   created_at: string;
 }
 
@@ -33,7 +34,8 @@ export default function Opportunities() {
     title: "",
     description: "",
     deadline: "",
-    opportunity_type: "project"
+    opportunity_type: "project",
+    emoji: ""
   });
   
   const { user } = useAuth();
@@ -119,7 +121,7 @@ export default function Opportunities() {
       });
 
       setShowAddDialog(false);
-      setNewOpportunity({ title: "", description: "", deadline: "", opportunity_type: "project" });
+      setNewOpportunity({ title: "", description: "", deadline: "", opportunity_type: "project", emoji: "" });
       fetchOpportunities();
     } catch (error) {
       console.error('Error adding opportunity:', error);
@@ -287,6 +289,34 @@ export default function Opportunities() {
                     </div>
                     
                     <div className="space-y-2">
+                      <Label htmlFor="emoji" className="text-sm font-medium text-muted-foreground">أيقونة الفرصة (إيموجي)</Label>
+                      <div className="flex gap-3">
+                        <Input
+                          id="emoji"
+                          value={newOpportunity.emoji}
+                          onChange={(e) => setNewOpportunity(prev => ({ ...prev, emoji: e.target.value }))}
+                          placeholder="اختر إيموجي أو اكتب هنا"
+                          className="h-12 rounded-xl border-muted bg-muted/30 focus:bg-background transition-all flex-1"
+                          maxLength={2}
+                        />
+                        <div className="grid grid-cols-4 gap-2">
+                          {['💻', '🎨', '📱', '🔧', '💡', '📊', '🖊️', '🎯'].map((emoji) => (
+                            <Button
+                              key={emoji}
+                              type="button"
+                              variant="outline"
+                              className="h-12 w-12 text-xl hover:bg-muted/50 rounded-xl"
+                              onClick={() => setNewOpportunity(prev => ({ ...prev, emoji }))}
+                            >
+                              {emoji}
+                            </Button>
+                          ))}
+                        </div>
+                      </div>
+                      <p className="text-xs text-muted-foreground">اختر إيموجي يمثل نوع الفرصة أو اكتب إيموجي مخصص</p>
+                    </div>
+                    
+                    <div className="space-y-2">
                       <Label htmlFor="description" className="text-sm font-medium text-muted-foreground">وصف الفرصة</Label>
                       <Textarea
                         id="description"
@@ -355,16 +385,18 @@ export default function Opportunities() {
                 >
                   <CardContent className={`p-8 ${opportunity.status !== 'active' ? 'opacity-60' : ''}`}>
                     <div className="flex items-start justify-between mb-6">
-                      <div className="flex items-center gap-4">
-                        <div className={`w-12 h-12 rounded-2xl flex items-center justify-center ${
-                          opportunity.status === 'active' ? 'bg-muted' : 'bg-muted/50'
-                        }`}>
-                          {opportunity.opportunity_type === 'job' ? (
-                            <Briefcase className={`h-6 w-6 ${opportunity.status === 'active' ? 'text-foreground' : 'text-muted-foreground'}`} />
-                          ) : (
-                            <Code className={`h-6 w-6 ${opportunity.status === 'active' ? 'text-foreground' : 'text-muted-foreground'}`} />
-                          )}
-                        </div>
+                       <div className="flex items-center gap-4">
+                         <div className={`w-12 h-12 rounded-2xl flex items-center justify-center text-2xl ${
+                           opportunity.status === 'active' ? 'bg-muted' : 'bg-muted/50'
+                         }`}>
+                           {opportunity.emoji ? (
+                             <span>{opportunity.emoji}</span>
+                           ) : opportunity.opportunity_type === 'job' ? (
+                             <Briefcase className={`h-6 w-6 ${opportunity.status === 'active' ? 'text-foreground' : 'text-muted-foreground'}`} />
+                           ) : (
+                             <Code className={`h-6 w-6 ${opportunity.status === 'active' ? 'text-foreground' : 'text-muted-foreground'}`} />
+                           )}
+                         </div>
                         <div>
                           <div className="flex items-center gap-3 mb-2 flex-wrap">
                             <Badge 

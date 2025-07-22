@@ -383,7 +383,7 @@ export default function Opportunities() {
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-2 text-sm text-muted-foreground">
                         <Clock className="h-4 w-4" />
-                        <span>آخر موعد: {new Date(opportunity.deadline).toLocaleDateString('ar-SA')}</span>
+                        <span>آخر موعد: {new Date(opportunity.deadline).toLocaleDateString('ar', { calendar: 'gregory', year: 'numeric', month: 'long', day: 'numeric' })}</span>
                       </div>
                       
                       {opportunity.is_active && (

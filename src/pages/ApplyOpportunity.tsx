@@ -214,7 +214,7 @@ export default function ApplyOpportunity() {
             
             <div className="inline-flex items-center gap-2 bg-orange-50 dark:bg-orange-950/20 text-orange-600 dark:text-orange-400 px-4 py-2 rounded-full text-sm">
               <Clock className="h-4 w-4" />
-              <span>آخر موعد للتقديم: {new Date(opportunity.deadline).toLocaleDateString('ar-SA')}</span>
+              <span>آخر موعد للتقديم: {new Date(opportunity.deadline).toLocaleDateString('ar', { calendar: 'gregory', year: 'numeric', month: 'long', day: 'numeric' })}</span>
             </div>
           </div>
         </div>

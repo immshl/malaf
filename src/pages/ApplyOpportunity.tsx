@@ -148,10 +148,10 @@ export default function ApplyOpportunity() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-primary/5 via-background to-secondary/5 flex items-center justify-center">
+      <div className="min-h-screen bg-background flex items-center justify-center">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto mb-4"></div>
-          <p>جاري التحميل...</p>
+          <div className="animate-spin rounded-full h-12 w-12 border-2 border-muted border-t-foreground mx-auto mb-4"></div>
+          <p className="text-muted-foreground font-light">جاري التحميل...</p>
         </div>
       </div>
     );
@@ -159,11 +159,14 @@ export default function ApplyOpportunity() {
 
   if (!opportunity) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-primary/5 via-background to-secondary/5 flex items-center justify-center">
-        <Card className="max-w-md">
-          <CardContent className="text-center py-8">
-            <p className="text-muted-foreground">لم يتم العثور على الفرصة</p>
-            <Button onClick={() => navigate('/opportunities')} className="mt-4">
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <Card className="max-w-md rounded-3xl border-0 shadow-xl">
+          <CardContent className="text-center py-12">
+            <p className="text-muted-foreground mb-4">لم يتم العثور على الفرصة</p>
+            <Button 
+              onClick={() => navigate('/opportunities')} 
+              className="rounded-full px-6 py-2 bg-foreground text-background hover:bg-foreground/90"
+            >
               العودة للفرص
             </Button>
           </CardContent>
@@ -173,21 +176,21 @@ export default function ApplyOpportunity() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-primary/5 via-background to-secondary/5">
+    <div className="min-h-screen bg-background">
       {/* Header */}
-      <div className="bg-gradient-to-r from-primary/10 via-primary/5 to-background border-b border-border/20">
-        <div className="container mx-auto px-4 py-8">
+      <div className="bg-background border-b border-border/50">
+        <div className="container mx-auto px-4 py-12">
           <Button 
             variant="ghost" 
             onClick={() => navigate('/opportunities')}
-            className="mb-4 gap-2 hover:bg-primary/10"
+            className="mb-8 gap-2 rounded-full px-4 py-2 hover:bg-muted"
           >
             <ArrowLeft className="h-4 w-4" />
             العودة للفرص
           </Button>
           
-          <div className="text-center">
-            <div className="inline-flex items-center gap-2 bg-primary/10 text-primary px-4 py-2 rounded-full text-sm font-medium mb-4">
+          <div className="text-center max-w-3xl mx-auto">
+            <div className="inline-flex items-center gap-2 bg-muted text-muted-foreground px-4 py-2 rounded-full text-sm font-medium mb-6">
               {opportunity.opportunity_type === 'job' ? (
                 <>
                   <Briefcase className="h-4 w-4" />
@@ -201,15 +204,15 @@ export default function ApplyOpportunity() {
               )}
             </div>
             
-            <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-4 leading-tight">
+            <h1 className="text-5xl md:text-6xl font-light text-foreground mb-6 tracking-tight leading-tight">
               {opportunity.title}
             </h1>
             
-            <p className="text-lg text-muted-foreground max-w-3xl mx-auto leading-relaxed mb-6">
+            <p className="text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed mb-8 font-light">
               {opportunity.description}
             </p>
             
-            <div className="inline-flex items-center gap-2 bg-orange-50 dark:bg-orange-950 text-orange-600 dark:text-orange-400 px-4 py-2 rounded-lg text-sm">
+            <div className="inline-flex items-center gap-2 bg-orange-50 dark:bg-orange-950/20 text-orange-600 dark:text-orange-400 px-4 py-2 rounded-full text-sm">
               <Clock className="h-4 w-4" />
               <span>آخر موعد للتقديم: {new Date(opportunity.deadline).toLocaleDateString('ar-SA')}</span>
             </div>
@@ -218,136 +221,101 @@ export default function ApplyOpportunity() {
       </div>
 
       {/* Application Form */}
-      <div className="container mx-auto px-4 py-16 max-w-3xl">
-        <div className="grid md:grid-cols-3 gap-8">
-          {/* Instructions */}
-          <div className="md:col-span-1">
-            <div className="sticky top-8 space-y-6">
-              <div>
-                <h3 className="text-lg font-semibold text-foreground mb-3">
-                  خطوات التقديم
-                </h3>
-                <div className="space-y-4">
-                  <div className="flex gap-3">
-                    <div className="w-6 h-6 rounded-full bg-primary/20 flex items-center justify-center text-primary text-sm font-semibold">1</div>
-                    <p className="text-sm text-muted-foreground">املأ النموذج بمعلوماتك الشخصية</p>
-                  </div>
-                  <div className="flex gap-3">
-                    <div className="w-6 h-6 rounded-full bg-primary/20 flex items-center justify-center text-primary text-sm font-semibold">2</div>
-                    <p className="text-sm text-muted-foreground">أرفق رابط Google Drive لأعمالك</p>
-                  </div>
-                  <div className="flex gap-3">
-                    <div className="w-6 h-6 rounded-full bg-primary/20 flex items-center justify-center text-primary text-sm font-semibold">3</div>
-                    <p className="text-sm text-muted-foreground">سنراجع طلبك ونتواصل معك</p>
-                  </div>
+      <div className="container mx-auto px-4 py-20 max-w-2xl">
+        <div className="text-center mb-12">
+          <h2 className="text-3xl font-semibold text-foreground mb-4">
+            تقدم للفرصة
+          </h2>
+          <p className="text-muted-foreground font-light">
+            املأ النموذج أدناه وسنتواصل معك قريباً
+          </p>
+        </div>
+
+        <Card className="border-0 shadow-xl bg-background rounded-3xl overflow-hidden">
+          <CardContent className="p-10">
+            <form onSubmit={handleSubmitApplication} className="space-y-8">
+              <div className="grid md:grid-cols-2 gap-6">
+                <div className="space-y-2">
+                  <Label htmlFor="name" className="text-sm font-medium text-muted-foreground">الاسم الكامل *</Label>
+                  <Input
+                    id="name"
+                    value={applicationForm.applicant_name}
+                    onChange={(e) => setApplicationForm(prev => ({ ...prev, applicant_name: e.target.value }))}
+                    placeholder="مثال: أحمد محمد"
+                    className="h-12 rounded-xl border-muted bg-muted/30 focus:bg-background transition-all"
+                    required
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="email" className="text-sm font-medium text-muted-foreground">البريد الإلكتروني *</Label>
+                  <Input
+                    id="email"
+                    type="email"
+                    value={applicationForm.applicant_email}
+                    onChange={(e) => setApplicationForm(prev => ({ ...prev, applicant_email: e.target.value }))}
+                    placeholder="example@email.com"
+                    className="h-12 rounded-xl border-muted bg-muted/30 focus:bg-background transition-all"
+                    required
+                  />
                 </div>
               </div>
-              
-              <Alert className="bg-green-50 dark:bg-green-950 border-green-200 dark:border-green-800">
-                <CheckCircle className="h-4 w-4 text-green-600" />
-                <AlertDescription className="text-green-700 dark:text-green-300 text-sm">
-                  <strong>نصيحة:</strong> تأكد من أن رابط Google Drive يحتوي على أفضل أعمالك ومتاح للجميع
-                </AlertDescription>
-              </Alert>
-            </div>
-          </div>
 
-          {/* Form */}
-          <div className="md:col-span-2">
-            <Card className="border-0 shadow-xl bg-background/80 backdrop-blur-sm">
-              <CardHeader className="text-center pb-6">
-                <CardTitle className="text-2xl flex items-center justify-center gap-2 text-foreground">
-                  <Send className="h-6 w-6 text-primary" />
-                  تقدم للفرصة
-                </CardTitle>
-              </CardHeader>
-              
-              <CardContent>
-                <form onSubmit={handleSubmitApplication} className="space-y-6">
-                  <div className="grid md:grid-cols-2 gap-6">
-                    <div className="space-y-2">
-                      <Label htmlFor="name" className="text-sm font-medium">الاسم الكامل *</Label>
-                      <Input
-                        id="name"
-                        value={applicationForm.applicant_name}
-                        onChange={(e) => setApplicationForm(prev => ({ ...prev, applicant_name: e.target.value }))}
-                        placeholder="مثال: أحمد محمد"
-                        className="h-12 transition-all focus:ring-2 focus:ring-primary/20"
-                        required
-                      />
-                    </div>
+              <div className="space-y-2">
+                <Label htmlFor="phone" className="text-sm font-medium text-muted-foreground">رقم الجوال *</Label>
+                <Input
+                  id="phone"
+                  type="tel"
+                  value={applicationForm.applicant_phone}
+                  onChange={(e) => setApplicationForm(prev => ({ ...prev, applicant_phone: e.target.value }))}
+                  placeholder="+966 50 123 4567"
+                  className="h-12 rounded-xl border-muted bg-muted/30 focus:bg-background transition-all"
+                  required
+                />
+              </div>
 
-                    <div className="space-y-2">
-                      <Label htmlFor="email" className="text-sm font-medium">البريد الإلكتروني *</Label>
-                      <Input
-                        id="email"
-                        type="email"
-                        value={applicationForm.applicant_email}
-                        onChange={(e) => setApplicationForm(prev => ({ ...prev, applicant_email: e.target.value }))}
-                        placeholder="example@email.com"
-                        className="h-12 transition-all focus:ring-2 focus:ring-primary/20"
-                        required
-                      />
-                    </div>
-                  </div>
+              <div className="space-y-2">
+                <Label htmlFor="portfolio" className="text-sm font-medium text-muted-foreground">رابط الأعمال (Google Drive) *</Label>
+                <Input
+                  id="portfolio"
+                  type="url"
+                  value={applicationForm.portfolio_link}
+                  onChange={(e) => setApplicationForm(prev => ({ ...prev, portfolio_link: e.target.value }))}
+                  placeholder="https://drive.google.com/..."
+                  className="h-12 rounded-xl border-muted bg-muted/30 focus:bg-background transition-all"
+                  required
+                />
+                <p className="text-xs text-muted-foreground mt-3 flex items-center gap-2 bg-muted/30 p-4 rounded-xl">
+                  <ExternalLink className="h-4 w-4" />
+                  <span>تأكد من ضبط الرابط ليكون متاحاً للجميع (Anyone with the link can view)</span>
+                </p>
+              </div>
 
-                  <div className="space-y-2">
-                    <Label htmlFor="phone" className="text-sm font-medium">رقم الجوال *</Label>
-                    <Input
-                      id="phone"
-                      type="tel"
-                      value={applicationForm.applicant_phone}
-                      onChange={(e) => setApplicationForm(prev => ({ ...prev, applicant_phone: e.target.value }))}
-                      placeholder="+966 50 123 4567"
-                      className="h-12 transition-all focus:ring-2 focus:ring-primary/20"
-                      required
-                    />
-                  </div>
-
-                  <div className="space-y-2">
-                    <Label htmlFor="portfolio" className="text-sm font-medium">رابط الأعمال (Google Drive) *</Label>
-                    <Input
-                      id="portfolio"
-                      type="url"
-                      value={applicationForm.portfolio_link}
-                      onChange={(e) => setApplicationForm(prev => ({ ...prev, portfolio_link: e.target.value }))}
-                      placeholder="https://drive.google.com/..."
-                      className="h-12 transition-all focus:ring-2 focus:ring-primary/20"
-                      required
-                    />
-                    <p className="text-xs text-muted-foreground mt-2 flex items-center gap-2 bg-muted/30 p-3 rounded-lg">
-                      <ExternalLink className="h-4 w-4" />
-                      <span>تأكد من ضبط الرابط ليكون متاحاً للجميع (Anyone with the link can view)</span>
-                    </p>
-                  </div>
-
-                  <div className="pt-4">
-                    {user ? (
-                      <Button 
-                        type="submit" 
-                        className="w-full h-12 text-lg gap-2 hover:scale-105 transition-all" 
-                        disabled={submitting}
-                      >
-                        <Send className="h-5 w-5" />
-                        {submitting ? "جاري الإرسال..." : "إرسال التقديم"}
-                      </Button>
-                    ) : (
-                      <Button 
-                        type="button"
-                        onClick={handleSignUpAndApply}
-                        className="w-full h-12 text-lg gap-2 hover:scale-105 transition-all"
-                        variant="outline"
-                      >
-                        <UserPlus className="h-5 w-5" />
-                        إنشاء حساب وإرسال التقديم
-                      </Button>
-                    )}
-                  </div>
-                </form>
-              </CardContent>
-            </Card>
-          </div>
-        </div>
+              <div className="pt-6">
+                {user ? (
+                  <Button 
+                    type="submit" 
+                    className="w-full h-12 text-base gap-2 rounded-xl bg-foreground text-background hover:bg-foreground/90 transition-all" 
+                    disabled={submitting}
+                  >
+                    <Send className="h-5 w-5" />
+                    {submitting ? "جاري الإرسال..." : "إرسال التقديم"}
+                  </Button>
+                ) : (
+                  <Button 
+                    type="button"
+                    onClick={handleSignUpAndApply}
+                    className="w-full h-12 text-base gap-2 rounded-xl bg-muted text-foreground hover:bg-muted/80 transition-all"
+                    variant="outline"
+                  >
+                    <UserPlus className="h-5 w-5" />
+                    إنشاء حساب وإرسال التقديم
+                  </Button>
+                )}
+              </div>
+            </form>
+          </CardContent>
+        </Card>
       </div>
     </div>
   );

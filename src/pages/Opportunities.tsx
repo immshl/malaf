@@ -489,16 +489,16 @@ export default function Opportunities() {
                   <CardContent className={`p-8 ${opportunity.status !== 'active' ? 'opacity-60' : ''}`}>
                     <div className="flex items-start justify-between mb-6">
                        <div className="flex items-center gap-4">
-                         <div className={`w-12 h-12 rounded-2xl flex items-center justify-center text-2xl ${
-                           opportunity.status === 'active' ? 'bg-muted' : 'bg-muted/50'
-                         }`}>
-                           {opportunity.emoji ? (
-                             <span>{opportunity.emoji}</span>
-                           ) : opportunity.opportunity_type === 'job' ? (
-                             <Briefcase className={`h-6 w-6 ${opportunity.status === 'active' ? 'text-foreground' : 'text-muted-foreground'}`} />
-                           ) : (
-                             <Code className={`h-6 w-6 ${opportunity.status === 'active' ? 'text-foreground' : 'text-muted-foreground'}`} />
-                           )}
+                          <div className={`w-12 h-12 rounded-full flex items-center justify-center text-xl flex-shrink-0 ${
+                            opportunity.status === 'active' ? 'bg-muted' : 'bg-muted/50'
+                          }`}>
+                            {opportunity.emoji ? (
+                              <span className="text-xl leading-none flex items-center justify-center w-full h-full">{opportunity.emoji}</span>
+                            ) : opportunity.opportunity_type === 'job' ? (
+                              <Briefcase className={`h-5 w-5 ${opportunity.status === 'active' ? 'text-foreground' : 'text-muted-foreground'}`} />
+                            ) : (
+                              <Code className={`h-5 w-5 ${opportunity.status === 'active' ? 'text-foreground' : 'text-muted-foreground'}`} />
+                            )}
                          </div>
                         <div>
                           <div className="flex items-center gap-3 mb-2 flex-wrap">

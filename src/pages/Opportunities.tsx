@@ -477,23 +477,23 @@ export default function Opportunities() {
           <div className="max-w-4xl mx-auto">
             <Card className="text-center mb-16 glass border-0 shadow-elegant bg-background/80 backdrop-blur-sm rounded-3xl overflow-hidden">
               <CardContent className="p-12">
-                <div className="flex flex-col items-center gap-6">
-                  {/* Counter Circle */}
-                  <div className="w-20 h-20 rounded-full bg-gradient-to-br from-purple-500 to-blue-500 flex items-center justify-center shadow-lg">
-                    <span className="text-3xl font-bold text-white">
-                      {opportunities.length}
-                    </span>
+                <div className="flex flex-col items-center gap-4">
+                  {/* Title with inline counter */}
+                  <div className="flex items-center gap-4">
+                    <h2 className="text-4xl md:text-5xl font-bold text-foreground tracking-tight">
+                      فرصة متاحة
+                    </h2>
+                    <div className="w-12 h-12 rounded-full bg-gradient-to-br from-purple-500 to-blue-500 flex items-center justify-center shadow-lg flex-shrink-0">
+                      <span className="text-lg font-bold text-white">
+                        {opportunities.length}
+                      </span>
+                    </div>
                   </div>
                   
-                  {/* Title and Description */}
-                  <div>
-                    <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-4 tracking-tight">
-                      {opportunities.length === 1 ? "فرصة متاحة" : "فرصة متاحة"}
-                    </h2>
-                    <p className="text-xl text-muted-foreground max-w-3xl mx-auto font-light leading-relaxed">
-                      اختر الفرصة المناسبة لمهاراتك وابدأ رحلتك المهنية
-                    </p>
-                  </div>
+                  {/* Description */}
+                  <p className="text-xl text-muted-foreground max-w-3xl mx-auto font-light leading-relaxed">
+                    اختر الفرصة المناسبة لمهاراتك وابدأ رحلتك المهنية
+                  </p>
                 </div>
               </CardContent>
             </Card>

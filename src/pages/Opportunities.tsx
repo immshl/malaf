@@ -176,14 +176,37 @@ export default function Opportunities() {
 
   return (
     <div className="min-h-screen bg-background">
-      {/* Hero Section - Apple-style minimal */}
+      {/* Header with Logo */}
       <div className="bg-background border-b border-border/50">
-        <div className="container mx-auto px-4 py-20">
-          <div className="text-center max-w-3xl mx-auto">
-            <h1 className="text-6xl md:text-7xl font-light text-foreground mb-6 tracking-tight">
+        <div className="container mx-auto px-4 py-6">
+          <div className="flex items-center justify-center">
+            <div className="flex items-center gap-2">
+              <div className="w-8 h-8">
+                <img 
+                  src="/lovable-uploads/be1d2269-8206-422b-a395-e4fb9e1a88cc.png" 
+                  alt="ملف" 
+                  className="w-full h-full object-contain dark:hidden"
+                />
+                <img 
+                  src="/lovable-uploads/822b255a-0cfa-4520-b9a5-aa69e7ef91e6.png" 
+                  alt="ملف" 
+                  className="w-full h-full object-contain hidden dark:block"
+                />
+              </div>
+              <span className="font-bold text-lg text-foreground">ملف</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Hero Section - Apple-style minimal */}
+      <div className="bg-background">
+        <div className="container mx-auto px-4 py-24 md:py-32">
+          <div className="text-center max-w-4xl mx-auto">
+            <h1 className="text-4xl md:text-7xl lg:text-8xl font-bold text-foreground mb-8 leading-[1.1] tracking-tight">
               الفرص المتاحة
             </h1>
-            <p className="text-xl text-muted-foreground mb-12 font-light leading-relaxed">
+            <p className="text-xl text-muted-foreground mb-12 max-w-3xl mx-auto font-light leading-relaxed">
               اكتشف الفرص المتاحة وتقدم للمناسب منها
             </p>
             
@@ -276,18 +299,18 @@ export default function Opportunities() {
             <div className="w-24 h-24 bg-muted rounded-3xl flex items-center justify-center mx-auto mb-8">
               <Users className="h-12 w-12 text-muted-foreground" />
             </div>
-            <h3 className="text-2xl font-semibold text-foreground mb-4">لا توجد فرص متاحة حالياً</h3>
-            <p className="text-muted-foreground text-lg max-w-md mx-auto font-light">
+            <h3 className="text-4xl md:text-5xl font-bold text-foreground mb-4 tracking-tight">لا توجد فرص متاحة حالياً</h3>
+            <p className="text-muted-foreground text-xl max-w-md mx-auto font-light">
               نعمل على إضافة فرص جديدة باستمرار
             </p>
           </div>
         ) : (
           <div className="max-w-4xl mx-auto">
             <div className="text-center mb-16">
-              <h2 className="text-3xl font-semibold text-foreground mb-4">
+              <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-6 tracking-tight">
                 {opportunities.length} فرصة متاحة
               </h2>
-              <p className="text-muted-foreground font-light">
+              <p className="text-xl text-muted-foreground max-w-3xl mx-auto font-light leading-relaxed">
                 اختر الفرصة المناسبة لمهاراتك
               </p>
             </div>

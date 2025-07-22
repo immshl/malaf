@@ -204,11 +204,11 @@ export default function ApplyOpportunity() {
               )}
             </div>
             
-            <h1 className="text-5xl md:text-6xl font-light text-foreground mb-6 tracking-tight leading-tight">
+            <h1 className="text-4xl md:text-7xl lg:text-8xl font-bold text-foreground mb-8 leading-[1.1] tracking-tight">
               {opportunity.title}
             </h1>
             
-            <p className="text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed mb-8 font-light">
+            <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed mb-8 font-light">
               {opportunity.description}
             </p>
             
@@ -222,14 +222,14 @@ export default function ApplyOpportunity() {
 
       {/* Application Form */}
       <div className="container mx-auto px-4 py-20 max-w-2xl">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl font-semibold text-foreground mb-4">
-            تقدم للفرصة
-          </h2>
-          <p className="text-muted-foreground font-light">
-            املأ النموذج أدناه وسنتواصل معك قريباً
-          </p>
-        </div>
+         <div className="text-center mb-12">
+           <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-6 tracking-tight">
+             تقدم للفرصة
+           </h2>
+           <p className="text-xl text-muted-foreground max-w-3xl mx-auto font-light leading-relaxed">
+             املأ النموذج أدناه وسنتواصل معك قريباً
+           </p>
+         </div>
 
         <Card className="border-0 shadow-xl bg-background rounded-3xl overflow-hidden">
           <CardContent className="p-10">

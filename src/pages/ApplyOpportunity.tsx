@@ -33,6 +33,8 @@ export default function ApplyOpportunity() {
   const [signUpForm, setSignUpForm] = useState({
     fullName: "",
     email: "",
+    phone: "",
+    username: "",
     password: "",
     confirmPassword: ""
   });
@@ -47,7 +49,12 @@ export default function ApplyOpportunity() {
   useEffect(() => {
     fetchOpportunity();
     loadSavedApplication();
-  }, [opportunityId]);
+    
+    // Pre-fill user data if logged in
+    if (user) {
+      fetchUserProfile();
+    }
+  }, [opportunityId, user]);
 
   // Load saved application data from localStorage
   const loadSavedApplication = () => {
@@ -73,6 +80,30 @@ export default function ApplyOpportunity() {
       } catch (error) {
         console.error('Error loading saved application:', error);
       }
+    }
+  };
+
+  // Fetch user profile to pre-fill form for logged in users
+  const fetchUserProfile = async () => {
+    if (!user) return;
+    
+    try {
+      const { data, error } = await supabase
+        .from('profiles')
+        .select('*')
+        .eq('user_id', user.id)
+        .single();
+
+      if (error) throw error;
+      
+      setApplicationForm(prev => ({
+        ...prev,
+        applicant_name: data.full_name || '',
+        applicant_email: user.email || '',
+        applicant_phone: data.phone || ''
+      }));
+    } catch (error) {
+      console.error('Error fetching user profile:', error);
     }
   };
 
@@ -179,6 +210,8 @@ export default function ApplyOpportunity() {
     setSignUpForm({
       fullName: applicationForm.applicant_name,
       email: applicationForm.applicant_email,
+      phone: applicationForm.applicant_phone,
+      username: "",
       password: "",
       confirmPassword: ""
     });
@@ -188,7 +221,8 @@ export default function ApplyOpportunity() {
   const handleSignUpSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    if (!signUpForm.fullName || !signUpForm.email || !signUpForm.password) {
+    if (!signUpForm.fullName || !signUpForm.email || !signUpForm.phone || 
+        !signUpForm.username || !signUpForm.password) {
       toast({
         title: "خطأ",
         description: "يرجى ملء جميع الحقول المطلوبة",
@@ -229,18 +263,57 @@ export default function ApplyOpportunity() {
 
       const redirectUrl = `${window.location.origin}/verify-email`;
       
-      const { error } = await supabase.auth.signUp({
+      const { data, error } = await supabase.auth.signUp({
         email: signUpForm.email,
         password: signUpForm.password,
         options: {
           emailRedirectTo: redirectUrl,
           data: {
-            full_name: signUpForm.fullName
+            full_name: signUpForm.fullName,
+            username: signUpForm.username,
+            phone: signUpForm.phone
           }
         }
       });
 
       if (error) throw error;
+
+      // Automatically submit application after account creation
+      if (data.user) {
+        try {
+          await supabase
+            .from('opportunity_applications')
+            .insert([{
+              opportunity_id: opportunityId,
+              user_id: data.user.id,
+              applicant_name: signUpForm.fullName,
+              applicant_email: signUpForm.email,
+              applicant_phone: signUpForm.phone,
+              portfolio_link: applicationForm.portfolio_link
+            }]);
+
+          // Send notification email
+          await supabase.functions.invoke('send-opportunity-notification', {
+            body: {
+              to: 'iimmshl@gmail.com',
+              subject: `تقديم جديد على فرصة: ${opportunity?.title}`,
+              html: `
+                <div dir="rtl" style="font-family: Arial, sans-serif;">
+                  <h2>تقديم جديد على فرصة العمل</h2>
+                  <p><strong>الفرصة:</strong> ${opportunity?.title}</p>
+                  <p><strong>اسم المتقدم:</strong> ${signUpForm.fullName}</p>
+                  <p><strong>البريد الإلكتروني:</strong> ${signUpForm.email}</p>
+                  <p><strong>رقم الجوال:</strong> ${signUpForm.phone}</p>
+                  <p><strong>رابط الأعمال:</strong> <a href="${applicationForm.portfolio_link}">${applicationForm.portfolio_link}</a></p>
+                  <p><strong>تاريخ التقديم:</strong> ${new Date().toLocaleDateString('ar-SA')}</p>
+                </div>
+              `
+            }
+          });
+        } catch (appError) {
+          console.error('Error submitting application after signup:', appError);
+        }
+      }
 
       toast({
         title: "تم إنشاء الحساب!",
@@ -461,6 +534,31 @@ export default function ApplyOpportunity() {
                   value={signUpForm.email}
                   onChange={(e) => setSignUpForm(prev => ({ ...prev, email: e.target.value }))}
                   placeholder="example@email.com"
+                  className="h-12 rounded-xl border-muted bg-muted/30 focus:bg-background transition-all"
+                  required
+                />
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="modal-phone" className="text-sm font-medium text-muted-foreground">رقم الجوال *</Label>
+                <Input
+                  id="modal-phone"
+                  type="tel"
+                  value={signUpForm.phone}
+                  onChange={(e) => setSignUpForm(prev => ({ ...prev, phone: e.target.value }))}
+                  placeholder="+966 50 123 4567"
+                  className="h-12 rounded-xl border-muted bg-muted/30 focus:bg-background transition-all"
+                  required
+                />
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="modal-username" className="text-sm font-medium text-muted-foreground">اسم المستخدم *</Label>
+                <Input
+                  id="modal-username"
+                  value={signUpForm.username}
+                  onChange={(e) => setSignUpForm(prev => ({ ...prev, username: e.target.value }))}
+                  placeholder="اسم المستخدم"
                   className="h-12 rounded-xl border-muted bg-muted/30 focus:bg-background transition-all"
                   required
                 />

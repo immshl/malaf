@@ -290,30 +290,14 @@ export default function Opportunities() {
                     
                     <div className="space-y-2">
                       <Label htmlFor="emoji" className="text-sm font-medium text-muted-foreground">أيقونة الفرصة (إيموجي)</Label>
-                      <div className="flex gap-3">
-                        <Input
-                          id="emoji"
-                          value={newOpportunity.emoji}
-                          onChange={(e) => setNewOpportunity(prev => ({ ...prev, emoji: e.target.value }))}
-                          placeholder="اختر إيموجي أو اكتب هنا"
-                          className="h-12 rounded-xl border-muted bg-muted/30 focus:bg-background transition-all flex-1"
-                          maxLength={2}
-                        />
-                        <div className="grid grid-cols-4 gap-2">
-                          {['💻', '🎨', '📱', '🔧', '💡', '📊', '🖊️', '🎯'].map((emoji) => (
-                            <Button
-                              key={emoji}
-                              type="button"
-                              variant="outline"
-                              className="h-12 w-12 text-xl hover:bg-muted/50 rounded-xl"
-                              onClick={() => setNewOpportunity(prev => ({ ...prev, emoji }))}
-                            >
-                              {emoji}
-                            </Button>
-                          ))}
-                        </div>
-                      </div>
-                      <p className="text-xs text-muted-foreground">اختر إيموجي يمثل نوع الفرصة أو اكتب إيموجي مخصص</p>
+                      <Input
+                        id="emoji"
+                        value={newOpportunity.emoji}
+                        onChange={(e) => setNewOpportunity(prev => ({ ...prev, emoji: e.target.value }))}
+                        placeholder="اكتب أي إيموجي (مثل: 💻 🎨 📱 🚀 📊 🎯 💡 🔧 ⭐ 🎪 🌟 🔥 💎 🎊 🎉 🎈 🏆 🎁 🌈 🦄 🌙 ⚡ 🎵 🎭 🍕 🍔 🍟 🍰 🎂 🍦 🍩 🧁 ☕ 🍺 🏠 🏢 🏰 🏖️ 🌍 🌎 🌏 🛡️ ⚔️ 🏹 🎪 🎯 🎲 🎮 🕹️ 📚 📖 📝 📊 📈 📉 💰 💵 💸 💳 💎 ⌚ 📱 💻 🖥️ ⌨️ 🖱️ 🖨️ 📷 📹 🔋 🔌 💡 🔦 🕯️ 🧯 🔧 🔨 ⚒️ 🛠️ ⚡ 🔥 ❄️ ☀️ 🌞 🌝 🌛 🌜 🌚 🌕 🌖 🌗 🌘 🌑 🌒 🌓 🌔)"
+                        className="h-12 rounded-xl border-muted bg-muted/30 focus:bg-background transition-all"
+                      />
+                      <p className="text-xs text-muted-foreground">يمكنك استخدام أي إيموجي من لوحة المفاتيح أو نسخه من الإنترنت</p>
                     </div>
                     
                     <div className="space-y-2">

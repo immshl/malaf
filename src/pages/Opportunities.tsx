@@ -492,7 +492,7 @@ export default function Opportunities() {
                   
                   {/* Description */}
                   <p className="text-xl text-muted-foreground max-w-3xl mx-auto font-light leading-relaxed">
-                    اختر الفرصة المناسبة لمهاراتك وابدأ رحلتك المهنية
+                    اختر الفرصة المناسبة لمهاراتك
                   </p>
                 </div>
               </CardContent>

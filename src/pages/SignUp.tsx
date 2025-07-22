@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -57,6 +57,30 @@ const SignUp = () => {
     const baseEmail = atIndex > -1 ? currentEmail.substring(0, atIndex) : currentEmail;
     setFormData({...formData, email: baseEmail + domain});
   };
+
+  
+  // Load saved application data if coming from opportunity application
+  useEffect(() => {
+    const savedApplication = localStorage.getItem('pendingApplication');
+    if (savedApplication) {
+      try {
+        const data = JSON.parse(savedApplication);
+        // Fill form with saved data
+        setFormData(prev => ({
+          ...prev,
+          fullName: data.applicant_name || '',
+          email: data.applicant_email || ''
+        }));
+        
+        toast({
+          title: "تم تعبئة بياناتك تلقائياً",
+          description: "أكمل إنشاء حسابك باختيار اسم مستخدم وكلمة مرور",
+        });
+      } catch (error) {
+        console.error('Error loading saved application:', error);
+      }
+    }
+  }, []);
 
   // Redirect if already logged in
   if (user) {

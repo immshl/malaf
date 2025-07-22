@@ -11,6 +11,7 @@ import { toast } from "@/hooks/use-toast";
 const EmailVerification = () => {
   const [isVerified, setIsVerified] = useState(false);
   const [isChecking, setIsChecking] = useState(true);
+  const [isPolling, setIsPolling] = useState(false);
   const navigate = useNavigate();
   const { user } = useAuth();
   const { language } = useLanguage();
@@ -139,6 +140,55 @@ const EmailVerification = () => {
 
     checkEmailVerification();
   }, [searchParams, user, navigate]);
+
+  // Poll for email verification status every 5 seconds
+  useEffect(() => {
+    if (isVerified || isChecking) return;
+
+    setIsPolling(true);
+    
+    const pollInterval = setInterval(async () => {
+      try {
+        // Get fresh user session to check email confirmation
+        const { data: session } = await supabase.auth.getSession();
+        
+        if (session?.session?.user?.email_confirmed_at) {
+          setIsVerified(true);
+          clearInterval(pollInterval);
+          
+          toast({
+            title: t('verificationSuccess', 'تم التحقق بنجاح! 🎉'),
+            description: t('emailConfirmed', 'تم تأكيد بريدك الإلكتروني بنجاح')
+          });
+          
+          setTimeout(() => {
+            // Check if user needs to complete an application
+            const postVerificationRedirect = localStorage.getItem('postVerificationRedirect');
+            if (postVerificationRedirect) {
+              localStorage.removeItem('postVerificationRedirect');
+              navigate(postVerificationRedirect);
+            } else {
+              navigate("/create-profile");
+            }
+          }, 2000);
+        }
+      } catch (error) {
+        console.error('Error polling verification status:', error);
+      }
+    }, 5000); // Poll every 5 seconds
+
+    // Cleanup interval after 10 minutes (to avoid infinite polling)
+    const timeoutId = setTimeout(() => {
+      clearInterval(pollInterval);
+      setIsPolling(false);
+    }, 600000); // 10 minutes
+
+    return () => {
+      clearInterval(pollInterval);
+      clearTimeout(timeoutId);
+      setIsPolling(false);
+    };
+  }, [isVerified, isChecking, navigate, t]);
 
   const handleResendEmail = async () => {
     if (!user?.email) {

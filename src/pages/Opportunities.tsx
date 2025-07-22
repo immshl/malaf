@@ -40,9 +40,12 @@ export default function Opportunities() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetchOpportunities();
     checkIsAdmin();
   }, [user]);
+
+  useEffect(() => {
+    fetchOpportunities();
+  }, [isAdmin]);
 
   const checkIsAdmin = () => {
     if (user?.email === 'iimmshl@gmail.com') {
@@ -52,11 +55,14 @@ export default function Opportunities() {
 
   const fetchOpportunities = async () => {
     try {
-      const { data, error } = await supabase
-        .from('opportunities')
-        .select('*')
-        .eq('is_active', true)
-        .order('created_at', { ascending: false });
+      let query = supabase.from('opportunities').select('*');
+      
+      // المدير يرى جميع الفرص، المستخدمين العاديين يرون النشطة فقط
+      if (!isAdmin) {
+        query = query.eq('is_active', true);
+      }
+      
+      const { data, error } = await query.order('created_at', { ascending: false });
 
       if (error) throw error;
       setOpportunities(data || []);

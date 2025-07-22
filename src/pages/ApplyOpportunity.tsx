@@ -1,12 +1,13 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { ArrowLeft, ExternalLink, CheckCircle, Clock, Briefcase, Code, Send, UserPlus } from "lucide-react";
+import { ArrowLeft, ExternalLink, CheckCircle, Clock, Briefcase, Code, Send, UserPlus, X } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
@@ -28,6 +29,14 @@ export default function ApplyOpportunity() {
   const [opportunity, setOpportunity] = useState<Opportunity | null>(null);
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
+  const [showSignUpModal, setShowSignUpModal] = useState(false);
+  const [signUpForm, setSignUpForm] = useState({
+    fullName: "",
+    email: "",
+    password: "",
+    confirmPassword: ""
+  });
+  const [signUpLoading, setSignUpLoading] = useState(false);
   const [applicationForm, setApplicationForm] = useState({
     applicant_name: "",
     applicant_email: "",
@@ -165,17 +174,91 @@ export default function ApplyOpportunity() {
     }
   };
 
-  const handleSignUpAndApply = () => {
-    // Store application data in localStorage for after signup
-    localStorage.setItem('pendingApplication', JSON.stringify({
-      opportunityId,
-      ...applicationForm
-    }));
+  const handleShowSignUpModal = () => {
+    // Pre-fill signup form with application data
+    setSignUpForm({
+      fullName: applicationForm.applicant_name,
+      email: applicationForm.applicant_email,
+      password: "",
+      confirmPassword: ""
+    });
+    setShowSignUpModal(true);
+  };
+
+  const handleSignUpSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
     
-    // Also store the redirect URL for after email verification
-    localStorage.setItem('postVerificationRedirect', `/apply/${opportunityId}`);
-    
-    navigate('/signup');
+    if (!signUpForm.fullName || !signUpForm.email || !signUpForm.password) {
+      toast({
+        title: "خطأ",
+        description: "يرجى ملء جميع الحقول المطلوبة",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    if (signUpForm.password !== signUpForm.confirmPassword) {
+      toast({
+        title: "خطأ", 
+        description: "كلمتا المرور غير متطابقتان",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    if (signUpForm.password.length < 6) {
+      toast({
+        title: "خطأ",
+        description: "كلمة المرور يجب أن تكون 6 أحرف على الأقل",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    setSignUpLoading(true);
+
+    try {
+      // Store application data for after verification
+      localStorage.setItem('pendingApplication', JSON.stringify({
+        opportunityId,
+        ...applicationForm
+      }));
+      
+      // Store the redirect URL for after email verification
+      localStorage.setItem('postVerificationRedirect', `/apply/${opportunityId}`);
+
+      const redirectUrl = `${window.location.origin}/verify-email`;
+      
+      const { error } = await supabase.auth.signUp({
+        email: signUpForm.email,
+        password: signUpForm.password,
+        options: {
+          emailRedirectTo: redirectUrl,
+          data: {
+            full_name: signUpForm.fullName
+          }
+        }
+      });
+
+      if (error) throw error;
+
+      toast({
+        title: "تم إنشاء الحساب!",
+        description: "يرجى التحقق من بريدك الإلكتروني لتأكيد الحساب"
+      });
+
+      setShowSignUpModal(false);
+      navigate('/verify-email');
+    } catch (error: any) {
+      console.error('Signup error:', error);
+      toast({
+        title: "خطأ",
+        description: error.message || "حدث خطأ في إنشاء الحساب",
+        variant: "destructive",
+      });
+    } finally {
+      setSignUpLoading(false);
+    }
   };
 
   if (loading) {
@@ -333,21 +416,102 @@ export default function ApplyOpportunity() {
                     <Send className="h-5 w-5" />
                     {submitting ? "جاري الإرسال..." : "إرسال التقديم"}
                   </Button>
-                ) : (
-                  <Button 
-                    type="button"
-                    onClick={handleSignUpAndApply}
-                    className="w-full h-12 text-base gap-2 rounded-xl bg-muted text-foreground hover:bg-muted/80 transition-all"
-                    variant="outline"
-                  >
-                    <UserPlus className="h-5 w-5" />
-                    إنشاء حساب وإرسال التقديم
-                  </Button>
-                )}
+                 ) : (
+                   <Button 
+                     type="button"
+                     onClick={handleShowSignUpModal}
+                     className="w-full h-12 text-base gap-2 rounded-xl bg-foreground text-background hover:bg-foreground/90 transition-all"
+                   >
+                     <UserPlus className="h-5 w-5" />
+                     إنشئ حسابك للتقديم
+                   </Button>
+                 )}
               </div>
             </form>
           </CardContent>
         </Card>
+
+        {/* Sign Up Modal */}
+        <Dialog open={showSignUpModal} onOpenChange={setShowSignUpModal}>
+          <DialogContent className="max-w-md rounded-2xl border-0 shadow-2xl">
+            <DialogHeader className="text-center pb-4 border-b border-border/20">
+              <DialogTitle className="text-2xl font-semibold text-foreground">
+                إنشئ حسابك للتقديم
+              </DialogTitle>
+            </DialogHeader>
+            
+            <form onSubmit={handleSignUpSubmit} className="space-y-4 p-2">
+              <div className="space-y-2">
+                <Label htmlFor="modal-fullName" className="text-sm font-medium text-muted-foreground">الاسم الكامل *</Label>
+                <Input
+                  id="modal-fullName"
+                  value={signUpForm.fullName}
+                  onChange={(e) => setSignUpForm(prev => ({ ...prev, fullName: e.target.value }))}
+                  placeholder="الاسم الكامل"
+                  className="h-12 rounded-xl border-muted bg-muted/30 focus:bg-background transition-all"
+                  required
+                />
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="modal-email" className="text-sm font-medium text-muted-foreground">البريد الإلكتروني *</Label>
+                <Input
+                  id="modal-email"
+                  type="email"
+                  value={signUpForm.email}
+                  onChange={(e) => setSignUpForm(prev => ({ ...prev, email: e.target.value }))}
+                  placeholder="example@email.com"
+                  className="h-12 rounded-xl border-muted bg-muted/30 focus:bg-background transition-all"
+                  required
+                />
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="modal-password" className="text-sm font-medium text-muted-foreground">كلمة المرور *</Label>
+                <Input
+                  id="modal-password"
+                  type="password"
+                  value={signUpForm.password}
+                  onChange={(e) => setSignUpForm(prev => ({ ...prev, password: e.target.value }))}
+                  placeholder="كلمة المرور (6 أحرف على الأقل)"
+                  className="h-12 rounded-xl border-muted bg-muted/30 focus:bg-background transition-all"
+                  required
+                />
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="modal-confirmPassword" className="text-sm font-medium text-muted-foreground">تأكيد كلمة المرور *</Label>
+                <Input
+                  id="modal-confirmPassword"
+                  type="password"
+                  value={signUpForm.confirmPassword}
+                  onChange={(e) => setSignUpForm(prev => ({ ...prev, confirmPassword: e.target.value }))}
+                  placeholder="تأكيد كلمة المرور"
+                  className="h-12 rounded-xl border-muted bg-muted/30 focus:bg-background transition-all"
+                  required
+                />
+              </div>
+
+              <div className="flex gap-3 pt-4">
+                <Button
+                  type="button"
+                  variant="outline"
+                  onClick={() => setShowSignUpModal(false)}
+                  className="flex-1 h-12 rounded-xl"
+                >
+                  إلغاء
+                </Button>
+                <Button
+                  type="submit"
+                  disabled={signUpLoading}
+                  className="flex-1 h-12 rounded-xl bg-foreground text-background hover:bg-foreground/90"
+                >
+                  {signUpLoading ? "جاري الإنشاء..." : "إنشاء الحساب"}
+                </Button>
+              </div>
+            </form>
+          </DialogContent>
+        </Dialog>
       </div>
     </div>
   );

@@ -480,14 +480,14 @@ export default function Opportunities() {
                 <div className="flex flex-col items-center gap-4">
                   {/* Title with inline counter */}
                   <div className="flex items-center gap-4">
-                    <h2 className="text-4xl md:text-5xl font-bold text-foreground tracking-tight">
-                      فرصة متاحة
-                    </h2>
                     <div className="w-12 h-12 rounded-full bg-gradient-to-br from-purple-500 to-blue-500 flex items-center justify-center shadow-lg flex-shrink-0">
                       <span className="text-lg font-bold text-white">
                         {opportunities.length}
                       </span>
                     </div>
+                    <h2 className="text-4xl md:text-5xl font-bold text-foreground tracking-tight">
+                      فرصة متاحة
+                    </h2>
                   </div>
                   
                   {/* Description */}

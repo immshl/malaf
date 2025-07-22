@@ -73,6 +73,77 @@ export type Database = {
           },
         ]
       }
+      opportunities: {
+        Row: {
+          created_at: string
+          deadline: string
+          description: string
+          id: string
+          is_active: boolean
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          deadline: string
+          description: string
+          id?: string
+          is_active?: boolean
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          deadline?: string
+          description?: string
+          id?: string
+          is_active?: boolean
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      opportunity_applications: {
+        Row: {
+          applicant_email: string
+          applicant_name: string
+          applicant_phone: string
+          created_at: string
+          id: string
+          opportunity_id: string
+          portfolio_link: string
+          user_id: string | null
+        }
+        Insert: {
+          applicant_email: string
+          applicant_name: string
+          applicant_phone: string
+          created_at?: string
+          id?: string
+          opportunity_id: string
+          portfolio_link: string
+          user_id?: string | null
+        }
+        Update: {
+          applicant_email?: string
+          applicant_name?: string
+          applicant_phone?: string
+          created_at?: string
+          id?: string
+          opportunity_id?: string
+          portfolio_link?: string
+          user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "opportunity_applications_opportunity_id_fkey"
+            columns: ["opportunity_id"]
+            isOneToOne: false
+            referencedRelation: "opportunities"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       otp_codes: {
         Row: {
           code: string

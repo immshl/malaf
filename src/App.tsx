@@ -14,6 +14,8 @@ import ResetPassword from "./pages/ResetPassword";
 import EmailVerification from "./pages/EmailVerification";
 import CreateProfile from "./pages/CreateProfile";
 import UserProfile from "./pages/UserProfile";
+import Opportunities from "./pages/Opportunities";
+import ApplyOpportunity from "./pages/ApplyOpportunity";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -35,6 +37,8 @@ const App = () => (
               <Route path="/verify-email" element={<EmailVerification />} />
               <Route path="/create-profile" element={<CreateProfile />} />
               <Route path="/profile/:username" element={<UserProfile />} />
+              <Route path="/opportunities" element={<Opportunities />} />
+              <Route path="/apply/:opportunityId" element={<ApplyOpportunity />} />
               
               {/* الرابط المختصر للفريلانسر - يجب أن يكون قبل catch-all مباشرة */}
               <Route path="/:username" element={<UserProfile />} />

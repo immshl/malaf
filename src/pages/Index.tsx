@@ -187,6 +187,9 @@ const Index = () => {
               <a href="#how-it-works" className="text-muted-foreground hover:text-foreground transition-smooth font-medium text-sm tracking-wide">
                 {language === "ar" ? "كيف يعمل" : "How It Works"}
               </a>
+              <Link to="/opportunities" className="text-muted-foreground hover:text-foreground transition-smooth font-medium text-sm tracking-wide">
+                {language === "ar" ? "الفرص" : "Opportunities"}
+              </Link>
               {user ? (
                 <UserProfile />
               ) : (
@@ -238,7 +241,7 @@ const Index = () => {
                       <div className="w-3 h-3 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full shadow-sm"></div>
                       <span className="text-lg font-medium">{language === "ar" ? "المميزات" : "Features"}</span>
                     </a>
-                    <a 
+                     <a 
                       href="#how-it-works" 
                       className="flex items-center gap-4 p-4 text-foreground hover:text-primary hover:bg-muted/50 rounded-xl transition-all duration-300 transform hover:scale-[1.02] hover:shadow-md"
                       onClick={() => setIsMobileMenuOpen(false)}
@@ -246,6 +249,14 @@ const Index = () => {
                       <div className="w-3 h-3 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-full shadow-sm"></div>
                       <span className="text-lg font-medium">{language === "ar" ? "كيف يعمل" : "How It Works"}</span>
                     </a>
+                    <Link 
+                      to="/opportunities" 
+                      className="flex items-center gap-4 p-4 text-foreground hover:text-primary hover:bg-muted/50 rounded-xl transition-all duration-300 transform hover:scale-[1.02] hover:shadow-md"
+                      onClick={() => setIsMobileMenuOpen(false)}
+                    >
+                      <div className="w-3 h-3 bg-gradient-to-r from-green-500 to-emerald-500 rounded-full shadow-sm"></div>
+                      <span className="text-lg font-medium">{language === "ar" ? "الفرص" : "Opportunities"}</span>
+                    </Link>
                   </div>
                   
                   {/* Auth Section */}

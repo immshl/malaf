@@ -373,13 +373,14 @@ export default function Opportunities() {
                     إضافة فرصة جديدة
                   </Button>
                 </DialogTrigger>
-                <DialogContent className="max-w-lg rounded-2xl border-0 shadow-2xl">
-                  <DialogHeader className="text-center pb-6">
+                <DialogContent className="max-w-lg rounded-2xl border-0 shadow-2xl max-h-[90vh] overflow-hidden">
+                  <DialogHeader className="text-center pb-4 border-b border-border/20">
                     <DialogTitle className="text-2xl font-semibold text-foreground">
                       إضافة فرصة جديدة
                     </DialogTitle>
                   </DialogHeader>
-                  <div className="space-y-6">
+                  <div className="max-h-[60vh] overflow-y-auto px-1">
+                    <div className="space-y-6 py-4">
                     <div className="space-y-2">
                       <Label htmlFor="title" className="text-sm font-medium text-muted-foreground">عنوان الفرصة</Label>
                       <Input
@@ -441,7 +442,11 @@ export default function Opportunities() {
                         className="h-12 rounded-xl border-muted bg-muted/30 focus:bg-background transition-all"
                       />
                     </div>
-                    
+                    </div>
+                  </div>
+                  
+                  {/* Fixed Footer with Button */}
+                  <div className="border-t border-border/20 pt-4 mt-4">
                     <Button 
                       onClick={handleAddOpportunity} 
                       className="w-full h-12 text-base rounded-xl bg-foreground text-background hover:bg-foreground/90"

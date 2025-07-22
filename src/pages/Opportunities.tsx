@@ -180,7 +180,7 @@ export default function Opportunities() {
         <div className="flex justify-between items-center mb-8">
           <div>
             <h1 className="text-4xl font-bold text-foreground mb-2">الفرص المتاحة</h1>
-            <p className="text-muted-foreground">اكتشف الفرص الوظيفية المتاحة وتقدم للمناسب منها</p>
+            <p className="text-muted-foreground">اكتشف الفرص المتاحة وتقدم للمناسب منها</p>
           </div>
           
           {isAdmin && (

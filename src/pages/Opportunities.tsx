@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Calendar, Plus, Trash2, Eye, EyeOff, Briefcase, Code, Clock, MapPin, Users } from "lucide-react";
+import { Calendar, Plus, Trash2, Eye, EyeOff, Briefcase, Code, Clock, MapPin, Users, Check, X } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -20,6 +20,7 @@ interface Opportunity {
   deadline: string;
   is_active: boolean;
   opportunity_type: string;
+  status: string;
   created_at: string;
 }
 
@@ -59,13 +60,30 @@ export default function Opportunities() {
       
       // المدير يرى جميع الفرص، المستخدمين العاديين يرون النشطة فقط
       if (!isAdmin) {
-        query = query.eq('is_active', true);
+        query = query.eq('status', 'active');
       }
       
       const { data, error } = await query.order('created_at', { ascending: false });
 
       if (error) throw error;
-      setOpportunities(data || []);
+      
+      // فحص انتهاء التاريخ وتحديث الحالة تلقائياً
+      const opportunitiesWithStatus = data?.map(opportunity => {
+        const isExpired = new Date(opportunity.deadline) < new Date();
+        const effectiveStatus = isExpired && opportunity.status === 'active' ? 'expired' : opportunity.status;
+        
+        // تحديث قاعدة البيانات إذا انتهت الفرصة
+        if (isExpired && opportunity.status === 'active') {
+          supabase
+            .from('opportunities')
+            .update({ status: 'expired' })
+            .eq('id', opportunity.id);
+        }
+        
+        return { ...opportunity, status: effectiveStatus };
+      }) || [];
+      
+      setOpportunities(opportunitiesWithStatus);
     } catch (error) {
       console.error('Error fetching opportunities:', error);
       toast({
@@ -113,26 +131,33 @@ export default function Opportunities() {
     }
   };
 
-  const handleToggleActive = async (id: string, currentStatus: boolean) => {
+  const handleUpdateStatus = async (id: string, newStatus: string) => {
     try {
       const { error } = await supabase
         .from('opportunities')
-        .update({ is_active: !currentStatus })
+        .update({ status: newStatus })
         .eq('id', id);
 
       if (error) throw error;
 
+      const statusMessages = {
+        'active': 'تم تفعيل الفرصة',
+        'inactive': 'تم إخفاء الفرصة', 
+        'completed': 'تم وضع الفرصة كمكتملة',
+        'expired': 'تم وضع الفرصة كمنتهية'
+      };
+
       toast({
         title: "تم بنجاح",
-        description: currentStatus ? "تم إخفاء الفرصة" : "تم إظهار الفرصة",
+        description: statusMessages[newStatus as keyof typeof statusMessages],
       });
 
       fetchOpportunities();
     } catch (error) {
-      console.error('Error toggling opportunity:', error);
+      console.error('Error updating opportunity status:', error);
       toast({
         title: "خطأ",
-        description: "حدث خطأ في تحديث الفرصة",
+        description: "حدث خطأ في تحديث حالة الفرصة",
         variant: "destructive",
       });
     }
@@ -328,53 +353,101 @@ export default function Opportunities() {
                   className="group hover:shadow-xl transition-all duration-500 border-0 bg-background rounded-3xl overflow-hidden"
                   style={{ animationDelay: `${index * 100}ms` }}
                 >
-                  <CardContent className="p-8">
+                  <CardContent className={`p-8 ${opportunity.status !== 'active' ? 'opacity-60' : ''}`}>
                     <div className="flex items-start justify-between mb-6">
                       <div className="flex items-center gap-4">
-                        <div className="w-12 h-12 rounded-2xl bg-muted flex items-center justify-center">
+                        <div className={`w-12 h-12 rounded-2xl flex items-center justify-center ${
+                          opportunity.status === 'active' ? 'bg-muted' : 'bg-muted/50'
+                        }`}>
                           {opportunity.opportunity_type === 'job' ? (
-                            <Briefcase className="h-6 w-6 text-foreground" />
+                            <Briefcase className={`h-6 w-6 ${opportunity.status === 'active' ? 'text-foreground' : 'text-muted-foreground'}`} />
                           ) : (
-                            <Code className="h-6 w-6 text-foreground" />
+                            <Code className={`h-6 w-6 ${opportunity.status === 'active' ? 'text-foreground' : 'text-muted-foreground'}`} />
                           )}
                         </div>
                         <div>
-                          <div className="flex items-center gap-3 mb-2">
+                          <div className="flex items-center gap-3 mb-2 flex-wrap">
                             <Badge 
                               variant={opportunity.opportunity_type === 'job' ? 'default' : 'secondary'} 
                               className="text-xs font-medium rounded-full px-3 py-1"
                             >
                               {opportunity.opportunity_type === 'job' ? 'فرصة وظيفية' : 'فرصة مشروع'}
                             </Badge>
-                            <Badge variant="outline" className="text-xs font-medium rounded-full px-3 py-1">
-                              {opportunity.is_active ? 'متاحة' : 'منتهية'}
+                            
+                            {/* Status Badge */}
+                            <Badge 
+                              variant={
+                                opportunity.status === 'active' ? 'default' :
+                                opportunity.status === 'completed' ? 'outline' :
+                                'secondary'
+                              }
+                              className={`text-xs font-medium rounded-full px-3 py-1 ${
+                                opportunity.status === 'completed' ? 'border-green-500 text-green-700 bg-green-50' :
+                                opportunity.status === 'expired' ? 'border-orange-500 text-orange-700 bg-orange-50' :
+                                ''
+                              }`}
+                            >
+                              {opportunity.status === 'active' ? 'متاحة' :
+                               opportunity.status === 'completed' ? 'مكتملة - تم العثور على المناسب' :
+                               opportunity.status === 'expired' ? 'منتهية الصلاحية' :
+                               'مخفية'}
                             </Badge>
                           </div>
-                          <h3 className="text-2xl font-semibold text-foreground group-hover:text-foreground/80 transition-colors">
+                          <h3 className={`text-2xl font-semibold transition-colors ${
+                            opportunity.status === 'active' 
+                              ? 'text-foreground group-hover:text-foreground/80' 
+                              : 'text-muted-foreground'
+                          }`}>
                             {opportunity.title}
                           </h3>
                         </div>
                       </div>
                       
                       {isAdmin && (
-                        <div className="flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                        <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                          {/* Toggle Active/Inactive */}
                           <Button
                             variant="ghost"
                             size="sm"
-                            onClick={() => handleToggleActive(opportunity.id, opportunity.is_active)}
-                            className="h-10 w-10 p-0 rounded-xl hover:bg-muted"
+                            onClick={() => handleUpdateStatus(
+                              opportunity.id, 
+                              opportunity.status === 'active' ? 'inactive' : 'active'
+                            )}
+                            className="h-8 w-8 p-0 rounded-xl hover:bg-muted"
+                            title={opportunity.status === 'active' ? 'إخفاء' : 'إظهار'}
                           >
-                            {opportunity.is_active ? (
+                            {opportunity.status === 'active' ? (
                               <Eye className="h-4 w-4" />
                             ) : (
                               <EyeOff className="h-4 w-4" />
                             )}
                           </Button>
+                          
+                          {/* Mark as Completed */}
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            onClick={() => handleUpdateStatus(
+                              opportunity.id, 
+                              opportunity.status === 'completed' ? 'active' : 'completed'
+                            )}
+                            className="h-8 w-8 p-0 rounded-xl hover:bg-green-50 hover:text-green-600"
+                            title={opportunity.status === 'completed' ? 'إعادة تفعيل' : 'وضع كمكتملة'}
+                          >
+                            {opportunity.status === 'completed' ? (
+                              <X className="h-4 w-4" />
+                            ) : (
+                              <Check className="h-4 w-4" />
+                            )}
+                          </Button>
+                          
+                          {/* Delete */}
                           <Button
                             variant="ghost"
                             size="sm"
                             onClick={() => handleDeleteOpportunity(opportunity.id)}
-                            className="h-10 w-10 p-0 rounded-xl hover:bg-red-50 hover:text-red-600"
+                            className="h-8 w-8 p-0 rounded-xl hover:bg-red-50 hover:text-red-600"
+                            title="حذف"
                           >
                             <Trash2 className="h-4 w-4" />
                           </Button>
@@ -382,17 +455,21 @@ export default function Opportunities() {
                       )}
                     </div>
                     
-                    <p className="text-muted-foreground leading-relaxed mb-6 font-light text-lg">
+                    <p className={`leading-relaxed mb-6 font-light text-lg ${
+                      opportunity.status === 'active' ? 'text-muted-foreground' : 'text-muted-foreground/70'
+                    }`}>
                       {opportunity.description}
                     </p>
                     
                     <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                      <div className={`flex items-center gap-2 text-sm ${
+                        opportunity.status === 'active' ? 'text-muted-foreground' : 'text-muted-foreground/70'
+                      }`}>
                         <Clock className="h-4 w-4" />
                         <span>آخر موعد: {new Date(opportunity.deadline).toLocaleDateString('ar', { calendar: 'gregory', year: 'numeric', month: 'long', day: 'numeric' })}</span>
                       </div>
                       
-                      {opportunity.is_active && (
+                      {opportunity.status === 'active' && (
                         <Button 
                           onClick={() => handleApply(opportunity.id)}
                           className="rounded-full px-6 py-2 bg-foreground text-background hover:bg-foreground/90 transition-all hover:scale-105"

@@ -475,14 +475,28 @@ export default function Opportunities() {
           </div>
         ) : (
           <div className="max-w-4xl mx-auto">
-            <div className="text-center mb-16">
-              <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-6 tracking-tight">
-                {opportunities.length} فرصة متاحة
-              </h2>
-              <p className="text-xl text-muted-foreground max-w-3xl mx-auto font-light leading-relaxed">
-                اختر الفرصة المناسبة لمهاراتك
-              </p>
-            </div>
+            <Card className="text-center mb-16 glass border-0 shadow-elegant bg-background/80 backdrop-blur-sm rounded-3xl overflow-hidden">
+              <CardContent className="p-12">
+                <div className="flex flex-col items-center gap-6">
+                  {/* Counter Circle */}
+                  <div className="w-20 h-20 rounded-full bg-gradient-to-br from-purple-500 to-blue-500 flex items-center justify-center shadow-lg">
+                    <span className="text-3xl font-bold text-white">
+                      {opportunities.length}
+                    </span>
+                  </div>
+                  
+                  {/* Title and Description */}
+                  <div>
+                    <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-4 tracking-tight">
+                      {opportunities.length === 1 ? "فرصة متاحة" : "فرصة متاحة"}
+                    </h2>
+                    <p className="text-xl text-muted-foreground max-w-3xl mx-auto font-light leading-relaxed">
+                      اختر الفرصة المناسبة لمهاراتك وابدأ رحلتك المهنية
+                    </p>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
             
             <div className="space-y-6">
               {opportunities.map((opportunity, index) => (

@@ -263,17 +263,6 @@ export default function ApplyOpportunity() {
                 </p>
               </div>
 
-              <Alert>
-                <AlertDescription className="text-sm">
-                  <strong>كيفية مشاركة ملفات Google Drive:</strong><br />
-                  1. اذهب إلى Google Drive وحدد الملف/المجلد<br />
-                  2. اضغط بالزر الأيمن واختر "مشاركة"<br />
-                  3. اضغط على "تغيير" بجانب "مقيد"<br />
-                  4. اختر "أي شخص لديه الرابط"<br />
-                  5. انسخ الرابط والصقه أعلاه
-                </AlertDescription>
-              </Alert>
-
               {user ? (
                 <Button 
                   type="submit" 

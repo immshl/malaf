@@ -37,7 +37,35 @@ export default function ApplyOpportunity() {
 
   useEffect(() => {
     fetchOpportunity();
+    loadSavedApplication();
   }, [opportunityId]);
+
+  // Load saved application data from localStorage
+  const loadSavedApplication = () => {
+    const savedApplication = localStorage.getItem('pendingApplication');
+    if (savedApplication) {
+      try {
+        const data = JSON.parse(savedApplication);
+        if (data.opportunityId === opportunityId) {
+          setApplicationForm({
+            applicant_name: data.applicant_name || '',
+            applicant_email: data.applicant_email || '',
+            applicant_phone: data.applicant_phone || '',
+            portfolio_link: data.portfolio_link || ''
+          });
+          // Clear saved data after loading
+          localStorage.removeItem('pendingApplication');
+          
+          toast({
+            title: "تم استرجاع بيانات التقديم",
+            description: "تم ملء النموذج ببياناتك المحفوظة. يمكنك المراجعة والإرسال",
+          });
+        }
+      } catch (error) {
+        console.error('Error loading saved application:', error);
+      }
+    }
+  };
 
   const fetchOpportunity = async () => {
     if (!opportunityId) return;
@@ -138,11 +166,15 @@ export default function ApplyOpportunity() {
   };
 
   const handleSignUpAndApply = () => {
-    // Store application data in sessionStorage for after signup
-    sessionStorage.setItem('pendingApplication', JSON.stringify({
+    // Store application data in localStorage for after signup
+    localStorage.setItem('pendingApplication', JSON.stringify({
       opportunityId,
       ...applicationForm
     }));
+    
+    // Also store the redirect URL for after email verification
+    localStorage.setItem('postVerificationRedirect', `/apply/${opportunityId}`);
+    
     navigate('/signup');
   };
 

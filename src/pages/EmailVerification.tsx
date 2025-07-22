@@ -100,7 +100,14 @@ const EmailVerification = () => {
             });
             
             setTimeout(() => {
-              navigate("/create-profile");
+              // Check if user needs to complete an application
+              const postVerificationRedirect = localStorage.getItem('postVerificationRedirect');
+              if (postVerificationRedirect) {
+                localStorage.removeItem('postVerificationRedirect');
+                navigate(postVerificationRedirect);
+              } else {
+                navigate("/create-profile");
+              }
             }, 3000);
           } else {
             console.error('Email verification error:', error);
@@ -117,7 +124,14 @@ const EmailVerification = () => {
       
       // Check if user is already verified
       if (user?.email_confirmed_at) {
-        navigate("/create-profile");
+        // Check if user needs to complete an application
+        const postVerificationRedirect = localStorage.getItem('postVerificationRedirect');
+        if (postVerificationRedirect) {
+          localStorage.removeItem('postVerificationRedirect');
+          navigate(postVerificationRedirect);
+        } else {
+          navigate("/create-profile");
+        }
       }
       
       setIsChecking(false);

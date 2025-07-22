@@ -80,6 +80,7 @@ export type Database = {
           description: string
           id: string
           is_active: boolean
+          opportunity_type: string
           title: string
           updated_at: string
         }
@@ -89,6 +90,7 @@ export type Database = {
           description: string
           id?: string
           is_active?: boolean
+          opportunity_type?: string
           title: string
           updated_at?: string
         }
@@ -98,6 +100,7 @@ export type Database = {
           description?: string
           id?: string
           is_active?: boolean
+          opportunity_type?: string
           title?: string
           updated_at?: string
         }

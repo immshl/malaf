@@ -7,6 +7,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
@@ -18,6 +19,7 @@ interface Opportunity {
   description: string;
   deadline: string;
   is_active: boolean;
+  opportunity_type: string;
   created_at: string;
 }
 
@@ -29,7 +31,8 @@ export default function Opportunities() {
   const [newOpportunity, setNewOpportunity] = useState({
     title: "",
     description: "",
-    deadline: ""
+    deadline: "",
+    opportunity_type: "project"
   });
   
   const { user } = useAuth();
@@ -92,7 +95,7 @@ export default function Opportunities() {
       });
 
       setShowAddDialog(false);
-      setNewOpportunity({ title: "", description: "", deadline: "" });
+      setNewOpportunity({ title: "", description: "", deadline: "", opportunity_type: "project" });
       fetchOpportunities();
     } catch (error) {
       console.error('Error adding opportunity:', error);
@@ -213,6 +216,21 @@ export default function Opportunities() {
                     />
                   </div>
                   <div>
+                    <Label htmlFor="opportunity_type">نوع الفرصة</Label>
+                    <Select 
+                      value={newOpportunity.opportunity_type} 
+                      onValueChange={(value) => setNewOpportunity(prev => ({ ...prev, opportunity_type: value }))}
+                    >
+                      <SelectTrigger>
+                        <SelectValue placeholder="اختر نوع الفرصة" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="project">فرصة مشروع</SelectItem>
+                        <SelectItem value="job">فرصة وظيفية</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  <div>
                     <Label htmlFor="deadline">تاريخ انتهاء التقديم</Label>
                     <Input
                       id="deadline"
@@ -281,9 +299,17 @@ export default function Opportunities() {
                   </div>
                   
                   <div className="flex justify-between items-center">
-                    <Badge variant="secondary" className="text-xs">
-                      {opportunity.is_active ? 'متاحة' : 'منتهية'}
-                    </Badge>
+                    <div className="flex gap-2">
+                      <Badge variant="secondary" className="text-xs">
+                        {opportunity.is_active ? 'متاحة' : 'منتهية'}
+                      </Badge>
+                      <Badge 
+                        variant={opportunity.opportunity_type === 'job' ? 'default' : 'outline'} 
+                        className="text-xs"
+                      >
+                        {opportunity.opportunity_type === 'job' ? 'فرصة وظيفية' : 'فرصة مشروع'}
+                      </Badge>
+                    </div>
                     
                     {opportunity.is_active && (
                       <Button 

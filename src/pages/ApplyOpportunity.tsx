@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { ArrowLeft, ExternalLink, CheckCircle } from "lucide-react";
+import { ArrowLeft, ExternalLink, CheckCircle, Clock, Briefcase, Code, Send, UserPlus } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -16,6 +16,7 @@ interface Opportunity {
   title: string;
   description: string;
   deadline: string;
+  opportunity_type: string;
 }
 
 export default function ApplyOpportunity() {
@@ -173,116 +174,180 @@ export default function ApplyOpportunity() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-primary/5 via-background to-secondary/5">
-      <div className="container mx-auto px-4 py-8 max-w-2xl">
-        <Button 
-          variant="ghost" 
-          onClick={() => navigate('/opportunities')}
-          className="mb-6 gap-2"
-        >
-          <ArrowLeft className="h-4 w-4" />
-          العودة للفرص
-        </Button>
-
-        <Card className="mb-6">
-          <CardHeader>
-            <CardTitle className="text-2xl text-foreground">{opportunity.title}</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <p className="text-muted-foreground mb-4">{opportunity.description}</p>
-            <p className="text-sm text-muted-foreground">
-              آخر موعد للتقديم: {new Date(opportunity.deadline).toLocaleDateString('ar-SA')}
-            </p>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardHeader>
-            <CardTitle>تقدم للفرصة</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <Alert className="mb-6">
-              <CheckCircle className="h-4 w-4" />
-              <AlertDescription className="text-sm leading-relaxed">
-                <strong>خطوات التقديم:</strong><br />
-                1. املأ النموذج أدناه بمعلوماتك الشخصية<br />
-                2. أرفق رابط Google Drive يحتوي على أعمالك (تأكد من إتاحة الوصول للجميع)<br />
-                3. سنراجع طلبك ونتواصل مع المرشحين المناسبين لاجتماع أونلاين<br />
-                4. إذا لم يكن لديك حساب، ستتم إعادة توجيهك لإنشاء حساب سريع
-              </AlertDescription>
-            </Alert>
-
-            <form onSubmit={handleSubmitApplication} className="space-y-6">
-              <div>
-                <Label htmlFor="name">الاسم الكامل *</Label>
-                <Input
-                  id="name"
-                  value={applicationForm.applicant_name}
-                  onChange={(e) => setApplicationForm(prev => ({ ...prev, applicant_name: e.target.value }))}
-                  placeholder="أدخل اسمك الكامل"
-                  required
-                />
-              </div>
-
-              <div>
-                <Label htmlFor="email">البريد الإلكتروني *</Label>
-                <Input
-                  id="email"
-                  type="email"
-                  value={applicationForm.applicant_email}
-                  onChange={(e) => setApplicationForm(prev => ({ ...prev, applicant_email: e.target.value }))}
-                  placeholder="أدخل بريدك الإلكتروني"
-                  required
-                />
-              </div>
-
-              <div>
-                <Label htmlFor="phone">رقم الجوال *</Label>
-                <Input
-                  id="phone"
-                  type="tel"
-                  value={applicationForm.applicant_phone}
-                  onChange={(e) => setApplicationForm(prev => ({ ...prev, applicant_phone: e.target.value }))}
-                  placeholder="أدخل رقم جوالك"
-                  required
-                />
-              </div>
-
-              <div>
-                <Label htmlFor="portfolio">رابط الأعمال (Google Drive) *</Label>
-                <Input
-                  id="portfolio"
-                  type="url"
-                  value={applicationForm.portfolio_link}
-                  onChange={(e) => setApplicationForm(prev => ({ ...prev, portfolio_link: e.target.value }))}
-                  placeholder="https://drive.google.com/..."
-                  required
-                />
-                <p className="text-xs text-muted-foreground mt-1 flex items-center gap-1">
-                  <ExternalLink className="h-3 w-3" />
-                  تأكد من ضبط الرابط ليكون متاحاً للجميع (Anyone with the link can view)
-                </p>
-              </div>
-
-              {user ? (
-                <Button 
-                  type="submit" 
-                  className="w-full" 
-                  disabled={submitting}
-                >
-                  {submitting ? "جاري الإرسال..." : "إرسال التقديم"}
-                </Button>
+      {/* Header */}
+      <div className="bg-gradient-to-r from-primary/10 via-primary/5 to-background border-b border-border/20">
+        <div className="container mx-auto px-4 py-8">
+          <Button 
+            variant="ghost" 
+            onClick={() => navigate('/opportunities')}
+            className="mb-4 gap-2 hover:bg-primary/10"
+          >
+            <ArrowLeft className="h-4 w-4" />
+            العودة للفرص
+          </Button>
+          
+          <div className="text-center">
+            <div className="inline-flex items-center gap-2 bg-primary/10 text-primary px-4 py-2 rounded-full text-sm font-medium mb-4">
+              {opportunity.opportunity_type === 'job' ? (
+                <>
+                  <Briefcase className="h-4 w-4" />
+                  <span>فرصة وظيفية</span>
+                </>
               ) : (
-                <Button 
-                  type="button"
-                  onClick={handleSignUpAndApply}
-                  className="w-full"
-                >
-                  إنشاء حساب وإرسال التقديم
-                </Button>
+                <>
+                  <Code className="h-4 w-4" />
+                  <span>فرصة مشروع</span>
+                </>
               )}
-            </form>
-          </CardContent>
-        </Card>
+            </div>
+            
+            <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-4 leading-tight">
+              {opportunity.title}
+            </h1>
+            
+            <p className="text-lg text-muted-foreground max-w-3xl mx-auto leading-relaxed mb-6">
+              {opportunity.description}
+            </p>
+            
+            <div className="inline-flex items-center gap-2 bg-orange-50 dark:bg-orange-950 text-orange-600 dark:text-orange-400 px-4 py-2 rounded-lg text-sm">
+              <Clock className="h-4 w-4" />
+              <span>آخر موعد للتقديم: {new Date(opportunity.deadline).toLocaleDateString('ar-SA')}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Application Form */}
+      <div className="container mx-auto px-4 py-16 max-w-3xl">
+        <div className="grid md:grid-cols-3 gap-8">
+          {/* Instructions */}
+          <div className="md:col-span-1">
+            <div className="sticky top-8 space-y-6">
+              <div>
+                <h3 className="text-lg font-semibold text-foreground mb-3">
+                  خطوات التقديم
+                </h3>
+                <div className="space-y-4">
+                  <div className="flex gap-3">
+                    <div className="w-6 h-6 rounded-full bg-primary/20 flex items-center justify-center text-primary text-sm font-semibold">1</div>
+                    <p className="text-sm text-muted-foreground">املأ النموذج بمعلوماتك الشخصية</p>
+                  </div>
+                  <div className="flex gap-3">
+                    <div className="w-6 h-6 rounded-full bg-primary/20 flex items-center justify-center text-primary text-sm font-semibold">2</div>
+                    <p className="text-sm text-muted-foreground">أرفق رابط Google Drive لأعمالك</p>
+                  </div>
+                  <div className="flex gap-3">
+                    <div className="w-6 h-6 rounded-full bg-primary/20 flex items-center justify-center text-primary text-sm font-semibold">3</div>
+                    <p className="text-sm text-muted-foreground">سنراجع طلبك ونتواصل معك</p>
+                  </div>
+                </div>
+              </div>
+              
+              <Alert className="bg-green-50 dark:bg-green-950 border-green-200 dark:border-green-800">
+                <CheckCircle className="h-4 w-4 text-green-600" />
+                <AlertDescription className="text-green-700 dark:text-green-300 text-sm">
+                  <strong>نصيحة:</strong> تأكد من أن رابط Google Drive يحتوي على أفضل أعمالك ومتاح للجميع
+                </AlertDescription>
+              </Alert>
+            </div>
+          </div>
+
+          {/* Form */}
+          <div className="md:col-span-2">
+            <Card className="border-0 shadow-xl bg-background/80 backdrop-blur-sm">
+              <CardHeader className="text-center pb-6">
+                <CardTitle className="text-2xl flex items-center justify-center gap-2 text-foreground">
+                  <Send className="h-6 w-6 text-primary" />
+                  تقدم للفرصة
+                </CardTitle>
+              </CardHeader>
+              
+              <CardContent>
+                <form onSubmit={handleSubmitApplication} className="space-y-6">
+                  <div className="grid md:grid-cols-2 gap-6">
+                    <div className="space-y-2">
+                      <Label htmlFor="name" className="text-sm font-medium">الاسم الكامل *</Label>
+                      <Input
+                        id="name"
+                        value={applicationForm.applicant_name}
+                        onChange={(e) => setApplicationForm(prev => ({ ...prev, applicant_name: e.target.value }))}
+                        placeholder="مثال: أحمد محمد"
+                        className="h-12 transition-all focus:ring-2 focus:ring-primary/20"
+                        required
+                      />
+                    </div>
+
+                    <div className="space-y-2">
+                      <Label htmlFor="email" className="text-sm font-medium">البريد الإلكتروني *</Label>
+                      <Input
+                        id="email"
+                        type="email"
+                        value={applicationForm.applicant_email}
+                        onChange={(e) => setApplicationForm(prev => ({ ...prev, applicant_email: e.target.value }))}
+                        placeholder="example@email.com"
+                        className="h-12 transition-all focus:ring-2 focus:ring-primary/20"
+                        required
+                      />
+                    </div>
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="phone" className="text-sm font-medium">رقم الجوال *</Label>
+                    <Input
+                      id="phone"
+                      type="tel"
+                      value={applicationForm.applicant_phone}
+                      onChange={(e) => setApplicationForm(prev => ({ ...prev, applicant_phone: e.target.value }))}
+                      placeholder="+966 50 123 4567"
+                      className="h-12 transition-all focus:ring-2 focus:ring-primary/20"
+                      required
+                    />
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="portfolio" className="text-sm font-medium">رابط الأعمال (Google Drive) *</Label>
+                    <Input
+                      id="portfolio"
+                      type="url"
+                      value={applicationForm.portfolio_link}
+                      onChange={(e) => setApplicationForm(prev => ({ ...prev, portfolio_link: e.target.value }))}
+                      placeholder="https://drive.google.com/..."
+                      className="h-12 transition-all focus:ring-2 focus:ring-primary/20"
+                      required
+                    />
+                    <p className="text-xs text-muted-foreground mt-2 flex items-center gap-2 bg-muted/30 p-3 rounded-lg">
+                      <ExternalLink className="h-4 w-4" />
+                      <span>تأكد من ضبط الرابط ليكون متاحاً للجميع (Anyone with the link can view)</span>
+                    </p>
+                  </div>
+
+                  <div className="pt-4">
+                    {user ? (
+                      <Button 
+                        type="submit" 
+                        className="w-full h-12 text-lg gap-2 hover:scale-105 transition-all" 
+                        disabled={submitting}
+                      >
+                        <Send className="h-5 w-5" />
+                        {submitting ? "جاري الإرسال..." : "إرسال التقديم"}
+                      </Button>
+                    ) : (
+                      <Button 
+                        type="button"
+                        onClick={handleSignUpAndApply}
+                        className="w-full h-12 text-lg gap-2 hover:scale-105 transition-all"
+                        variant="outline"
+                      >
+                        <UserPlus className="h-5 w-5" />
+                        إنشاء حساب وإرسال التقديم
+                      </Button>
+                    )}
+                  </div>
+                </form>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
       </div>
     </div>
   );

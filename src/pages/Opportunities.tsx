@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Calendar, Plus, Trash2, Eye, EyeOff } from "lucide-react";
+import { Calendar, Plus, Trash2, Eye, EyeOff, Briefcase, Code, Clock, MapPin, Users } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -176,154 +176,219 @@ export default function Opportunities() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-primary/5 via-background to-secondary/5">
-      <div className="container mx-auto px-4 py-8">
-        <div className="flex justify-between items-center mb-8">
-          <div>
-            <h1 className="text-4xl font-bold text-foreground mb-2">الفرص المتاحة</h1>
-            <p className="text-muted-foreground">اكتشف الفرص المتاحة وتقدم للمناسب منها</p>
-          </div>
-          
-          {isAdmin && (
-            <Dialog open={showAddDialog} onOpenChange={setShowAddDialog}>
-              <DialogTrigger asChild>
-                <Button className="gap-2">
-                  <Plus className="h-4 w-4" />
-                  إضافة فرصة جديدة
-                </Button>
-              </DialogTrigger>
-              <DialogContent className="max-w-md">
-                <DialogHeader>
-                  <DialogTitle>إضافة فرصة جديدة</DialogTitle>
-                </DialogHeader>
-                <div className="space-y-4">
-                  <div>
-                    <Label htmlFor="title">عنوان الفرصة</Label>
-                    <Input
-                      id="title"
-                      value={newOpportunity.title}
-                      onChange={(e) => setNewOpportunity(prev => ({ ...prev, title: e.target.value }))}
-                      placeholder="أدخل عنوان الفرصة"
-                    />
-                  </div>
-                  <div>
-                    <Label htmlFor="description">وصف الفرصة</Label>
-                    <Textarea
-                      id="description"
-                      value={newOpportunity.description}
-                      onChange={(e) => setNewOpportunity(prev => ({ ...prev, description: e.target.value }))}
-                      placeholder="أدخل وصف الفرصة"
-                      rows={4}
-                    />
-                  </div>
-                  <div>
-                    <Label htmlFor="opportunity_type">نوع الفرصة</Label>
-                    <Select 
-                      value={newOpportunity.opportunity_type} 
-                      onValueChange={(value) => setNewOpportunity(prev => ({ ...prev, opportunity_type: value }))}
-                    >
-                      <SelectTrigger>
-                        <SelectValue placeholder="اختر نوع الفرصة" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="project">فرصة مشروع</SelectItem>
-                        <SelectItem value="job">فرصة وظيفية</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-                  <div>
-                    <Label htmlFor="deadline">تاريخ انتهاء التقديم</Label>
-                    <Input
-                      id="deadline"
-                      type="date"
-                      value={newOpportunity.deadline}
-                      onChange={(e) => setNewOpportunity(prev => ({ ...prev, deadline: e.target.value }))}
-                    />
-                  </div>
-                  <Button onClick={handleAddOpportunity} className="w-full">
-                    إضافة الفرصة
+      {/* Hero Section */}
+      <div className="bg-gradient-to-r from-primary/10 via-primary/5 to-background border-b border-border/20">
+        <div className="container mx-auto px-4 py-16">
+          <div className="text-center max-w-4xl mx-auto">
+            <div className="inline-flex items-center gap-2 bg-primary/10 text-primary px-4 py-2 rounded-full text-sm font-medium mb-6 animate-fade-in">
+              <Users className="h-4 w-4" />
+              <span>فرص العمل والمشاريع</span>
+            </div>
+            
+            <h1 className="text-5xl md:text-6xl font-bold text-foreground mb-6 leading-tight animate-fade-in">
+              الفرص المتاحة
+            </h1>
+            <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto leading-relaxed animate-fade-in">
+              اكتشف الفرص المتاحة وتقدم للمناسب منها. فرص وظيفية ومشاريع متنوعة تناسب مهاراتك وخبراتك
+            </p>
+            
+            {isAdmin && (
+              <Dialog open={showAddDialog} onOpenChange={setShowAddDialog}>
+                <DialogTrigger asChild>
+                  <Button size="lg" className="gap-3 px-8 py-4 text-lg animate-fade-in">
+                    <Plus className="h-5 w-5" />
+                    إضافة فرصة جديدة
                   </Button>
-                </div>
-              </DialogContent>
-            </Dialog>
-          )}
-        </div>
-
-        {opportunities.length === 0 ? (
-          <Card className="text-center py-12">
-            <CardContent>
-              <p className="text-muted-foreground text-lg">لا توجد فرص متاحة حالياً</p>
-              <p className="text-sm text-muted-foreground mt-2">تابعنا للحصول على آخر الفرص المتاحة</p>
-            </CardContent>
-          </Card>
-        ) : (
-          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {opportunities.map((opportunity) => (
-              <Card key={opportunity.id} className="group hover:shadow-lg transition-all duration-300">
-                <CardHeader>
-                  <div className="flex justify-between items-start">
-                    <CardTitle className="text-xl text-foreground group-hover:text-primary transition-colors">
-                      {opportunity.title}
-                    </CardTitle>
-                    {isAdmin && (
-                      <div className="flex gap-1">
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          onClick={() => handleToggleActive(opportunity.id, opportunity.is_active)}
-                        >
-                          {opportunity.is_active ? (
-                            <Eye className="h-4 w-4" />
-                          ) : (
-                            <EyeOff className="h-4 w-4" />
-                          )}
-                        </Button>
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          onClick={() => handleDeleteOpportunity(opportunity.id)}
-                        >
-                          <Trash2 className="h-4 w-4 text-destructive" />
-                        </Button>
-                      </div>
-                    )}
-                  </div>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <p className="text-muted-foreground leading-relaxed">
-                    {opportunity.description}
-                  </p>
-                  
-                  <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                    <Calendar className="h-4 w-4" />
-                    <span>آخر موعد للتقديم: {new Date(opportunity.deadline).toLocaleDateString('ar-SA')}</span>
-                  </div>
-                  
-                  <div className="flex justify-between items-center">
-                    <div className="flex gap-2">
-                      <Badge variant="secondary" className="text-xs">
-                        {opportunity.is_active ? 'متاحة' : 'منتهية'}
-                      </Badge>
-                      <Badge 
-                        variant={opportunity.opportunity_type === 'job' ? 'default' : 'outline'} 
-                        className="text-xs"
-                      >
-                        {opportunity.opportunity_type === 'job' ? 'فرصة وظيفية' : 'فرصة مشروع'}
-                      </Badge>
+                </DialogTrigger>
+                <DialogContent className="max-w-lg">
+                  <DialogHeader>
+                    <DialogTitle className="text-2xl flex items-center gap-2">
+                      <Plus className="h-6 w-6 text-primary" />
+                      إضافة فرصة جديدة
+                    </DialogTitle>
+                  </DialogHeader>
+                  <div className="space-y-6 pt-4">
+                    <div className="space-y-2">
+                      <Label htmlFor="title" className="text-sm font-medium">عنوان الفرصة</Label>
+                      <Input
+                        id="title"
+                        value={newOpportunity.title}
+                        onChange={(e) => setNewOpportunity(prev => ({ ...prev, title: e.target.value }))}
+                        placeholder="مثال: مطور واجهات أمامية"
+                        className="h-12"
+                      />
                     </div>
                     
-                    {opportunity.is_active && (
-                      <Button 
-                        onClick={() => handleApply(opportunity.id)}
-                        className="bg-primary hover:bg-primary/90"
+                    <div className="space-y-2">
+                      <Label htmlFor="opportunity_type" className="text-sm font-medium">نوع الفرصة</Label>
+                      <Select 
+                        value={newOpportunity.opportunity_type} 
+                        onValueChange={(value) => setNewOpportunity(prev => ({ ...prev, opportunity_type: value }))}
                       >
-                        تقدم للفرصة
-                      </Button>
-                    )}
+                        <SelectTrigger className="h-12">
+                          <SelectValue placeholder="اختر نوع الفرصة" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="project" className="flex items-center gap-2">
+                            <Code className="h-4 w-4" />
+                            فرصة مشروع
+                          </SelectItem>
+                          <SelectItem value="job" className="flex items-center gap-2">
+                            <Briefcase className="h-4 w-4" />
+                            فرصة وظيفية
+                          </SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                    
+                    <div className="space-y-2">
+                      <Label htmlFor="description" className="text-sm font-medium">وصف الفرصة</Label>
+                      <Textarea
+                        id="description"
+                        value={newOpportunity.description}
+                        onChange={(e) => setNewOpportunity(prev => ({ ...prev, description: e.target.value }))}
+                        placeholder="اكتب وصفاً مفصلاً للفرصة..."
+                        rows={4}
+                        className="resize-none"
+                      />
+                    </div>
+                    
+                    <div className="space-y-2">
+                      <Label htmlFor="deadline" className="text-sm font-medium">تاريخ انتهاء التقديم</Label>
+                      <Input
+                        id="deadline"
+                        type="date"
+                        value={newOpportunity.deadline}
+                        onChange={(e) => setNewOpportunity(prev => ({ ...prev, deadline: e.target.value }))}
+                        className="h-12"
+                      />
+                    </div>
+                    
+                    <Button onClick={handleAddOpportunity} className="w-full h-12 text-lg">
+                      إضافة الفرصة
+                    </Button>
                   </div>
-                </CardContent>
-              </Card>
-            ))}
+                </DialogContent>
+              </Dialog>
+            )}
           </div>
+        </div>
+      </div>
+
+      {/* Opportunities Grid */}
+      <div className="container mx-auto px-4 py-16">
+        {opportunities.length === 0 ? (
+          <div className="text-center py-20">
+            <div className="w-24 h-24 bg-muted/30 rounded-full flex items-center justify-center mx-auto mb-6">
+              <Users className="h-12 w-12 text-muted-foreground/50" />
+            </div>
+            <h3 className="text-2xl font-semibold text-foreground mb-3">لا توجد فرص متاحة حالياً</h3>
+            <p className="text-muted-foreground text-lg max-w-md mx-auto leading-relaxed">
+              نعمل على إضافة فرص جديدة باستمرار. تابعنا للحصول على آخر التحديثات
+            </p>
+          </div>
+        ) : (
+          <>
+            <div className="text-center mb-12">
+              <h2 className="text-3xl font-bold text-foreground mb-4">
+                {opportunities.length} فرصة متاحة
+              </h2>
+              <p className="text-muted-foreground">
+                اختر الفرصة المناسبة لمهاراتك وابدأ رحلتك المهنية
+              </p>
+            </div>
+            
+            <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+              {opportunities.map((opportunity, index) => (
+                <Card 
+                  key={opportunity.id} 
+                  className="group hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 border-0 bg-background/80 backdrop-blur-sm hover:bg-background/90 overflow-hidden animate-fade-in"
+                  style={{ animationDelay: `${index * 100}ms` }}
+                >
+                  {/* Header with gradient */}
+                  <div className="h-2 bg-gradient-to-r from-primary via-primary/70 to-secondary"></div>
+                  
+                  <CardHeader className="pb-4">
+                    <div className="flex justify-between items-start mb-4">
+                      <div className="flex items-center gap-3">
+                        <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
+                          {opportunity.opportunity_type === 'job' ? (
+                            <Briefcase className="h-6 w-6 text-primary" />
+                          ) : (
+                            <Code className="h-6 w-6 text-primary" />
+                          )}
+                        </div>
+                        <div>
+                          <Badge 
+                            variant={opportunity.opportunity_type === 'job' ? 'default' : 'secondary'} 
+                            className="text-xs mb-2"
+                          >
+                            {opportunity.opportunity_type === 'job' ? 'فرصة وظيفية' : 'فرصة مشروع'}
+                          </Badge>
+                        </div>
+                      </div>
+                      
+                      {isAdmin && (
+                        <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            onClick={() => handleToggleActive(opportunity.id, opportunity.is_active)}
+                            className="h-8 w-8 p-0"
+                          >
+                            {opportunity.is_active ? (
+                              <Eye className="h-4 w-4" />
+                            ) : (
+                              <EyeOff className="h-4 w-4" />
+                            )}
+                          </Button>
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            onClick={() => handleDeleteOpportunity(opportunity.id)}
+                            className="h-8 w-8 p-0 hover:text-destructive"
+                          >
+                            <Trash2 className="h-4 w-4" />
+                          </Button>
+                        </div>
+                      )}
+                    </div>
+                    
+                    <CardTitle className="text-xl text-foreground group-hover:text-primary transition-colors line-clamp-2 leading-tight">
+                      {opportunity.title}
+                    </CardTitle>
+                  </CardHeader>
+                  
+                  <CardContent className="space-y-6">
+                    <p className="text-muted-foreground leading-relaxed line-clamp-3">
+                      {opportunity.description}
+                    </p>
+                    
+                    <div className="flex items-center gap-2 text-sm text-muted-foreground bg-muted/30 rounded-lg p-3">
+                      <Clock className="h-4 w-4 text-orange-500" />
+                      <span>آخر موعد: {new Date(opportunity.deadline).toLocaleDateString('ar-SA')}</span>
+                    </div>
+                    
+                    <div className="flex justify-between items-center pt-2">
+                      <Badge variant={opportunity.is_active ? "default" : "secondary"} className="text-xs">
+                        {opportunity.is_active ? 'متاحة' : 'منتهية'}
+                      </Badge>
+                      
+                      {opportunity.is_active && (
+                        <Button 
+                          onClick={() => handleApply(opportunity.id)}
+                          className="bg-primary hover:bg-primary/90 hover:scale-105 transition-all px-6"
+                          size="sm"
+                        >
+                          تقدم الآن
+                        </Button>
+                      )}
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          </>
         )}
       </div>
     </div>

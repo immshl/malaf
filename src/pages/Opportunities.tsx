@@ -299,7 +299,7 @@ export default function Opportunities() {
             <div className="w-24 h-24 bg-muted rounded-3xl flex items-center justify-center mx-auto mb-8">
               <Users className="h-12 w-12 text-muted-foreground" />
             </div>
-            <h3 className="text-4xl md:text-5xl font-bold text-foreground mb-4 tracking-tight">لا توجد فرص متاحة حالياً</h3>
+            <h3 className="text-2xl md:text-3xl font-semibold text-foreground mb-4 tracking-tight">لا توجد فرص متاحة حالياً</h3>
             <p className="text-muted-foreground text-xl max-w-md mx-auto font-light">
               نعمل على إضافة فرص جديدة باستمرار
             </p>

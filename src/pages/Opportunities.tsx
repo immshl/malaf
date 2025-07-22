@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Calendar, Plus, Trash2, Eye, EyeOff, Briefcase, Code, Clock, MapPin, Users, Check, X } from "lucide-react";
+import { Calendar, Plus, Trash2, Eye, EyeOff, Briefcase, Code, Clock, MapPin, Users, Check, X, Menu, ArrowLeft } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -11,7 +11,9 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import UserProfile from "@/components/UserProfile";
+import AuthButton from "@/components/AuthButton";
 
 interface Opportunity {
   id: string;
@@ -30,6 +32,7 @@ export default function Opportunities() {
   const [loading, setLoading] = useState(true);
   const [isAdmin, setIsAdmin] = useState(false);
   const [showAddDialog, setShowAddDialog] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [newOpportunity, setNewOpportunity] = useState({
     title: "",
     description: "",
@@ -196,6 +199,32 @@ export default function Opportunities() {
     navigate(`/apply/${opportunityId}`);
   };
 
+  const toggleMobileMenu = () => {
+    setIsMobileMenuOpen(!isMobileMenuOpen);
+  };
+
+  const closeMobileMenu = () => {
+    setIsMobileMenuOpen(false);
+  };
+
+  // Close mobile menu when clicking outside
+  useEffect(() => {
+    const handleOutsideClick = (event: MouseEvent) => {
+      const target = event.target as HTMLElement;
+      if (isMobileMenuOpen && !target.closest('.mobile-menu-container')) {
+        closeMobileMenu();
+      }
+    };
+
+    if (isMobileMenuOpen) {
+      document.addEventListener('click', handleOutsideClick);
+    }
+
+    return () => {
+      document.removeEventListener('click', handleOutsideClick);
+    };
+  }, [isMobileMenuOpen]);
+
   if (loading) {
     return (
       <div className="min-h-screen bg-background flex items-center justify-center">
@@ -208,28 +237,118 @@ export default function Opportunities() {
   }
 
   return (
-    <div className="min-h-screen bg-background">
-      {/* Header with Logo */}
-      <div className="bg-background border-b border-border/50">
-        <div className="container mx-auto px-4 py-6">
-          <div className="flex items-center justify-center">
-            <div className="flex items-center gap-2">
-              <div className="w-8 h-8">
-                <img 
-                  src="/lovable-uploads/be1d2269-8206-422b-a395-e4fb9e1a88cc.png" 
-                  alt="ملف" 
-                  className="w-full h-full object-contain dark:hidden"
-                />
-                <img 
-                  src="/lovable-uploads/822b255a-0cfa-4520-b9a5-aa69e7ef91e6.png" 
-                  alt="ملف" 
-                  className="w-full h-full object-contain hidden dark:block"
-                />
+    <div className="min-h-screen bg-background relative">
+      {/* Mobile Menu Overlay */}
+      {isMobileMenuOpen && (
+        <div 
+          className="fixed inset-0 bg-black/20 backdrop-blur-sm z-30 md:hidden"
+          onClick={closeMobileMenu}
+        />
+      )}
+      
+      <div className="relative z-40">
+        {/* Navigation */}
+        <nav className="sticky top-0 glass border-b border-border/20 z-40">
+          <div className="container mx-auto px-6">
+            <div className="flex items-center justify-between h-20 py-2">
+              {/* Logo */}
+              <Link to="/" className="flex items-center gap-0.5 hover:opacity-80 transition-opacity">
+                <div className="w-8 h-8">
+                  {/* Logo for light mode (black) */}
+                  <img 
+                    src="/lovable-uploads/be1d2269-8206-422b-a395-e4fb9e1a88cc.png" 
+                    alt="ملف" 
+                    className="w-full h-full object-contain dark:hidden"
+                  />
+                  {/* Logo for dark mode (white) */}
+                  <img 
+                    src="/lovable-uploads/822b255a-0cfa-4520-b9a5-aa69e7ef91e6.png" 
+                    alt="ملف" 
+                    className="w-full h-full object-contain hidden dark:block"
+                  />
+                </div>
+                <span className="font-bold text-lg text-foreground">ملف</span>
+              </Link>
+
+              {/* Navigation Links */}
+              <div className="hidden md:flex items-center space-x-4 space-x-reverse">
+                <Link to="/" className="text-muted-foreground hover:text-foreground transition-smooth font-medium text-sm tracking-wide">
+                  الرئيسية
+                </Link>
+                <span className="text-foreground font-medium text-sm tracking-wide">
+                  الفرص
+                </span>
+                {user ? (
+                  <UserProfile />
+                ) : (
+                  <AuthButton />
+                )}
               </div>
-              <span className="font-bold text-lg text-foreground">ملف</span>
+
+              {/* Mobile Menu Button */}
+              <button 
+                type="button"
+                className="md:hidden p-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors focus:outline-none focus:ring-2 focus:ring-purple-500 mobile-menu-container"
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  const newState = !isMobileMenuOpen;
+                  setIsMobileMenuOpen(newState);
+                }}
+                aria-label="فتح القائمة"
+              >
+                {isMobileMenuOpen ? (
+                  <X className="w-6 h-6 text-gray-700 dark:text-gray-300" />
+                ) : (
+                  <Menu className="w-6 h-6 text-gray-700 dark:text-gray-300" />
+                )}
+              </button>
             </div>
           </div>
-        </div>
+
+          {/* Mobile Menu */}
+          {isMobileMenuOpen && (
+            <>
+              {/* Overlay */}
+              <div 
+                className="fixed inset-0 bg-black/20 backdrop-blur-sm z-40 animate-fade-in"
+                onClick={() => setIsMobileMenuOpen(false)}
+              />
+              
+              {/* Menu Content */}
+              <div className="fixed top-18 left-0 right-0 z-50 animate-slide-down mobile-menu-container">
+                <div className="mx-6 mt-4 glass rounded-2xl shadow-elegant border border-border/20 overflow-hidden">
+                  <div className="p-8 space-y-6">
+                    {/* Navigation Links */}
+                    <div className="space-y-2">
+                      <Link 
+                        to="/" 
+                        className="flex items-center gap-4 p-4 text-foreground hover:text-primary hover:bg-muted/50 rounded-xl transition-all duration-300 transform hover:scale-[1.02] hover:shadow-md"
+                        onClick={() => setIsMobileMenuOpen(false)}
+                      >
+                        <div className="w-3 h-3 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full shadow-sm"></div>
+                        <span className="text-lg font-medium">الرئيسية</span>
+                      </Link>
+                      <div className="flex items-center gap-4 p-4 text-primary bg-muted/50 rounded-xl">
+                        <div className="w-3 h-3 bg-gradient-to-r from-green-500 to-emerald-500 rounded-full shadow-sm"></div>
+                        <span className="text-lg font-medium">الفرص</span>
+                      </div>
+                    </div>
+                    
+                    {/* Auth Section */}
+                    <div className="pt-6 border-t border-border space-y-8">
+                       {user ? (
+                        <UserProfile />
+                       ) : (
+                         <AuthButton isMobile={true} />
+                       )}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </>
+          )}
+        </nav>
       </div>
 
       {/* Hero Section - Apple-style minimal */}

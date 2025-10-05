@@ -254,6 +254,7 @@ export type Database = {
           location: string | null
           phone: string | null
           profession: string | null
+          show_in_directory: boolean | null
           skills: string[] | null
           time_slot: string | null
           twitter_url: string | null
@@ -282,6 +283,7 @@ export type Database = {
           location?: string | null
           phone?: string | null
           profession?: string | null
+          show_in_directory?: boolean | null
           skills?: string[] | null
           time_slot?: string | null
           twitter_url?: string | null
@@ -310,6 +312,7 @@ export type Database = {
           location?: string | null
           phone?: string | null
           profession?: string | null
+          show_in_directory?: boolean | null
           skills?: string[] | null
           time_slot?: string | null
           twitter_url?: string | null

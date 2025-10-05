@@ -18,6 +18,7 @@ import Opportunities from "./pages/Opportunities";
 import ApplyOpportunity from "./pages/ApplyOpportunity";
 import ManagePortfolio from "./pages/ManagePortfolio";
 import FullPortfolio from "./pages/FullPortfolio";
+import ServiceProvidersDirectory from "./pages/ServiceProvidersDirectory";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -43,6 +44,7 @@ const App = () => (
               <Route path="/apply/:opportunityId" element={<ApplyOpportunity />} />
               <Route path="/manage-portfolio" element={<ManagePortfolio />} />
               <Route path="/portfolio/:username" element={<FullPortfolio />} />
+              <Route path="/service-providers" element={<ServiceProvidersDirectory />} />
               
               {/* الرابط المختصر للفريلانسر - يجب أن يكون قبل catch-all مباشرة */}
               <Route path="/:username" element={<UserProfile />} />

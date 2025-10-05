@@ -42,7 +42,8 @@ const CreateProfile = () => {
     linkedinUrl: "",
     githubUrl: "",
     featuredLinks: [] as Array<{title: string, url: string}>,
-    hasPortfolioPage: false
+    hasPortfolioPage: false,
+    showInDirectory: false
   });
   const [isLoading, setIsLoading] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
@@ -89,7 +90,8 @@ const CreateProfile = () => {
               linkedinUrl: existingProfile.linkedin_url || "",
               githubUrl: existingProfile.github_url || "",
               featuredLinks: existingProfile.featured_links ? JSON.parse(JSON.stringify(existingProfile.featured_links)) : [],
-              hasPortfolioPage: existingProfile.has_portfolio_page || false
+              hasPortfolioPage: existingProfile.has_portfolio_page || false,
+              showInDirectory: existingProfile.show_in_directory || false
             });
           } else {
             // No existing profile, load user data from auth
@@ -188,7 +190,8 @@ const CreateProfile = () => {
           available_days: profileData.availableDays.length > 0 ? profileData.availableDays : null,
           time_slot: profileData.timeSlot || null,
           featured_links: profileData.featuredLinks.length > 0 ? profileData.featuredLinks : null,
-          has_portfolio_page: profileData.hasPortfolioPage
+          has_portfolio_page: profileData.hasPortfolioPage,
+          show_in_directory: profileData.showInDirectory
         }, {
           onConflict: 'user_id'
         });
@@ -1073,6 +1076,55 @@ const CreateProfile = () => {
                       <Plus className="ml-2 h-4 w-4" />
                       إدارة الأعمال
                     </Button>
+                  </div>
+                )}
+              </CardContent>
+            </Card>
+
+            {/* القسم الثامن: إظهار الملف في دليل مقدمي الخدمات */}
+            <Card className="border shadow-soft">
+              <CardHeader>
+                <CardTitle className="text-lg">دليل مقدمي الخدمات</CardTitle>
+                <CardDescription>
+                  اظهر ملفك الشخصي في دليل مقدمي الخدمات العام
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-6">
+                <div className="flex items-center justify-between p-4 bg-gradient-primary/5 rounded-lg">
+                  <div className="flex-1">
+                    <Label htmlFor="showInDirectory" className="text-foreground font-medium cursor-pointer">
+                      إظهار ملفي في الدليل العام
+                    </Label>
+                    <p className="text-sm text-muted-foreground mt-1">
+                      عند التفعيل، سيظهر ملفك الشخصي في دليل مقدمي الخدمات لجميع الزوار
+                    </p>
+                  </div>
+                  <Checkbox
+                    id="showInDirectory"
+                    checked={profileData.showInDirectory}
+                    onCheckedChange={(checked) => 
+                      setProfileData(prev => ({ ...prev, showInDirectory: checked as boolean }))
+                    }
+                    className="scale-125"
+                  />
+                </div>
+                
+                {profileData.showInDirectory && (
+                  <div className="bg-primary/5 p-4 rounded-lg space-y-3">
+                    <div className="flex items-start gap-3">
+                      <div className="bg-primary/10 p-2 rounded-full">
+                        <Upload className="h-5 w-5 text-primary" />
+                      </div>
+                      <div>
+                        <h4 className="font-medium text-foreground">فوائد الظهور في الدليل:</h4>
+                        <ul className="text-sm text-muted-foreground mt-2 space-y-1">
+                          <li>• زيادة فرص التعاقد مع عملاء جدد</li>
+                          <li>• ظهور ملفك للباحثين عن خدماتك</li>
+                          <li>• بناء علامتك التجارية الشخصية</li>
+                          <li>• الوصول لشبكة أوسع من العملاء المحتملين</li>
+                        </ul>
+                      </div>
+                    </div>
                   </div>
                 )}
               </CardContent>

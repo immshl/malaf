@@ -190,6 +190,9 @@ const Index = () => {
               <Link to="/opportunities" className="text-muted-foreground hover:text-foreground transition-smooth font-medium text-sm tracking-wide">
                 {language === "ar" ? "الفرص" : "Opportunities"}
               </Link>
+              <Link to="/service-providers" className="text-muted-foreground hover:text-foreground transition-smooth font-medium text-sm tracking-wide">
+                {language === "ar" ? "مقدمو الخدمات" : "Service Providers"}
+              </Link>
               {user ? (
                 <UserProfile />
               ) : (
@@ -256,6 +259,14 @@ const Index = () => {
                     >
                       <div className="w-3 h-3 bg-gradient-to-r from-green-500 to-emerald-500 rounded-full shadow-sm"></div>
                       <span className="text-lg font-medium">{language === "ar" ? "الفرص" : "Opportunities"}</span>
+                    </Link>
+                    <Link 
+                      to="/service-providers" 
+                      className="flex items-center gap-4 p-4 text-foreground hover:text-primary hover:bg-muted/50 rounded-xl transition-all duration-300 transform hover:scale-[1.02] hover:shadow-md"
+                      onClick={() => setIsMobileMenuOpen(false)}
+                    >
+                      <div className="w-3 h-3 bg-gradient-to-r from-orange-500 to-yellow-500 rounded-full shadow-sm"></div>
+                      <span className="text-lg font-medium">{language === "ar" ? "مقدمو الخدمات" : "Service Providers"}</span>
                     </Link>
                   </div>
                   

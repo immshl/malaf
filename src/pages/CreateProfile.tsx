@@ -1040,7 +1040,35 @@ const CreateProfile = () => {
                       type="button"
                       variant="outline"
                       className="w-full"
-                      onClick={() => navigate('/manage-portfolio')}
+                      disabled={isLoading}
+                      onClick={async () => {
+                        try {
+                          setIsLoading(true);
+                          // حفظ تفعيل صفحة الأعمال أولاً
+                          const { error } = await supabase
+                            .from('profiles')
+                            .update({ has_portfolio_page: true })
+                            .eq('user_id', user.id);
+
+                          if (error) throw error;
+
+                          toast({
+                            title: "تم التفعيل",
+                            description: "تم تفعيل صفحة الأعمال بنجاح"
+                          });
+
+                          navigate('/manage-portfolio');
+                        } catch (error) {
+                          console.error('Error enabling portfolio page:', error);
+                          toast({
+                            variant: "destructive",
+                            title: "خطأ",
+                            description: "حدث خطأ أثناء تفعيل صفحة الأعمال"
+                          });
+                        } finally {
+                          setIsLoading(false);
+                        }
+                      }}
                     >
                       <Plus className="ml-2 h-4 w-4" />
                       إدارة الأعمال

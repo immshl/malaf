@@ -41,7 +41,8 @@ const CreateProfile = () => {
     experienceYears: null as number | null,
     linkedinUrl: "",
     githubUrl: "",
-    featuredLinks: [] as Array<{title: string, url: string}>
+    featuredLinks: [] as Array<{title: string, url: string}>,
+    hasPortfolioPage: false
   });
   const [isLoading, setIsLoading] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
@@ -87,7 +88,8 @@ const CreateProfile = () => {
               experienceYears: existingProfile.experience_years || null,
               linkedinUrl: existingProfile.linkedin_url || "",
               githubUrl: existingProfile.github_url || "",
-              featuredLinks: existingProfile.featured_links ? JSON.parse(JSON.stringify(existingProfile.featured_links)) : []
+              featuredLinks: existingProfile.featured_links ? JSON.parse(JSON.stringify(existingProfile.featured_links)) : [],
+              hasPortfolioPage: existingProfile.has_portfolio_page || false
             });
           } else {
             // No existing profile, load user data from auth
@@ -185,7 +187,8 @@ const CreateProfile = () => {
           emoji: profileData.emoji || null,
           available_days: profileData.availableDays.length > 0 ? profileData.availableDays : null,
           time_slot: profileData.timeSlot || null,
-          featured_links: profileData.featuredLinks.length > 0 ? profileData.featuredLinks : null
+          featured_links: profileData.featuredLinks.length > 0 ? profileData.featuredLinks : null,
+          has_portfolio_page: profileData.hasPortfolioPage
         }, {
           onConflict: 'user_id'
         });
@@ -986,6 +989,64 @@ const CreateProfile = () => {
                     ستطبق هذه الفترة على جميع الأيام المختارة
                   </p>
                 </div>
+              </CardContent>
+            </Card>
+
+            {/* القسم السابع: صفحة الأعمال */}
+            <Card className="border shadow-soft">
+              <CardHeader>
+                <CardTitle className="text-lg">صفحة الأعمال</CardTitle>
+                <CardDescription>
+                  فعّل صفحة خاصة لعرض أعمالك وإنجازاتك بشكل تفصيلي
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-6">
+                <div className="flex items-center justify-between p-4 bg-gradient-primary/5 rounded-lg">
+                  <div className="flex-1">
+                    <Label htmlFor="hasPortfolioPage" className="text-foreground font-medium cursor-pointer">
+                      تفعيل صفحة الأعمال
+                    </Label>
+                    <p className="text-sm text-muted-foreground mt-1">
+                      عند التفعيل، ستتمكن من إضافة أعمالك مع صور وفيديوهات ووصف تفصيلي
+                    </p>
+                  </div>
+                  <Checkbox
+                    id="hasPortfolioPage"
+                    checked={profileData.hasPortfolioPage}
+                    onCheckedChange={(checked) => 
+                      setProfileData(prev => ({ ...prev, hasPortfolioPage: checked as boolean }))
+                    }
+                    className="scale-125"
+                  />
+                </div>
+                
+                {profileData.hasPortfolioPage && (
+                  <div className="bg-primary/5 p-4 rounded-lg space-y-3">
+                    <div className="flex items-start gap-3">
+                      <div className="bg-primary/10 p-2 rounded-full">
+                        <Upload className="h-5 w-5 text-primary" />
+                      </div>
+                      <div>
+                        <h4 className="font-medium text-foreground">ماذا يمكنك إضافته؟</h4>
+                        <ul className="text-sm text-muted-foreground mt-2 space-y-1">
+                          <li>• صورة غلاف وحتى 7 صور إضافية لكل عمل</li>
+                          <li>• وصف تفصيلي بدون حدود</li>
+                          <li>• روابط فيديوهات (حتى 7 روابط)</li>
+                          <li>• ترتيب وإدارة أعمالك بسهولة</li>
+                        </ul>
+                      </div>
+                    </div>
+                    <Button
+                      type="button"
+                      variant="outline"
+                      className="w-full"
+                      onClick={() => navigate('/manage-portfolio')}
+                    >
+                      <Plus className="ml-2 h-4 w-4" />
+                      إدارة الأعمال
+                    </Button>
+                  </div>
+                )}
               </CardContent>
             </Card>
 

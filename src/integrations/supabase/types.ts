@@ -7,7 +7,7 @@ export type Json =
   | Json[]
 
 export type Database = {
-  // Allows to automatically instanciate createClient with right options
+  // Allows to automatically instantiate createClient with right options
   // instead of createClient<Database, { PostgrestVersion: 'XX' }>(URL, KEY)
   __InternalSupabase: {
     PostgrestVersion: "12.2.3 (519615d)"
@@ -183,6 +183,56 @@ export type Database = {
         }
         Relationships: []
       }
+      portfolio_items: {
+        Row: {
+          additional_images: string[] | null
+          cover_image: string
+          created_at: string
+          description: string
+          display_order: number
+          id: string
+          is_published: boolean | null
+          profile_id: string
+          title: string
+          updated_at: string
+          video_links: string[] | null
+        }
+        Insert: {
+          additional_images?: string[] | null
+          cover_image: string
+          created_at?: string
+          description: string
+          display_order?: number
+          id?: string
+          is_published?: boolean | null
+          profile_id: string
+          title: string
+          updated_at?: string
+          video_links?: string[] | null
+        }
+        Update: {
+          additional_images?: string[] | null
+          cover_image?: string
+          created_at?: string
+          description?: string
+          display_order?: number
+          id?: string
+          is_published?: boolean | null
+          profile_id?: string
+          title?: string
+          updated_at?: string
+          video_links?: string[] | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "portfolio_items_profile_id_fkey"
+            columns: ["profile_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       profiles: {
         Row: {
           available_days: string[] | null
@@ -196,6 +246,7 @@ export type Database = {
           featured_links: Json | null
           full_name: string | null
           github_url: string | null
+          has_portfolio_page: boolean | null
           id: string
           instagram_url: string | null
           is_public: boolean | null
@@ -223,6 +274,7 @@ export type Database = {
           featured_links?: Json | null
           full_name?: string | null
           github_url?: string | null
+          has_portfolio_page?: boolean | null
           id?: string
           instagram_url?: string | null
           is_public?: boolean | null
@@ -250,6 +302,7 @@ export type Database = {
           featured_links?: Json | null
           full_name?: string | null
           github_url?: string | null
+          has_portfolio_page?: boolean | null
           id?: string
           instagram_url?: string | null
           is_public?: boolean | null

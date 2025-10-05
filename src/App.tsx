@@ -16,6 +16,8 @@ import CreateProfile from "./pages/CreateProfile";
 import UserProfile from "./pages/UserProfile";
 import Opportunities from "./pages/Opportunities";
 import ApplyOpportunity from "./pages/ApplyOpportunity";
+import ManagePortfolio from "./pages/ManagePortfolio";
+import FullPortfolio from "./pages/FullPortfolio";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -39,6 +41,8 @@ const App = () => (
               <Route path="/profile/:username" element={<UserProfile />} />
               <Route path="/opportunities" element={<Opportunities />} />
               <Route path="/apply/:opportunityId" element={<ApplyOpportunity />} />
+              <Route path="/manage-portfolio" element={<ManagePortfolio />} />
+              <Route path="/portfolio/:username" element={<FullPortfolio />} />
               
               {/* الرابط المختصر للفريلانسر - يجب أن يكون قبل catch-all مباشرة */}
               <Route path="/:username" element={<UserProfile />} />

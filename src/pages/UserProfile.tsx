@@ -357,15 +357,15 @@ const UserProfile = () => {
           {/* بطاقة المعلومات الرئيسية */}
           <Card className="border border-border rounded-3xl shadow-soft hover:shadow-medium transition-smooth animate-fade-in hover-scale">
             <CardContent className="p-8 lg:p-12 text-center">
-              {/* زر زيارة الصفحة الكاملة - يظهر فقط إذا كانت صفحة الأعمال مفعلة */}
+              {/* زر معرض الأعمال - يظهر فقط إذا كانت صفحة الأعمال مفعلة */}
               {profile.has_portfolio_page && (
                 <div className="mb-6">
                   <Button
                     onClick={() => navigate(`/portfolio/${profile.username}`)}
-                    className="bg-gradient-primary hover:opacity-90 text-white"
+                    className="bg-gradient-primary hover:opacity-90 text-primary-foreground shadow-medium"
                   >
                     <ExternalLink className="ml-2 h-4 w-4" />
-                    {language === 'ar' ? 'زيارة الصفحة الكاملة' : 'Visit Full Portfolio'}
+                    {language === 'ar' ? 'معرض الأعمال' : 'Portfolio Gallery'}
                   </Button>
                 </div>
               )}

@@ -90,12 +90,12 @@ const FullPortfolio = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-background to-accent/5">
       {/* Header Section */}
-      <div className="bg-gradient-to-r from-primary/10 via-secondary/10 to-accent/10 py-16 px-4">
+      <div className="bg-gradient-to-r from-primary/10 via-secondary/10 to-accent/10 py-12 lg:py-16 px-4 animate-fade-in">
         <div className="max-w-6xl mx-auto">
           <Button
             variant="ghost"
             onClick={() => navigate(`/${username}`)}
-            className="mb-8"
+            className="mb-8 hover-scale"
           >
             <ArrowRight className="ml-2 h-4 w-4" />
             {t("العودة للملف الشخصي")}
@@ -114,11 +114,11 @@ const FullPortfolio = () => {
             </div>
 
             <div className="flex-1 text-center md:text-right">
-              <h1 className="text-4xl font-bold mb-2">{profile.full_name}</h1>
+              <h1 className="text-3xl lg:text-4xl font-bold mb-2">{profile.full_name}</h1>
               {profile.profession && (
-                <p className="text-xl text-muted-foreground mb-4">{profile.profession}</p>
+                <p className="text-lg lg:text-xl text-muted-foreground mb-4">{profile.profession}</p>
               )}
-              {profile.bio && <p className="text-lg mb-6 max-w-3xl">{profile.bio}</p>}
+              {profile.bio && <p className="text-base lg:text-lg mb-6 max-w-3xl leading-relaxed">{profile.bio}</p>}
 
               <div className="flex flex-wrap gap-4 justify-center md:justify-start">
                 {profile.contact_email && (
@@ -165,32 +165,32 @@ const FullPortfolio = () => {
       </div>
 
       {/* Portfolio Items Section */}
-      <div className="max-w-6xl mx-auto py-16 px-4">
-        <h2 className="text-3xl font-bold mb-8 text-center">
+      <div className="max-w-6xl mx-auto py-12 lg:py-16 px-4">
+        <h2 className="text-2xl lg:text-3xl font-bold mb-8 text-center animate-fade-in">
           {t("معرض الأعمال")}
         </h2>
 
         {items.length === 0 ? (
-          <Card className="p-12 text-center text-muted-foreground">
+          <Card className="p-12 text-center text-muted-foreground shadow-soft">
             {t("لا توجد أعمال معروضة حالياً")}
           </Card>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 animate-fade-in">
             {items.map((item) => (
               <Card
                 key={item.id}
-                className="overflow-hidden cursor-pointer group hover:shadow-xl transition-all duration-300"
+                className="overflow-hidden cursor-pointer group hover:shadow-xl transition-smooth hover-scale"
                 onClick={() => setSelectedItem(item)}
               >
                 <div className="aspect-video overflow-hidden">
                   <img
                     src={item.cover_image}
                     alt={item.title}
-                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                    className="w-full h-full object-cover group-hover:scale-110 transition-smooth"
                   />
                 </div>
-                <div className="p-4">
-                  <h3 className="font-bold text-lg mb-2 line-clamp-2">{item.title}</h3>
+                <div className="p-4 lg:p-5">
+                  <h3 className="font-bold text-base lg:text-lg mb-2 line-clamp-2">{item.title}</h3>
                   <p className="text-sm text-muted-foreground line-clamp-3">
                     {item.description}
                   </p>
@@ -207,30 +207,30 @@ const FullPortfolio = () => {
           {selectedItem && (
             <>
               <DialogHeader>
-                <DialogTitle className="text-2xl">{selectedItem.title}</DialogTitle>
+                <DialogTitle className="text-xl lg:text-2xl">{selectedItem.title}</DialogTitle>
               </DialogHeader>
 
               <div className="space-y-6">
                 <img
                   src={selectedItem.cover_image}
                   alt={selectedItem.title}
-                  className="w-full rounded-lg"
+                  className="w-full rounded-lg shadow-medium"
                 />
 
-                <p className="text-lg whitespace-pre-wrap leading-relaxed">
+                <p className="text-base lg:text-lg whitespace-pre-wrap leading-relaxed">
                   {selectedItem.description}
                 </p>
 
                 {selectedItem.additional_images.length > 0 && (
                   <div className="space-y-4">
-                    <h3 className="text-xl font-bold">{t("صور إضافية")}</h3>
-                    <div className="grid grid-cols-2 gap-4">
+                    <h3 className="text-lg lg:text-xl font-bold">{t("صور إضافية")}</h3>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                       {selectedItem.additional_images.map((img, index) => (
                         <img
                           key={index}
                           src={img}
                           alt={`${selectedItem.title} ${index + 1}`}
-                          className="w-full rounded-lg"
+                          className="w-full rounded-lg shadow-soft hover:shadow-medium transition-smooth"
                         />
                       ))}
                     </div>
@@ -239,13 +239,13 @@ const FullPortfolio = () => {
 
                 {selectedItem.video_links.length > 0 && (
                   <div className="space-y-4">
-                    <h3 className="text-xl font-bold">{t("روابط الفيديو")}</h3>
+                    <h3 className="text-lg lg:text-xl font-bold">{t("روابط الفيديو")}</h3>
                     <div className="space-y-2">
                       {selectedItem.video_links.map((link, index) => (
                         <Button
                           key={index}
                           variant="outline"
-                          className="w-full justify-between"
+                          className="w-full justify-between hover-scale"
                           asChild
                         >
                           <a href={link} target="_blank" rel="noopener noreferrer">

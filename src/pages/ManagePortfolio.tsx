@@ -227,17 +227,17 @@ const ManagePortfolio = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-background to-accent/5 py-12 px-4">
       <div className="max-w-6xl mx-auto">
-        <div className="flex items-center justify-between mb-8">
-          <h1 className="text-4xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+        <div className="flex items-center justify-between mb-8 animate-fade-in">
+          <h1 className="text-3xl lg:text-4xl font-bold bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent">
             {t("إدارة الأعمال")}
           </h1>
-          <Button variant="outline" onClick={() => navigate(-1)}>
+          <Button variant="outline" onClick={() => navigate(-1)} className="hover-scale">
             <ArrowRight className="ml-2 h-4 w-4" />
             {t("رجوع")}
           </Button>
         </div>
 
-        <Card className="p-8 mb-8">
+        <Card className="p-6 lg:p-8 mb-8 shadow-soft hover:shadow-medium transition-smooth animate-fade-in">
           <form onSubmit={handleSubmit} className="space-y-6">
             <div>
               <label className="block text-sm font-medium mb-2">
@@ -358,24 +358,24 @@ const ManagePortfolio = () => {
           </form>
         </Card>
 
-        <div className="space-y-4">
-          <h2 className="text-2xl font-bold">{t("أعمالك الحالية")}</h2>
+        <div className="space-y-4 animate-fade-in">
+          <h2 className="text-xl lg:text-2xl font-bold">{t("أعمالك الحالية")}</h2>
           {items.length === 0 ? (
-            <Card className="p-8 text-center text-muted-foreground">
+            <Card className="p-8 text-center text-muted-foreground shadow-soft">
               {t("لم تضف أي أعمال بعد")}
             </Card>
           ) : (
             items.map((item) => (
-              <Card key={item.id} className="p-6">
-                <div className="flex gap-4">
+              <Card key={item.id} className="p-4 lg:p-6 shadow-soft hover:shadow-medium transition-smooth hover-scale">
+                <div className="flex flex-col sm:flex-row gap-4">
                   <img
                     src={item.cover_image}
                     alt={item.title}
-                    className="w-32 h-32 object-cover rounded-lg"
+                    className="w-full sm:w-32 h-48 sm:h-32 object-cover rounded-lg"
                   />
                   <div className="flex-1">
-                    <h3 className="text-xl font-bold mb-2">{item.title}</h3>
-                    <p className="text-muted-foreground line-clamp-2 mb-4">
+                    <h3 className="text-lg lg:text-xl font-bold mb-2">{item.title}</h3>
+                    <p className="text-sm lg:text-base text-muted-foreground line-clamp-2 mb-4">
                       {item.description}
                     </p>
                     <div className="flex gap-2">

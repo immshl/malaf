@@ -138,6 +138,27 @@ const ManagePortfolio = () => {
     setFormData({ ...formData, video_links: newLinks });
   };
 
+  const handleRemoveImage = (index: number) => {
+    const newImages = [...formData.additional_images];
+    newImages[index] = "";
+    setFormData({ ...formData, additional_images: newImages });
+    toast.success(t("تم حذف الصورة"));
+  };
+
+  const handleMoveImageUp = (index: number) => {
+    if (index === 0) return;
+    const newImages = [...formData.additional_images];
+    [newImages[index - 1], newImages[index]] = [newImages[index], newImages[index - 1]];
+    setFormData({ ...formData, additional_images: newImages });
+  };
+
+  const handleMoveImageDown = (index: number) => {
+    if (index === formData.additional_images.length - 1) return;
+    const newImages = [...formData.additional_images];
+    [newImages[index], newImages[index + 1]] = [newImages[index + 1], newImages[index]];
+    setFormData({ ...formData, additional_images: newImages });
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -305,11 +326,46 @@ const ManagePortfolio = () => {
                       {uploadingIndex === index && <Loading />}
                     </div>
                     {img && (
-                      <img
-                        src={img}
-                        alt={`Additional ${index + 1}`}
-                        className="w-full h-32 object-cover rounded"
-                      />
+                      <div className="relative">
+                        <img
+                          src={img}
+                          alt={`Additional ${index + 1}`}
+                          className="w-full h-32 object-cover rounded"
+                        />
+                        <div className="absolute top-2 right-2 flex gap-2">
+                          <Button
+                            type="button"
+                            size="icon"
+                            variant="destructive"
+                            className="h-8 w-8"
+                            onClick={() => handleRemoveImage(index)}
+                          >
+                            <X className="h-4 w-4" />
+                          </Button>
+                          {index > 0 && formData.additional_images[index - 1] && (
+                            <Button
+                              type="button"
+                              size="icon"
+                              variant="secondary"
+                              className="h-8 w-8"
+                              onClick={() => handleMoveImageUp(index)}
+                            >
+                              <Upload className="h-4 w-4 rotate-180" />
+                            </Button>
+                          )}
+                          {index < formData.additional_images.length - 1 && formData.additional_images[index + 1] && (
+                            <Button
+                              type="button"
+                              size="icon"
+                              variant="secondary"
+                              className="h-8 w-8"
+                              onClick={() => handleMoveImageDown(index)}
+                            >
+                              <Upload className="h-4 w-4" />
+                            </Button>
+                          )}
+                        </div>
+                      </div>
                     )}
                   </div>
                 ))}

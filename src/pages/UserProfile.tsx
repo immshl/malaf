@@ -256,27 +256,43 @@ const UserProfile = () => {
         return;
       }
 
+      // Get freelancer's actual email from auth.users
+      let freelancerEmail = profile.contact_email;
+      if (!freelancerEmail && profile.username) {
+        try {
+          const { data: emailData } = await supabase
+            .rpc('get_user_email_by_username', { username_input: profile.username });
+          freelancerEmail = emailData;
+        } catch (error) {
+          console.error('Error getting user email:', error);
+        }
+      }
+
       // Send booking notification email to freelancer
-      try {
-        await supabase.functions.invoke('send-booking-notification', {
-          body: {
-            freelancerEmail: profile.contact_email || profile.user_id, // fallback if no contact email
-            freelancerName: profile.full_name || profile.username || 'الفريلانسر',
-            clientName: bookingForm.name,
-            clientEmail: bookingForm.email,
-            clientPhone: bookingForm.phone,
-            requestedDay: showAlternativeBooking ? null : selectedDay,
-            requestedTime: showAlternativeBooking ? null : selectedTime,
-            suggestedDay: showAlternativeBooking ? alternativeDay : null,
-            suggestedTimeSlot: showAlternativeBooking ? alternativeTimeSlot : null,
-            notes: bookingForm.notes,
-            isAlternativeRequest: showAlternativeBooking,
-          },
-        });
-        console.log('Booking notification email sent successfully');
-      } catch (emailError) {
-        console.error('Failed to send booking notification email:', emailError);
-        // Don't block the booking if email fails
+      if (freelancerEmail) {
+        try {
+          await supabase.functions.invoke('send-booking-notification', {
+            body: {
+              freelancerEmail: freelancerEmail,
+              freelancerName: profile.full_name || profile.username || 'الفريلانسر',
+              clientName: bookingForm.name,
+              clientEmail: bookingForm.email,
+              clientPhone: bookingForm.phone,
+              requestedDay: showAlternativeBooking ? null : selectedDay,
+              requestedTime: showAlternativeBooking ? null : selectedTime,
+              suggestedDay: showAlternativeBooking ? alternativeDay : null,
+              suggestedTimeSlot: showAlternativeBooking ? alternativeTimeSlot : null,
+              notes: bookingForm.notes,
+              isAlternativeRequest: showAlternativeBooking,
+            },
+          });
+          console.log('Booking notification email sent successfully to:', freelancerEmail);
+        } catch (emailError) {
+          console.error('Failed to send booking notification email:', emailError);
+          // Don't block the booking if email fails
+        }
+      } else {
+        console.warn('No email found for freelancer, skipping notification');
       }
 
       toast({

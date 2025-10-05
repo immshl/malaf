@@ -271,7 +271,7 @@ const UserProfile = () => {
       // Send booking notification email to freelancer
       if (freelancerEmail) {
         try {
-          await supabase.functions.invoke('send-booking-notification', {
+          const { data: emailResponse, error: emailError } = await supabase.functions.invoke('send-booking-notification', {
             body: {
               freelancerEmail: freelancerEmail,
               freelancerName: profile.full_name || profile.username || 'الفريلانسر',
@@ -286,13 +286,32 @@ const UserProfile = () => {
               isAlternativeRequest: showAlternativeBooking,
             },
           });
-          console.log('Booking notification email sent successfully to:', freelancerEmail);
+          
+          if (emailError) {
+            console.error('Failed to send booking notification email:', emailError);
+            toast({
+              variant: "destructive",
+              title: "تنبيه: لم يتم إرسال الإشعار",
+              description: "تم حفظ الحجز لكن فشل إرسال البريد الإلكتروني. يرجى التواصل مباشرة.",
+            });
+          } else {
+            console.log('Booking notification email sent successfully to:', freelancerEmail);
+          }
         } catch (emailError) {
           console.error('Failed to send booking notification email:', emailError);
-          // Don't block the booking if email fails
+          toast({
+            variant: "destructive",
+            title: "تنبيه: لم يتم إرسال الإشعار",
+            description: "تم حفظ الحجز لكن فشل إرسال البريد الإلكتروني. يرجى التواصل مباشرة.",
+          });
         }
       } else {
         console.warn('No email found for freelancer, skipping notification');
+        toast({
+          variant: "destructive",
+          title: "تنبيه",
+          description: "تم حفظ الحجز لكن لم يتم العثور على بريد الفريلانسر. يرجى التواصل مباشرة.",
+        });
       }
 
       toast({

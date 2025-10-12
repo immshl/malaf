@@ -598,8 +598,21 @@ const Index = () => {
             <div className="pt-6 border-t border-border/20">
               <p className="text-sm text-muted-foreground">
                 {language === "ar" 
-                  ? `© ${new Date().getFullYear()} ملف. جميع الحقوق محفوظة.`
-                  : `© ${new Date().getFullYear()} Malaf. All rights reserved.`
+                  ? (
+                    <>
+                      © {new Date().getFullYear()} ملف. جميع الحقوق محفوظة. ملف أحد منتجات شركة{" "}
+                      <a 
+                        href="https://taseeb.com" 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className="text-foreground hover:text-primary transition-colors underline"
+                      >
+                        تصيب
+                      </a>
+                      {" "}لخدمات الأعمال
+                    </>
+                  )
+                  : `© ${new Date().getFullYear()} Malaf. All rights reserved. Malaf is a product of Taseeb Business Services`
                 }
               </p>
             </div>

@@ -609,10 +609,10 @@ const Index = () => {
                       >
                         تصيب
                       </a>
-                      {" "}لخدمات الأعمال. جميع الحقوق محفوظة
+                      {" "}لخدمات الأعمال. جميع الحقوق محفوظة © {new Date().getFullYear()}
                     </>
                   )
-                  : "Malaf: A product of Taseeb Business Services. All rights reserved"
+                  : `Malaf: A product of Taseeb Business Services. All rights reserved © ${new Date().getFullYear()}`
                 }
               </p>
             </div>

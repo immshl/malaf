@@ -600,7 +600,7 @@ const Index = () => {
                 {language === "ar" 
                   ? (
                     <>
-                      © {new Date().getFullYear()} ملف. جميع الحقوق محفوظة. ملف أحد منتجات شركة{" "}
+                      ملف: أحد منتجات شركة{" "}
                       <a 
                         href="https://taseeb.com" 
                         target="_blank" 
@@ -609,10 +609,10 @@ const Index = () => {
                       >
                         تصيب
                       </a>
-                      {" "}لخدمات الأعمال
+                      {" "}لخدمات الأعمال. جميع الحقوق محفوظة
                     </>
                   )
-                  : `© ${new Date().getFullYear()} Malaf. All rights reserved. Malaf is a product of Taseeb Business Services`
+                  : "Malaf: A product of Taseeb Business Services. All rights reserved"
                 }
               </p>
             </div>
